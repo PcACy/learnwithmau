@@ -1,0 +1,1121 @@
+[
+  {
+    "id": "person",
+    "hanzi": "人",
+    "forms": [
+      "亻"
+    ],
+    "meaning": "Mensch/Person",
+    "pinyin": "rén",
+    "strokes": 2
+  },
+  {
+    "id": "you-archaic",
+    "hanzi": "尔",
+    "forms": [],
+    "meaning": "du (veraltet)",
+    "pinyin": "ěr",
+    "strokes": 5
+  },
+  {
+    "id": "woman",
+    "hanzi": "女",
+    "forms": [],
+    "meaning": "Frau",
+    "pinyin": "nǚ",
+    "strokes": 3
+  },
+  {
+    "id": "child",
+    "hanzi": "子",
+    "forms": [],
+    "meaning": "Kind",
+    "pinyin": "zǐ",
+    "strokes": 3
+  },
+  {
+    "id": "speech",
+    "hanzi": "言",
+    "forms": [
+      "讠"
+    ],
+    "meaning": "Sprache/Wort",
+    "pinyin": "yán",
+    "strokes": 7
+  },
+  {
+    "id": "body",
+    "hanzi": "身",
+    "forms": [],
+    "meaning": "Körper",
+    "pinyin": "shēn",
+    "strokes": 7
+  },
+  {
+    "id": "inch",
+    "hanzi": "寸",
+    "forms": [],
+    "meaning": "Zoll/Daumenbreite",
+    "pinyin": "cùn",
+    "strokes": 3
+  },
+  {
+    "id": "sun",
+    "hanzi": "日",
+    "forms": [],
+    "meaning": "Sonne/Tag",
+    "pinyin": "rì",
+    "strokes": 4
+  },
+  {
+    "id": "moon",
+    "hanzi": "月",
+    "forms": [],
+    "meaning": "Mond/Monat",
+    "pinyin": "yuè",
+    "strokes": 4
+  },
+  {
+    "id": "big",
+    "hanzi": "大",
+    "forms": [],
+    "meaning": "groß",
+    "pinyin": "dà",
+    "strokes": 3
+  },
+  {
+    "id": "small",
+    "hanzi": "小",
+    "forms": [
+      "⺍",
+      "⺌"
+    ],
+    "meaning": "klein",
+    "pinyin": "xiǎo",
+    "strokes": 3
+  },
+  {
+    "id": "one",
+    "hanzi": "一",
+    "forms": [],
+    "meaning": "eins/Strich",
+    "pinyin": "yī",
+    "strokes": 1
+  },
+  {
+    "id": "two",
+    "hanzi": "二",
+    "forms": [],
+    "meaning": "zwei (Doppelstrich)",
+    "pinyin": "èr",
+    "strokes": 2
+  },
+  {
+    "id": "three",
+    "hanzi": "三",
+    "forms": [],
+    "meaning": "drei (Dreifachstrich)",
+    "pinyin": "sān",
+    "strokes": 3
+  },
+  {
+    "id": "seven",
+    "hanzi": "七",
+    "forms": [],
+    "meaning": "sieben",
+    "pinyin": "qī",
+    "strokes": 2
+  },
+  {
+    "id": "eight",
+    "hanzi": "八",
+    "forms": [],
+    "meaning": "acht/Abspaltung",
+    "pinyin": "bā",
+    "strokes": 2
+  },
+  {
+    "id": "nine",
+    "hanzi": "九",
+    "forms": [],
+    "meaning": "neun",
+    "pinyin": "jiǔ",
+    "strokes": 2
+  },
+  {
+    "id": "frame",
+    "hanzi": "冂",
+    "forms": [],
+    "meaning": "Rahmen (unten offen)",
+    "pinyin": "jiōng",
+    "strokes": 2
+  },
+  {
+    "id": "earth",
+    "hanzi": "土",
+    "forms": [],
+    "meaning": "Erde/Boden",
+    "pinyin": "tǔ",
+    "strokes": 3
+  },
+  {
+    "id": "legs",
+    "hanzi": "儿",
+    "forms": [],
+    "meaning": "Beine/Menschlein",
+    "pinyin": "ér",
+    "strokes": 2
+  },
+  {
+    "id": "learn-top",
+    "hanzi": "⺍",
+    "forms": [],
+    "meaning": "Lernen-Kopf (in 学)",
+    "pinyin": "xué",
+    "strokes": 3
+  },
+  {
+    "id": "cover",
+    "hanzi": "冖",
+    "forms": [],
+    "meaning": "Abdeckung",
+    "pinyin": "mì",
+    "strokes": 2
+  },
+  {
+    "id": "mouth",
+    "hanzi": "口",
+    "forms": [],
+    "meaning": "Mund/Öffnung",
+    "pinyin": "kǒu",
+    "strokes": 3
+  },
+  {
+    "id": "right-hand",
+    "hanzi": "又",
+    "forms": [],
+    "meaning": "rechte Hand/wieder",
+    "pinyin": "yòu",
+    "strokes": 2
+  },
+  {
+    "id": "left-hand",
+    "hanzi": "𠂇",
+    "forms": [],
+    "meaning": "linke Hand",
+    "pinyin": "zuǒ",
+    "strokes": 2
+  },
+  {
+    "id": "enclosure",
+    "hanzi": "囗",
+    "forms": [],
+    "meaning": "Umfassungen",
+    "pinyin": "wéi",
+    "strokes": 3
+  },
+  {
+    "id": "line",
+    "hanzi": "丨",
+    "forms": [],
+    "meaning": "vertikale Linie",
+    "pinyin": "gǔn",
+    "strokes": 1
+  },
+  {
+    "id": "jade",
+    "hanzi": "玉",
+    "forms": [],
+    "meaning": "Jade/Kostbarkeit",
+    "pinyin": "yù",
+    "strokes": 5
+  },
+  {
+    "id": "water",
+    "hanzi": "水",
+    "forms": [
+      "氵"
+    ],
+    "meaning": "Wasser",
+    "pinyin": "shuǐ",
+    "strokes": 4
+  },
+  {
+    "id": "five",
+    "hanzi": "五",
+    "forms": [],
+    "meaning": "fünf",
+    "pinyin": "wǔ",
+    "strokes": 4
+  },
+  {
+    "id": "grass",
+    "hanzi": "艹",
+    "forms": [],
+    "meaning": "Gras",
+    "pinyin": "cǎo",
+    "strokes": 3
+  },
+  {
+    "id": "level",
+    "hanzi": "平",
+    "forms": [],
+    "meaning": "flach/Frieden",
+    "pinyin": "píng",
+    "strokes": 5
+  },
+  {
+    "id": "tree",
+    "hanzi": "木",
+    "forms": [],
+    "meaning": "Baum/Holz",
+    "pinyin": "mù",
+    "strokes": 4
+  },
+  {
+    "id": "divination",
+    "hanzi": "卜",
+    "forms": [],
+    "meaning": "Wahrsagung",
+    "pinyin": "bǔ",
+    "strokes": 2
+  },
+  {
+    "id": "say",
+    "hanzi": "曰",
+    "forms": [],
+    "meaning": "sagen (flacher Kreis)",
+    "pinyin": "yuē",
+    "strokes": 4
+  },
+  {
+    "id": "ten",
+    "hanzi": "十",
+    "forms": [],
+    "meaning": "zehn",
+    "pinyin": "shí",
+    "strokes": 2
+  },
+  {
+    "id": "born",
+    "hanzi": "生",
+    "forms": [],
+    "meaning": "geboren/wachsen",
+    "pinyin": "shēng",
+    "strokes": 5
+  },
+  {
+    "id": "its",
+    "hanzi": "其",
+    "forms": [],
+    "meaning": "dessen",
+    "pinyin": "qí",
+    "strokes": 8
+  },
+  {
+    "id": "white",
+    "hanzi": "白",
+    "forms": [],
+    "meaning": "weiß",
+    "pinyin": "bái",
+    "strokes": 5
+  },
+  {
+    "id": "crown",
+    "hanzi": "亠",
+    "forms": [],
+    "meaning": "Kopf-Krone",
+    "pinyin": "tóu",
+    "strokes": 2
+  },
+  {
+    "id": "pit",
+    "hanzi": "凶",
+    "forms": [],
+    "meaning": "Grube/Unglück",
+    "pinyin": "xiōng",
+    "strokes": 4
+  },
+  {
+    "id": "electric",
+    "hanzi": "电",
+    "forms": [],
+    "meaning": "Blitz/Strom",
+    "pinyin": "diàn",
+    "strokes": 5
+  },
+  {
+    "id": "hand",
+    "hanzi": "手",
+    "forms": [
+      "扌"
+    ],
+    "meaning": "Hand",
+    "pinyin": "shǒu",
+    "strokes": 4
+  },
+  {
+    "id": "halberd",
+    "hanzi": "戈",
+    "forms": [],
+    "meaning": "Hellebarde/Waffe",
+    "pinyin": "gē",
+    "strokes": 4
+  },
+  {
+    "id": "also",
+    "hanzi": "也",
+    "forms": [],
+    "meaning": "ebenfalls/auch",
+    "pinyin": "yě",
+    "strokes": 3
+  },
+  {
+    "id": "gate",
+    "hanzi": "门",
+    "forms": [],
+    "meaning": "Tor/Tür",
+    "pinyin": "mén",
+    "strokes": 3
+  },
+  {
+    "id": "horse",
+    "hanzi": "马",
+    "forms": [],
+    "meaning": "Pferd",
+    "pinyin": "mǎ",
+    "strokes": 3
+  },
+  {
+    "id": "corpse",
+    "hanzi": "尸",
+    "forms": [],
+    "meaning": "Leichen-Sim/Körper",
+    "pinyin": "shī",
+    "strokes": 3
+  },
+  {
+    "id": "table",
+    "hanzi": "几",
+    "forms": [],
+    "meaning": "kleiner Tisch",
+    "pinyin": "jī",
+    "strokes": 2
+  },
+  {
+    "id": "ladle",
+    "hanzi": "勺",
+    "forms": [],
+    "meaning": "Schöpfkelle",
+    "pinyin": "sháo",
+    "strokes": 3
+  },
+  {
+    "id": "shortbird",
+    "hanzi": "隹",
+    "forms": [],
+    "meaning": "Kurzschwanzvogel",
+    "pinyin": "zhuī",
+    "strokes": 8
+  },
+  {
+    "id": "private",
+    "hanzi": "厶",
+    "forms": [],
+    "meaning": "privat/geheim",
+    "pinyin": "sī",
+    "strokes": 2
+  },
+  {
+    "id": "mo-final",
+    "hanzi": "么",
+    "forms": [],
+    "meaning": "unbestimmte Partikel",
+    "pinyin": "me",
+    "strokes": 3
+  },
+  {
+    "id": "evening",
+    "hanzi": "夕",
+    "forms": [],
+    "meaning": "Abend",
+    "pinyin": "xī",
+    "strokes": 3
+  },
+  {
+    "id": "old-top",
+    "hanzi": "耂",
+    "forms": [],
+    "meaning": "Alter-Kopf",
+    "pinyin": "lǎo",
+    "strokes": 4
+  },
+  {
+    "id": "dagger",
+    "hanzi": "匕",
+    "forms": [],
+    "meaning": "Löffel/Dolch",
+    "pinyin": "bǐ",
+    "strokes": 2
+  },
+  {
+    "id": "few",
+    "hanzi": "少",
+    "forms": [],
+    "meaning": "wenige/kaum",
+    "pinyin": "shǎo",
+    "strokes": 4
+  },
+  {
+    "id": "exchange",
+    "hanzi": "交",
+    "forms": [],
+    "meaning": "austauschen/kreuzen",
+    "pinyin": "jiāo",
+    "strokes": 6
+  },
+  {
+    "id": "dog",
+    "hanzi": "犬",
+    "forms": [
+      "犭"
+    ],
+    "meaning": "Hund",
+    "pinyin": "quǎn",
+    "strokes": 4
+  },
+  {
+    "id": "field",
+    "hanzi": "田",
+    "forms": [],
+    "meaning": "Feld",
+    "pinyin": "tián",
+    "strokes": 5
+  },
+  {
+    "id": "claw",
+    "hanzi": "爫",
+    "forms": [],
+    "meaning": "Kralle/Pfote oben",
+    "pinyin": "zhǎo",
+    "strokes": 4
+  },
+  {
+    "id": "lack",
+    "hanzi": "欠",
+    "forms": [],
+    "meaning": "gähnen/mangeln",
+    "pinyin": "qiàn",
+    "strokes": 4
+  },
+  {
+    "id": "cloud",
+    "hanzi": "云",
+    "forms": [],
+    "meaning": "Wolke/Sprechen",
+    "pinyin": "yún",
+    "strokes": 4
+  },
+  {
+    "id": "eye",
+    "hanzi": "目",
+    "forms": [],
+    "meaning": "Auge",
+    "pinyin": "mù",
+    "strokes": 5
+  },
+  {
+    "id": "beg",
+    "hanzi": "乞",
+    "forms": [],
+    "meaning": "bitten/flehen",
+    "pinyin": "qǐ",
+    "strokes": 3
+  },
+  {
+    "id": "not",
+    "hanzi": "不",
+    "forms": [],
+    "meaning": "nicht (Ganzzeichen)",
+    "pinyin": "bù",
+    "strokes": 4
+  },
+  {
+    "id": "be",
+    "hanzi": "是",
+    "forms": [],
+    "meaning": "sein (Ganzzeichen)",
+    "pinyin": "shì",
+    "strokes": 9
+  },
+  {
+    "id": "father",
+    "hanzi": "父",
+    "forms": [],
+    "meaning": "Vater/Axt",
+    "pinyin": "fù",
+    "strokes": 4
+  },
+  {
+    "id": "cling",
+    "hanzi": "巴",
+    "forms": [],
+    "meaning": "anhaften/hoffen",
+    "pinyin": "bā",
+    "strokes": 4
+  },
+  {
+    "id": "script",
+    "hanzi": "文",
+    "forms": [],
+    "meaning": "Schrift/Kultur",
+    "pinyin": "wén",
+    "strokes": 4
+  },
+  {
+    "id": "walk-rad",
+    "hanzi": "辶",
+    "forms": [],
+    "meaning": "gehen (Umfassung)",
+    "pinyin": "chuò",
+    "strokes": 3
+  },
+  {
+    "id": "scholar",
+    "hanzi": "士",
+    "forms": [],
+    "meaning": "Gelehrter",
+    "pinyin": "shì",
+    "strokes": 3
+  },
+  {
+    "id": "heart",
+    "hanzi": "心",
+    "forms": [
+      "忄",
+      "⺗"
+    ],
+    "meaning": "Herz/Gefühl",
+    "pinyin": "xīn",
+    "strokes": 4
+  },
+  {
+    "id": "roof",
+    "hanzi": "宀",
+    "forms": [],
+    "meaning": "Dach mit Kamin",
+    "pinyin": "mián",
+    "strokes": 3
+  },
+  {
+    "id": "mountain",
+    "hanzi": "山",
+    "forms": [],
+    "meaning": "Berg",
+    "pinyin": "shān",
+    "strokes": 3
+  },
+  {
+    "id": "step",
+    "hanzi": "彳",
+    "forms": [],
+    "meaning": "Schritt/gehen",
+    "pinyin": "chì",
+    "strokes": 3
+  },
+  {
+    "id": "ear-mound",
+    "hanzi": "阝",
+    "forms": [],
+    "meaning": "Hügel/Stadt/Ohr",
+    "pinyin": "fù",
+    "strokes": 2
+  },
+  {
+    "id": "grain",
+    "hanzi": "禾",
+    "forms": [],
+    "meaning": "Getreide/Halm",
+    "pinyin": "hé",
+    "strokes": 5
+  },
+  {
+    "id": "fire",
+    "hanzi": "火",
+    "forms": [
+      "灬"
+    ],
+    "meaning": "Feuer/Punkte",
+    "pinyin": "huǒ",
+    "strokes": 4
+  },
+  {
+    "id": "knife",
+    "hanzi": "刀",
+    "forms": [
+      "刂"
+    ],
+    "meaning": "Messer/Schwert",
+    "pinyin": "dāo",
+    "strokes": 2
+  },
+  {
+    "id": "clothing",
+    "hanzi": "衣",
+    "forms": [
+      "衤"
+    ],
+    "meaning": "Kleidung/Gewand",
+    "pinyin": "yī",
+    "strokes": 6
+  },
+  {
+    "id": "food",
+    "hanzi": "食",
+    "forms": [
+      "饣"
+    ],
+    "meaning": "Essen/Nahrung",
+    "pinyin": "shí",
+    "strokes": 8
+  },
+  {
+    "id": "metal",
+    "hanzi": "金",
+    "forms": [
+      "钅"
+    ],
+    "meaning": "Metall/Gold",
+    "pinyin": "jīn",
+    "strokes": 8
+  },
+  {
+    "id": "cart",
+    "hanzi": "车",
+    "forms": [],
+    "meaning": "Wagen/Fahrzeug",
+    "pinyin": "chē",
+    "strokes": 4
+  },
+  {
+    "id": "rain",
+    "hanzi": "雨",
+    "forms": [],
+    "meaning": "Regen",
+    "pinyin": "yǔ",
+    "strokes": 8
+  },
+  {
+    "id": "see",
+    "hanzi": "见",
+    "forms": [],
+    "meaning": "sehen/erblicken",
+    "pinyin": "jiàn",
+    "strokes": 4
+  },
+  {
+    "id": "altar",
+    "hanzi": "示",
+    "forms": [
+      "礻"
+    ],
+    "meaning": "Zeigen/Altar",
+    "pinyin": "shì",
+    "strokes": 5
+  },
+  {
+    "id": "king",
+    "hanzi": "王",
+    "forms": [],
+    "meaning": "König/Jade",
+    "pinyin": "wáng",
+    "strokes": 4
+  },
+  {
+    "id": "stand-up",
+    "hanzi": "立",
+    "forms": [],
+    "meaning": "stehen/aufrichten",
+    "pinyin": "lì",
+    "strokes": 5
+  },
+  {
+    "id": "axe",
+    "hanzi": "斤",
+    "forms": [],
+    "meaning": "Axt/Pfund",
+    "pinyin": "jīn",
+    "strokes": 4
+  },
+  {
+    "id": "tongue",
+    "hanzi": "舌",
+    "forms": [],
+    "meaning": "Zunge",
+    "pinyin": "shé",
+    "strokes": 6
+  },
+  {
+    "id": "work",
+    "hanzi": "工",
+    "forms": [],
+    "meaning": "Arbeit/Handwerk",
+    "pinyin": "gōng",
+    "strokes": 3
+  },
+  {
+    "id": "fly",
+    "hanzi": "飞",
+    "forms": [],
+    "meaning": "fliegen",
+    "pinyin": "fēi",
+    "strokes": 3
+  },
+  {
+    "id": "rice",
+    "hanzi": "米",
+    "forms": [],
+    "meaning": "Reis/Korn",
+    "pinyin": "mǐ",
+    "strokes": 6
+  },
+  {
+    "id": "ice",
+    "hanzi": "冫",
+    "forms": [],
+    "meaning": "Eis/Zweipunkt",
+    "pinyin": "bīng",
+    "strokes": 2
+  },
+  {
+    "id": "cliff",
+    "hanzi": "厂",
+    "forms": [
+      "𠂆"
+    ],
+    "meaning": "Klippe/Fabrik",
+    "pinyin": "chǎng",
+    "strokes": 2
+  },
+  {
+    "id": "shelter",
+    "hanzi": "广",
+    "forms": [],
+    "meaning": "Schutzdach/weit",
+    "pinyin": "guǎng",
+    "strokes": 3
+  },
+  {
+    "id": "steam",
+    "hanzi": "气",
+    "forms": [],
+    "meaning": "Dampf/Luft/Atem",
+    "pinyin": "qì",
+    "strokes": 4
+  },
+  {
+    "id": "wrap",
+    "hanzi": "勹",
+    "forms": [],
+    "meaning": "einwickeln/Umfassung",
+    "pinyin": "bāo",
+    "strokes": 2
+  },
+  {
+    "id": "west",
+    "hanzi": "西",
+    "forms": [],
+    "meaning": "Westen",
+    "pinyin": "xī",
+    "strokes": 6
+  },
+  {
+    "id": "east",
+    "hanzi": "东",
+    "forms": [],
+    "meaning": "Osten",
+    "pinyin": "dōng",
+    "strokes": 5
+  },
+  {
+    "id": "dot",
+    "hanzi": "丶",
+    "forms": [],
+    "meaning": "Punkt/Tropfen",
+    "pinyin": "diǎn",
+    "strokes": 1
+  },
+  {
+    "id": "eight-horns",
+    "hanzi": "丷",
+    "forms": [],
+    "meaning": "zwei Hörner oben",
+    "pinyin": "bā",
+    "strokes": 2
+  },
+  {
+    "id": "box-frame",
+    "hanzi": "匚",
+    "forms": [],
+    "meaning": "offener Kasten",
+    "pinyin": "fāng",
+    "strokes": 2
+  },
+  {
+    "id": "arrow",
+    "hanzi": "矢",
+    "forms": [],
+    "meaning": "Pfeil",
+    "pinyin": "shǐ",
+    "strokes": 5
+  },
+  {
+    "id": "stand",
+    "hanzi": "且",
+    "forms": [],
+    "meaning": "Sockel/zudem",
+    "pinyin": "qiě",
+    "strokes": 5
+  },
+  {
+    "id": "stare",
+    "hanzi": "艮",
+    "forms": [],
+    "meaning": "hartnäckig/starr",
+    "pinyin": "gèn",
+    "strokes": 6
+  },
+  {
+    "id": "blue-green",
+    "hanzi": "青",
+    "forms": [],
+    "meaning": "blaugrün/jung",
+    "pinyin": "qīng",
+    "strokes": 8
+  },
+  {
+    "id": "pig",
+    "hanzi": "豕",
+    "forms": [],
+    "meaning": "Schwein",
+    "pinyin": "shǐ",
+    "strokes": 7
+  },
+  {
+    "id": "towel",
+    "hanzi": "巾",
+    "forms": [],
+    "meaning": "Tuch/Handtuch",
+    "pinyin": "jīn",
+    "strokes": 3
+  },
+  {
+    "id": "feather",
+    "hanzi": "羽",
+    "forms": [
+      "习"
+    ],
+    "meaning": "Feder/Flügel",
+    "pinyin": "yǔ",
+    "strokes": 6
+  },
+  {
+    "id": "strike",
+    "hanzi": "攵",
+    "forms": [],
+    "meaning": "klopfen/Handlung",
+    "pinyin": "pū",
+    "strokes": 4
+  },
+  {
+    "id": "tall",
+    "hanzi": "高",
+    "forms": [],
+    "meaning": "hoch/groß",
+    "pinyin": "gāo",
+    "strokes": 10
+  },
+  {
+    "id": "sheep",
+    "hanzi": "羊",
+    "forms": [
+      "⺶",
+      "⺷"
+    ],
+    "meaning": "Schaf",
+    "pinyin": "yáng",
+    "strokes": 6
+  },
+  {
+    "id": "stop",
+    "hanzi": "止",
+    "forms": [],
+    "meaning": "anhalten/stoppen",
+    "pinyin": "zhǐ",
+    "strokes": 4
+  },
+  {
+    "id": "bristle",
+    "hanzi": "彡",
+    "forms": [],
+    "meaning": "Borsten/Haare",
+    "pinyin": "shān",
+    "strokes": 3
+  },
+  {
+    "id": "silk",
+    "hanzi": "幺",
+    "forms": [],
+    "meaning": "Seidenfaden/winzig",
+    "pinyin": "yāo",
+    "strokes": 3
+  },
+  {
+    "id": "hands-joined",
+    "hanzi": "廾",
+    "forms": [],
+    "meaning": "zwei Hände zusammen",
+    "pinyin": "gǒng",
+    "strokes": 3
+  },
+  {
+    "id": "noon",
+    "hanzi": "午",
+    "forms": [],
+    "meaning": "Mittag",
+    "pinyin": "wǔ",
+    "strokes": 4
+  },
+  {
+    "id": "winter-go",
+    "hanzi": "夂",
+    "forms": [],
+    "meaning": "langsames Gehen",
+    "pinyin": "zhǐ",
+    "strokes": 3
+  },
+  {
+    "id": "break-decide",
+    "hanzi": "夬",
+    "forms": [],
+    "meaning": "entscheiden/spalten",
+    "pinyin": "guài",
+    "strokes": 4
+  },
+  {
+    "id": "oppose",
+    "hanzi": "反",
+    "forms": [],
+    "meaning": "umkehren/gegen",
+    "pinyin": "fǎn",
+    "strokes": 4
+  },
+  {
+    "id": "small-spear",
+    "hanzi": "戋",
+    "forms": [],
+    "meaning": "kleine Lanze",
+    "pinyin": "jiān",
+    "strokes": 5
+  },
+  {
+    "id": "capital",
+    "hanzi": "京",
+    "forms": [],
+    "meaning": "Hauptstadt",
+    "pinyin": "jīng",
+    "strokes": 8
+  },
+  {
+    "id": "now-rad",
+    "hanzi": "今",
+    "forms": [],
+    "meaning": "Gegenwart/heute",
+    "pinyin": "jīn",
+    "strokes": 4
+  },
+  {
+    "id": "year-rad",
+    "hanzi": "年",
+    "forms": [],
+    "meaning": "Jahr",
+    "pinyin": "nián",
+    "strokes": 6
+  },
+  {
+    "id": "book-rad",
+    "hanzi": "书",
+    "forms": [],
+    "meaning": "Buch/Schrift",
+    "pinyin": "shū",
+    "strokes": 4
+  },
+  {
+    "id": "rise-joy",
+    "hanzi": "兴",
+    "forms": [],
+    "meaning": "aufsteigen/Freude",
+    "pinyin": "xīng",
+    "strokes": 6
+  },
+  {
+    "id": "finish",
+    "hanzi": "了",
+    "forms": [],
+    "meaning": "vollenden/fertig",
+    "pinyin": "le",
+    "strokes": 2
+  },
+  {
+    "id": "skin",
+    "hanzi": "皮",
+    "forms": [],
+    "meaning": "Haut/Leder",
+    "pinyin": "pí",
+    "strokes": 5
+  },
+  {
+    "id": "sound",
+    "hanzi": "音",
+    "forms": [],
+    "meaning": "Klang/Laut",
+    "pinyin": "yīn",
+    "strokes": 9
+  },
+  {
+    "id": "cattle",
+    "hanzi": "牛",
+    "forms": [
+      "⺧",
+      "牜"
+    ],
+    "meaning": "Rind/Kuh",
+    "pinyin": "niú",
+    "strokes": 4
+  },
+  {
+    "id": "head-rad",
+    "hanzi": "页",
+    "forms": [],
+    "meaning": "Kopf/Blatt",
+    "pinyin": "yè",
+    "strokes": 6
+  },
+  {
+    "id": "nail",
+    "hanzi": "丁",
+    "forms": [],
+    "meaning": "Nagel/4. Himmelsstamm",
+    "pinyin": "dīng",
+    "strokes": 2
+  },
+  {
+    "id": "droop",
+    "hanzi": "垂",
+    "forms": [],
+    "meaning": "hängen/herabhängen",
+    "pinyin": "chuí",
+    "strokes": 8
+  }
+]
+

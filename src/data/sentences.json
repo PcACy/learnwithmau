@@ -1,0 +1,142 @@
+[
+  {
+    "id": "s1",
+    "german": "Ich bin Chinese.",
+    "pinyin": "wǒ shì zhōng guó rén",
+    "tokens": ["我", "是", "中国", "人"],
+    "explanation": "SVO-Satzbau: Subjekt (我) + Verb 'sein' (是) + Prädikatsnomen (中国人)."
+  },
+  {
+    "id": "s2",
+    "german": "Wie geht es dir?",
+    "pinyin": "nǐ hǎo ma",
+    "tokens": ["你", "好", "吗"],
+    "explanation": "Fragesatz mit der Fragepartikel 吗 (ma) am Satzende."
+  },
+  {
+    "id": "s3",
+    "german": "Ich lerne gerne Chinesisch.",
+    "pinyin": "wǒ xǐ huan xué xí hàn yǔ",
+    "tokens": ["我", "喜欢", "学习", "汉语"],
+    "explanation": "Modalverb '喜欢' (mögen/gerne tun) vor dem Hauptverb '学习' (lernen)."
+  },
+  {
+    "id": "s4",
+    "german": "Er geht morgen nach Peking.",
+    "pinyin": "tā míng tiān qù běi jīng",
+    "tokens": ["他", "明天", "去", "北京"],
+    "explanation": "Zeitangabe (明天 = morgen) steht immer vor dem Verb (去 = gehen)."
+  },
+  {
+    "id": "s5",
+    "german": "Möchtest du Tee trinken?",
+    "pinyin": "nǐ xiǎng hē chá ma",
+    "tokens": ["你", "想", "喝", "茶", "吗"],
+    "explanation": "Modalverb 想 (möchten) + Verb 喝 (trinken) + Objekt 茶 (Tee) + Partikel 吗."
+  },
+  {
+    "id": "s6",
+    "german": "Ich habe keinen Computer.",
+    "pinyin": "wǒ méi yǒu diàn nǎo",
+    "tokens": ["我", "没有", "电脑"],
+    "explanation": "Verneinung von 有 (haben/existieren) erfolgt immer mit 没有 (nicht mit 不)."
+  },
+  {
+    "id": "s7",
+    "german": "Sie ist unsere Lehrerin.",
+    "pinyin": "tā shì wǒ men de lǎo shī",
+    "tokens": ["她", "是", "我们", "的", "老师"],
+    "explanation": "Besitzanzeigendes 的: 我们 (wir) + 的 = unser/unsere."
+  },
+  {
+    "id": "s8",
+    "german": "Was möchtest du essen?",
+    "pinyin": "nǐ xiǎng chī shén me",
+    "tokens": ["你", "想", "吃", "什么"],
+    "explanation": "Fragewort 什么 (was) ersetzt im Chinesischen direkt das gesuchte Objekt an Ort und Stelle."
+  },
+  {
+    "id": "s9",
+    "german": "Ich kann Chinesisch sprechen.",
+    "pinyin": "wǒ huì shuō hàn yǔ",
+    "tokens": ["我", "会", "说", "汉语"],
+    "explanation": "Modalverb 会 (gelerntes Können) vor dem Verb 说 (sprechen)."
+  },
+  {
+    "id": "s10",
+    "german": "Wo arbeitet er?",
+    "pinyin": "tā zài nǎr gōng zuò",
+    "tokens": ["他", "在", "哪儿", "工作"],
+    "explanation": "Ortsangabe mit 在 (in/an) steht vor der Handlung: 在哪儿 (wo) + 工作 (arbeiten)."
+  },
+  {
+    "id": "s11",
+    "german": "Wie viel kostet dieses Buch?",
+    "pinyin": "zhè běn shū duō shao qián",
+    "tokens": ["这", "本", "书", "多少", "钱"],
+    "explanation": "Zählwort 本 (běn) für Bücher: 这本书 (dieses Buch) + 多少钱 (wie viel Geld)."
+  },
+  {
+    "id": "s12",
+    "german": "Heute ist das Wetter sehr gut.",
+    "pinyin": "jīn tiān tiān qì hěn hǎo",
+    "tokens": ["今天", "天气", "很", "好"],
+    "explanation": "Adjektiv-Prädikat: Bei Adjektiven wie 好 wird statt 是 das Hilfswort 很 (sehr/neutral) verwendet."
+  },
+  {
+    "id": "s13",
+    "german": "Auf dem Tisch liegt ein Buch.",
+    "pinyin": "zhuō zi shang yǒu yì běn shū",
+    "tokens": ["桌子", "上", "有", "一", "本", "书"],
+    "explanation": "Lokalsatz: Ort (桌子上 = auf dem Tisch) + 有 (es gibt/befindet sich) + Objekt."
+  },
+  {
+    "id": "s14",
+    "german": "Er ruft mich an.",
+    "pinyin": "tā gěi wǒ dǎ diàn huà",
+    "tokens": ["他", "给", "我", "打", "电话"],
+    "explanation": "Struktur: 给 + Person + 打电话 (jemandem anrufen)."
+  },
+  {
+    "id": "s15",
+    "german": "Kennst du diesen Menschen?",
+    "pinyin": "nǐ rèn shi zhè ge rén ma",
+    "tokens": ["你", "认识", "这", "个", "人", "吗"],
+    "explanation": "认识 (kennen) + 这个人 (dieser Mensch) mit Zählwort 个."
+  },
+  {
+    "id": "s16",
+    "german": "Wir fahren mit dem Taxi zum Restaurant.",
+    "pinyin": "wǒ men zuò chū zū chē qù fàn diàn",
+    "tokens": ["我们", "坐", "出租车", "去", "饭店"],
+    "explanation": "Verbenkette: Zuerst Transportmittel (坐出租车 = Taxi nehmen), dann Zielhandlung (去饭店 = ins Restaurant gehen)."
+  },
+  {
+    "id": "s17",
+    "german": "Meine Tochter ist fünf Jahre alt.",
+    "pinyin": "wǒ de nǚ ér wǔ suì",
+    "tokens": ["我", "的", "女儿", "五", "岁"],
+    "explanation": "Altersangabe mit 岁 (Jahre alt), benötigt kein 'ist' (是)."
+  },
+  {
+    "id": "s18",
+    "german": "Es regnet jetzt.",
+    "pinyin": "xiàn zài xià yǔ le",
+    "tokens": ["现在", "下", "雨", "了"],
+    "explanation": "Modalpartikel 了 am Satzende signalisiert eine Zustandsveränderung (es hat begonnen zu regnen)."
+  },
+  {
+    "id": "s19",
+    "german": "Ich gehe heute Abend schlafen.",
+    "pinyin": "wǒ jīn tiān wǎn shang shuì jiào",
+    "tokens": ["我", "今天", "晚上", "睡觉"],
+    "explanation": "Genaue Zeitangabe: Vom Großen zum Kleinen (今天 = heute, 晚上 = Abend)."
+  },
+  {
+    "id": "s20",
+    "german": "Lass uns zusammen essen gehen, okay?",
+    "pinyin": "wǒ men qù chī fàn ba",
+    "tokens": ["我们", "去", "吃", "饭", "吧"],
+    "explanation": "Vorschlagspartikel 吧 am Ende drückt eine freundliche Aufforderung ('lass uns...') aus."
+  }
+]

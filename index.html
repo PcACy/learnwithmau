@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#09090b" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)" />
+    <meta name="description" content="Modulare Offline-Lernplattform für Chinesisch-Anfänger (HSK 1)" />
+    <title>Learn with Mau · Hanzi Arcade</title>
+    <script>
+      (function() {
+        try {
+          var stored = localStorage.getItem('hanzi-arcade-settings');
+          var theme = stored ? JSON.parse(stored).state?.theme : 'system';
+          var isDark = theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+          if (isDark) {
+            document.documentElement.classList.add('dark');
+            document.documentElement.style.backgroundColor = '#09090b';
+          } else {
+            document.documentElement.classList.remove('dark');
+            document.documentElement.style.backgroundColor = '#fafafa';
+          }
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body class="bg-zinc-50 dark:bg-zinc-950">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
