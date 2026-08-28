@@ -1,5 +1,5 @@
 import type { LucideIcon } from 'lucide-react';
-import { CalendarClock, FlaskConical, Headphones, Keyboard, Layers, MessageSquareQuote } from 'lucide-react';
+import { CalendarClock, FlaskConical, GraduationCap, Headphones, Keyboard, Layers, MessageSquareQuote } from 'lucide-react';
 import type { ModeId } from '../types/game';
 
 export interface ModeConfig {
@@ -59,5 +59,13 @@ export const MODES: readonly ModeConfig[] = [
     tagline: 'SM-2-Karten selbst bewerten',
     description: 'Wiederhole alle fälligen Vokabeln im klassischen Karteikarten-Stil.',
     icon: Layers,
+  },
+  {
+    id: 'exam',
+    path: '/exam',
+    title: 'HSK-1 Probeprüfung',
+    tagline: 'Offizielle 30-Fragen-Simulation',
+    description: 'Realistischer Test für Hör- und Leseverstehen mit Fehleranalyse.',
+    icon: GraduationCap,
   },
 ] as const;

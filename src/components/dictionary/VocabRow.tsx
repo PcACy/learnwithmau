@@ -9,6 +9,7 @@ import { playAsset, playToneSequence, stopCurrentAudio } from '../../lib/audio';
 import { getMasteryLevel } from '../../lib/mastery';
 import { useSettingsStore, type AudioSpeed } from '../../store/settingsStore';
 import { StrokeOrderViewer } from './StrokeOrderViewer';
+import { PitchContour } from '../ui/PitchContour';
 
 interface VocabRowProps {
   item: VocabItem;
@@ -121,6 +122,17 @@ export function VocabRow({ item, card, expanded, onToggle }: VocabRowProps) {
                     <sub className="ml-0.5 text-[9px] text-zinc-400">{syllable.tone}</sub>
                   </span>
                 ))}
+              </div>
+
+              {/* Tonhöhen-Visualisierung */}
+              <div className="flex items-center gap-1.5" title="Chao-Tonhöhenverlauf">
+                <span className="text-xs font-semibold text-zinc-400">Tonverlauf:</span>
+                <PitchContour
+                  tones={item.syllables.map((s) => s.tone)}
+                  syllables={item.syllables.map((s) => s.marked)}
+                  size="sm"
+                  showLabels={false}
+                />
               </div>
 
               {/* Audio Speed Toggles */}

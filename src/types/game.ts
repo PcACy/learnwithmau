@@ -7,7 +7,8 @@ export type ModeId =
   | 'alchemy'
   | 'number-drill'
   | 'review'
-  | 'sentences';
+  | 'sentences'
+  | 'exam';
 
 export interface StreakData {
   current: number;

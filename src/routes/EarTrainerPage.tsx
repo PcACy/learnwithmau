@@ -15,6 +15,7 @@ import { useKeyDown } from '../hooks/useKeyDown';
 import { KeyHints } from '../components/ui/Kbd';
 import { SessionSummary } from '../components/game/SessionSummary';
 import { useProgressStore } from '../store/progressStore';
+import { PitchContour } from '../components/ui/PitchContour';
 
 const QUESTIONS_PER_SESSION = 10;
 const FAST_ANSWER_MS = 2500;
@@ -356,7 +357,10 @@ export function EarTrainerPage() {
                 {index + 1}
               </span>
               {question.kind === 'tone' ? (
-                <span className="text-4xl font-bold">{question.data.options[index].marked}</span>
+                <>
+                  <span className="text-3xl font-bold">{question.data.options[index].marked}</span>
+                  <PitchContour tones={[question.data.options[index].tone]} size="sm" />
+                </>
               ) : (
                 <>
                   <span className="font-cjk text-3xl font-semibold">{question.options[index].hanzi}</span>
@@ -374,21 +378,30 @@ export function EarTrainerPage() {
               const highlightIndex = question.kind === 'tone' ? question.data.syllableIndex : -1;
               return (
                 <>
-                  <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
-                    <span className="font-cjk text-4xl font-semibold">{revealed.hanzi}</span>
-                    <span className="font-mono text-lg text-zinc-600 dark:text-zinc-300">
-                      {revealed.syllables.map((syl, i) => (
-                        <span
-                          key={i}
-                          className={
-                            i === highlightIndex ? 'font-bold text-emerald-700 dark:text-emerald-400' : undefined
-                          }
-                        >
-                          {i > 0 ? '\u00A0' : ''}
-                          {syl.marked}
-                        </span>
-                      ))}
-                    </span>
+                  <div className="flex flex-wrap items-center justify-between gap-4">
+                    <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+                      <span className="font-cjk text-4xl font-semibold">{revealed.hanzi}</span>
+                      <span className="font-mono text-lg text-zinc-600 dark:text-zinc-300">
+                        {revealed.syllables.map((syl, i) => (
+                          <span
+                            key={i}
+                            className={
+                              i === highlightIndex ? 'font-bold text-emerald-700 dark:text-emerald-400' : undefined
+                            }
+                          >
+                            {i > 0 ? '\u00A0' : ''}
+                            {syl.marked}
+                          </span>
+                        ))}
+                      </span>
+                    </div>
+
+                    <PitchContour
+                      tones={revealed.syllables.map((s) => s.tone)}
+                      syllables={revealed.syllables.map((s) => s.marked)}
+                      size="sm"
+                      showLabels={true}
+                    />
                   </div>
                   <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400">{revealed.meaning}</p>
                   <p

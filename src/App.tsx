@@ -12,6 +12,7 @@ import { SentenceBuilderPage } from './routes/SentenceBuilderPage';
 import { SettingsPage } from './routes/SettingsPage';
 import { StatsPage } from './routes/StatsPage';
 import { TypeRacerPage } from './routes/TypeRacerPage';
+import { MockExamPage } from './routes/MockExamPage';
 
 function renderMode(mode: ModeConfig) {
   switch (mode.id) {
@@ -27,6 +28,8 @@ function renderMode(mode: ModeConfig) {
       return <NumberDrillPage />;
     case 'review':
       return <ReviewPage />;
+    case 'exam':
+      return <MockExamPage />;
   }
 }
 
