@@ -15,6 +15,7 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { useSettingsStore } from '../../store/settingsStore';
+import { fireMicroBurst } from '../../lib/confetti';
 
 interface StrokeOrderViewerProps {
   character: string;
@@ -211,6 +212,7 @@ export function StrokeOrderViewer({ character, pinyin, meaning, size = 190 }: St
       },
       onComplete: (summary) => {
         setQuizStatus('success');
+        fireMicroBurst();
         setQuizFeedback(
           summary.totalMistakes === 0
             ? 'Perfekt fehlerfrei gezeichnet!'

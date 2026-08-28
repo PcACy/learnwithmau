@@ -6,6 +6,7 @@ import { useKeyDown } from '../hooks/useKeyDown';
 import { KeyHints } from '../components/ui/Kbd';
 import { SessionSummary } from '../components/game/SessionSummary';
 import { useProgressStore } from '../store/progressStore';
+import { fireCelebration, fireMicroBurst } from '../lib/confetti';
 
 const PUZZLES_PER_SESSION = 6;
 
@@ -84,9 +85,11 @@ export function AlchemyPage() {
         });
         setSession({ ...solvedSession, finishedAt });
         setPhase('summary');
+        fireCelebration();
         return;
       }
 
+      fireMicroBurst();
       const nextPuzzle = solvedSession.puzzles[solvedSession.index + 1];
       setSession({
         ...solvedSession,

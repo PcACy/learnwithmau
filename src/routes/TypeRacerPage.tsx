@@ -9,6 +9,7 @@ import { KeyHints } from '../components/ui/Kbd';
 import { SessionSummary } from '../components/game/SessionSummary';
 import { useProgressStore } from '../store/progressStore';
 import { playAsset, stopCurrentAudio } from '../lib/audio';
+import { fireCelebration, fireMicroBurst } from '../lib/confetti';
 import type { SrsCard } from '../types/srs';
 import type { VocabItem } from '../types/vocab';
 
@@ -108,7 +109,12 @@ export function TypeRacerPage() {
             finishedAt: Date.now(),
           });
           setPhase('summary');
+          fireCelebration();
           return;
+        }
+
+        if (round.wordErrors === 0) {
+          fireMicroBurst();
         }
 
         const nextIndex = round.itemIndex + 1;
@@ -284,14 +290,14 @@ export function TypeRacerPage() {
       </div>
 
       <section
-        className={`reveal rounded-[2.5rem] border p-7 shadow-whisper transition-colors duration-300 sm:p-9 dark:bg-zinc-900 ${
+        className={`reveal rounded-[2.5rem] border p-7 shadow-whisper transition-all duration-300 sm:p-9 dark:bg-zinc-900 ${
           round.flashWrong
-            ? 'border-rose-500/60 bg-white dark:border-white/[0.06]'
+            ? 'animate-shake border-rose-500/60 bg-rose-500/[0.02] dark:border-rose-500/40'
             : 'border-zinc-200/70 bg-white dark:border-white/[0.06]'
         }`}
         style={{ '--index': 1 } as CSSProperties}
       >
-        <div className={`flex flex-wrap gap-3 ${round.flashWrong ? 'animate-pulse-soft' : ''}`}>
+        <div className="flex flex-wrap gap-3">
           {Array.from(currentItem.hanzi).map((_hanzi, i) => {
             const isFilled = round.slots[i] !== null && round.slots[i] !== undefined;
             const isCurrent = i === slotIndex;

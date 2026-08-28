@@ -13,6 +13,7 @@ import {
 import { Link } from 'react-router-dom';
 import sentencesData from '../data/sentences.json';
 import { playToneSequence } from '../lib/audio';
+import { fireCelebration, fireMicroBurst } from '../lib/confetti';
 
 interface SentenceItem {
   id: string;
@@ -96,6 +97,7 @@ export function SentenceBuilderPage() {
     if (isCorrect) {
       setStatus('correct');
       setScore((s) => s + 1);
+      fireMicroBurst();
       playToneSequence([1, 4]); // Bestätigungston
     } else {
       setStatus('wrong');
@@ -115,6 +117,7 @@ export function SentenceBuilderPage() {
       setShowPinyin(false);
     } else {
       setStatus('summary');
+      fireCelebration();
     }
   };
 
@@ -210,7 +213,11 @@ export function SentenceBuilderPage() {
 
       {/* Gebauter Satz (Slots) */}
       <div
-        className="reveal min-h-24 rounded-3xl border-2 border-dashed border-zinc-300 bg-zinc-50/70 p-5 dark:border-zinc-700 dark:bg-zinc-950/40"
+        className={`reveal min-h-24 rounded-3xl border-2 border-dashed p-5 transition-colors duration-200 ${
+          status === 'wrong'
+            ? 'animate-shake border-red-500/60 bg-red-500/5 dark:border-red-400/50'
+            : 'border-zinc-300 bg-zinc-50/70 dark:border-zinc-700 dark:bg-zinc-950/40'
+        }`}
         style={{ '--index': 2 } as CSSProperties}
       >
         {selectedTokens.length === 0 ? (

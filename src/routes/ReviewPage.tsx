@@ -11,6 +11,7 @@ import { useKeyDown } from '../hooks/useKeyDown';
 import { KeyHints } from '../components/ui/Kbd';
 import { SessionSummary } from '../components/game/SessionSummary';
 import { useProgressStore } from '../store/progressStore';
+import { fireCelebration } from '../lib/confetti';
 
 type Phase = 'intro' | 'drill' | 'summary' | 'empty';
 
@@ -130,6 +131,7 @@ export function ReviewPage() {
       });
       setSession((prev) => (prev ? { ...prev, finishedAt } : prev));
       setPhase('summary');
+      fireCelebration();
     },
     [logSession],
   );
@@ -363,7 +365,7 @@ export function ReviewPage() {
               </span>
             </button>
           ) : (
-            <div className="reveal flex flex-col items-center py-8 text-center">
+            <div className="reveal animate-pop-in flex flex-col items-center py-8 text-center">
               <span className="font-cjk text-4xl font-semibold">{currentItem.hanzi}</span>
               <span className="mt-4 font-mono text-2xl font-bold tracking-tight text-emerald-700 dark:text-emerald-400">
                 {currentItem.pinyin}

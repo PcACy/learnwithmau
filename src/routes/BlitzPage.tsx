@@ -14,6 +14,7 @@ import {
 import { Link } from 'react-router-dom';
 import { VOCAB } from '../data';
 import { playAsset, playToneSequence } from '../lib/audio';
+import { fireCelebration, fireMicroBurst } from '../lib/confetti';
 import type { VocabItem } from '../types/vocab';
 
 interface BlitzQuestion {
@@ -139,6 +140,7 @@ export function BlitzPage() {
         if (prev <= 1) {
           clearInterval(timer);
           setGameState('ended');
+          fireCelebration();
           return 0;
         }
         return prev - 1;
@@ -173,6 +175,7 @@ export function BlitzPage() {
       setScore((s) => s + points);
       setStreak(newStreak);
       if (newStreak > bestStreak) setBestStreak(newStreak);
+      if (newStreak > 0 && newStreak % 5 === 0) fireMicroBurst();
       playToneSequence([1]);
     } else {
       setStreak(0);
@@ -354,9 +357,9 @@ export function BlitzPage() {
               disabled={selectedOption !== null}
               className={`flex h-14 items-center justify-between rounded-2xl border px-5 text-left text-sm font-semibold transition-all duration-150 active:scale-98 ${
                 isCorrect
-                  ? 'border-emerald-500 bg-emerald-500 text-white shadow-emerald-500/30'
+                  ? 'animate-pop-in border-emerald-500 bg-emerald-500 text-white shadow-emerald-500/30'
                   : isWrong
-                    ? 'border-red-500 bg-red-500 text-white'
+                    ? 'animate-shake border-red-500 bg-red-500 text-white'
                     : selectedOption !== null && option === currentQ.correctAnswer
                       ? 'border-emerald-500 bg-emerald-500/20 text-emerald-800 dark:text-emerald-300'
                       : 'border-zinc-200/80 bg-white text-zinc-800 hover:border-emerald-500/40 hover:bg-zinc-50 dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800'
