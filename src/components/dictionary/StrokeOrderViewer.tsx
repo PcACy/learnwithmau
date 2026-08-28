@@ -213,7 +213,7 @@ export function StrokeOrderViewer({ character, pinyin, meaning, size = 190 }: St
         setQuizStatus('success');
         setQuizFeedback(
           summary.totalMistakes === 0
-            ? 'Perfekt fehlerfrei gezeichnet! 🎉'
+            ? 'Perfekt fehlerfrei gezeichnet!'
             : `Klasse! Abgeschlossen mit ${summary.totalMistakes} Korrektur${summary.totalMistakes === 1 ? '' : 'en'}.`,
         );
       },

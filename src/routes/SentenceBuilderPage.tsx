@@ -290,7 +290,8 @@ export function SentenceBuilderPage() {
               {currentSentence.tokens.join(' ')} · {currentSentence.pinyin}
             </p>
             <p className="mx-auto max-w-lg text-xs leading-relaxed text-zinc-600 dark:text-zinc-300">
-              💡 <strong>Grammatik-Tipp:</strong> {currentSentence.explanation}
+              <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 mr-1.5">Grammatik-Tipp</span>
+              {currentSentence.explanation}
             </p>
             <button
               type="button"

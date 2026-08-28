@@ -209,8 +209,9 @@ export function VocabRow({ item, card, expanded, onToggle }: VocabRowProps) {
 
           {item.notes && (
             <div className="rounded-xl border border-zinc-100 bg-zinc-50/50 p-3 dark:border-white/[0.04] dark:bg-zinc-950/30">
-              <p className="text-xs italic leading-relaxed text-zinc-600 dark:text-zinc-300">
-                💡 {item.notes}
+              <p className="text-xs leading-relaxed text-zinc-600 dark:text-zinc-300">
+                <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 mr-1.5">Tipp</span>
+                {item.notes}
               </p>
             </div>
           )}
