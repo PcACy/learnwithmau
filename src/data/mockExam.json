@@ -5,8 +5,11 @@
     "part": 1,
     "prompt": "Stimmt das gehörte Wort mit der deutschen Übersetzung überein?",
     "chineseText": "苹果 (píngguǒ)",
-    "audioUrl": "/audio/vocab/pingguo.mp3",
-    "options": ["Wahr (Richtig übersetzt: Apfel)", "Falsch (Falsch übersetzt: Buch)"],
+    "audioUrl": "/audio/hsk1/hsk1-pingguo.mp3",
+    "options": [
+      "Wahr (Richtig übersetzt: Apfel)",
+      "Falsch (Falsch übersetzt: Buch)"
+    ],
     "correctIndex": 0,
     "explanation": "„苹果“ (píngguǒ) bedeutet auf Deutsch „Apfel“."
   },
@@ -16,8 +19,11 @@
     "part": 1,
     "prompt": "Stimmt das gehörte Wort mit der angegebenen Bedeutung überein?",
     "chineseText": "水 (shuǐ)",
-    "audioUrl": "/audio/vocab/shui.mp3",
-    "options": ["Wahr (Bedeutung: Wasser)", "Falsch (Bedeutung: Tee)"],
+    "audioUrl": "/audio/hsk1/hsk1-shui.mp3",
+    "options": [
+      "Wahr (Bedeutung: Wasser)",
+      "Falsch (Bedeutung: Tee)"
+    ],
     "correctIndex": 0,
     "explanation": "„水“ (shuǐ) heißt „Wasser“. Tee heißt auf Chinesisch „茶“ (chá)."
   },
@@ -27,8 +33,11 @@
     "part": 1,
     "prompt": "Stimmt das gehörte Wort mit der Übersetzung „Schule“ überein?",
     "chineseText": "医院 (yīyuàn)",
-    "audioUrl": "/audio/vocab/yiyuan.mp3",
-    "options": ["Wahr (Es bedeutet Schule)", "Falsch (Es bedeutet Krankenhaus)"],
+    "audioUrl": "/audio/hsk1/hsk1-yiyuan.mp3",
+    "options": [
+      "Wahr (Es bedeutet Schule)",
+      "Falsch (Es bedeutet Krankenhaus)"
+    ],
     "correctIndex": 1,
     "explanation": "„医院“ (yīyuàn) bedeutet „Krankenhaus“. Schule heißt „学校“ (xuéxiào)."
   },
@@ -38,8 +47,11 @@
     "part": 1,
     "prompt": "Stimmt das gehörte Wort mit der Tätigkeit „Schlafen“ überein?",
     "chineseText": "睡觉 (shuìjiào)",
-    "audioUrl": "/audio/vocab/shuijiao.mp3",
-    "options": ["Wahr (Bedeutet schlafen)", "Falsch (Bedeutet aufstehen)"],
+    "audioUrl": "/audio/hsk1/hsk1-shuijiao.mp3",
+    "options": [
+      "Wahr (Bedeutet schlafen)",
+      "Falsch (Bedeutet aufstehen)"
+    ],
     "correctIndex": 0,
     "explanation": "„睡觉“ (shuìjiào) bedeutet „schlafen / zu Bett gehen“."
   },
@@ -49,8 +61,11 @@
     "part": 1,
     "prompt": "Stimmt das Wort mit der Übersetzung „Morgen / Vormittag“ überein?",
     "chineseText": "昨天 (zuótiān)",
-    "audioUrl": "/audio/vocab/zuotian.mp3",
-    "options": ["Wahr (Bedeutet gestern)", "Falsch (Bedeutet morgen)"],
+    "audioUrl": "/audio/hsk1/hsk1-zuotian.mp3",
+    "options": [
+      "Wahr (Bedeutet gestern)",
+      "Falsch (Bedeutet morgen)"
+    ],
     "correctIndex": 0,
     "explanation": "„昨天“ (zuótiān) bedeutet „gestern“."
   },
@@ -60,8 +75,12 @@
     "part": 2,
     "prompt": "Welche deutsche Übersetzung passt zum gehörten Begriff?",
     "chineseText": "出租车 (chūzūchē)",
-    "audioUrl": "/audio/vocab/chuzuche.mp3",
-    "options": ["Flugzeug", "Taxi", "Zug"],
+    "audioUrl": "/audio/hsk1/hsk1-chuzuche.mp3",
+    "options": [
+      "Flugzeug",
+      "Taxi",
+      "Zug"
+    ],
     "correctIndex": 1,
     "explanation": "„出租车“ (chūzūchē) ist das Taxi. Flugzeug heißt „飞机“ (fēijī)."
   },
@@ -71,8 +90,12 @@
     "part": 2,
     "prompt": "Welche Zeitangabe hörst du?",
     "chineseText": "中午 (zhōngwǔ)",
-    "audioUrl": "/audio/vocab/zhongwu.mp3",
-    "options": ["Vormittag (上午)", "Mittag (中午)", "Nachmittag (下午)"],
+    "audioUrl": "/audio/hsk1/hsk1-zhongwu.mp3",
+    "options": [
+      "Vormittag (上午)",
+      "Mittag (中午)",
+      "Nachmittag (下午)"
+    ],
     "correctIndex": 1,
     "explanation": "„中午“ (zhōngwǔ) bezeichnet den Mittag (ca. 12:00 Uhr)."
   },
@@ -82,8 +105,12 @@
     "part": 2,
     "prompt": "Welches Getränk wird im Audio genannt?",
     "chineseText": "茶 (chá)",
-    "audioUrl": "/audio/vocab/cha.mp3",
-    "options": ["Wasser (水)", "Tee (茶)", "Kaffee (咖啡)"],
+    "audioUrl": "/audio/hsk1/hsk1-cha.mp3",
+    "options": [
+      "Wasser (水)",
+      "Tee (茶)",
+      "Kaffee (咖啡)"
+    ],
     "correctIndex": 1,
     "explanation": "„茶“ (chá) bedeutet „Tee“."
   },
@@ -93,8 +120,12 @@
     "part": 2,
     "prompt": "Welche Zahl hörst du?",
     "chineseText": "八 (bā)",
-    "audioUrl": "/audio/vocab/ba.mp3",
-    "options": ["6 (六 · liù)", "8 (八 · bā)", "10 (十 · shí)"],
+    "audioUrl": "/audio/hsk1/hsk1-ba.mp3",
+    "options": [
+      "6 (六 · liù)",
+      "8 (八 · bā)",
+      "10 (十 · shí)"
+    ],
     "correctIndex": 1,
     "explanation": "„八“ (bā) ist die Zahl Acht."
   },
@@ -104,8 +135,12 @@
     "part": 2,
     "prompt": "Welches Pronomen wird gesprochen?",
     "chineseText": "我们 (wǒmen)",
-    "audioUrl": "/audio/vocab/women.mp3",
-    "options": ["Ich (我)", "Wir (我们)", "Sie alle (他们)"],
+    "audioUrl": "/audio/hsk1/hsk1-women.mp3",
+    "options": [
+      "Ich (我)",
+      "Wir (我们)",
+      "Sie alle (他们)"
+    ],
     "correctIndex": 1,
     "explanation": "„我们“ (wǒmen) ist die 1. Person Plural („wir“)."
   },
@@ -115,8 +150,12 @@
     "part": 3,
     "prompt": "Jemand sagt dir das Gehörte. Welche Antwort ist passend?",
     "chineseText": "谢谢 (xièxie)",
-    "audioUrl": "/audio/vocab/xiexie.mp3",
-    "options": ["不客气 (Gern geschehen)", "没关系 (Macht nichts)", "再见 (Auf Wiedersehen)"],
+    "audioUrl": "/audio/hsk1/hsk1-xiexie.mp3",
+    "options": [
+      "不客气 (Gern geschehen)",
+      "没关系 (Macht nichts)",
+      "再见 (Auf Wiedersehen)"
+    ],
     "correctIndex": 0,
     "explanation": "Auf „谢谢“ (Danke) antwortet man standardmäßig mit „不客气“ (bú kèqi - Keine Ursache / Gern geschehen)."
   },
@@ -126,8 +165,12 @@
     "part": 3,
     "prompt": "Jemand entschuldigt sich bei dir. Welche Erwiderung passt?",
     "chineseText": "对不起 (duìbuqǐ)",
-    "audioUrl": "/audio/vocab/duibuqi.mp3",
-    "options": ["好的 (In Ordnung)", "没关系 (Kein Problem / Macht nichts)", "你好 (Hallo)"],
+    "audioUrl": "/audio/hsk1/hsk1-duibuqi.mp3",
+    "options": [
+      "好的 (In Ordnung)",
+      "没关系 (Kein Problem / Macht nichts)",
+      "你好 (Hallo)"
+    ],
     "correctIndex": 1,
     "explanation": "Auf „对不起“ (Entschuldigung) antwortet man mit „没关系“ (méi guānxi - Macht nichts)."
   },
@@ -137,8 +180,12 @@
     "part": 3,
     "prompt": "Was bedeutet das Verabschiedungswort im Audio?",
     "chineseText": "再见 (zàijiàn)",
-    "audioUrl": "/audio/vocab/zaijian.mp3",
-    "options": ["Guten Morgen", "Auf Wiedersehen", "Willkommen"],
+    "audioUrl": "/audio/hsk1/hsk1-zaijian.mp3",
+    "options": [
+      "Guten Morgen",
+      "Auf Wiedersehen",
+      "Willkommen"
+    ],
     "correctIndex": 1,
     "explanation": "„再见“ (zàijiàn) bedeutet wörtlich „wieder sehen“ = Auf Wiedersehen."
   },
@@ -148,8 +195,12 @@
     "part": 3,
     "prompt": "Welcher Ort wird im Audio genannt?",
     "chineseText": "饭馆 (fànguǎn)",
-    "audioUrl": "/audio/vocab/fanguan.mp3",
-    "options": ["Geschäft / Laden (商店)", "Restaurant / Gasthaus (饭馆)", "Bahnhof (火车站)"],
+    "audioUrl": "/audio/hsk1/hsk1-fanguan.mp3",
+    "options": [
+      "Geschäft / Laden (商店)",
+      "Restaurant / Gasthaus (饭馆)",
+      "Bahnhof (火车站)"
+    ],
     "correctIndex": 1,
     "explanation": "„饭馆“ (fànguǎn) bedeutet Restaurant / Speiselokal."
   },
@@ -159,8 +210,12 @@
     "part": 3,
     "prompt": "Welcher Wochentag oder Zeitbegriff wird genannt?",
     "chineseText": "星期 (xīngqī)",
-    "audioUrl": "/audio/vocab/xingqi.mp3",
-    "options": ["Monat (月)", "Woche (星期)", "Jahr (年)"],
+    "audioUrl": "/audio/hsk1/hsk1-xingqi.mp3",
+    "options": [
+      "Monat (月)",
+      "Woche (星期)",
+      "Jahr (年)"
+    ],
     "correctIndex": 1,
     "explanation": "„星期“ (xīngqī) bedeutet „Woche“."
   },
@@ -170,7 +225,10 @@
     "part": 1,
     "prompt": "Passen Schriftzeichen und Bedeutung zusammen?",
     "chineseText": "书 (shū) — „Buch“",
-    "options": ["Richtig (Bedeutet Buch)", "Falsch (Bedeutet Tisch)"],
+    "options": [
+      "Richtig (Bedeutet Buch)",
+      "Falsch (Bedeutet Tisch)"
+    ],
     "correctIndex": 0,
     "explanation": "„书“ (shū) bedeutet „Buch“. Tisch heißt „桌子“ (zhuōzi)."
   },
@@ -180,7 +238,10 @@
     "part": 1,
     "prompt": "Passen Schriftzeichen und Bedeutung zusammen?",
     "chineseText": "猫 (māo) — „Hund“",
-    "options": ["Richtig", "Falsch (猫 bedeutet Katze)"],
+    "options": [
+      "Richtig",
+      "Falsch (猫 bedeutet Katze)"
+    ],
     "correctIndex": 1,
     "explanation": "„猫“ (māo) bedeutet „Katze“. Hund heißt „狗“ (gǒu)."
   },
@@ -190,7 +251,10 @@
     "part": 1,
     "prompt": "Passen Schriftzeichen und Bedeutung zusammen?",
     "chineseText": "北京 (Běijīng) — „Peking“",
-    "options": ["Richtig (Hauptstadt Chinas)", "Falsch (Bedeutet Shanghai)"],
+    "options": [
+      "Richtig (Hauptstadt Chinas)",
+      "Falsch (Bedeutet Shanghai)"
+    ],
     "correctIndex": 0,
     "explanation": "„北京“ (Běijīng) ist die Hauptstadt von China (Peking)."
   },
@@ -200,7 +264,10 @@
     "part": 1,
     "prompt": "Passen Schriftzeichen und Bedeutung zusammen?",
     "chineseText": "高兴 (gāoxìng) — „Traurig“",
-    "options": ["Richtig", "Falsch (高兴 bedeutet erfreut / glücklich)"],
+    "options": [
+      "Richtig",
+      "Falsch (高兴 bedeutet erfreut / glücklich)"
+    ],
     "correctIndex": 1,
     "explanation": "„高兴“ (gāoxìng) bedeutet „glücklich / erfreut sein“."
   },
@@ -210,7 +277,10 @@
     "part": 1,
     "prompt": "Passen Schriftzeichen und Bedeutung zusammen?",
     "chineseText": "大 (dà) — „Groß“",
-    "options": ["Richtig (Gegenteil von 小 xiǎo)", "Falsch (Bedeutet klein)"],
+    "options": [
+      "Richtig (Gegenteil von 小 xiǎo)",
+      "Falsch (Bedeutet klein)"
+    ],
     "correctIndex": 0,
     "explanation": "„大“ (dà) bedeutet „groß“. Klein heißt „小“ (xiǎo)."
   },
@@ -220,7 +290,11 @@
     "part": 2,
     "prompt": "Welches Wort füllt die Lücke grammatikalisch korrekt aus?",
     "chineseText": "我 ___ 中国人。(Wǒ ___ Zhōngguórén - Ich bin Chinese.)",
-    "options": ["有 (yǒu · haben)", "是 (shì · sein)", "在 (zài · sich befinden)"],
+    "options": [
+      "有 (yǒu · haben)",
+      "是 (shì · sein)",
+      "在 (zài · sich befinden)"
+    ],
     "correctIndex": 1,
     "explanation": "Für Gleichsetzungen („A ist B“) nutzt man das Kopula-Verb „是“ (shì): 我是中国人。"
   },
@@ -230,7 +304,11 @@
     "part": 2,
     "prompt": "Welches Wort füllt die Lücke sinnvoll aus?",
     "chineseText": "我想 ___ 水。(Wǒ xiǎng ___ shuǐ - Ich möchte Wasser trinken.)",
-    "options": ["喝 (hē · trinken)", "吃 (chī · essen)", "听 (tīng · hören)"],
+    "options": [
+      "喝 (hē · trinken)",
+      "吃 (chī · essen)",
+      "听 (tīng · hören)"
+    ],
     "correctIndex": 0,
     "explanation": "Flüssigkeiten wie Wasser oder Tee werden mit „喝“ (hē - trinken) kombiniert."
   },
@@ -240,7 +318,11 @@
     "part": 2,
     "prompt": "Welche Fragepartikel verwandelt den Satz in eine Ja/Nein-Frage?",
     "chineseText": "你好 ___？(Nǐ hǎo ___ ? - Wie geht es dir / Geht es dir gut?)",
-    "options": ["呢 (ne)", "吗 (ma)", "的 (de)"],
+    "options": [
+      "呢 (ne)",
+      "吗 (ma)",
+      "的 (de)"
+    ],
     "correctIndex": 1,
     "explanation": "Die Fragepartikel „吗“ (ma) steht am Ende von Aussagesätzen für Entscheidungsfragen."
   },
@@ -250,7 +332,11 @@
     "part": 2,
     "prompt": "Welches Wort drückt den Besitz korrekt aus?",
     "chineseText": "这是我 ___ 书。(Zhè shì wǒ ___ shū - Das ist mein Buch.)",
-    "options": ["了 (le)", "在 (zài)", "的 (de)"],
+    "options": [
+      "了 (le)",
+      "在 (zài)",
+      "的 (de)"
+    ],
     "correctIndex": 2,
     "explanation": "Das Strukturpartikel „的“ (de) verbindet Besitzer und Nomen (我的书 = mein Buch)."
   },
@@ -260,7 +346,11 @@
     "part": 2,
     "prompt": "Welches Zählwort (Klassifikator) passt zu Büchern?",
     "chineseText": "三 ___ 书 (sān ___ shū - drei Bücher)",
-    "options": ["本 (běn)", "个 (gè)", "块 (kuài)"],
+    "options": [
+      "本 (běn)",
+      "个 (gè)",
+      "块 (kuài)"
+    ],
     "correctIndex": 0,
     "explanation": "„本“ (běn) ist das spezifische Zählwort für gebundene Werke wie Bücher und Hefte."
   },

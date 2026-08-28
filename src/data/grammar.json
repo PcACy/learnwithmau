@@ -82,7 +82,7 @@
     "examples": [
       {
         "hanzi": "我是中国人。",
-        "pinyin": "Wǒ shì Zhōngguórén.",
+        "pinyin": "Wǒ标志: Wǒ shì Zhōngguórén.",
         "german": "Ich bin Chinese / Chinesin.",
         "breakdown": [
           { "part": "我 (Wǒ)", "meaning": "Ich" },
@@ -146,13 +146,13 @@
         ]
       },
       {
-        "hanzi": "他没有汉语书。",
-        "pinyin": "Tā méiyǒu Hànyǔ shū.",
-        "german": "Er hat kein Chinesisch-Buch.",
+        "hanzi": "他没有时间。",
+        "pinyin": "Tā méiyǒu shíjiān.",
+        "german": "Er hat keine Zeit.",
         "breakdown": [
           { "part": "他 (Tā)", "meaning": "Er" },
           { "part": "没有 (méiyǒu)", "meaning": "nicht haben" },
-          { "part": "汉语书 (Hànyǔ shū)", "meaning": "Chinesisch-Buch" }
+          { "part": "时间 (shíjiān)", "meaning": "Zeit" }
         ]
       }
     ],
@@ -229,7 +229,7 @@
   {
     "id": "question-particles",
     "order": 5,
-    "title": "Fragen bilden („吗“, „呢“ & Fragewörter)",
+    "title": "Fragen bilden („吗“, „呢“, „怎么样“ & Fragewörter)",
     "subtitle": "Entscheidungsfragen, Rückfragen und W-Fragen",
     "hanziTag": "吗 / 呢",
     "summary": "Fragen sind im Chinesischen extrem einfach: Die Wortstellung ändert sich NIE. Ein Aussagesatz wird durch Anhängen von „吗“ (ma) am Satzende zur Ja/Nein-Frage. Bei W-Fragen ersetzt das Fragewort einfach die gesuchte Stelle.",
@@ -240,6 +240,7 @@
     "keyRules": [
       "Ja/Nein-Frage: 你是老师 (Du bist Lehrer) → 你是老师吗？(Bist du Lehrer?).",
       "Elliptische Rückfrage mit '呢': 我很好，你呢？(Mir geht es gut, und dir?).",
+      "Meinung / Zustand mit '怎么样': 今天天气怎么样？(Wie ist das Wetter heute?).",
       "W-Fragewörter: 谁 (shéi - wer), 什么 (shénme - was), 哪儿 (nǎr - wo), 怎么 (zěnme - wie), 多少 / 几 (wie viel / wie viele).",
       "Keine Inversion: Fragewörter stehen genau dort, wo im Antwortsatz die Information steht."
     ],
@@ -255,13 +256,13 @@
         ]
       },
       {
-        "hanzi": "这是什么？",
-        "pinyin": "Zhè shì shénme?",
-        "german": "Was ist das?",
+        "hanzi": "今天天气怎么样？",
+        "pinyin": "Jīntiān tiānqì zěnmeyàng?",
+        "german": "Wie ist das Wetter heute?",
         "breakdown": [
-          { "part": "这 (Zhè)", "meaning": "Dies" },
-          { "part": "是 (shì)", "meaning": "ist" },
-          { "part": "什么 (shénme)", "meaning": "was" }
+          { "part": "今天 (Jīntiān)", "meaning": "Heute" },
+          { "part": "天气 (tiānqì)", "meaning": "Wetter" },
+          { "part": "怎么样 (zěnmeyàng)", "meaning": "wie / wie beschaffen" }
         ]
       },
       {
@@ -421,7 +422,7 @@
     "examples": [
       {
         "hanzi": "我明天下午去学校。",
-        "pinyin": "Wǒ míngtiān xiàwǔ qù xuéxiào.",
+        "pinyin": "Wǒ标志: Wǒ míngtiān xiàwǔ qù xuéxiào.",
         "german": "Ich gehe morgen Nachmittag zur Schule.",
         "breakdown": [
           { "part": "我 (Wǒ)", "meaning": "Ich" },
@@ -567,6 +568,128 @@
         "options": ["太好。(Tài hǎo.)", "太好了。(Tài hǎo le.)", "好了太。(Hǎo le tài.)"],
         "correctIndex": 1,
         "explanation": "Das feste Konstruktionsmuster für überschwängliche Ausrufe lautet „太 + Adjektiv + 了“."
+      }
+    ]
+  },
+  {
+    "id": "conjunctions-dou-and-ba",
+    "order": 11,
+    "title": "Verbindungswörter, Allquantor & Vorschläge („和“, „都“, „吧“)",
+    "subtitle": "Nomen verknüpfen, 'alle/beide' ausdrücken und Vorschläge machen",
+    "hanziTag": "和 / 都",
+    "summary": "„和“ (hé) verbindet NUR Nomen oder Pronomen ('und'). „都“ (dōu) bedeutet 'alle/beide' und steht immer VOR dem Verb. „吧“ (ba) am Satzende signalisiert einen freundlichen Vorschlag ('Lass uns...').",
+    "formula": {
+      "pattern": "[Nomen A] + 和 + [Nomen B]  /  [Mehrzahl-Subjekt] + 都 + [Verb]  /  [Satz] + 吧",
+      "explanation": "Nomen verknüpfen: A 和 B. Alle tun etwas: Subjekt + 都 + Verb. Vorschlag: Satz + 吧."
+    },
+    "keyRules": [
+      "„和“ (hé) verbindet NIEMALS ganze Sätze. Verbinde Sätze durch Komma oder Bindewörter wie 也 (yě).",
+      "„都“ (dōu) steht immer NACH dem Subjekt und VOR dem Verb: 我们都是学生 (Wir alle sind Schüler).",
+      "„吧“ (ba) mildert Aufforderungen ab oder macht Vorschläge: 我们走吧 (Lass uns gehen / Gehen wir!).",
+      "Telefon-Gruß: 喂 (wèi) bedeutet 'Hallo' am Telefon."
+    ],
+    "examples": [
+      {
+        "hanzi": "我和他是好朋友。",
+        "pinyin": "Wǒ hé tā shì hǎo péngyou.",
+        "german": "Er und ich sind gute Freunde.",
+        "breakdown": [
+          { "part": "我和他 (Wǒ hé tā)", "meaning": "ich und er" },
+          { "part": "是 (shì)", "meaning": "sein" },
+          { "part": "好朋友 (hǎo péngyou)", "meaning": "gute Freunde" }
+        ]
+      },
+      {
+        "hanzi": "我们都喜欢喝中国茶。",
+        "pinyin": "Wǒmen dōu xǐhuan hē Zhōngguó chá.",
+        "german": "Wir alle trinken gerne chinesischen Tee.",
+        "breakdown": [
+          { "part": "我们 (Wǒmen)", "meaning": "Wir" },
+          { "part": "都 (dōu)", "meaning": "alle" },
+          { "part": "喜欢喝 (xǐhuan hē)", "meaning": "gerne trinken" },
+          { "part": "中国茶 (Zhōngguó chá)", "meaning": "chinesischer Tee" }
+        ]
+      },
+      {
+        "hanzi": "我们明天去学校吧！",
+        "pinyin": "Wǒmen míngtiān qù xuéxiào ba!",
+        "german": "Lass uns morgen zur Schule gehen!",
+        "breakdown": [
+          { "part": "我们明天 (Wǒmen míngtiān)", "meaning": "wir morgen" },
+          { "part": "去学校 (qù xuéxiào)", "meaning": "zur Schule gehen" },
+          { "part": "吧 (ba)", "meaning": "Vorschlags-Partikel" }
+        ]
+      }
+    ],
+    "pitfalls": [
+      {
+        "wrong": "我喝茶和我吃米饭。(Wǒ hē chá hé wǒ chī mǐfàn.)",
+        "right": "我喝茶，也吃米饭。(Wǒ hē chá, yě chī mǐfàn.)",
+        "explanation": "„和“ verbindet nur Nomen (Tee und Kaffee), keine eigenständigen Sätze."
+      }
+    ],
+    "quizzes": [
+      {
+        "question": "Welcher Satz drückt korrekt aus: „Wir alle sind Schüler.“?",
+        "options": ["我们是都学生。(Wǒmen shì dōu xuésheng.)", "都是我们学生。(Dōu shì wǒmen xuésheng.)", "我们都是学生。(Wǒmen dōu shì xuésheng.)"],
+        "correctIndex": 2,
+        "explanation": "„都“ (dōu) steht unmittelbar vor dem Prädikat/Verb: 我们 (Subjekt) + 都 + 是学生."
+      }
+    ]
+  },
+  {
+    "id": "serial-verbs-and-adjectives",
+    "order": 12,
+    "title": "Serieller Satzbau (连动句) & Adjektivprädikate mit „很“",
+    "subtitle": "Mehrere Handlungen nacheinander & Eigenschaften beschreiben",
+    "hanziTag": "连动 / 很",
+    "summary": "Im Chinesischen können zwei Verben direkt nacheinander stehen, um einen Zweck oder ein Transportmittel auszudrücken ('gehen um zu...', 'per Taxi nach...'). Reinen Eigenschaftssätzen wird das Bindewort „很“ (hěn) vorangestellt.",
+    "formula": {
+      "pattern": "[Subjekt] + [去 / 来 / 坐] + [Ort / Transport] + [Verb 2] + [Objekt]  /  [Subjekt] + [很] + [Adjektiv]",
+      "explanation": "Seriell: Subjekt + Verb 1 + Verb 2. Eigenschaft: Subjekt + 很 + Adjektiv (ohne 是!)."
+    },
+    "keyRules": [
+      "Zweck-Konstruktion: 去商店买苹果 (In den Laden gehen, um Äpfel zu kaufen).",
+      "Transport-Mittel: 坐出租车去医院 (Mit dem Taxi ins Krankenhaus fahren).",
+      "Adjektivprädikat: 我很高兴 (Ich bin glücklich — '很' dient hier rein grammatikalisch als Brücke, nicht zwingend als 'sehr').",
+      "Verneinung von Adjektiven: 我不高 (Ich bin nicht groß — '很' entfällt bei Verneinung mit 不)."
+    ],
+    "examples": [
+      {
+        "hanzi": "我坐飞机去北京。",
+        "pinyin": "Wǒ zuò fēijī qù Běijīng.",
+        "german": "Ich fliege mit dem Flugzeug nach Peking.",
+        "breakdown": [
+          { "part": "我 (Wǒ)", "meaning": "Ich" },
+          { "part": "坐飞机 (zuò fēijī)", "meaning": "das Flugzeug nehmen" },
+          { "part": "去北京 (qù Běijīng)", "meaning": "nach Peking reisen" }
+        ]
+      },
+      {
+        "hanzi": "今天天气很好，不冷也不热。",
+        "pinyin": "Jīntiān tiānqì hěn hǎo, bù lěng yě bú rè.",
+        "german": "Heute ist das Wetter gut, weder kalt noch heiß.",
+        "breakdown": [
+          { "part": "今天天气 (Jīntiān tiānqì)", "meaning": "heutiges Wetter" },
+          { "part": "很好 (hěn hǎo)", "meaning": "gut" },
+          { "part": "不冷 (bù lěng)", "meaning": "nicht kalt" },
+          { "part": "也不热 (yě bú rè)", "meaning": "auch nicht heiß" }
+        ]
+      }
+    ],
+    "pitfalls": [
+      {
+        "wrong": "我坐飞机为去北京。",
+        "right": "我坐飞机去北京。(Wǒ zuó fēijī qù Běijīng.)",
+        "explanation": "Im Chinesischen braucht man keine Präposition wie 'um zu' — die Verben folgen einfach chronologisch aufeinander."
+      }
+    ],
+    "quizzes": [
+      {
+        "question": "Wie drückt man „Ich fahre mit dem Taxi nach Hause.“ auf Chinesisch aus?",
+        "options": ["我坐出租车回家。(Wǒ zuò chūzūchē huí jiā.)", "我回家给出租车。(Wǒ huí jiā gěi chūzūchē.)", "坐出租车我回家是。(Zuò chūzūchē wǒ huí jiā shì.)"],
+        "correctIndex": 0,
+        "explanation": "Serielles Satzmuster: Subjekt (我) + Transportmittel (坐出租车) + Zielhandlung (回家)."
       }
     ]
   }

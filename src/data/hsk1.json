@@ -6863,5 +6863,58 @@
     ],
     "audioPath": "/audio/hsk1/hsk1-ba-particle.mp3",
     "hskLevel": 1
+  },
+  {
+    "id": "hsk1-shijian",
+    "hanzi": "时间",
+    "pinyin": "shí jiān",
+    "syllables": [
+      {
+        "plain": "shi",
+        "marked": "shí",
+        "tone": 2
+      },
+      {
+        "plain": "jian",
+        "marked": "jiān",
+        "tone": 1
+      }
+    ],
+    "meaning": "Zeit / Zeitdauer",
+    "notes": "Bezeichnet Zeit als Konzept oder Zeitdauer (z. B. 没有时间 méiyǒu shíjiān = keine Zeit haben).",
+    "characters": [
+      {
+        "char": "时",
+        "parts": [
+          {
+            "id": "sun",
+            "hanzi": "日",
+            "position": "left"
+          },
+          {
+            "id": "inch",
+            "hanzi": "寸",
+            "position": "right"
+          }
+        ]
+      },
+      {
+        "char": "间",
+        "parts": [
+          {
+            "id": "gate",
+            "hanzi": "门",
+            "position": "enclosure"
+          },
+          {
+            "id": "sun",
+            "hanzi": "日",
+            "position": "inside"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-shijian.mp3",
+    "hskLevel": 1
   }
 ]

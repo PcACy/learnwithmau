@@ -5,11 +5,11 @@ import type { GrammarLesson } from '../types/grammar';
 const lessons = grammarData as GrammarLesson[];
 
 describe('HSK-1 Grammar Curriculum Dataset', () => {
-  it('contains exactly 10 comprehensive HSK-1 grammar lessons', () => {
-    expect(lessons.length).toBe(10);
+  it('contains exactly 12 comprehensive HSK-1 grammar lessons', () => {
+    expect(lessons.length).toBe(12);
   });
 
-  it('ensures each lesson is properly ordered from 1 to 10', () => {
+  it('ensures each lesson is properly ordered from 1 to 12', () => {
     lessons.forEach((lesson, index) => {
       expect(lesson.order).toBe(index + 1);
       expect(lesson.id).toBeTruthy();
