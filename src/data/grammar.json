@@ -1,0 +1,573 @@
+[
+  {
+    "id": "svo-basics",
+    "order": 1,
+    "title": "Grundsatz des Satzbaus (SVO)",
+    "subtitle": "Subjekt + Prädikat + Objekt — Die goldene Basisregel",
+    "hanziTag": "语序",
+    "summary": "Die chinesische Grundgrammatik ist erstaunlich logisch und einfach: Es gibt keine Verbkonjugationen (kein 'ich gehe, du gehst'), keine Deklinationen (kein Genitiv/Dativ/Akkusativ) und keine grammatikalischen Geschlechter.",
+    "formula": {
+      "pattern": "[Subjekt] + [Verb] + [Objekt]",
+      "explanation": "Genau wie im Deutschen folgt der einfache chinesische Aussagesatz der Reihenfolge Subjekt-Verb-Objekt."
+    },
+    "keyRules": [
+      "Verben verändern niemals ihre Form — weder nach Person, noch nach Zeit oder Mehrzahl.",
+      "Es gibt keine Artikel ('der, die, das' existieren im Chinesischen nicht).",
+      "Substantive haben keine grammatikalischen Geschlechter (Maskulin, Feminin, Neutrum entfallen)."
+    ],
+    "examples": [
+      {
+        "hanzi": "我喝茶。",
+        "pinyin": "Wǒ hē chá.",
+        "german": "Ich trinke Tee.",
+        "breakdown": [
+          { "part": "我 (Wǒ)", "meaning": "Ich" },
+          { "part": "喝 (hē)", "meaning": "trinken" },
+          { "part": "茶 (chá)", "meaning": "Tee" }
+        ]
+      },
+      {
+        "hanzi": "他吃苹果。",
+        "pinyin": "Tā chī píngguǒ.",
+        "german": "Er isst einen Apfel / Äpfel.",
+        "breakdown": [
+          { "part": "他 (Tā)", "meaning": "Er" },
+          { "part": "吃 (chī)", "meaning": "essen" },
+          { "part": "苹果 (píngguǒ)", "meaning": "Apfel" }
+        ]
+      },
+      {
+        "hanzi": "我们看书。",
+        "pinyin": "Wǒmen kàn shū.",
+        "german": "Wir lesen ein Buch.",
+        "breakdown": [
+          { "part": "我们 (Wǒmen)", "meaning": "Wir" },
+          { "part": "看 (kàn)", "meaning": "sehen/lesen" },
+          { "part": "书 (shū)", "meaning": "Buch" }
+        ]
+      }
+    ],
+    "pitfalls": [
+      {
+        "wrong": "我吃一个苹果 gestern。",
+        "right": "我昨天吃苹果。(Wǒ zuótiān chī píngguǒ.)",
+        "explanation": "Zeitangaben dürfen niemals an das Satzende gestellt werden. Sie gehören vor das Verb oder an den Satzanfang."
+      }
+    ],
+    "quizzes": [
+      {
+        "question": "Wie lautet die richtige chinesische Übersetzung für: „Ich trinke Wasser.“?",
+        "options": ["我水喝。(Wǒ shuǐ hē.)", "我喝水。(Wǒ hē shuǐ.)", "喝水我。(Hē shuǐ wǒ.)"],
+        "correctIndex": 1,
+        "explanation": "Chinesisch folgt strikt der SVO-Reihenfolge: Subjekt (我) + Verb (喝) + Objekt (水)."
+      }
+    ]
+  },
+  {
+    "id": "verb-shi-and-bu",
+    "order": 2,
+    "title": "Das Verb „是“ (sein) & Verneinung mit „不“",
+    "subtitle": "Gleichsetzungen formulieren und Aussagen verneinen",
+    "hanziTag": "是 / 不",
+    "summary": "„是“ (shì) verbindet zwei Substantive oder Pronomen („A ist B“). Es wird NICHT vor reinen Adjektiven verwendet. Die Standard-Verneinung für Gegenwart und Zukunft ist „不“ (bù).",
+    "formula": {
+      "pattern": "[Subjekt] + [不] + [是] + [Nomen]",
+      "explanation": "Für Gleichsetzungen: A 是 B. Für die Verneinung wird '不' direkt vor das Verb gesetzt: A 不是 B."
+    },
+    "keyRules": [
+      "„是“ verbindet nur Nomen mit Nomen (z. B. 'Ich bin Schüler'). Sag niemals '我是高兴' für 'Ich bin glücklich'.",
+      "Tonwechsel von '不': Vor dem 4. Ton (wie bei 是 shì) wird '不' als 2. Ton gesprochen (bú shì statt bù shì).",
+      "Vor Adjektiven steht anstelle von '是' meist das unbetonte Bindewort '很' (hěn): 我很高兴 (Ich bin glücklich)."
+    ],
+    "examples": [
+      {
+        "hanzi": "我是中国人。",
+        "pinyin": "Wǒ shì Zhōngguórén.",
+        "german": "Ich bin Chinese / Chinesin.",
+        "breakdown": [
+          { "part": "我 (Wǒ)", "meaning": "Ich" },
+          { "part": "是 (shì)", "meaning": "sein" },
+          { "part": "中国人 (Zhōngguórén)", "meaning": "Chinese" }
+        ]
+      },
+      {
+        "hanzi": "他不是老师，他是学生。",
+        "pinyin": "Tā bú shì lǎoshī, tā shì xuésheng.",
+        "german": "Er ist kein Lehrer, er ist Schüler.",
+        "breakdown": [
+          { "part": "他 (Tā)", "meaning": "Er" },
+          { "part": "不是 (bú shì)", "meaning": "ist nicht" },
+          { "part": "老师 (lǎoshī)", "meaning": "Lehrer" },
+          { "part": "学生 (xuésheng)", "meaning": "Schüler" }
+        ]
+      }
+    ],
+    "pitfalls": [
+      {
+        "wrong": "我是很好。(Wǒ shì hěn hǎo.)",
+        "right": "我很好。(Wǒ hěn hǎo - Mir geht es gut.)",
+        "explanation": "„是“ darf nicht vor reinen Eigenschaftswörtern / Adjektiven stehen."
+      }
+    ],
+    "quizzes": [
+      {
+        "question": "Welcher Satz verneint korrekt: „Er ist kein Arzt.“?",
+        "options": ["他没有医生。(Tā méiyǒu yīshēng.)", "他不是医生。(Tā bú shì yīshēng.)", "他不医生。(Tā bù yīshēng.)"],
+        "correctIndex": 1,
+        "explanation": "„不是“ (bú shì) verneint das Seins-Verb „是“ (shì)."
+      }
+    ]
+  },
+  {
+    "id": "you-and-meiyou",
+    "order": 3,
+    "title": "Besitz & Existenz („有“ & „没有“)",
+    "subtitle": "Etwas besitzen und die Existenz von Dingen beschreiben",
+    "hanziTag": "有",
+    "summary": "„有“ (yǒu) hat zwei Bedeutungen: 'haben / besitzen' (Besitz) und 'es gibt / existieren' (Existenz an einem Ort). Die Verneinung von '有' lautet AUSNAHMSLOS „没有“ (méiyǒu).",
+    "formula": {
+      "pattern": "[Subjekt / Ort] + [有 / 没有] + [Objekt]",
+      "explanation": "Besitz: Subjekt + 有 + Nomen. Existenz: Ort + 有 + Nomen. Verneinung immer mit '没有'."
+    },
+    "keyRules": [
+      "Besitz: 我有钱 (Ich habe Geld).",
+      "Existenz: 桌子上有书 (Auf dem Tisch gibt es ein Buch).",
+      "Das Wort '不有' (bù yǒu) ist ein schwerer Grammatikfehler und existiert im Chinesischen NICHT. Es heißt immer '没有' (méiyǒu)."
+    ],
+    "examples": [
+      {
+        "hanzi": "我有一只猫。",
+        "pinyin": "Wǒ yǒu yì zhī māo.",
+        "german": "Ich habe eine Katze.",
+        "breakdown": [
+          { "part": "我 (Wǒ)", "meaning": "Ich" },
+          { "part": "有 (yǒu)", "meaning": "haben" },
+          { "part": "一只猫 (yì zhī māo)", "meaning": "eine Katze" }
+        ]
+      },
+      {
+        "hanzi": "他没有汉语书。",
+        "pinyin": "Tā méiyǒu Hànyǔ shū.",
+        "german": "Er hat kein Chinesisch-Buch.",
+        "breakdown": [
+          { "part": "他 (Tā)", "meaning": "Er" },
+          { "part": "没有 (méiyǒu)", "meaning": "nicht haben" },
+          { "part": "汉语书 (Hànyǔ shū)", "meaning": "Chinesisch-Buch" }
+        ]
+      }
+    ],
+    "pitfalls": [
+      {
+        "wrong": "我不有电脑。(Wǒ bù yǒu diànnǎo.)",
+        "right": "我没有电脑。(Wǒ méiyǒu diànnǎo - Ich habe keinen Computer.)",
+        "explanation": "„有“ wird niemals mit „不“ verneint, sondern ausnahmslos mit „没“ (méi)."
+      }
+    ],
+    "quizzes": [
+      {
+        "question": "Wie sagst du auf Chinesisch: „Ich habe keine Zeit.“?",
+        "options": ["我不是时间。(Wǒ bú shì shíjiān.)", "我不有时间。(Wǒ bù yǒu shíjiān.)", "我没有时间。(Wǒ méiyǒu shíjiān.)"],
+        "correctIndex": 2,
+        "explanation": "Besitzverneinung erfordert zwingend „没有“ (méiyǒu)."
+      }
+    ]
+  },
+  {
+    "id": "zai-locations",
+    "order": 4,
+    "title": "Ortsangaben & die Handlungsregel („在“ zài)",
+    "subtitle": "Aufenthaltsorte und Handlungen an bestimmten Orten",
+    "hanziTag": "在",
+    "summary": "„在“ (zài) drückt aus, wo sich jemand oder etwas befindet ('sein in/an/auf'). Wenn an diesem Ort eine Handlung stattfindet, gilt die goldene chinesische Regel: Der Ort steht IMMER VOR dem Verb!",
+    "formula": {
+      "pattern": "[Subjekt] + [在 + Ort] + [Verb] + [Objekt]",
+      "explanation": "Erst der Handlungsrahmen (wo/wann), dann die eigentliche Aktion (was)."
+    },
+    "keyRules": [
+      "Reiner Aufenthalt: Subjekt + 在 + Ort (z. B. 我在家 · Ich bin zu Hause).",
+      "Handlung am Ort: Subjekt + 在 + Ort + Verb (z. B. 我在家看书 · Ich lese zu Hause ein Buch).",
+      "Ortsangaben mit Lage: Nomen + 上 (oben/auf), 下 (unten/unter), 里 (innen/in) — z. B. 桌子上 (auf dem Tisch), 学校里 (in der Schule)."
+    ],
+    "examples": [
+      {
+        "hanzi": "妈妈在医院工作。",
+        "pinyin": "Māma zài yīyuàn gōngzuò.",
+        "german": "Mama arbeitet im Krankenhaus.",
+        "breakdown": [
+          { "part": "妈妈 (Māma)", "meaning": "Mama" },
+          { "part": "在医院 (zài yīyuàn)", "meaning": "im Krankenhaus" },
+          { "part": "工作 (gōngzuò)", "meaning": "arbeiten" }
+        ]
+      },
+      {
+        "hanzi": "我们在饭馆吃米饭。",
+        "pinyin": "Wǒmen zài fànguǎn chī mǐfàn.",
+        "german": "Wir essen im Restaurant Reis.",
+        "breakdown": [
+          { "part": "我们 (Wǒmen)", "meaning": "Wir" },
+          { "part": "在饭馆 (zài fànguǎn)", "meaning": "im Restaurant" },
+          { "part": "吃米饭 (chī mǐfàn)", "meaning": "Reis essen" }
+        ]
+      }
+    ],
+    "pitfalls": [
+      {
+        "wrong": "我看书在学校。(Wǒ kàn shū zài xuéxiào.)",
+        "right": "我在学校看书。(Wǒ zài xuéxiào kàn shū.)",
+        "explanation": "Im Deutschen steht der Ort oft hinten ('Ich lese in der Schule'). Im Chinesischen muss '在 + Ort' IMMER vor das Verb."
+      }
+    ],
+    "quizzes": [
+      {
+        "question": "Welche Wortstellung ist grammatikalisch korrekt für: „Er trinkt Tee zu Hause.“?",
+        "options": ["他在家喝茶。(Tā zài jiā hē chá.)", "他喝茶在家。(Tā hē chá zài jiā.)", "在家他喝茶是。(Zài jiā tā hē chá shì.)"],
+        "correctIndex": 0,
+        "explanation": "Subjekt (他) + Ort mit 在 (在家) + Verb und Objekt (喝茶)."
+      }
+    ]
+  },
+  {
+    "id": "question-particles",
+    "order": 5,
+    "title": "Fragen bilden („吗“, „呢“ & Fragewörter)",
+    "subtitle": "Entscheidungsfragen, Rückfragen und W-Fragen",
+    "hanziTag": "吗 / 呢",
+    "summary": "Fragen sind im Chinesischen extrem einfach: Die Wortstellung ändert sich NIE. Ein Aussagesatz wird durch Anhängen von „吗“ (ma) am Satzende zur Ja/Nein-Frage. Bei W-Fragen ersetzt das Fragewort einfach die gesuchte Stelle.",
+    "formula": {
+      "pattern": "[Aussagesatz] + [吗] ？",
+      "explanation": "Hänge einfach '吗' an einen normalen Aussagesatz an, um eine Ja/Nein-Frage zu stellen."
+    },
+    "keyRules": [
+      "Ja/Nein-Frage: 你是老师 (Du bist Lehrer) → 你是老师吗？(Bist du Lehrer?).",
+      "Elliptische Rückfrage mit '呢': 我很好，你呢？(Mir geht es gut, und dir?).",
+      "W-Fragewörter: 谁 (shéi - wer), 什么 (shénme - was), 哪儿 (nǎr - wo), 怎么 (zěnme - wie), 多少 / 几 (wie viel / wie viele).",
+      "Keine Inversion: Fragewörter stehen genau dort, wo im Antwortsatz die Information steht."
+    ],
+    "examples": [
+      {
+        "hanzi": "你喜欢吃中国菜吗？",
+        "pinyin": "Nǐ xǐhuan chī Zhōngguó cài ma?",
+        "german": "Magst du chinesisches Essen?",
+        "breakdown": [
+          { "part": "你喜欢 (Nǐ xǐhuan)", "meaning": "du magst" },
+          { "part": "吃中国菜 (chī Zhōngguó cài)", "meaning": "chinesisches Essen essen" },
+          { "part": "吗 (ma)", "meaning": "Fragepartikel" }
+        ]
+      },
+      {
+        "hanzi": "这是什么？",
+        "pinyin": "Zhè shì shénme?",
+        "german": "Was ist das?",
+        "breakdown": [
+          { "part": "这 (Zhè)", "meaning": "Dies" },
+          { "part": "是 (shì)", "meaning": "ist" },
+          { "part": "什么 (shénme)", "meaning": "was" }
+        ]
+      },
+      {
+        "hanzi": "他在哪儿？",
+        "pinyin": "Tā zài nǎr?",
+        "german": "Wo ist er?",
+        "breakdown": [
+          { "part": "他 (Tā)", "meaning": "Er" },
+          { "part": "在 (zài)", "meaning": "sich befinden" },
+          { "part": "哪儿 (nǎr)", "meaning": "wo" }
+        ]
+      }
+    ],
+    "pitfalls": [
+      {
+        "wrong": "他是谁吗？(Tā shì shéi ma?)",
+        "right": "他是谁？(Tā shì shéi - Wer ist er?)",
+        "explanation": "Verwende '吗' NIEMALS zusammen mit einem Fragewort wie 谁, 什么 oder 哪儿. Das wäre doppelt gefragt."
+      }
+    ],
+    "quizzes": [
+      {
+        "question": "Wie fragst du auf Chinesisch: „Trinkst du Tee?“?",
+        "options": ["你喝茶吗？(Nǐ hē chá ma?)", "你喝茶什么？(Nǐ hē chá shénme?)", "吗你喝茶？(Ma nǐ hē chá?)"],
+        "correctIndex": 0,
+        "explanation": "Aussagesatz (你喝茶) + Fragepartikel (吗)."
+      }
+    ]
+  },
+  {
+    "id": "particle-de",
+    "order": 6,
+    "title": "Besitz & Beschreibung mit „的“ (de)",
+    "subtitle": "Zugehörigkeit und Attribute präzise verknüpfen",
+    "hanziTag": "的",
+    "summary": "„的“ (de) ist die wichtigste Strukturpartikel im Chinesischen. Sie funktioniert ähnlich wie das deutsche Genitiv-Apostroph ('Peters Buch') und verbindet Besitzer mit Besitz oder Eigenschaften mit Substantiven.",
+    "formula": {
+      "pattern": "[Besitzer / Attribut] + [的] + [Nomen]",
+      "explanation": "Das Bestimmende steht immer VOR dem '的', das Hauptnomen steht immer HINTER dem '的'."
+    },
+    "keyRules": [
+      "Besitz: 我的 (mein), 他的 (sein), 老师的 (des Lehrers).",
+      "Eigenschaften: 漂亮的衣服 (hübsche Kleidung), 大的苹果 (großer Apfel).",
+      "Ausnahme bei enger Verwandtschaft / Institutionen: Bei nahen Familienmitgliedern kann '的' weggelassen werden (我爸爸 statt 我的爸爸, 我们学校 statt 我们的学校)."
+    ],
+    "examples": [
+      {
+        "hanzi": "这是我的电脑。",
+        "pinyin": "Zhè shì wǒ de diànnǎo.",
+        "german": "Das ist mein Computer.",
+        "breakdown": [
+          { "part": "这是 (Zhè shì)", "meaning": "Das ist" },
+          { "part": "我的 (wǒ de)", "meaning": "mein" },
+          { "part": "电脑 (diànnǎo)", "meaning": "Computer" }
+        ]
+      },
+      {
+        "hanzi": "她是我的好朋友。",
+        "pinyin": "Tā shì wǒ de hǎo péngyou.",
+        "german": "Sie ist meine gute Freundin.",
+        "breakdown": [
+          { "part": "她是 (Tā shì)", "meaning": "Sie ist" },
+          { "part": "我的 (wǒ de)", "meaning": "mein(e)" },
+          { "part": "好朋友 (hǎo péngyou)", "meaning": "guter Freund" }
+        ]
+      }
+    ],
+    "pitfalls": [
+      {
+        "wrong": "书我 (Shū wǒ)",
+        "right": "我的书 (Wǒ de shū)",
+        "explanation": "Im Chinesischen steht der Besitzer ('ich') immer VOR dem Besitz ('Buch'), verbunden mit '的'."
+      }
+    ],
+    "quizzes": [
+      {
+        "question": "Wie drückt man „Das Buch des Lehrers“ auf Chinesisch aus?",
+        "options": ["书的老师 (Shū de lǎoshī)", "老师书的 (Lǎoshī shū de)", "老师的书 (Lǎoshī de shū)"],
+        "correctIndex": 2,
+        "explanation": "Besitzer (老师) + 的 + Besitz (书) = 老师的书."
+      }
+    ]
+  },
+  {
+    "id": "measure-words",
+    "order": 7,
+    "title": "Das Zählwörter-System (Klassifikatoren)",
+    "subtitle": "Warum man im Chinesischen nicht einfach 'zwei Bücher' sagen kann",
+    "hanziTag": "量词",
+    "summary": "Im Chinesischen kann eine Zahl fast nie direkt vor ein Substantiv gesetzt werden. Dazwischen gehört immer ein passendes Zählwort (Klassifikator) — ähnlich wie im Deutschen 'ein Glas Wasser' oder 'ein Blatt Papier'.",
+    "formula": {
+      "pattern": "[Zahl / 这 / 那] + [Zählwort] + [Nomen]",
+      "explanation": "Grundformel: Zahl + Klassifikator + Substantiv. Z. B. 三本书 (drei Bücher)."
+    },
+    "keyRules": [
+      "„个“ (gè): Das universelle Standard-Zählwort für Menschen und allgemeine Gegenstände (一个人, 三个苹果).",
+      "„本“ (běn): Für gebundene Werke mit Buchrücken (一本书, 两本词典).",
+      "„块“ (kuài): Für Geld / Yuan (五块钱) und Stücke.",
+      "„岁“ (suì): Zählwort für das Lebensalter / Jahre (他八岁 · Er ist 8 Jahre alt).",
+      "„些“ (xiē): Drückt eine unbestimmte Mehrzahl aus ('einige / manche' — 这些 diese, 那些 jene)."
+    ],
+    "examples": [
+      {
+        "hanzi": "桌子上有三个苹果。",
+        "pinyin": "Zhuōzi shang yǒu sān gè píngguǒ.",
+        "german": "Auf dem Tisch liegen drei Äpfel.",
+        "breakdown": [
+          { "part": "桌子上 (Zhuōzi shang)", "meaning": "auf dem Tisch" },
+          { "part": "有 (yǒu)", "meaning": "gibt es" },
+          { "part": "三个 (sān gè)", "meaning": "drei [Stück]" },
+          { "part": "苹果 (píngguǒ)", "meaning": "Äpfel" }
+        ]
+      },
+      {
+        "hanzi": "我想买一本书。",
+        "pinyin": "Wǒ xiǎng mǎi yì běn shū.",
+        "german": "Ich möchte ein Buch kaufen.",
+        "breakdown": [
+          { "part": "我想买 (Wǒ xiǎng mǎi)", "meaning": "ich möchte kaufen" },
+          { "part": "一本 (yì běn)", "meaning": "ein [Buch-Klassifikator]" },
+          { "part": "书 (shū)", "meaning": "Buch" }
+        ]
+      }
+    ],
+    "pitfalls": [
+      {
+        "wrong": "三个钱 (sān gè qián)",
+        "right": "三块钱 (sān kuài qián)",
+        "explanation": "Für Geldbeträge in Yuan verwendet man als Zählwort '块' (kuài), nicht '个'."
+      }
+    ],
+    "quizzes": [
+      {
+        "question": "Welches Zählwort füllt die Lücke korrekt aus: „我买两 ___ 书。“?",
+        "options": ["个 (gè)", "本 (běn)", "岁 (suì)"],
+        "correctIndex": 1,
+        "explanation": "Für Bücher („书“) ist „本“ (běn) das vorgeschriebene Zählwort."
+      }
+    ]
+  },
+  {
+    "id": "time-and-dates",
+    "order": 8,
+    "title": "Zeit- & Datumsangaben (Groß → Klein)",
+    "subtitle": "Jahr, Monat, Tag und Uhrzeit logisch anordnen",
+    "hanziTag": "时间",
+    "summary": "Im Chinesischen folgt jede Zeit- und Datumsangabe einer strengen Hierarchie vom Größten zum Kleinsten: Jahr → Monat → Tag → Tageszeit → Stunde → Minute. Im Satz steht die Zeitangabe immer VOR dem Prädikat!",
+    "formula": {
+      "pattern": "[Jahr] 年 + [Monat] 月 + [Tag] 号/日 + [Tageszeit] + [Uhrzeit] 点",
+      "explanation": "Immer vom Größten zum Kleinsten. Im Satz: Subjekt + Zeit + Verb ODER Zeit + Subjekt + Verb."
+    },
+    "keyRules": [
+      "Datums-Hierarchie: 2026年 8月 28号 上午 9点 (28. August 2026, 9:00 Uhr morgens).",
+      "Wochentage: 星期 (xīngqī) + Zahl 1–6 (星期一 = Montag, 星期日/天 = Sonntag).",
+      "Satzstellung: Zeitangaben stehen VOR dem Verb (z. B. 我明天去 · Ich gehe morgen). Zeit am Satzende ist falsch!"
+    ],
+    "examples": [
+      {
+        "hanzi": "我明天下午去学校。",
+        "pinyin": "Wǒ míngtiān xiàwǔ qù xuéxiào.",
+        "german": "Ich gehe morgen Nachmittag zur Schule.",
+        "breakdown": [
+          { "part": "我 (Wǒ)", "meaning": "Ich" },
+          { "part": "明天下午 (míngtiān xiàwǔ)", "meaning": "morgen Nachmittag" },
+          { "part": "去学校 (qù xuéxiào)", "meaning": "zur Schule gehen" }
+        ]
+      },
+      {
+        "hanzi": "现在几点？现在三点十分。",
+        "pinyin": "Xiànzài jǐ diǎn? Xiànzài sān diǎn shí fēn.",
+        "german": "Wie spät ist es jetzt? Es ist jetzt 3:10 Uhr.",
+        "breakdown": [
+          { "part": "现在 (Xiànzài)", "meaning": "Jetzt" },
+          { "part": "三点 (sān diǎn)", "meaning": "3 Uhr" },
+          { "part": "十分 (shí fēn)", "meaning": "10 Minuten" }
+        ]
+      }
+    ],
+    "pitfalls": [
+      {
+        "wrong": "我去北京明天。(Wǒ qù Běijīng míngtiān.)",
+        "right": "我明天去北京。(Wǒ míngtiān qù Běijīng.)",
+        "explanation": "Zeitangaben ('morgen') dürfen niemals ans Ende des Satzes gehängt werden."
+      }
+    ],
+    "quizzes": [
+      {
+        "question": "Welche Satzstellung ist korrekt für: „Wir essen heute Mittag im Restaurant.“?",
+        "options": [
+          "我们吃米饭今天中午在饭馆。(Wǒmen chī mǐfàn jīntiān zhōngwǔ zài fànguǎn.)",
+          "我们今天中午在饭馆吃米饭。(Wǒmen jīntiān zhōngwǔ zài fànguǎn chī mǐfàn.)",
+          "在饭馆我们吃米饭今天中午。(Zài fànguǎn wǒmen chī mǐfàn jīntiān zhōngwǔ.)"
+        ],
+        "correctIndex": 1,
+        "explanation": "Goldene Regel: Subjekt (我们) + Zeit (今天中午) + Ort (在饭馆) + Handlung (吃米饭)."
+      }
+    ]
+  },
+  {
+    "id": "modal-verbs",
+    "order": 9,
+    "title": "Modalverben & Wünsche („会“, „想“, „能“)",
+    "subtitle": "Fähigkeiten, Wünsche und Möglichkeiten ausdrücken",
+    "hanziTag": "会 / 想",
+    "summary": "Modalverben stehen direkt vor dem Hauptverb und drücken aus, ob man etwas kann (erlernte Fähigkeit '会'), möchte ('想') oder die Erlaubnis/Möglichkeit dazu hat ('能').",
+    "formula": {
+      "pattern": "[Subjekt] + [会 / 想 / 能] + [Hauptverb] + [Objekt]",
+      "explanation": "Modalverb steht direkt vor der eigentlichen Handlung."
+    },
+    "keyRules": [
+      "„会“ (huì): Erlernte Fähigkeiten ('Ich kann Chinesisch sprechen / schwimmen / kochen').",
+      "„想“ (xiǎng): Wunsch oder Absicht ('Ich möchte Tee trinken / nach Peking reisen').",
+      "„能“ (néng): Physische Möglichkeit oder Erlaubnis ('Ich kann/darf heute kommen').",
+      "Verneinung: '不' wird direkt vor das Modalverb gesetzt (不会, 不想, 不能)."
+    ],
+    "examples": [
+      {
+        "hanzi": "我会说汉语，我不会写汉字。",
+        "pinyin": "Wǒ huì shuō Hànyǔ, wǒ bú huì xiě hànzì.",
+        "german": "Ich kann Chinesisch sprechen, ich kann keine Schriftzeichen schreiben.",
+        "breakdown": [
+          { "part": "我会说 (Wǒ huì shuō)", "meaning": "ich kann sprechen" },
+          { "part": "汉语 (Hànyǔ)", "meaning": "Chinesisch" },
+          { "part": "我不会写 (wǒ bú huì xiě)", "meaning": "ich kann nicht schreiben" },
+          { "part": "汉字 (hànzì)", "meaning": "Schriftzeichen" }
+        ]
+      },
+      {
+        "hanzi": "我想去看电影。",
+        "pinyin": "Wǒ xiǎng qù kàn diànyǐng.",
+        "german": "Ich möchte ins Kino gehen.",
+        "breakdown": [
+          { "part": "我想去 (Wǒ xiǎng qù)", "meaning": "ich möchte gehen" },
+          { "part": "看电影 (kàn diànyǐng)", "meaning": "Film schauen" }
+        ]
+      }
+    ],
+    "pitfalls": [
+      {
+        "wrong": "我能说汉语。(für erlernte Sprache)",
+        "right": "我会说汉语。(Wǒ huì shuō Hànyǔ.)",
+        "explanation": "Für erlernte Fertigkeiten (Sprachen, Autofahren, Kochen) verwendet man '会' (huì), nicht '能'."
+      }
+    ],
+    "quizzes": [
+      {
+        "question": "Wie sagst du: „Ich möchte heute chinesisches Essen essen.“?",
+        "options": ["我想今天吃中国菜。(Wǒ xiǎng jīntiān chī Zhōngguó cài.)", "我今天想吃中国菜。(Wǒ jīntiān xiǎng chī Zhōngguó cài.)", "我吃中国菜想今天。(Wǒ chī Zhōngguó cài xiǎng jīntiān.)"],
+        "correctIndex": 1,
+        "explanation": "Subjekt (我) + Zeit (今天) + Modalverb (想) + Hauptverb & Objekt (吃中国菜)."
+      }
+    ]
+  },
+  {
+    "id": "particles-le-and-qing",
+    "order": 10,
+    "title": "Aspektpartikel „了“ & Höflichkeitsformel „请“",
+    "subtitle": "Zustandsänderungen, vollendete Handlungen und Bitten",
+    "hanziTag": "了 / 请",
+    "summary": "„了“ (le) zeigt eine vollendete Handlung oder eine neue Situation / Zustandsänderung an (keine reine Vergangenheitsform!). „请“ (qǐng) steht am Satzanfang für höfliche Bitten ('Bitte nehmen Sie Platz').",
+    "formula": {
+      "pattern": "[Verb] + [了]  bzw.  太 + [Adjektiv] + [了]  /  [请] + [Verb]",
+      "explanation": "Vollendung: Verb + 了. Ausruf der Begeisterung: 太 ... 了. Höfliche Bitte: 请 + Verb."
+    },
+    "keyRules": [
+      "Vollendete Handlung: 我买了书 (Ich habe Bücher gekauft).",
+      "Zustandsänderung: 下雨了 (Es hat angefangen zu regnen / Jetzt regnet es).",
+      "Struktur '太 ... 了': 太好了 (Zu gut / Großartig!), 太大了 (Zu groß!).",
+      "Höflichkeit: 请坐 (Bitte setzen Sie sich), 请喝茶 (Bitte trinken Sie Tee)."
+    ],
+    "examples": [
+      {
+        "hanzi": "我买了一件漂亮的衣服。",
+        "pinyin": "Wǒ mǎi le yí jiàn piàoliang de yīfu.",
+        "german": "Ich habe ein hübsches Kleidungsstück gekauft.",
+        "breakdown": [
+          { "part": "我买了 (Wǒ mǎi le)", "meaning": "ich habe gekauft" },
+          { "part": "一件 (yí jiàn)", "meaning": "ein [Kleidungs-Zählwort]" },
+          { "part": "漂亮的衣服 (piàoliang de yīfu)", "meaning": "hübsche Kleidung" }
+        ]
+      },
+      {
+        "hanzi": "太好了！请进，请坐！",
+        "pinyin": "Tài hǎo le! Qǐng jìn, qǐng zuò!",
+        "german": "Großartig! Bitte herein, bitte nehmen Sie Platz!",
+        "breakdown": [
+          { "part": "太好了 (Tài hǎo le)", "meaning": "Großartig / Zu schön" },
+          { "part": "请进 (Qǐng jìn)", "meaning": "bitte herein" },
+          { "part": "请坐 (qǐng zuò)", "meaning": "bitte setzen" }
+        ]
+      }
+    ],
+    "pitfalls": [
+      {
+        "wrong": "我昨天买没有了书。(Wǒ zuótiān mǎi méiyǒu le shū.)",
+        "right": "我昨天没有买书。(Wǒ zuótiān méiyǒu mǎi shū.)",
+        "explanation": "Wenn eine Handlung mit '没有' verneint wird, fällt das '了' zwingend weg!"
+      }
+    ],
+    "quizzes": [
+      {
+        "question": "Wie drückt man „Großartig! / Zu schön!“ auf Chinesisch aus?",
+        "options": ["太好。(Tài hǎo.)", "太好了。(Tài hǎo le.)", "好了太。(Hǎo le tài.)"],
+        "correctIndex": 1,
+        "explanation": "Das feste Konstruktionsmuster für überschwängliche Ausrufe lautet „太 + Adjektiv + 了“."
+      }
+    ]
+  }
+]

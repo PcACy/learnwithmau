@@ -13,6 +13,7 @@ import { SettingsPage } from './routes/SettingsPage';
 import { StatsPage } from './routes/StatsPage';
 import { TypeRacerPage } from './routes/TypeRacerPage';
 import { MockExamPage } from './routes/MockExamPage';
+import { GrammarPage } from './routes/GrammarPage';
 
 function renderMode(mode: ModeConfig) {
   switch (mode.id) {
@@ -39,6 +40,7 @@ export function AppRoutes() {
       <Route element={<AppShell />}>
         <Route path="/" element={<DashboardPage />} />
         <Route path="/dictionary" element={<DictionaryPage />} />
+        <Route path="/grammar" element={<GrammarPage />} />
         <Route path="/stats" element={<StatsPage />} />
         <Route path="/settings" element={<SettingsPage />} />
         <Route path="/blitz" element={<BlitzPage />} />
