@@ -46,6 +46,30 @@ export interface CharacterDecomposition {
 
 export type HskLevel = 1;
 
+export type PartOfSpeech =
+  | 'nomen'
+  | 'verb'
+  | 'adjektiv'
+  | 'pronomen'
+  | 'adverb'
+  | 'partikel'
+  | 'zahl'
+  | 'eigenname'
+  | 'interjektion';
+
+export interface Collocation {
+  hanzi: string;
+  pinyin: string;
+  german: string;
+}
+
+export interface ExampleSentence {
+  hanzi: string;
+  pinyin: string;
+  german: string;
+  audioPath?: string;
+}
+
 export interface VocabItem {
   /** Stabile ID, z.B. "hsk1-nihao". */
   id: string;
@@ -59,6 +83,12 @@ export interface VocabItem {
   /** Pfad zu einem lokalen Audio-Asset; null ⇒ Synthese-Fallback. */
   audioPath: string | null;
   hskLevel: HskLevel;
+  partOfSpeech?: PartOfSpeech;
+  mnemonic?: string;
+  strokes?: number;
+  hskOrder?: number;
+  collocations?: Collocation[];
+  exampleSentences?: ExampleSentence[];
 }
 
 /** Kanonischer Radikal-Eintrag aus `data/radicals.json`. */
