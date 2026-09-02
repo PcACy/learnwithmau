@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom';
 import sentencesData from '../data/sentences.json';
 import { playToneSequence } from '../lib/audio';
 import { fireCelebration, fireMicroBurst } from '../lib/confetti';
+import { shuffled } from '../lib/shuffle';
 
 interface SentenceItem {
   id: string;
@@ -26,23 +27,14 @@ interface SentenceItem {
 const SENTENCES: SentenceItem[] = sentencesData as SentenceItem[];
 const ROUNDS_PER_SESSION = 5;
 
-function shuffle<T>(arr: readonly T[]): T[] {
-  const copy = [...arr];
-  for (let i = copy.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [copy[i], copy[j]] = [copy[j], copy[i]];
-  }
-  return copy;
-}
-
 function initSession(): {
   sentences: SentenceItem[];
   available: string[];
 } {
-  const initial = shuffle(SENTENCES).slice(0, ROUNDS_PER_SESSION);
+  const initial = shuffled(SENTENCES).slice(0, ROUNDS_PER_SESSION);
   return {
     sentences: initial,
-    available: initial[0] ? shuffle(initial[0].tokens) : [],
+    available: initial[0] ? shuffled(initial[0].tokens) : [],
   };
 }
 
@@ -112,7 +104,7 @@ export function SentenceBuilderPage() {
       const nextItem = sessionSentences[nextIdx];
       setCurrentIndex(nextIdx);
       setSelectedTokens([]);
-      setAvailableTokens(shuffle(nextItem.tokens));
+      setAvailableTokens(shuffled(nextItem.tokens));
       setStatus('playing');
       setShowPinyin(false);
     } else {
@@ -125,7 +117,7 @@ export function SentenceBuilderPage() {
   const resetCurrent = () => {
     if (!currentSentence) return;
     setSelectedTokens([]);
-    setAvailableTokens(shuffle(currentSentence.tokens));
+    setAvailableTokens(shuffled(currentSentence.tokens));
     setStatus('playing');
   };
 

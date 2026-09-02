@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
 import {
   ArrowLeft,
@@ -34,6 +34,7 @@ export function MockExamPage() {
   const [showSubmitModal, setShowSubmitModal] = useState(false);
   const [submission, setSubmission] = useState<ExamSubmission | null>(null);
 
+  const examStartedAtRef = useRef<number>(0);
   const currentQ = QUESTIONS[currentIndex];
 
   // Prüfung auswerten
@@ -58,7 +59,7 @@ export function MockExamPage() {
     const passed = score >= 180;
 
     const sub: ExamSubmission = {
-      startedAt: Date.now() - (DEFAULT_TIME_SEC - timeLeft) * 1000,
+      startedAt: examStartedAtRef.current,
       finishedAt: Date.now(),
       answers,
       markedQuestions: Array.from(marked),
@@ -75,25 +76,30 @@ export function MockExamPage() {
     if (passed) {
       fireCelebration();
     }
-  }, [answers, marked, timeLeft]);
+  }, [answers, marked]);
 
-  // Timer
+  const submitExamRef = useRef(handleSubmitExam);
+  useEffect(() => {
+    submitExamRef.current = handleSubmitExam;
+  });
+
+  // Timer: Stabil ohne Re-Erstellung bei jedem Sekundenschritt
   useEffect(() => {
     if (phase !== 'exam' || isPaused) return;
 
-    const timer = setInterval(() => {
+    const timer = window.setInterval(() => {
       setTimeLeft((prev) => {
         if (prev <= 1) {
-          clearInterval(timer);
-          handleSubmitExam();
+          window.clearInterval(timer);
+          submitExamRef.current();
           return 0;
         }
         return prev - 1;
       });
     }, 1000);
 
-    return () => clearInterval(timer);
-  }, [phase, isPaused, handleSubmitExam]);
+    return () => window.clearInterval(timer);
+  }, [phase, isPaused]);
 
   // Audio bei Fragenwechsel im Hörverstehen
   useEffect(() => {
@@ -108,6 +114,7 @@ export function MockExamPage() {
     setAnswers({});
     setMarked(new Set());
     setTimeLeft(DEFAULT_TIME_SEC);
+    examStartedAtRef.current = Date.now();
     setCurrentIndex(0);
     setIsPaused(false);
     setPhase('exam');

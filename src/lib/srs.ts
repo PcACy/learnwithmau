@@ -3,7 +3,7 @@ import type { SrsCard, SrsGrade } from '../types/srs';
 /** Ein Item gilt ab 21 Tagen Intervall als gemeistert. */
 export const MASTERY_INTERVAL_DAYS = 21;
 
-export const SRS_MIN_EASINESS = 1.3;
+const SRS_MIN_EASINESS = 1.3;
 
 const DEFAULT_EASINESS = 2.5;
 

@@ -15,6 +15,8 @@ import { Link } from 'react-router-dom';
 import { VOCAB } from '../data';
 import { playAsset, playToneSequence } from '../lib/audio';
 import { fireCelebration, fireMicroBurst } from '../lib/confetti';
+import { shuffled } from '../lib/shuffle';
+import { useProgressStore } from '../store/progressStore';
 import type { VocabItem } from '../types/vocab';
 
 interface BlitzQuestion {
@@ -29,17 +31,8 @@ interface BlitzQuestion {
 
 const TOTAL_TIME_SEC = 90;
 
-function shuffle<T>(arr: readonly T[]): T[] {
-  const copy = [...arr];
-  for (let i = copy.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [copy[i], copy[j]] = [copy[j], copy[i]];
-  }
-  return copy;
-}
-
 function generateBlitzQuestions(count = 15): BlitzQuestion[] {
-  const shuffledVocab = shuffle(VOCAB);
+  const shuffledVocab = shuffled(VOCAB);
   const questions: BlitzQuestion[] = [];
 
   for (let i = 0; i < count; i++) {
@@ -47,11 +40,14 @@ function generateBlitzQuestions(count = 15): BlitzQuestion[] {
     const qType: 'meaning' | 'pinyin' | 'tone' = i % 3 === 0 ? 'tone' : i % 3 === 1 ? 'meaning' : 'pinyin';
 
     if (qType === 'meaning') {
-      const distractors = shuffle(VOCAB.filter((v) => v.id !== item.id))
-        .slice(0, 3)
-        .map((v) => v.meaning.split(',')[0].trim());
       const correct = item.meaning.split(',')[0].trim();
-      const options = shuffle([correct, ...distractors]);
+      const distinctDistractors = Array.from(
+        new Set(
+          VOCAB.map((v) => v.meaning.split(',')[0].trim()).filter((m) => m !== correct),
+        ),
+      );
+      const distractors = shuffled(distinctDistractors).slice(0, 3);
+      const options = shuffled([correct, ...distractors]);
 
       questions.push({
         id: `blitz-${i}`,
@@ -63,11 +59,14 @@ function generateBlitzQuestions(count = 15): BlitzQuestion[] {
         audioUrl: item.audioPath,
       });
     } else if (qType === 'pinyin') {
-      const distractors = shuffle(VOCAB.filter((v) => v.id !== item.id))
-        .slice(0, 3)
-        .map((v) => v.pinyin);
       const correct = item.pinyin;
-      const options = shuffle([correct, ...distractors]);
+      const distinctDistractors = Array.from(
+        new Set(
+          VOCAB.map((v) => v.pinyin).filter((p) => p !== correct),
+        ),
+      );
+      const distractors = shuffled(distinctDistractors).slice(0, 3);
+      const options = shuffled([correct, ...distractors]);
 
       questions.push({
         id: `blitz-${i}`,
@@ -80,15 +79,18 @@ function generateBlitzQuestions(count = 15): BlitzQuestion[] {
       });
     } else {
       const firstTone = item.syllables[0]?.tone ?? 1;
-      const options = ['Ton 1 (ˉ)', 'Ton 2 (ˊ)', 'Ton 3 (ˇ)', 'Ton 4 (ˋ)'];
       const toneNames: Record<number, string> = {
         1: 'Ton 1 (ˉ)',
         2: 'Ton 2 (ˊ)',
         3: 'Ton 3 (ˇ)',
         4: 'Ton 4 (ˋ)',
-        5: 'Ton 1 (ˉ)',
+        5: 'Neutraler Ton',
       };
       const correct = toneNames[firstTone] || 'Ton 1 (ˉ)';
+      const standardOptions = ['Ton 1 (ˉ)', 'Ton 2 (ˊ)', 'Ton 3 (ˇ)', 'Ton 4 (ˋ)'];
+      const options = firstTone === 5
+        ? shuffled(['Neutraler Ton', 'Ton 1 (ˉ)', 'Ton 2 (ˊ)', 'Ton 4 (ˋ)'])
+        : standardOptions;
 
       questions.push({
         id: `blitz-${i}`,
@@ -106,6 +108,7 @@ function generateBlitzQuestions(count = 15): BlitzQuestion[] {
 }
 
 export function BlitzPage() {
+  const logSession = useProgressStore((s) => s.logSession);
   const [questions, setQuestions] = useState<BlitzQuestion[]>([]);
   const [currentIdx, setCurrentIdx] = useState(0);
   const [timeLeft, setTimeLeft] = useState(TOTAL_TIME_SEC);
@@ -141,6 +144,12 @@ export function BlitzPage() {
           clearInterval(timer);
           setGameState('ended');
           fireCelebration();
+          void logSession({
+            mode: 'blitz',
+            answered: answeredCount,
+            correct: score > 0 ? Math.round(score / 100) : 0,
+            durationMs: TOTAL_TIME_SEC * 1000,
+          });
           return 0;
         }
         return prev - 1;
@@ -148,7 +157,7 @@ export function BlitzPage() {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [gameState]);
+  }, [gameState, answeredCount, score, logSession]);
 
   const currentQ = questions[currentIdx];
 

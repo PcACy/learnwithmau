@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import type { CSSProperties } from 'react';
 import {
   ArrowRight,
@@ -16,6 +16,7 @@ import { SrsDistributionBar } from '../components/dashboard/SrsDistributionBar';
 import { StatsGrid } from '../components/dashboard/StatsGrid';
 import { useProgressStore } from '../store/progressStore';
 import { VOCAB } from '../data';
+import { db } from '../lib/db';
 import { selectDueItemIds } from '../lib/srsQuery';
 import { ACHIEVEMENTS } from '../config/achievements';
 import { MASTERY_LEVELS, getMasteryLevel } from '../lib/mastery';
@@ -26,6 +27,44 @@ export function StatsPage() {
   const cards = useProgressStore((s) => s.cards);
   const streak = useProgressStore((s) => s.streak);
   const [filterCategory, setFilterCategory] = useState<string>('all');
+  const [sessionStats, setSessionStats] = useState<{
+    alchemySolved: number;
+    tonesCorrect: number;
+    sentencesSolved: number;
+    blitzCompleted: number;
+  }>({
+    alchemySolved: 0,
+    tonesCorrect: 0,
+    sentencesSolved: 0,
+    blitzCompleted: 0,
+  });
+
+  useEffect(() => {
+    let cancelled = false;
+    void db.stats
+      .toArray()
+      .then((rows) => {
+        if (cancelled) return;
+        let alchemySolved = 0;
+        let tonesCorrect = 0;
+        let sentencesSolved = 0;
+        let blitzCompleted = 0;
+
+        for (const row of rows) {
+          if (row.mode === 'alchemy') alchemySolved += row.correct;
+          else if (row.mode === 'ear-trainer') tonesCorrect += row.correct;
+          else if (row.mode === 'sentences') sentencesSolved += row.correct;
+          else if (row.mode === 'blitz') blitzCompleted += 1;
+        }
+
+        setSessionStats({ alchemySolved, tonesCorrect, sentencesSolved, blitzCompleted });
+      })
+      .catch(() => undefined);
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const dueToday = useMemo(
     () => selectDueItemIds(cards, ALL_ITEM_IDS, new Date()).length,
@@ -49,7 +88,7 @@ export function StatsPage() {
       const { current, unlocked } = ach.calculateProgress({
         cards,
         streak,
-        stats: {},
+        stats: sessionStats,
       });
       return {
         ...ach,
@@ -57,7 +96,7 @@ export function StatsPage() {
         unlocked,
       };
     });
-  }, [cards, streak]);
+  }, [cards, streak, sessionStats]);
 
   const unlockedCount = achievementProgress.filter((a) => a.unlocked).length;
 
@@ -77,7 +116,7 @@ export function StatsPage() {
           </p>
           <h1 className="mt-1 text-3xl font-bold tracking-tight sm:text-4xl">Fortschritt & Statistiken</h1>
           <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
-            Detaillierte Auswertung deines Langzeit-Lernfortschritts für alle 162 HSK-1-Vokabeln.
+            Detaillierte Auswertung deines Langzeit-Lernfortschritts für alle {VOCAB.length} HSK-1-Vokabeln.
           </p>
         </div>
 

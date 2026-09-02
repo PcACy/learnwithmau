@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import type { CSSProperties, DragEvent } from 'react';
 import { RotateCcw } from 'lucide-react';
 import { buildAlchemyPuzzles, type AlchemyPuzzle } from '../lib/alchemyEngine';
@@ -56,6 +56,15 @@ export function AlchemyPage() {
 
   const [phase, setPhase] = useState<Phase>('running');
   const [session, setSession] = useState<SessionState>(() => newSession());
+  const flashTimerRef = useRef<number | undefined>(undefined);
+
+  useEffect(() => {
+    return () => {
+      if (flashTimerRef.current !== undefined) {
+        window.clearTimeout(flashTimerRef.current);
+      }
+    };
+  }, []);
 
   const puzzle = session.puzzles[session.index];
   const solved =
@@ -142,7 +151,10 @@ export function AlchemyPage() {
         return;
       }
 
-      window.setTimeout(() => {
+      if (flashTimerRef.current !== undefined) {
+        window.clearTimeout(flashTimerRef.current);
+      }
+      flashTimerRef.current = window.setTimeout(() => {
         setSession((prev) => ({
           ...prev,
           slots: prev.slots.map((slot) => ({ ...slot, wrongFlash: false })),

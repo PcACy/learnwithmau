@@ -129,27 +129,31 @@ export const useProgressStore = create<ProgressState>()((set, get) => ({
     const existing = get().cards[itemId];
     const reviewed = applyReview(existing ?? createCard(itemId, at), grade, at);
 
-    const nextGoal = ensureFresh(get().dailyGoal, at);
-    const countedGoal: DailyGoal = { ...nextGoal, completedReviews: nextGoal.completedReviews + 1 };
-    const nextStreak = touchStreak(get().streak, toDateKey(at));
+    let updatedGoal: DailyGoal = get().dailyGoal;
+    let updatedStreak: StreakData = get().streak;
+
+    set((state) => {
+      const freshGoal = ensureFresh(state.dailyGoal, at);
+      updatedGoal = { ...freshGoal, completedReviews: freshGoal.completedReviews + 1 };
+      updatedStreak = touchStreak(state.streak, toDateKey(at));
+      return {
+        cards: { ...state.cards, [itemId]: reviewed },
+        dailyGoal: updatedGoal,
+        streak: updatedStreak,
+      };
+    });
 
     try {
       await db.transaction('rw', db.cards, db.meta, async () => {
         await db.cards.put(reviewed);
         await db.meta.bulkPut([
-          { key: 'dailyGoal', value: countedGoal },
-          { key: 'streak', value: nextStreak },
+          { key: 'dailyGoal', value: updatedGoal },
+          { key: 'streak', value: updatedStreak },
         ]);
       });
     } catch {
       // IndexedDB write error handled gracefully in memory
     }
-
-    set((state) => ({
-      cards: { ...state.cards, [itemId]: reviewed },
-      dailyGoal: countedGoal,
-      streak: nextStreak,
-    }));
   },
 
   async logSession(stat) {

@@ -78,13 +78,6 @@ function createPuzzleFromSource(source: PuzzleSource): AlchemyPuzzle {
   };
 }
 
-/** Baut ein einzelnes Puzzle. */
-export function buildAlchemyPuzzle(): AlchemyPuzzle | null {
-  if (PUZZLE_POOL.length === 0) return null;
-  const source = PUZZLE_POOL[Math.floor(Math.random() * PUZZLE_POOL.length)];
-  return createPuzzleFromSource(source);
-}
-
 /** Baut mehrere unterschiedliche Puzzles für eine Spielsession. */
 export function buildAlchemyPuzzles(count: number): AlchemyPuzzle[] {
   if (PUZZLE_POOL.length === 0) return [];

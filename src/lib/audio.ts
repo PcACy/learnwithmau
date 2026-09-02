@@ -101,6 +101,7 @@ export function syllableAssetUrl(plain: string, tone: Tone): string {
 }
 
 let currentAudio: HTMLAudioElement | null = null;
+let currentOnEnded: (() => void) | null = null;
 
 /**
  * Stoppt die aktuell laufende Audio-Wiedergabe sofort und setzt das Audio-Element zurück.
@@ -115,6 +116,11 @@ export function stopCurrentAudio(): void {
       // ignore
     }
     currentAudio = null;
+  }
+  if (currentOnEnded) {
+    const cb = currentOnEnded;
+    currentOnEnded = null;
+    cb();
   }
 }
 
@@ -136,19 +142,34 @@ export function playAsset(url: string, onEnded?: () => void, rate?: number): Pro
     const finish = (started: boolean) => {
       if (settled) return;
       settled = true;
+      window.clearTimeout(timeoutId);
       if (currentAudio === audio && !started) {
         currentAudio = null;
+        currentOnEnded = null;
       }
       resolve(started);
     };
 
-    audio.addEventListener('playing', () => finish(true), { once: true });
+    currentOnEnded = () => {
+      onEnded?.();
+      finish(false);
+    };
+
+    audio.addEventListener(
+      'playing',
+      () => {
+        window.clearTimeout(timeoutId);
+        finish(true);
+      },
+      { once: true },
+    );
     audio.addEventListener('error', () => finish(false), { once: true });
     audio.addEventListener(
       'ended',
       () => {
         if (currentAudio === audio) {
           currentAudio = null;
+          currentOnEnded = null;
         }
         onEnded?.();
         finish(true);
@@ -175,9 +196,5 @@ export function playAsset(url: string, onEnded?: () => void, rate?: number): Pro
       finish(false);
     }
   });
-}
-
-export function isAudioPrimed(): boolean {
-  return ctx !== null;
 }
 

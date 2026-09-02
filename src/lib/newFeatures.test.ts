@@ -61,4 +61,22 @@ describe('Achievements configuration', () => {
     };
     expect(firstStep.calculateProgress({ cards, streak: { current: 0, longest: 0 }, stats: {} }).unlocked).toBe(true);
   });
+
+  it('calculates game-based achievements correctly with stats data', () => {
+    const alchemyAch = ACHIEVEMENTS.find((a) => a.id === 'alchemy-hero')!;
+    const toneAch = ACHIEVEMENTS.find((a) => a.id === 'tone-master')!;
+    const sentenceAch = ACHIEVEMENTS.find((a) => a.id === 'sentence-pro')!;
+    const blitzAch = ACHIEVEMENTS.find((a) => a.id === 'blitz-champion')!;
+
+    const baseData = { cards: {}, streak: { current: 0, longest: 0 } };
+
+    expect(alchemyAch.calculateProgress({ ...baseData, stats: {} }).unlocked).toBe(false);
+    expect(alchemyAch.calculateProgress({ ...baseData, stats: { alchemySolved: 6 } }).unlocked).toBe(true);
+
+    expect(toneAch.calculateProgress({ ...baseData, stats: { tonesCorrect: 9 } }).unlocked).toBe(false);
+    expect(toneAch.calculateProgress({ ...baseData, stats: { tonesCorrect: 10 } }).unlocked).toBe(true);
+
+    expect(sentenceAch.calculateProgress({ ...baseData, stats: { sentencesSolved: 5 } }).unlocked).toBe(true);
+    expect(blitzAch.calculateProgress({ ...baseData, stats: { blitzCompleted: 1 } }).unlocked).toBe(true);
+  });
 });

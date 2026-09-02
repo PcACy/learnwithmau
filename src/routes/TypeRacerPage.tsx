@@ -147,10 +147,13 @@ export function TypeRacerPage() {
     [round, currentItem, targetChar, slotIndex, phase, review, logSession],
   );
 
-  // Stoppt Audio beim Verlassen der Seite
+  // Stoppt Audio und Timer beim Verlassen der Seite
   useEffect(() => {
     return () => {
       stopCurrentAudio();
+      if (flashTimer.current !== undefined) {
+        window.clearTimeout(flashTimer.current);
+      }
     };
   }, []);
 

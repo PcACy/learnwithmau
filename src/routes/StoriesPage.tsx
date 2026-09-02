@@ -20,6 +20,7 @@ import storiesData from '../data/stories.json';
 import type { Story, StorySentence, StoryWordToken } from '../types/story';
 import { playAsset, stopCurrentAudio } from '../lib/audio';
 import { fireCelebration, fireMicroBurst } from '../lib/confetti';
+import { getCompletedStories, putCompletedStories } from '../lib/db';
 
 const STORIES = storiesData as Story[];
 
@@ -40,12 +41,23 @@ export function StoriesPage() {
   // Completed Stories Storage
   const [completedStories, setCompletedStories] = useState<Set<string>>(() => {
     try {
-      const saved = localStorage.getItem('hanzi_completed_stories');
+      const saved = typeof window !== 'undefined' ? localStorage.getItem('hanzi_completed_stories') : null;
       return saved ? new Set(JSON.parse(saved)) : new Set();
     } catch {
       return new Set();
     }
   });
+
+  useEffect(() => {
+    let cancelled = false;
+    void getCompletedStories().then((ids) => {
+      if (cancelled || ids.length === 0) return;
+      setCompletedStories((prev) => new Set([...prev, ...ids]));
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   // Quiz State
   const [quizAnswers, setQuizAnswers] = useState<Record<string, number>>({});
@@ -107,7 +119,9 @@ export function StoriesPage() {
         });
       });
       // Kurze Pause zwischen Sätzen für angenehmes Zuhören
-      await new Promise((r) => setTimeout(r, 450));
+      if (!fullAudioCancelledRef.current) {
+        await new Promise((r) => setTimeout(r, 450));
+      }
     }
 
     if (!fullAudioCancelledRef.current) {
@@ -139,11 +153,7 @@ export function StoriesPage() {
   const markCompleted = useCallback((id: string) => {
     setCompletedStories((prev) => {
       const next = new Set(prev).add(id);
-      try {
-        localStorage.setItem('hanzi_completed_stories', JSON.stringify(Array.from(next)));
-      } catch {
-        // Ignore
-      }
+      void putCompletedStories(Array.from(next));
       return next;
     });
     fireCelebration();

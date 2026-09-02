@@ -6,6 +6,8 @@ import type { DailyGoal, SessionStat, StreakData } from '../types/game';
 export interface MetaMap {
   streak: StreakData;
   dailyGoal: DailyGoal;
+  completedGrammar: string[];
+  completedStories: string[];
 }
 
 export type MetaKey = keyof MetaMap;
@@ -43,6 +45,50 @@ export async function getMeta<K extends MetaKey>(key: K): Promise<MetaMap[K] | u
 
 export async function putMeta<K extends MetaKey>(key: K, value: MetaMap[K]): Promise<void> {
   await db.meta.put({ key, value });
+}
+
+export async function getCompletedGrammar(): Promise<string[]> {
+  const meta = await getMeta('completedGrammar');
+  if (meta && Array.isArray(meta)) return meta;
+  try {
+    const raw = typeof window !== 'undefined' ? localStorage.getItem('hanzi_completed_grammar') : null;
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+}
+
+export async function putCompletedGrammar(ids: string[]): Promise<void> {
+  await putMeta('completedGrammar', ids);
+  try {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('hanzi_completed_grammar', JSON.stringify(ids));
+    }
+  } catch {
+    // ignore
+  }
+}
+
+export async function getCompletedStories(): Promise<string[]> {
+  const meta = await getMeta('completedStories');
+  if (meta && Array.isArray(meta)) return meta;
+  try {
+    const raw = typeof window !== 'undefined' ? localStorage.getItem('hanzi_completed_stories') : null;
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+}
+
+export async function putCompletedStories(ids: string[]): Promise<void> {
+  await putMeta('completedStories', ids);
+  try {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('hanzi_completed_stories', JSON.stringify(ids));
+    }
+  } catch {
+    // ignore
+  }
 }
 
 export interface BackupData {
@@ -110,6 +156,21 @@ export async function importBackup(
       }
       if (Array.isArray(data.meta) && data.meta.length > 0) {
         await db.meta.bulkPut(data.meta);
+        for (const row of data.meta) {
+          if (row.key === 'completedGrammar' && Array.isArray(row.value)) {
+            try {
+              localStorage.setItem('hanzi_completed_grammar', JSON.stringify(row.value));
+            } catch {
+              // ignore
+            }
+          } else if (row.key === 'completedStories' && Array.isArray(row.value)) {
+            try {
+              localStorage.setItem('hanzi_completed_stories', JSON.stringify(row.value));
+            } catch {
+              // ignore
+            }
+          }
+        }
       }
       if (data.stats.length > 0) {
         // Strip previous auto-increment IDs

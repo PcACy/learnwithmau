@@ -8,7 +8,8 @@ export type ModeId =
   | 'number-drill'
   | 'review'
   | 'sentences'
-  | 'exam';
+  | 'exam'
+  | 'blitz';
 
 export interface StreakData {
   current: number;

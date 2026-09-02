@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import type { CSSProperties } from 'react';
 import {
   Check,
@@ -13,6 +13,7 @@ import grammarData from '../data/grammar.json';
 import type { GrammarLesson } from '../types/grammar';
 import { playAsset, stopCurrentAudio } from '../lib/audio';
 import { fireCelebration, fireMicroBurst } from '../lib/confetti';
+import { getCompletedGrammar, putCompletedGrammar } from '../lib/db';
 
 const LESSONS = grammarData as GrammarLesson[];
 
@@ -20,12 +21,23 @@ export function GrammarPage() {
   const [selectedLessonId, setSelectedLessonId] = useState<string>(LESSONS[0].id);
   const [completedLessons, setCompletedLessons] = useState<Set<string>>(() => {
     try {
-      const saved = localStorage.getItem('hanzi_completed_grammar');
+      const saved = typeof window !== 'undefined' ? localStorage.getItem('hanzi_completed_grammar') : null;
       return saved ? new Set(JSON.parse(saved)) : new Set();
     } catch {
       return new Set();
     }
   });
+
+  useEffect(() => {
+    let cancelled = false;
+    void getCompletedGrammar().then((ids) => {
+      if (cancelled || ids.length === 0) return;
+      setCompletedLessons((prev) => new Set([...prev, ...ids]));
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const [quizAnswers, setQuizAnswers] = useState<Record<string, number>>({});
   const [quizSubmitted, setQuizSubmitted] = useState<Record<string, boolean>>({});
@@ -55,11 +67,7 @@ export function GrammarPage() {
   const markCompleted = useCallback((id: string) => {
     setCompletedLessons((prev) => {
       const next = new Set(prev).add(id);
-      try {
-        localStorage.setItem('hanzi_completed_grammar', JSON.stringify(Array.from(next)));
-      } catch {
-        // Ignore
-      }
+      void putCompletedGrammar(Array.from(next));
       return next;
     });
     fireCelebration();
