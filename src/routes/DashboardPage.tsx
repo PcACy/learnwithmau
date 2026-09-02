@@ -3,6 +3,7 @@ import type { CSSProperties } from 'react';
 import {
   ArrowRight,
   BookOpen,
+  BookOpenText,
   CalendarClock,
   CheckCircle2,
   ChevronRight,
@@ -478,7 +479,7 @@ export function DashboardPage() {
         <h2 className="reveal text-xl font-bold tracking-tight" style={{ '--index': 10 } as CSSProperties}>
           Tools & Fortschritt
         </h2>
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           <Link
             to="/dictionary"
             style={{ '--index': 11 } as CSSProperties}
@@ -490,14 +491,14 @@ export function DashboardPage() {
               </span>
               <span>
                 <span className="block font-semibold tracking-tight">Wörterbuch</span>
-                <span className="block text-xs text-zinc-500 dark:text-zinc-400">162 Wörter & Strichfolge</span>
+                <span className="block text-xs text-zinc-500 dark:text-zinc-400">163 Wörter & Strichfolge</span>
               </span>
             </span>
             <ChevronRight className="h-4 w-4 text-zinc-400 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-emerald-500 dark:group-hover:text-emerald-400" />
           </Link>
 
           <Link
-            to="/exam"
+            to="/grammar"
             style={{ '--index': 12 } as CSSProperties}
             className="reveal group flex items-center justify-between gap-4 rounded-[2rem] border border-zinc-200/70 bg-white p-5 shadow-whisper transition-all duration-300 ease-[var(--ease-spring)] hover:-translate-y-0.5 hover:border-emerald-600/35 dark:border-white/[0.06] dark:bg-zinc-900 dark:hover:border-emerald-400/30 active:scale-[0.99]"
           >
@@ -506,8 +507,42 @@ export function DashboardPage() {
                 <GraduationCap className="h-5 w-5" aria-hidden />
               </span>
               <span>
+                <span className="block font-semibold tracking-tight">Grammatik</span>
+                <span className="block text-xs text-zinc-500 dark:text-zinc-400">12 HSK-1-Lektionen</span>
+              </span>
+            </span>
+            <ChevronRight className="h-4 w-4 text-zinc-400 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-emerald-500 dark:group-hover:text-emerald-400" />
+          </Link>
+
+          <Link
+            to="/stories"
+            style={{ '--index': 13 } as CSSProperties}
+            className="reveal group flex items-center justify-between gap-4 rounded-[2rem] border border-zinc-200/70 bg-white p-5 shadow-whisper transition-all duration-300 ease-[var(--ease-spring)] hover:-translate-y-0.5 hover:border-emerald-600/35 dark:border-white/[0.06] dark:bg-zinc-900 dark:hover:border-emerald-400/30 active:scale-[0.99]"
+          >
+            <span className="flex items-center gap-3.5">
+              <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-zinc-100 text-zinc-700 transition-colors duration-300 group-hover:bg-emerald-500/10 group-hover:text-emerald-700 dark:bg-zinc-800 dark:text-zinc-200 dark:group-hover:text-emerald-400">
+                <BookOpenText className="h-5 w-5" aria-hidden />
+              </span>
+              <span>
+                <span className="block font-semibold tracking-tight">Lesen & Geschichten</span>
+                <span className="block text-xs text-zinc-500 dark:text-zinc-400">8 Graded-Reader-Texte</span>
+              </span>
+            </span>
+            <ChevronRight className="h-4 w-4 text-zinc-400 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-emerald-500 dark:group-hover:text-emerald-400" />
+          </Link>
+
+          <Link
+            to="/exam"
+            style={{ '--index': 14 } as CSSProperties}
+            className="reveal group flex items-center justify-between gap-4 rounded-[2rem] border border-zinc-200/70 bg-white p-5 shadow-whisper transition-all duration-300 ease-[var(--ease-spring)] hover:-translate-y-0.5 hover:border-emerald-600/35 dark:border-white/[0.06] dark:bg-zinc-900 dark:hover:border-emerald-400/30 active:scale-[0.99]"
+          >
+            <span className="flex items-center gap-3.5">
+              <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-zinc-100 text-zinc-700 transition-colors duration-300 group-hover:bg-emerald-500/10 group-hover:text-emerald-700 dark:bg-zinc-800 dark:text-zinc-200 dark:group-hover:text-emerald-400">
+                <GraduationCap className="h-5 w-5" aria-hidden />
+              </span>
+              <span>
                 <span className="block font-semibold tracking-tight">Probeprüfung</span>
-                <span className="block text-xs text-zinc-500 dark:text-zinc-400">30 HSK-1-Testfragen</span>
+                <span className="block text-xs text-zinc-500 dark:text-zinc-400">30 Testfragen (Hören & Lesen)</span>
               </span>
             </span>
             <ChevronRight className="h-4 w-4 text-zinc-400 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-emerald-500 dark:group-hover:text-emerald-400" />
@@ -515,7 +550,7 @@ export function DashboardPage() {
 
           <Link
             to="/stats"
-            style={{ '--index': 13 } as CSSProperties}
+            style={{ '--index': 15 } as CSSProperties}
             className="reveal group flex items-center justify-between gap-4 rounded-[2rem] border border-zinc-200/70 bg-white p-5 shadow-whisper transition-all duration-300 ease-[var(--ease-spring)] hover:-translate-y-0.5 hover:border-emerald-600/35 dark:border-white/[0.06] dark:bg-zinc-900 dark:hover:border-emerald-400/30 active:scale-[0.99]"
           >
             <span className="flex items-center gap-3.5">
@@ -532,7 +567,7 @@ export function DashboardPage() {
 
           <Link
             to="/settings"
-            style={{ '--index': 14 } as CSSProperties}
+            style={{ '--index': 16 } as CSSProperties}
             className="reveal group flex items-center justify-between gap-4 rounded-[2rem] border border-zinc-200/70 bg-white p-5 shadow-whisper transition-all duration-300 ease-[var(--ease-spring)] hover:-translate-y-0.5 hover:border-emerald-600/35 dark:border-white/[0.06] dark:bg-zinc-900 dark:hover:border-emerald-400/30 active:scale-[0.99]"
           >
             <span className="flex items-center gap-3.5">

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BookOpen, Flame, Gamepad2, GraduationCap, HardDrive, LineChart, Settings } from 'lucide-react';
+import { BookOpen, BookOpenText, Flame, Gamepad2, GraduationCap, HardDrive, LineChart, Settings } from 'lucide-react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useProgressStore } from '../../store/progressStore';
 import { useKeyDown } from '../../hooks/useKeyDown';
@@ -61,6 +61,7 @@ export function AppShell() {
     { to: '/', label: 'Arcade', icon: Gamepad2 },
     { to: '/dictionary', label: 'Wörterbuch', icon: BookOpen },
     { to: '/grammar', label: 'Grammatik', icon: GraduationCap },
+    { to: '/stories', label: 'Lesen', icon: BookOpenText },
     { to: '/stats', label: 'Fortschritt', icon: LineChart },
     { to: '/settings', label: 'Einstellungen', icon: Settings },
   ];
