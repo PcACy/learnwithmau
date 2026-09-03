@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { CSSProperties } from 'react';
-import { CheckCircle2, Layers, Volume2 } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Volume2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import type { SrsGrade } from '../types/srs';
 import type { VocabItem } from '../types/vocab';
@@ -11,7 +11,9 @@ import { useKeyDown } from '../hooks/useKeyDown';
 import { KeyHints } from '../components/ui/Kbd';
 import { SessionSummary } from '../components/game/SessionSummary';
 import { useProgressStore } from '../store/progressStore';
-import { fireCelebration } from '../lib/confetti';
+import { fireCelebration, fireMicroBurst } from '../lib/confetti';
+import { SealBadge } from '../components/ui/SealBadge';
+import { KineticButton } from '../components/ui/KineticButton';
 
 type Phase = 'intro' | 'drill' | 'summary' | 'empty';
 
@@ -145,6 +147,15 @@ export function ReviewPage() {
       void review(currentId, option.grade);
 
       const passed = option.grade >= 3;
+      if (option.grade === 5) {
+        fireMicroBurst();
+        playToneSequence([1]);
+      } else if (passed) {
+        playToneSequence([1]);
+      } else {
+        playToneSequence([4]);
+      }
+
       let nextQueue: string[];
       let nextPassed = session.passedIds;
       if (passed) {
@@ -175,8 +186,15 @@ export function ReviewPage() {
   );
 
   useKeyDown((event) => {
-    if (phase !== 'drill' || event.metaKey || event.ctrlKey || event.altKey) return;
+    if (event.metaKey || event.ctrlKey || event.altKey) return;
     if (event.repeat) return;
+
+    if (phase === 'intro' && event.key === 'Enter') {
+      startSession();
+      return;
+    }
+
+    if (phase !== 'drill') return;
 
     if (event.code === 'Space') {
       event.preventDefault();
@@ -238,48 +256,75 @@ export function ReviewPage() {
 
   if (phase === 'intro') {
     return (
-      <div className="reveal mx-auto max-w-2xl py-6">
-        <p className="flex items-center gap-1.5 font-mono text-xs font-medium uppercase tracking-[0.1em] text-emerald-700 dark:text-emerald-400">
-          <Layers className="h-3.5 w-3.5" aria-hidden />
-          Modus 5 · Wiederholen
-        </p>
-        <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Fälligkeits-Drill</h1>
-        <p className="mt-5 max-w-prose text-base leading-relaxed text-zinc-500 dark:text-zinc-400">
-          Der klassische Karteikarten-Lauf: Zeichen ansehen, selbst prüfen und ehrlich benoten.
-          Dein Urteil fließt direkt ins SM-2 ein.
-        </p>
-
-        <div className="mt-8 grid grid-cols-3 gap-4">
-          {[
-            { label: 'Überfällig', value: introSummary.dueCount },
-            { label: 'Neu', value: introSummary.freshCount },
-            { label: 'Gesamt', value: introSummary.dueCount + introSummary.freshCount },
-          ].map((stat) => (
-            <div
-              key={stat.label}
-              className="rounded-[1.5rem] border border-zinc-200/70 bg-white p-4 shadow-whisper dark:border-white/[0.06] dark:bg-zinc-900"
-            >
-              <p className="text-xs font-semibold uppercase tracking-[0.08em] text-zinc-500 dark:text-zinc-400">
-                {stat.label}
-              </p>
-              <p className="mt-1 font-mono text-2xl font-bold tabular-nums">{stat.value}</p>
-            </div>
-          ))}
+      <div className="reveal mx-auto max-w-2xl space-y-6 py-6">
+        <div className="flex items-center gap-2.5">
+          <SealBadge sealChar="复" label="SRS-WIEDERHOLUNG" variant="jade" />
+          <span className="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+            Fälligkeits-Drill
+          </span>
         </div>
 
-        <button
-          type="button"
-          onClick={startSession}
-          className="mt-10 inline-flex h-12 items-center rounded-xl bg-emerald-600 px-7 text-sm font-semibold text-white transition-all duration-200 ease-[var(--ease-spring)] hover:bg-emerald-500 active:translate-y-px focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
-        >
-          Warteschlange starten ({introSummary.dueCount + introSummary.freshCount} Karten)
-        </button>
+        <section className="double-bezel-casing shadow-whisper">
+          <div className="double-bezel-core p-7 sm:p-10 space-y-6 relative">
+            <span className="watermark-glyph">复</span>
 
-        <ul className="mt-8 max-w-prose space-y-3 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
-          <li className="flex gap-3"><span className="font-mono font-semibold text-emerald-700 dark:text-emerald-400">01</span>Überfällige Karten zuerst – das längst Fälligste ganz vorn.</li>
-          <li className="flex gap-3"><span className="font-mono font-semibold text-emerald-700 dark:text-emerald-400">02</span>„Vergessen“ hängt die Karte ans Ende der Runde, bis du sie korrekt benotest.</li>
-          <li className="flex gap-3"><span className="font-mono font-semibold text-emerald-700 dark:text-emerald-400">03</span>Ehrlich benoten lohnt: zu großzügige Grade überschätzen dein Intervall.</li>
-        </ul>
+            <div className="space-y-2 relative">
+              <h1 className="text-3xl font-black tracking-tight sm:text-4xl text-zinc-900 dark:text-zinc-50">
+                Fälligkeits-Drill
+              </h1>
+              <p className="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+                Der klassische Karteikarten-Lauf: Zeichen ansehen, selbst prüfen und ehrlich benoten.
+                Dein Urteil fließt direkt ins SM-2-Spaced-Repetition-System ein.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-3 gap-3 relative">
+              {[
+                { label: 'Überfällig', value: introSummary.dueCount },
+                { label: 'Neu', value: introSummary.freshCount },
+                { label: 'Gesamt', value: introSummary.dueCount + introSummary.freshCount },
+              ].map((stat) => (
+                <div
+                  key={stat.label}
+                  className="rounded-2xl border border-zinc-200/80 bg-zinc-50/70 p-4 text-center dark:border-white/10 dark:bg-zinc-950/50"
+                >
+                  <p className="text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                    {stat.label}
+                  </p>
+                  <p className="mt-1 font-mono text-2xl font-black tabular-nums text-zinc-900 dark:text-zinc-100">
+                    {stat.value}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            <div className="pt-2 relative">
+              <KineticButton
+                variant="primary"
+                onClick={startSession}
+                shortcut="[Enter]"
+                icon={<ArrowRight className="h-4 w-4" />}
+              >
+                Warteschlange starten ({introSummary.dueCount + introSummary.freshCount} Karten)
+              </KineticButton>
+            </div>
+
+            <ul className="space-y-2.5 text-xs leading-relaxed text-zinc-600 dark:text-zinc-300 relative border-t border-zinc-100 pt-4 dark:border-white/[0.05]">
+              <li className="flex gap-3">
+                <span className="font-mono font-bold text-emerald-700 dark:text-emerald-400">01</span>
+                <span>Überfällige Karten zuerst – das längst Fälligste ganz vorn.</span>
+              </li>
+              <li className="flex gap-3">
+                <span className="font-mono font-bold text-emerald-700 dark:text-emerald-400">02</span>
+                <span>„Vergessen“ hängt die Karte ans Ende der Runde, bis du sie korrekt benotest.</span>
+              </li>
+              <li className="flex gap-3">
+                <span className="font-mono font-bold text-emerald-700 dark:text-emerald-400">03</span>
+                <span>Ehrlich benoten lohnt: zu großzügige Grade überschätzen dein Intervall.</span>
+              </li>
+            </ul>
+          </div>
+        </section>
       </div>
     );
   }
@@ -308,17 +353,22 @@ export function ReviewPage() {
 
   return (
     <div className="mx-auto max-w-3xl space-y-6" aria-live="polite">
-      <div className="reveal flex items-end justify-between gap-4" style={{ '--index': 0 } as CSSProperties}>
-        <div>
-          <p className="font-mono text-xs font-medium uppercase tracking-[0.1em] text-emerald-700 dark:text-emerald-400">
-            Karte {completed + 1}/{session.initialTotal}
-            {session.requeueCount > 0 && ` · ${session.requeueCount}× wiederholt`}
-          </p>
-          <h1 className="mt-1 text-2xl font-bold tracking-tight">Was bedeutet dieses Zeichen?</h1>
+      <div className="reveal flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4" style={{ '--index': 0 } as CSSProperties}>
+        <div className="space-y-1">
+          <div className="flex items-center gap-2.5">
+            <SealBadge sealChar="复" label="SRS-WIEDERHOLUNG" variant="jade" />
+            <span className="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+              Karte {completed + 1} / {session.initialTotal}
+              {session.requeueCount > 0 && ` · ${session.requeueCount}× wiederholt`}
+            </span>
+          </div>
+          <h1 className="text-2xl font-black tracking-tight sm:text-3xl text-zinc-900 dark:text-zinc-50">
+            Was bedeutet dieses Zeichen?
+          </h1>
         </div>
-        <p className="font-mono text-sm tabular-nums text-zinc-500 dark:text-zinc-400">
-          {completed}/{session.initialTotal} erledigt
-        </p>
+        <span className="rounded-full border border-zinc-200/80 bg-white/90 px-3.5 py-1.5 font-mono text-xs font-bold tabular-nums text-zinc-600 dark:border-white/10 dark:bg-zinc-900/90 dark:text-zinc-300">
+          {completed} / {session.initialTotal} erledigt
+        </span>
       </div>
 
       <div
@@ -337,76 +387,80 @@ export function ReviewPage() {
       </div>
 
       <section
-        className="reveal rounded-[2.5rem] border border-zinc-200/70 bg-white p-7 shadow-whisper sm:p-9 dark:border-white/[0.06] dark:bg-zinc-900"
+        className="reveal double-bezel-casing shadow-whisper"
         style={{ '--index': 2 } as CSSProperties}
       >
-        <div className="relative">
-          <button
-            type="button"
-            onClick={playCurrent}
-            aria-label="Wort anhören"
-            title="Wort anhören (r)"
-            className="absolute right-0 top-0 flex h-11 w-11 items-center justify-center rounded-xl border border-zinc-200/80 bg-zinc-50 text-zinc-600 transition-all duration-200 hover:border-emerald-600/35 hover:bg-emerald-500/10 hover:text-emerald-700 active:translate-y-px dark:border-white/[0.08] dark:bg-zinc-950/50 dark:text-zinc-300 dark:hover:border-emerald-400/30 dark:hover:text-emerald-400"
-          >
-            <Volume2 className="h-5 w-5" aria-hidden />
-          </button>
+        <div className="double-bezel-core p-7 sm:p-10 space-y-6 relative">
+          <span className="watermark-glyph">复</span>
 
-          {!revealed ? (
+          <div className="relative">
             <button
               type="button"
-              onClick={() => setRevealedTrue()}
-              className="group flex w-full flex-col items-center justify-center py-14 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-600"
-              aria-label="Karte aufdecken"
+              onClick={playCurrent}
+              aria-label="Wort anhören"
+              title="Wort anhören (r)"
+              className="absolute right-0 top-0 flex h-11 w-11 items-center justify-center rounded-xl border border-zinc-200/80 bg-zinc-50 text-zinc-600 transition-all duration-200 hover:border-emerald-600/35 hover:bg-emerald-500/10 hover:text-emerald-700 active:translate-y-px dark:border-white/[0.08] dark:bg-zinc-950/50 dark:text-zinc-300 dark:hover:border-emerald-400/30 dark:hover:text-emerald-400 cursor-pointer"
             >
-              <span className="font-cjk text-6xl font-semibold tracking-wide sm:text-7xl">
-                {currentItem.hanzi}
-              </span>
-              <span className="mt-8 rounded-full border border-dashed border-zinc-300 px-4 py-1.5 font-mono text-xs text-zinc-400 transition-colors group-hover:border-emerald-600/50 group-hover:text-emerald-700 dark:border-white/[0.12] dark:text-zinc-500 dark:group-hover:text-emerald-400">
-                Leertaste zum Aufdecken
-              </span>
+              <Volume2 className="h-5 w-5" aria-hidden />
             </button>
-          ) : (
-            <div className="reveal animate-pop-in flex flex-col items-center py-8 text-center">
-              <span className="font-cjk text-4xl font-semibold">{currentItem.hanzi}</span>
-              <span className="mt-4 font-mono text-2xl font-bold tracking-tight text-emerald-700 dark:text-emerald-400">
-                {currentItem.pinyin}
-              </span>
-              <span className="mt-2 text-lg text-zinc-800 dark:text-zinc-100">{currentItem.meaning}</span>
-              {currentItem.notes && (
-                <span className="mt-3 max-w-prose text-xs italic text-zinc-400 dark:text-zinc-500">
-                  {currentItem.notes}
+
+            {!revealed ? (
+              <button
+                type="button"
+                onClick={() => setRevealedTrue()}
+                className="group flex w-full flex-col items-center justify-center py-14 cursor-pointer select-none relative"
+                aria-label="Karte aufdecken"
+              >
+                <span className="font-cjk text-6xl font-black tracking-wide sm:text-7xl text-zinc-900 dark:text-zinc-50 group-hover:scale-105 transition-transform duration-200">
+                  {currentItem.hanzi}
                 </span>
-              )}
+                <span className="mt-8 rounded-full border border-zinc-300 dark:border-white/15 px-4 py-1.5 font-mono text-xs text-zinc-500 transition-colors group-hover:border-emerald-600/50 group-hover:text-emerald-700 dark:text-zinc-400 dark:group-hover:text-emerald-400 font-semibold">
+                  Leertaste zum Aufdecken
+                </span>
+              </button>
+            ) : (
+              <div className="reveal animate-pop-in flex flex-col items-center py-6 text-center relative space-y-3">
+                <span className="font-cjk text-5xl font-black text-zinc-900 dark:text-zinc-50">{currentItem.hanzi}</span>
+                <span className="font-mono text-2xl font-bold tracking-tight text-emerald-700 dark:text-emerald-400">
+                  {currentItem.pinyin}
+                </span>
+                <span className="text-xl font-medium text-zinc-800 dark:text-zinc-100">{currentItem.meaning}</span>
+                {currentItem.notes && (
+                  <span className="mt-1 max-w-prose text-xs italic text-zinc-400 dark:text-zinc-500">
+                    {currentItem.notes}
+                  </span>
+                )}
 
-              <div className="mt-10 grid w-full grid-cols-2 gap-3 sm:grid-cols-4">
-                {GRADE_OPTIONS.map((option, i) => (
-                  <button
-                    key={option.grade}
-                    type="button"
-                    onClick={() => grade(i)}
-                    className={`relative flex h-20 flex-col items-center justify-center gap-0.5 rounded-[1.25rem] border transition-all duration-150 ease-[var(--ease-spring)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 ${option.styleClass}`}
-                  >
-                    <span className="absolute left-2 top-1.5 font-mono text-[10px] text-current opacity-60">
-                      {i + 1}
-                    </span>
-                    <span className="text-sm font-bold">{option.label}</span>
-                    <span className="text-[11px] opacity-70">{option.sublabel}</span>
-                  </button>
-                ))}
+                <div className="mt-8 grid w-full grid-cols-2 gap-3 sm:grid-cols-4">
+                  {GRADE_OPTIONS.map((option, i) => (
+                    <button
+                      key={option.grade}
+                      type="button"
+                      onClick={() => grade(i)}
+                      className={`relative flex h-20 flex-col items-center justify-center gap-0.5 rounded-2xl border-2 transition-all duration-150 cursor-pointer select-none active:scale-95 ${option.styleClass}`}
+                    >
+                      <span className="absolute left-2.5 top-2 font-mono text-[10px] font-bold text-current opacity-70">
+                        [{i + 1}]
+                      </span>
+                      <span className="text-sm font-bold">{option.label}</span>
+                      <span className="text-[11px] opacity-80">{option.sublabel}</span>
+                    </button>
+                  ))}
+                </div>
               </div>
-            </div>
-          )}
-        </div>
+            )}
+          </div>
 
-        <div className="mt-6">
-          <KeyHints
-            hints={[
-              ...(revealed
-                ? ([['1–4', 'Bewerten'], ['↵', '„Gut“']] as [string, string][])
-                : ([['␣', 'Aufdecken']] as [string, string][])),
-              ['R', 'Audio'],
-            ]}
-          />
+          <div className="pt-3 border-t border-zinc-100 dark:border-white/[0.05] flex justify-center">
+            <KeyHints
+              hints={[
+                ...(revealed
+                  ? ([['1–4', 'Bewerten'], ['↵ Enter', '„Gut“']] as [string, string][])
+                  : ([['␣', 'Aufdecken']] as [string, string][])),
+                ['R', 'Audio anhören'],
+              ]}
+            />
+          </div>
         </div>
       </section>
     </div>
