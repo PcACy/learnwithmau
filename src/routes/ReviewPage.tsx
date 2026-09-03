@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { CSSProperties } from 'react';
-import { ArrowRight, CheckCircle2, Volume2 } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Volume2, Layers } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import type { SrsGrade } from '../types/srs';
 import type { VocabItem } from '../types/vocab';
-import { VOCAB_BY_ID } from '../data';
+import { VOCAB_BY_ID, THEMATIC_DECKS, getThematicDeck } from '../data';
 import { buildReviewQueue, summarizeQueue } from '../lib/reviewQueue';
 import { playAsset, playToneSequence, stopCurrentAudio } from '../lib/audio';
 import { useKeyDown } from '../hooks/useKeyDown';
@@ -49,7 +49,7 @@ const GRADE_OPTIONS: readonly GradeOption[] = [
   {
     grade: 5,
     label: 'Leicht',
-    sublabel:'sofort gewusst',
+    sublabel: 'sofort gewusst',
     styleClass:
       'bg-emerald-600 border border-emerald-600 text-white hover:-translate-y-0.5 hover:bg-emerald-500 dark:border-emerald-500 dark:text-zinc-950 active:translate-y-0',
   },
@@ -64,6 +64,8 @@ interface SessionState {
   initialTotal: number;
   sessionStartedAt: number;
   finishedAt: number | null;
+  deckTitle: string;
+  deckTag: string;
 }
 
 export function ReviewPage() {
@@ -71,15 +73,49 @@ export function ReviewPage() {
   const review = useProgressStore((s) => s.review);
   const logSession = useProgressStore((s) => s.logSession);
 
+  const [selectedDeckId, setSelectedDeckId] = useState<string>('all');
+  const [freshLimit, setFreshLimit] = useState<number | 'all'>(10);
+
   const allItemIds = useMemo(() => [...VOCAB_BY_ID.keys()], []);
-  const introSummary = useMemo(
-    () => summarizeQueue(cards, allItemIds, new Date()),
-    [cards, allItemIds],
+
+  const selectedDeck = useMemo(
+    () => (selectedDeckId === 'all' ? null : getThematicDeck(selectedDeckId)),
+    [selectedDeckId],
   );
 
-  const [phase, setPhase] = useState<Phase>(
-    introSummary.dueCount + introSummary.freshCount === 0 ? 'empty' : 'intro',
+  const activeItemIds = useMemo(
+    () => (selectedDeck ? selectedDeck.itemIds : allItemIds),
+    [selectedDeck, allItemIds],
   );
+
+  const now = useMemo(() => new Date(), []);
+
+  const masterSummary = useMemo(
+    () => summarizeQueue(cards, allItemIds, now),
+    [cards, allItemIds, now],
+  );
+
+  const deckSummaries = useMemo(() => {
+    const map = new Map<string, ReturnType<typeof summarizeQueue>>();
+    for (const d of THEMATIC_DECKS) {
+      map.set(d.id, summarizeQueue(cards, d.itemIds, now));
+    }
+    return map;
+  }, [cards, now]);
+
+  const currentSummary = useMemo(
+    () => (selectedDeckId === 'all' ? masterSummary : (deckSummaries.get(selectedDeckId) ?? masterSummary)),
+    [selectedDeckId, masterSummary, deckSummaries],
+  );
+
+  const effectiveMaxFresh = freshLimit === 'all' ? undefined : freshLimit;
+  const queuedFreshCount = Math.min(
+    currentSummary.freshCount,
+    typeof effectiveMaxFresh === 'number' ? effectiveMaxFresh : currentSummary.freshCount,
+  );
+  const plannedSessionTotal = currentSummary.dueCount + queuedFreshCount;
+
+  const [phase, setPhase] = useState<Phase>('intro');
   const [session, setSession] = useState<SessionState | null>(null);
 
   const currentId = session?.queue[0] ?? null;
@@ -92,8 +128,8 @@ export function ReviewPage() {
   }, []);
 
   const startSession = useCallback(() => {
-    const now = new Date();
-    const built = buildReviewQueue(cards, allItemIds, now);
+    const nowDate = new Date();
+    const built = buildReviewQueue(cards, activeItemIds, nowDate, effectiveMaxFresh);
     const queue = [...built.overdueStudied, ...built.fresh];
     if (queue.length === 0) {
       setPhase('empty');
@@ -108,9 +144,11 @@ export function ReviewPage() {
       initialTotal: queue.length,
       sessionStartedAt: Date.now(),
       finishedAt: null,
+      deckTitle: selectedDeck ? selectedDeck.title : 'Gesamt-Deck',
+      deckTag: selectedDeck ? selectedDeck.hanziTag : '全',
     });
     setPhase('drill');
-  }, [cards, allItemIds]);
+  }, [cards, activeItemIds, effectiveMaxFresh, selectedDeck]);
 
   const playCurrent = useCallback(() => {
     if (!currentItem) return;
@@ -190,7 +228,9 @@ export function ReviewPage() {
     if (event.repeat) return;
 
     if (phase === 'intro' && event.key === 'Enter') {
-      startSession();
+      if (plannedSessionTotal > 0) {
+        startSession();
+      }
       return;
     }
 
@@ -198,21 +238,33 @@ export function ReviewPage() {
 
     if (event.code === 'Space') {
       event.preventDefault();
-      setRevealedTrue();
+      if (!revealed) {
+        setRevealedTrue();
+      } else {
+        playCurrent();
+      }
       return;
     }
-    if (event.key === 'r' || event.key === 'R') {
+
+    if (!revealed) {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        setRevealedTrue();
+      }
+      return;
+    }
+
+    if (event.key === 'Enter') {
       event.preventDefault();
-      playCurrent();
+      grade(2); // Standard-Bestätigung: Gut (Grade 4)
       return;
     }
-    if (event.key === 'Enter' && revealed) {
-      grade(2); // Standard-Urteil „Gut" für schnelles Weiterklicken
-      return;
+
+    const keyNum = Number(event.key);
+    if (keyNum >= 1 && keyNum <= GRADE_OPTIONS.length) {
+      event.preventDefault();
+      grade(keyNum - 1);
     }
-    if (!revealed) return;
-    const digit = Number.parseInt(event.key, 10);
-    if (digit >= 1 && digit <= GRADE_OPTIONS.length) grade(digit - 1);
   });
 
   function setRevealedTrue() {
@@ -220,18 +272,6 @@ export function ReviewPage() {
   }
 
   if (phase === 'empty') {
-    const formatter = new Intl.DateTimeFormat('de-DE', {
-      weekday: 'short',
-      day: 'numeric',
-      month: 'short',
-    });
-    const nextDue = introSummary.nextDueDate
-      ? (() => {
-          const [y, m, d] = introSummary.nextDueDate.split('-').map(Number);
-          return formatter.format(new Date(y, m - 1, d));
-        })()
-      : null;
-
     return (
       <div className="reveal mx-auto max-w-xl py-16 text-center">
         <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-3xl bg-emerald-500/10 text-emerald-700 dark:text-emerald-400">
@@ -239,90 +279,214 @@ export function ReviewPage() {
         </span>
         <h1 className="mt-6 text-3xl font-bold tracking-tight">Alles wiederholt!</h1>
         <p className="mx-auto mt-3 max-w-prose text-sm leading-relaxed text-zinc-500 dark:text-zinc-400">
-          Keine Karte ist heute fällig.
-          {nextDue
-            ? ` Die nächste Karte wird am ${nextDue} wieder fällig – oder trainiere bis dahin in einem der anderen Modi.`
-            : ' Leere den Katalog mit einem Durchlauf im Ear-Trainer oder TypeRacer.'}
+          Für das gewählte Deck sind heute keine Karten fällig und keine neuen Karten zur Einführung ausgewählt.
         </p>
-        <Link
-          to="/"
-          className="mt-8 inline-flex h-12 items-center rounded-xl bg-emerald-600 px-7 text-sm font-semibold text-white transition-all duration-200 ease-[var(--ease-spring)] hover:bg-emerald-500 active:translate-y-px focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
-        >
-          Zu den Trainingsmodi
-        </Link>
+        <div className="mt-8 flex items-center justify-center gap-4">
+          <button
+            type="button"
+            onClick={() => setPhase('intro')}
+            className="inline-flex h-12 items-center rounded-xl bg-emerald-600 px-7 text-sm font-semibold text-white transition-all duration-200 ease-[var(--ease-spring)] hover:bg-emerald-500 active:translate-y-px cursor-pointer"
+          >
+            Zur Deck-Auswahl
+          </button>
+          <Link
+            to="/"
+            className="inline-flex h-12 items-center rounded-xl border border-zinc-300 dark:border-white/10 px-6 text-sm font-semibold text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+          >
+            Zu den Trainingsmodi
+          </Link>
+        </div>
       </div>
     );
   }
 
   if (phase === 'intro') {
     return (
-      <div className="reveal mx-auto max-w-2xl space-y-6 py-6">
-        <div className="flex items-center gap-2.5">
-          <SealBadge sealChar="复" label="SRS-WIEDERHOLUNG" variant="jade" />
-          <span className="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
-            Fälligkeits-Drill
-          </span>
+      <div className="reveal mx-auto max-w-4xl space-y-6 py-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="flex items-center gap-2.5">
+            <SealBadge sealChar="复" label="SPACED REPETITION" variant="jade" />
+            <span className="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+              Thematische Wiederholung
+            </span>
+          </div>
+
+          <div className="flex items-center gap-2.5">
+            <span className="font-mono text-xs font-semibold text-zinc-600 dark:text-zinc-400">
+              Neue Vokabeln / Runde:
+            </span>
+            <div className="flex items-center rounded-xl bg-zinc-100 p-1 dark:bg-zinc-800 border border-zinc-200/60 dark:border-white/5">
+              {([5, 10, 15, 'all'] as const).map((limit) => (
+                <button
+                  key={String(limit)}
+                  type="button"
+                  onClick={() => setFreshLimit(limit)}
+                  className={`rounded-lg px-3 py-1 font-mono text-xs font-bold transition-all cursor-pointer ${
+                    freshLimit === limit
+                      ? 'bg-white text-emerald-700 shadow-xs dark:bg-zinc-900 dark:text-emerald-400'
+                      : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200'
+                  }`}
+                >
+                  {limit === 'all' ? 'Alle' : `+${limit}`}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
 
-        <section className="double-bezel-casing shadow-whisper">
-          <div className="double-bezel-core p-7 sm:p-10 space-y-6 relative">
-            <span className="watermark-glyph">复</span>
-
-            <div className="space-y-2 relative">
-              <h1 className="text-3xl font-black tracking-tight sm:text-4xl text-zinc-900 dark:text-zinc-50">
-                Fälligkeits-Drill
-              </h1>
-              <p className="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-                Der klassische Karteikarten-Lauf: Zeichen ansehen, selbst prüfen und ehrlich benoten.
-                Dein Urteil fließt direkt ins SM-2-Spaced-Repetition-System ein.
+        {/* Master-Deck: Alle fälligen Karten */}
+        <button
+          type="button"
+          onClick={() => setSelectedDeckId('all')}
+          className={`w-full text-left rounded-3xl border-2 transition-all p-5 sm:p-6 cursor-pointer relative overflow-hidden ${
+            selectedDeckId === 'all'
+              ? 'border-emerald-600 bg-emerald-50/50 dark:border-emerald-500 dark:bg-emerald-950/20 shadow-md ring-2 ring-emerald-500/20'
+              : 'border-zinc-200/80 bg-white hover:border-zinc-300 dark:border-white/10 dark:bg-zinc-900 dark:hover:border-white/20'
+          }`}
+        >
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div className="space-y-1.5">
+              <div className="flex items-center gap-2.5">
+                <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-600 font-cjk text-lg font-black text-white shadow-xs">
+                  全
+                </span>
+                <h2 className="text-lg font-bold text-zinc-900 dark:text-zinc-100">
+                  Gesamt-Deck (Alle 163 Vokabeln)
+                </h2>
+                {selectedDeckId === 'all' && (
+                  <span className="rounded-full bg-emerald-600/10 px-2.5 py-0.5 text-[10px] font-bold text-emerald-700 dark:text-emerald-400 border border-emerald-600/20">
+                    Aktiv gewählt
+                  </span>
+                )}
+              </div>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400 max-w-xl">
+                Tägliches Komplett-Review: Wiederholt alle fälligen Karten über alle 10 Themenbereiche hinweg.
               </p>
             </div>
 
-            <div className="grid grid-cols-3 gap-3 relative">
-              {[
-                { label: 'Überfällig', value: introSummary.dueCount },
-                { label: 'Neu', value: introSummary.freshCount },
-                { label: 'Gesamt', value: introSummary.dueCount + introSummary.freshCount },
-              ].map((stat) => (
-                <div
-                  key={stat.label}
-                  className="rounded-2xl border border-zinc-200/80 bg-zinc-50/70 p-4 text-center dark:border-white/10 dark:bg-zinc-950/50"
+            <div className="flex shrink-0 items-center gap-2 self-start sm:self-center">
+              <span className={`rounded-xl px-3 py-1.5 font-mono text-xs font-bold ${
+                masterSummary.dueCount > 0
+                  ? 'bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/25'
+                  : 'bg-zinc-100 text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400'
+              }`}>
+                {masterSummary.dueCount} fällig
+              </span>
+              <span className="rounded-xl bg-zinc-100 px-3 py-1.5 font-mono text-xs font-bold text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300">
+                {masterSummary.freshCount} neu
+              </span>
+            </div>
+          </div>
+        </button>
+
+        {/* Thematische Decks Grid */}
+        <div className="space-y-3">
+          <div className="flex items-center justify-between">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-600 dark:text-zinc-400 flex items-center gap-1.5">
+              <Layers className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+              Thematische Decks ({THEMATIC_DECKS.length})
+            </h3>
+            <span className="text-xs text-zinc-500 dark:text-zinc-400">
+              Wähle ein Thema für eine fokussierte Einheit
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+            {THEMATIC_DECKS.map((deck) => {
+              const summary = deckSummaries.get(deck.id);
+              const isSelected = selectedDeckId === deck.id;
+              const due = summary?.dueCount ?? 0;
+              const fresh = summary?.freshCount ?? 0;
+              const learned = deck.itemIds.length - fresh;
+              const pct = Math.round((learned / deck.itemIds.length) * 100);
+
+              return (
+                <button
+                  key={deck.id}
+                  type="button"
+                  onClick={() => setSelectedDeckId(deck.id)}
+                  className={`text-left rounded-2xl border-2 p-4 sm:p-5 transition-all cursor-pointer flex flex-col justify-between gap-3 relative ${
+                    isSelected
+                      ? 'border-emerald-600 bg-emerald-50/40 shadow-sm dark:border-emerald-500 dark:bg-emerald-950/20 ring-2 ring-emerald-500/20'
+                      : 'border-zinc-200/80 bg-white hover:border-zinc-300 hover:shadow-xs dark:border-white/10 dark:bg-zinc-900 dark:hover:border-white/20'
+                  }`}
                 >
-                  <p className="text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
-                    {stat.label}
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex items-center gap-2.5">
+                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-zinc-100 dark:bg-zinc-800 font-cjk text-lg font-black text-zinc-800 dark:text-zinc-100 border border-zinc-200 dark:border-white/10">
+                        {deck.hanziTag}
+                      </span>
+                      <div>
+                        <h4 className="text-sm font-bold text-zinc-900 dark:text-zinc-100">
+                          {deck.title}
+                        </h4>
+                        <span className="font-mono text-[11px] text-zinc-500 dark:text-zinc-400">
+                          {deck.itemIds.length} Vokabeln
+                        </span>
+                      </div>
+                    </div>
+
+                    {isSelected && (
+                      <span className="rounded-full bg-emerald-600 text-white p-1 shadow-xs">
+                        <CheckCircle2 className="h-4 w-4" />
+                      </span>
+                    )}
+                  </div>
+
+                  <p className="text-xs text-zinc-500 dark:text-zinc-400 line-clamp-2 leading-relaxed">
+                    {deck.description}
                   </p>
-                  <p className="mt-1 font-mono text-2xl font-black tabular-nums text-zinc-900 dark:text-zinc-100">
-                    {stat.value}
-                  </p>
-                </div>
-              ))}
+
+                  <div className="flex items-center gap-2 pt-2 border-t border-zinc-100 dark:border-white/[0.05]">
+                    <span className={`rounded-lg px-2 py-0.5 font-mono text-[11px] font-bold ${
+                      due > 0
+                        ? 'bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/25'
+                        : 'bg-zinc-100 text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400'
+                    }`}>
+                      {due} fällig
+                    </span>
+                    <span className="rounded-lg bg-zinc-100 dark:bg-zinc-800 px-2 py-0.5 font-mono text-[11px] text-zinc-600 dark:text-zinc-400">
+                      {fresh} neu
+                    </span>
+                    <span className="ml-auto font-mono text-[11px] text-zinc-400">
+                      {pct}% gelernt
+                    </span>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Start-Aktionsleiste */}
+        <section className="double-bezel-casing shadow-whisper">
+          <div className="double-bezel-core p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 relative">
+            <span className="watermark-glyph">复</span>
+            <div className="space-y-1 relative">
+              <p className="font-mono text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
+                Ausgewählt: {selectedDeck ? selectedDeck.title : 'Gesamt-Deck'}
+              </p>
+              <h3 className="text-xl font-black text-zinc-900 dark:text-zinc-100">
+                {plannedSessionTotal === 0
+                  ? 'Alle Karten in diesem Deck sind aktuell gelernt!'
+                  : `${plannedSessionTotal} Karten in dieser Runde bereit`}
+              </h3>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400">
+                {currentSummary.dueCount} fällige Wiederholungen + {queuedFreshCount} neue Vokabeln
+              </p>
             </div>
 
-            <div className="pt-2 relative">
+            <div className="relative shrink-0">
               <KineticButton
                 variant="primary"
                 onClick={startSession}
                 shortcut="[Enter]"
+                disabled={plannedSessionTotal === 0}
                 icon={<ArrowRight className="h-4 w-4" />}
               >
-                Warteschlange starten ({introSummary.dueCount + introSummary.freshCount} Karten)
+                Runde starten ({plannedSessionTotal} Karten)
               </KineticButton>
             </div>
-
-            <ul className="space-y-2.5 text-xs leading-relaxed text-zinc-600 dark:text-zinc-300 relative border-t border-zinc-100 pt-4 dark:border-white/[0.05]">
-              <li className="flex gap-3">
-                <span className="font-mono font-bold text-emerald-700 dark:text-emerald-400">01</span>
-                <span>Überfällige Karten zuerst – das längst Fälligste ganz vorn.</span>
-              </li>
-              <li className="flex gap-3">
-                <span className="font-mono font-bold text-emerald-700 dark:text-emerald-400">02</span>
-                <span>„Vergessen“ hängt die Karte ans Ende der Runde, bis du sie korrekt benotest.</span>
-              </li>
-              <li className="flex gap-3">
-                <span className="font-mono font-bold text-emerald-700 dark:text-emerald-400">03</span>
-                <span>Ehrlich benoten lohnt: zu großzügige Grade überschätzen dein Intervall.</span>
-              </li>
-            </ul>
           </div>
         </section>
       </div>
@@ -336,12 +500,15 @@ export function ReviewPage() {
       <SessionSummary
         headline={passRatio >= 0.85 && session.requeueCount === 0 ? 'Sauber wiederholt!' : 'Runde abgeschlossen'}
         stats={[
+          { label: 'Deck', value: session.deckTitle },
           { label: 'Karten', value: `${session.passedIds.size}/${session.initialTotal}` },
           { label: 'Bewertungen', value: String(session.gradedTotal) },
           { label: 'Dauer', value: `${minutes.toFixed(1)} min` },
         ]}
         onRestart={startSession}
-        restartLabel="Nächste Runde"
+        restartLabel="Nächste Runde in diesem Deck"
+        onSecondaryAction={() => setPhase('intro')}
+        secondaryLabel="Zurück zur Deck-Auswahl"
       />
     );
   }
@@ -356,7 +523,7 @@ export function ReviewPage() {
       <div className="reveal flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4" style={{ '--index': 0 } as CSSProperties}>
         <div className="space-y-1">
           <div className="flex items-center gap-2.5">
-            <SealBadge sealChar="复" label="SRS-WIEDERHOLUNG" variant="jade" />
+            <SealBadge sealChar={session.deckTag} label={session.deckTitle.toUpperCase()} variant="jade" />
             <span className="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
               Karte {completed + 1} / {session.initialTotal}
               {session.requeueCount > 0 && ` · ${session.requeueCount}× wiederholt`}
@@ -386,83 +553,102 @@ export function ReviewPage() {
         />
       </div>
 
-      <section
-        className="reveal double-bezel-casing shadow-whisper"
-        style={{ '--index': 2 } as CSSProperties}
-      >
-        <div className="double-bezel-core p-7 sm:p-10 space-y-6 relative">
-          <span className="watermark-glyph">复</span>
+      <div className="reveal double-bezel-casing shadow-whisper" style={{ '--index': 2 } as CSSProperties}>
+        <div className="double-bezel-core p-8 sm:p-14 text-center space-y-8 relative">
+          <span className="watermark-glyph">{session.deckTag}</span>
 
           <div className="relative">
-            <button
-              type="button"
-              onClick={playCurrent}
-              aria-label="Wort anhören"
-              title="Wort anhören (r)"
-              className="absolute right-0 top-0 flex h-11 w-11 items-center justify-center rounded-xl border border-zinc-200/80 bg-zinc-50 text-zinc-600 transition-all duration-200 hover:border-emerald-600/35 hover:bg-emerald-500/10 hover:text-emerald-700 active:translate-y-px dark:border-white/[0.08] dark:bg-zinc-950/50 dark:text-zinc-300 dark:hover:border-emerald-400/30 dark:hover:text-emerald-400 cursor-pointer"
-            >
-              <Volume2 className="h-5 w-5" aria-hidden />
-            </button>
+            <p className="font-cjk text-7xl sm:text-8xl font-black tracking-normal text-zinc-900 dark:text-zinc-50 select-none">
+              {currentItem.hanzi}
+            </p>
+          </div>
 
-            {!revealed ? (
+          <div className="relative min-h-[5.5rem] flex flex-col items-center justify-center">
+            {revealed ? (
+              <div className="reveal space-y-2">
+                <div className="flex items-center justify-center gap-2">
+                  <p className="font-mono text-2xl sm:text-3xl font-bold tracking-tight text-emerald-700 dark:text-emerald-400">
+                    {currentItem.pinyin}
+                  </p>
+                  <button
+                    type="button"
+                    onClick={playCurrent}
+                    aria-label="Aussprache abspielen"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-xl text-emerald-700 transition-colors hover:bg-emerald-500/15 dark:text-emerald-400 dark:hover:bg-emerald-500/20 active:translate-y-px cursor-pointer"
+                  >
+                    <Volume2 className="h-5 w-5" />
+                  </button>
+                </div>
+                <p className="text-lg sm:text-xl font-medium text-zinc-800 dark:text-zinc-200">
+                  {currentItem.meaning}
+                </p>
+              </div>
+            ) : (
               <button
                 type="button"
-                onClick={() => setRevealedTrue()}
-                className="group flex w-full flex-col items-center justify-center py-14 cursor-pointer select-none relative"
-                aria-label="Karte aufdecken"
+                onClick={setRevealedTrue}
+                className="group inline-flex items-center gap-2 rounded-2xl border border-zinc-200/80 bg-zinc-50/80 px-6 py-3 text-sm font-semibold text-zinc-700 transition-all duration-200 ease-[var(--ease-spring)] hover:-translate-y-0.5 hover:border-zinc-300 hover:bg-white dark:border-white/10 dark:bg-zinc-950/40 dark:text-zinc-200 dark:hover:border-white/20 active:translate-y-0 cursor-pointer shadow-xs"
               >
-                <span className="font-cjk text-6xl font-black tracking-wide sm:text-7xl text-zinc-900 dark:text-zinc-50 group-hover:scale-105 transition-transform duration-200">
-                  {currentItem.hanzi}
-                </span>
-                <span className="mt-8 rounded-full border border-zinc-300 dark:border-white/15 px-4 py-1.5 font-mono text-xs text-zinc-500 transition-colors group-hover:border-emerald-600/50 group-hover:text-emerald-700 dark:text-zinc-400 dark:group-hover:text-emerald-400 font-semibold">
-                  Leertaste zum Aufdecken
-                </span>
+                <span>Antwort aufdecken</span>
+                <kbd className="rounded-md bg-zinc-200/70 px-1.5 py-0.5 font-mono text-[10px] font-bold text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300">
+                  Space
+                </kbd>
               </button>
-            ) : (
-              <div className="reveal animate-pop-in flex flex-col items-center py-6 text-center relative space-y-3">
-                <span className="font-cjk text-5xl font-black text-zinc-900 dark:text-zinc-50">{currentItem.hanzi}</span>
-                <span className="font-mono text-2xl font-bold tracking-tight text-emerald-700 dark:text-emerald-400">
-                  {currentItem.pinyin}
-                </span>
-                <span className="text-xl font-medium text-zinc-800 dark:text-zinc-100">{currentItem.meaning}</span>
-                {currentItem.notes && (
-                  <span className="mt-1 max-w-prose text-xs italic text-zinc-400 dark:text-zinc-500">
-                    {currentItem.notes}
-                  </span>
-                )}
+            )}
+          </div>
 
-                <div className="mt-8 grid w-full grid-cols-2 gap-3 sm:grid-cols-4">
-                  {GRADE_OPTIONS.map((option, i) => (
+          <div className="border-t border-zinc-100 pt-6 dark:border-white/[0.05] relative">
+            {revealed ? (
+              <div className="space-y-3">
+                <p className="text-xs font-mono font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                  Wie gut konntest du dich erinnern?
+                </p>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                  {GRADE_OPTIONS.map((opt, idx) => (
                     <button
-                      key={option.grade}
+                      key={opt.grade}
                       type="button"
-                      onClick={() => grade(i)}
-                      className={`relative flex h-20 flex-col items-center justify-center gap-0.5 rounded-2xl border-2 transition-all duration-150 cursor-pointer select-none active:scale-95 ${option.styleClass}`}
+                      onClick={() => grade(idx)}
+                      className={`flex flex-col items-center justify-center rounded-2xl border p-3.5 text-center transition-all duration-200 ease-[var(--ease-spring)] cursor-pointer shadow-xs ${opt.styleClass}`}
                     >
-                      <span className="absolute left-2.5 top-2 font-mono text-[10px] font-bold text-current opacity-70">
-                        [{i + 1}]
-                      </span>
-                      <span className="text-sm font-bold">{option.label}</span>
-                      <span className="text-[11px] opacity-80">{option.sublabel}</span>
+                      <div className="flex items-center gap-1.5">
+                        <span className="font-mono text-xs font-bold opacity-60">[{idx + 1}]</span>
+                        <span className="text-sm font-bold">{opt.label}</span>
+                      </div>
+                      <span className="text-[11px] opacity-75 mt-0.5">{opt.sublabel}</span>
                     </button>
                   ))}
                 </div>
               </div>
+            ) : (
+              <p className="text-xs text-zinc-400 dark:text-zinc-500">
+                Drücke <kbd className="rounded bg-zinc-200/60 px-1.5 py-0.5 font-mono text-[10px] dark:bg-zinc-800">Leertaste</kbd> oder <kbd className="rounded bg-zinc-200/60 px-1.5 py-0.5 font-mono text-[10px] dark:bg-zinc-800">Enter</kbd> zum Aufdecken
+              </p>
             )}
           </div>
-
-          <div className="pt-3 border-t border-zinc-100 dark:border-white/[0.05] flex justify-center">
-            <KeyHints
-              hints={[
-                ...(revealed
-                  ? ([['1–4', 'Bewerten'], ['↵ Enter', '„Gut“']] as [string, string][])
-                  : ([['␣', 'Aufdecken']] as [string, string][])),
-                ['R', 'Audio anhören'],
-              ]}
-            />
-          </div>
         </div>
-      </section>
+      </div>
+
+      <div className="reveal flex items-center justify-between text-xs text-zinc-500 dark:text-zinc-400" style={{ '--index': 3 } as CSSProperties}>
+        <KeyHints
+          hints={
+            revealed
+              ? [
+                  ['1–4', 'Bewerten'],
+                  ['Enter', 'Gut'],
+                  ['Space', 'Audio'],
+                ]
+              : [['Space / Enter', 'Aufdecken']]
+          }
+        />
+        <button
+          type="button"
+          onClick={() => setPhase('intro')}
+          className="text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 transition-colors cursor-pointer"
+        >
+          Runde abbrechen
+        </button>
+      </div>
     </div>
   );
 }

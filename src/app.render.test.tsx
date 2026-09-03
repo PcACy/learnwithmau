@@ -29,7 +29,7 @@ const ROUTES: readonly [path: string, marker: string][] = [
   ['/typeracer', 'TYPERACER'],
   ['/alchemy', 'ALCHEMIE'],
   ['/number-drill', 'Session starten'],
-  ['/review', 'Fälligkeits-Drill'],
+  ['/review', 'Thematische Wiederholung'],
   ['/dictionary', 'Suchen'],
   ['/settings', 'Tagesziel'],
 ];

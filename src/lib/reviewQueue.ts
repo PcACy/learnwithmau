@@ -17,6 +17,7 @@ export function buildReviewQueue(
   cards: Record<string, SrsCard>,
   allItemIds: readonly string[],
   now: Date,
+  maxFresh?: number,
 ): ReviewQueue {
   const overdue: { id: string; dueDate: string }[] = [];
   const fresh: string[] = [];
@@ -32,7 +33,13 @@ export function buildReviewQueue(
 
   overdue.sort((a, b) => a.dueDate.localeCompare(b.dueDate));
 
-  return { overdueStudied: overdue.map((entry) => entry.id), fresh: shuffled(fresh) };
+  const shuffledFresh = shuffled(fresh);
+  const selectedFresh =
+    typeof maxFresh === 'number' && maxFresh >= 0
+      ? shuffledFresh.slice(0, maxFresh)
+      : shuffledFresh;
+
+  return { overdueStudied: overdue.map((entry) => entry.id), fresh: selectedFresh };
 }
 
 export interface QueueSummary {

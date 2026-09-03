@@ -9,6 +9,8 @@ interface SessionSummaryProps {
   stats: { label: string; value: string }[];
   onRestart(): void;
   restartLabel?: string;
+  onSecondaryAction?: () => void;
+  secondaryLabel?: string;
 }
 
 export function SessionSummary({
@@ -16,6 +18,8 @@ export function SessionSummary({
   stats,
   onRestart,
   restartLabel = 'Nochmal üben',
+  onSecondaryAction,
+  secondaryLabel = 'Zur Trainings-Zentrale',
 }: SessionSummaryProps) {
   const navigate = useNavigate();
 
@@ -78,10 +82,10 @@ export function SessionSummary({
 
             <KineticButton
               variant="secondary"
-              onClick={() => navigate('/')}
+              onClick={onSecondaryAction ?? (() => navigate('/'))}
               shortcut="[Esc]"
             >
-              Zur Trainings-Zentrale
+              {secondaryLabel}
             </KineticButton>
           </div>
         </div>

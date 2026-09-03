@@ -57,6 +57,19 @@ describe('buildReviewQueue', () => {
     expect(q.overdueStudied).toEqual([]);
     expect(q.fresh).toHaveLength(IDS.length);
   });
+
+  it('begrenzt neue Karten bei Angabe von maxFresh', () => {
+    const q1 = buildReviewQueue(baseCards(), IDS, NOW, 1);
+    expect(q1.overdueStudied).toEqual(['a', 'b', 'c']);
+    expect(q1.fresh).toHaveLength(1);
+
+    const q0 = buildReviewQueue(baseCards(), IDS, NOW, 0);
+    expect(q0.overdueStudied).toEqual(['a', 'b', 'c']);
+    expect(q0.fresh).toHaveLength(0);
+
+    const qAll = buildReviewQueue(baseCards(), IDS, NOW, 100);
+    expect(qAll.fresh).toHaveLength(2);
+  });
 });
 
 describe('summarizeQueue', () => {
