@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
-import { HelpCircle, Volume2 } from 'lucide-react';
+import { HelpCircle, Lightbulb, Volume2 } from 'lucide-react';
 import { VOCAB } from '../data';
 import { candidatesFor, type ImeCandidate } from '../lib/ime';
 import { pickDrillItems } from '../lib/drillGenerator';
@@ -62,6 +62,8 @@ export function TypeRacerPage() {
   const [phase, setPhase] = useState<Phase>('running');
   const [round, setRound] = useState<RoundState>(() => newRound(cards, new Date()));
   const [showHelp, setShowHelp] = useState(false);
+  const [showHint, setShowHint] = useState(false);
+  const mobileInputRef = useRef<HTMLInputElement | null>(null);
   const flashTimer = useRef<number | undefined>(undefined);
 
   const currentItem = round.items[round.itemIndex];
@@ -73,6 +75,7 @@ export function TypeRacerPage() {
   const startRound = useCallback(() => {
     setRound(newRound(cards, new Date()));
     setPhase('running');
+    setShowHint(false);
   }, [cards]);
 
   const commitChar = useCallback(
@@ -86,6 +89,7 @@ export function TypeRacerPage() {
         const allFilled = nextSlots.every((s) => s !== null);
 
         if (allFilled) {
+          setShowHint(false);
           const errors = round.wordErrors;
           const grade = errors === 0 ? 5 : errors <= 2 ? 4 : 3;
           void review(currentItem.id, grade);
@@ -167,11 +171,25 @@ export function TypeRacerPage() {
     }
   }, [currentItem]);
 
+  const handleMobileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const raw = e.target.value;
+    const lastChar = raw.slice(-1);
+    const digit = Number.parseInt(lastChar, 10);
+    if (!Number.isNaN(digit) && digit >= 1 && digit <= candidates.length) {
+      commitChar(candidates[digit - 1].char);
+      return;
+    }
+    const val = raw.toLowerCase().replace(/[^a-z]/g, '').slice(0, 7);
+    setRound((r) => ({ ...r, typed: val }));
+  };
+
   // Tastatureingabe für Pinyin, IME-Ziffern und Shortcuts
   useKeyDown((event) => {
     if (phase !== 'running') return;
     if (event.metaKey || event.ctrlKey || event.altKey) return;
-    if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) return;
+    if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) {
+      if (event.target !== mobileInputRef.current) return;
+    }
 
     if (event.key === ' ' || event.key === 'r') {
       if (round.typed.length === 0) {
@@ -249,7 +267,7 @@ export function TypeRacerPage() {
               Wort {wordsDone + 1} / {round.items.length}
             </span>
           </div>
-          <div className="flex items-center gap-3 pt-1">
+          <div className="flex items-center gap-3 pt-1 flex-wrap">
             <h1 className="text-2xl font-black tracking-tight sm:text-3xl text-zinc-900 dark:text-zinc-50">
               Tippe: „{currentItem.meaning}“
             </h1>
@@ -264,6 +282,20 @@ export function TypeRacerPage() {
                 <Volume2 className="h-4 w-4" aria-hidden />
               </button>
             )}
+            <button
+              type="button"
+              onClick={() => setShowHint((v) => !v)}
+              aria-label="Pinyin-Tipp aufdecken"
+              title="Pinyin-Tipp aufdecken"
+              className={`flex items-center gap-1.5 rounded-xl border px-2.5 py-1.5 text-xs font-semibold shadow-xs transition-all active:scale-95 cursor-pointer ${
+                showHint
+                  ? 'border-amber-500/40 bg-amber-500/15 text-amber-800 dark:text-amber-300 font-mono font-bold'
+                  : 'border-zinc-200/80 bg-white text-zinc-500 hover:text-zinc-800 dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-400'
+              }`}
+            >
+              <Lightbulb className={`h-3.5 w-3.5 ${showHint ? 'text-amber-500 fill-current' : ''}`} />
+              <span>{showHint ? currentItem.pinyin : 'Pinyin-Tipp'}</span>
+            </button>
           </div>
         </div>
 
@@ -299,10 +331,26 @@ export function TypeRacerPage() {
         style={{ '--index': 1 } as CSSProperties}
       >
         <div
-          className={`double-bezel-core p-7 sm:p-10 space-y-8 relative transition-colors ${
+          onClick={() => mobileInputRef.current?.focus()}
+          className={`double-bezel-core p-7 sm:p-10 space-y-8 relative transition-colors cursor-text ${
             round.flashWrong ? 'bg-rose-500/[0.04] dark:bg-rose-500/[0.06]' : ''
           }`}
         >
+          {/* Unsichtbarer Input für native mobile Tastatur (Touch / iOS / Android) */}
+          <input
+            ref={mobileInputRef}
+            type="text"
+            inputMode="text"
+            autoCapitalize="none"
+            autoComplete="off"
+            autoCorrect="off"
+            spellCheck={false}
+            className="absolute -top-96 left-0 opacity-0 pointer-events-none h-0 w-0"
+            value={round.typed}
+            onChange={handleMobileInputChange}
+            aria-label="Pinyin Eingabe"
+          />
+
           {/* Authentic Calligraphy Watermark */}
           <span className="watermark-glyph">
             打
