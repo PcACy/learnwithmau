@@ -82,7 +82,7 @@
     "examples": [
       {
         "hanzi": "我是中国人。",
-        "pinyin": "Wǒ标志: Wǒ shì Zhōngguórén.",
+        "pinyin": "Wǒ shì Zhōngguórén.",
         "german": "Ich bin Chinese / Chinesin.",
         "breakdown": [
           { "part": "我 (Wǒ)", "meaning": "Ich" },
@@ -422,7 +422,7 @@
     "examples": [
       {
         "hanzi": "我明天下午去学校。",
-        "pinyin": "Wǒ标志: Wǒ míngtiān xiàwǔ qù xuéxiào.",
+        "pinyin": "Wǒ míngtiān xiàwǔ qù xuéxiào.",
         "german": "Ich gehe morgen Nachmittag zur Schule.",
         "breakdown": [
           { "part": "我 (Wǒ)", "meaning": "Ich" },

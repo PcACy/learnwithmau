@@ -36,7 +36,7 @@ export interface ImeCandidate {
  */
 export function candidatesFor(prefix: string, limit = 9): ImeCandidate[] {
   if (prefix.length === 0) return [];
-  const lower = prefix.toLowerCase();
+  const lower = prefix.toLowerCase().replaceAll('ü', 'v');
 
   const matches: CandidateEntry[] = [];
   for (const [syllable, charCounts] of DICT) {
@@ -64,5 +64,5 @@ export function candidatesFor(prefix: string, limit = 9): ImeCandidate[] {
 }
 
 export function isKnownSyllable(syllable: string): boolean {
-  return DICT.has(syllable.toLowerCase());
+  return DICT.has(syllable.toLowerCase().replaceAll('ü', 'v'));
 }

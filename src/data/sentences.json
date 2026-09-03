@@ -65,7 +65,7 @@
   {
     "id": "s10",
     "german": "Wo arbeitet er?",
-    "pinyin": "tā zài nǎr gōng zuò",
+    "pinyin": "tā zài nǎ er gōng zuò",
     "tokens": ["他", "在", "哪儿", "工作"],
     "explanation": "Ortsangabe mit 在 (in/an) steht vor der Handlung: 在哪儿 (wo) + 工作 (arbeiten)."
   },
@@ -95,7 +95,7 @@
     "german": "Er ruft mich an.",
     "pinyin": "tā gěi wǒ dǎ diàn huà",
     "tokens": ["他", "给", "我", "打", "电话"],
-    "explanation": "Struktur: 给 + Person + 打电话 (jemandem anrufen)."
+    "explanation": "Struktur: 给 (gěi, HSK 2) + Person + 打电话 (jemanden anrufen)."
   },
   {
     "id": "s15",
@@ -128,9 +128,9 @@
   {
     "id": "s19",
     "german": "Ich gehe heute Abend schlafen.",
-    "pinyin": "wǒ jīn tiān wǎn shang shuì jiào",
-    "tokens": ["我", "今天", "晚上", "睡觉"],
-    "explanation": "Genaue Zeitangabe: Vom Großen zum Kleinen (今天 = heute, 晚上 = Abend)."
+    "pinyin": "wǒ jīn tiān wǎn shang qù shuì jiào",
+    "tokens": ["我", "今天", "晚上", "去", "睡觉"],
+    "explanation": "Genaue Zeitangabe + Richtungsverb: 今天晚上 (heute Abend, HSK 2) + 去睡觉 (schlafen gehen)."
   },
   {
     "id": "s20",

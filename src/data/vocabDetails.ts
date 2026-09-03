@@ -11,7 +11,6 @@ export const PART_OF_SPEECH_MAP: Record<string, PartOfSpeech> = {
   'hsk1-he': 'verb',
   'hsk1-hui': 'verb',
   'hsk1-hui-return': 'verb',
-  'hsk1-jia': 'verb',
   'hsk1-jiao': 'verb',
   'hsk1-kai': 'verb',
   'hsk1-kan': 'verb',
@@ -29,7 +28,6 @@ export const PART_OF_SPEECH_MAP: Record<string, PartOfSpeech> = {
   'hsk1-ting': 'verb',
   'hsk1-xiang': 'verb',
   'hsk1-xiayu': 'verb',
-  'hsk1-xie': 'verb',
   'hsk1-xie-write': 'verb',
   'hsk1-xiexie': 'verb',
   'hsk1-xihuan': 'verb',
@@ -60,6 +58,7 @@ export const PART_OF_SPEECH_MAP: Record<string, PartOfSpeech> = {
   'hsk1-hao-number': 'nomen',
   'hsk1-houmian': 'nomen',
   'hsk1-huochezhan': 'nomen',
+  'hsk1-jia': 'nomen',
   'hsk1-jintian': 'nomen',
   'hsk1-laoshi': 'nomen',
   'hsk1-li': 'nomen',
@@ -130,6 +129,7 @@ export const PART_OF_SPEECH_MAP: Record<string, PartOfSpeech> = {
   'hsk1-tamen': 'pronomen',
   'hsk1-wo': 'pronomen',
   'hsk1-women': 'pronomen',
+  'hsk1-xie': 'pronomen',
   'hsk1-zenme': 'pronomen',
   'hsk1-zenmeyang': 'pronomen',
   'hsk1-zhe': 'pronomen',
@@ -698,8 +698,7 @@ const EXAMPLE_SENTENCES_MAP: Record<string, ExampleSentence[]> = {
     {
       "hanzi": "你好！很高兴认识你。",
       "pinyin": "Nǐ hǎo! Hěn gāoxìng rènshi nǐ.",
-      "german": "Hallo! Sehr erfreut, dich kennenzulernen.",
-      "audioPath": "/audio/stories/s01-01.mp3"
+      "german": "Hallo! Sehr erfreut, dich kennenzulernen."
     },
     {
       "hanzi": "你好吗？我很好。",
@@ -728,8 +727,7 @@ const EXAMPLE_SENTENCES_MAP: Record<string, ExampleSentence[]> = {
     {
       "hanzi": "明天我们去看电影。",
       "pinyin": "Míngtiān wǒmen qù kàn diànyǐng.",
-      "german": "Morgen schauen wir einen Film.",
-      "audioPath": "/audio/stories/s07-03.mp3"
+      "german": "Morgen schauen wir einen Film."
     }
   ],
   "hsk1-xingqi": [
@@ -784,8 +782,7 @@ const EXAMPLE_SENTENCES_MAP: Record<string, ExampleSentence[]> = {
     {
       "hanzi": "中国菜很好吃。",
       "pinyin": "Zhōngguó cài hěn hǎochī.",
-      "german": "Chinesisches Essen ist sehr lecker.",
-      "audioPath": "/audio/stories/s02-03.mp3"
+      "german": "Chinesisches Essen ist sehr lecker."
     },
     {
       "hanzi": "我想去中国北京。",
@@ -1097,8 +1094,7 @@ const EXAMPLE_SENTENCES_MAP: Record<string, ExampleSentence[]> = {
     {
       "hanzi": "我们去中国饭馆吃饭吧。",
       "pinyin": "Wǒmen qù Zhōngguó fànguǎn chī fàn ba.",
-      "german": "Lass uns ins chinesische Restaurant essen gehen.",
-      "audioPath": "/audio/stories/s02-01.mp3"
+      "german": "Lass uns ins chinesische Restaurant essen gehen."
     },
     {
       "hanzi": "我们都是好朋友。",
@@ -1314,8 +1310,7 @@ const EXAMPLE_SENTENCES_MAP: Record<string, ExampleSentence[]> = {
     {
       "hanzi": "我在学校学习汉语。",
       "pinyin": "Wǒ zài xuéxiào xuéxí Hànyǔ.",
-      "german": "Ich lerne in der Schule Chinesisch.",
-      "audioPath": "/audio/stories/s04-04.mp3"
+      "german": "Ich lerne in der Schule Chinesisch."
     },
     {
       "hanzi": "我们学校很大。",
@@ -1867,8 +1862,7 @@ const EXAMPLE_SENTENCES_MAP: Record<string, ExampleSentence[]> = {
     {
       "hanzi": "明天我们去看电影吧。",
       "pinyin": "Míngtiān wǒmen qù kàn diànyǐng ba.",
-      "german": "Lass uns morgen ins Kino gehen.",
-      "audioPath": "/audio/stories/s07-03.mp3"
+      "german": "Lass uns morgen ins Kino gehen."
     },
     {
       "hanzi": "这部中国电影很有名。",
@@ -1880,8 +1874,7 @@ const EXAMPLE_SENTENCES_MAP: Record<string, ExampleSentence[]> = {
     {
       "hanzi": "今天天气真好，很晴朗。",
       "pinyin": "Jīntiān tiānqì zhēn hǎo, hěn qínglǎng.",
-      "german": "Heute ist das Wetter wirklich schön und heiter.",
-      "audioPath": "/audio/stories/s05-03.mp3"
+      "german": "Heute ist das Wetter wirklich schön und heiter."
     },
     {
       "hanzi": "北京冬天的天气很冷。",
@@ -2001,8 +1994,7 @@ const EXAMPLE_SENTENCES_MAP: Record<string, ExampleSentence[]> = {
     {
       "hanzi": "今天天气非常好。",
       "pinyin": "Jīntiān tiānqì fēicháng hǎo.",
-      "german": "Heute ist das Wetter ganz ausgezeichnet.",
-      "audioPath": "/audio/stories/s05-03.mp3"
+      "german": "Heute ist das Wetter ganz ausgezeichnet."
     },
     {
       "hanzi": "今天星期五，明天休息。",
@@ -2206,8 +2198,7 @@ const EXAMPLE_SENTENCES_MAP: Record<string, ExampleSentence[]> = {
     {
       "hanzi": "这家中国饭馆的菜很好吃。",
       "pinyin": "Zhè jiā Zhōngguó fànguǎn de cài hěn hǎochī.",
-      "german": "Das Essen in dieser chinesischen Gaststätte schmeckt vorzüglich.",
-      "audioPath": "/audio/stories/s02-01.mp3"
+      "german": "Das Essen in dieser chinesischen Gaststätte schmeckt vorzüglich."
     },
     {
       "hanzi": "今天晚上我们去饭馆吃饭吧。",
@@ -2639,8 +2630,7 @@ const EXAMPLE_SENTENCES_MAP: Record<string, ExampleSentence[]> = {
     {
       "hanzi": "我们一起去吃中国菜吧！",
       "pinyin": "Wǒmen yìqǐ qù chī Zhōngguó cài ba!",
-      "german": "Lass uns zusammen chinesisch essen gehen!",
-      "audioPath": "/audio/stories/s02-01.mp3"
+      "german": "Lass uns zusammen chinesisch essen gehen!"
     },
     {
       "hanzi": "快走吧，时间不早了。",

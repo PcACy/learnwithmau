@@ -1691,6 +1691,7 @@
       }
     ],
     "meaning": "wie viel, wie viele",
+    "notes": "Im HSK-1-Standard als Fragepronomen umgangssprachlich meist mit Neutralton auf 少 gesprochen (duōshao).",
     "characters": [
       {
         "char": "多",
@@ -1752,7 +1753,7 @@
   {
     "id": "hsk1-zheer",
     "hanzi": "这儿",
-    "pinyin": "zhè ér",
+    "pinyin": "zhè er",
     "syllables": [
       {
         "plain": "zhe",
@@ -1761,12 +1762,12 @@
       },
       {
         "plain": "er",
-        "marked": "ér",
-        "tone": 2
+        "marked": "er",
+        "tone": 5
       }
     ],
     "meaning": "hier",
-    "notes": "Umgangssprachlich verschmolzen zu zhèr (Erhua).",
+    "notes": "Erhua-Verbindung; umgangssprachlich zu zhèr verschmolzen (neutraler Auslaut).",
     "characters": [
       {
         "char": "这",
@@ -3110,6 +3111,7 @@
       }
     ],
     "meaning": "hallo (am Telefon), füttern",
+    "notes": "Am Telefon standardmäßig mit steigendem 2. Ton gesprochen (wéi: 喂，你好！); als Zuruf oder Verb 'füttern' im 4. Ton (wèi).",
     "characters": [
       {
         "char": "喂",

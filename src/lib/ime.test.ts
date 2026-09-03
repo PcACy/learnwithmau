@@ -25,9 +25,11 @@ describe('candidatesFor', () => {
     expect(candidatesFor('zh').some((c) => c.char === '中')).toBe(true);
   });
 
-  it('liefert für volle Silben die Zielzeichen: zhuo → 桌, ni → 你', () => {
+  it('liefert für volle Silben die Zielzeichen: zhuo → 桌, ni → 你, nv / nü → 女', () => {
     expect(candidatesFor('zhuo').map((c) => c.char)).toEqual(['桌']);
     expect(candidatesFor('ni').map((c) => c.char)).toContain('你');
+    expect(candidatesFor('nv').map((c) => c.char)).toContain('女');
+    expect(candidatesFor('nü').map((c) => c.char)).toContain('女');
   });
 
   it('dedupliziert Zeichen und respektiert das Limit', () => {
