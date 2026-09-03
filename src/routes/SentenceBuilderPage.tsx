@@ -15,6 +15,8 @@ import { SealBadge } from '../components/ui/SealBadge';
 import { KineticButton } from '../components/ui/KineticButton';
 import { SessionSummary } from '../components/game/SessionSummary';
 import { useProgressStore } from '../store/progressStore';
+import { useKeyDown } from '../hooks/useKeyDown';
+import { KeyHints } from '../components/ui/Kbd';
 
 interface SentenceItem {
   id: string;
@@ -124,6 +126,45 @@ export function SentenceBuilderPage() {
     setAvailableTokens(shuffled(currentSentence.tokens));
     setStatus('playing');
   };
+
+  useKeyDown((event) => {
+    if (status === 'summary' || event.metaKey || event.ctrlKey || event.altKey) return;
+    if (event.repeat) return;
+
+    if (status === 'playing') {
+      const digit = Number.parseInt(event.key, 10);
+      if (!Number.isNaN(digit) && digit >= 1 && digit <= availableTokens.length) {
+        event.preventDefault();
+        addToken(availableTokens[digit - 1], digit - 1);
+        return;
+      }
+      if (event.key === 'Backspace' && selectedTokens.length > 0) {
+        event.preventDefault();
+        removeToken(selectedTokens[selectedTokens.length - 1], selectedTokens.length - 1);
+        return;
+      }
+      if (event.key === 'Escape' && selectedTokens.length > 0) {
+        event.preventDefault();
+        resetCurrent();
+        return;
+      }
+      if (event.key === 'Enter' && selectedTokens.length > 0) {
+        event.preventDefault();
+        checkAnswer();
+        return;
+      }
+    } else if (status === 'correct') {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        nextSentence();
+      }
+    } else if (status === 'wrong') {
+      if (event.key === 'Enter' || event.key === 'Escape') {
+        event.preventDefault();
+        resetCurrent();
+      }
+    }
+  });
 
   if (!currentSentence) return null;
 
@@ -254,7 +295,7 @@ export function SentenceBuilderPage() {
           {/* Verfügbare Wortkarten */}
           <div className="space-y-2.5 relative">
             <p className="font-mono text-xs font-semibold text-zinc-400 dark:text-zinc-500 text-center">
-              Verfügbare Wortkarten:
+              Verfügbare Wortkarten (Wähle per Ziffer 1–9 oder Klick):
             </p>
             <div className="flex flex-wrap items-center justify-center gap-2.5">
               {availableTokens.map((token, i) => (
@@ -263,9 +304,12 @@ export function SentenceBuilderPage() {
                   type="button"
                   onClick={() => addToken(token, i)}
                   disabled={status !== 'playing'}
-                  className="flex h-13 items-center justify-center rounded-xl border border-zinc-200/80 bg-white px-4.5 font-cjk text-2xl font-bold text-zinc-800 shadow-xs transition-all duration-150 active:scale-95 hover:border-emerald-500 hover:bg-emerald-50/50 hover:text-emerald-700 dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:border-emerald-400/40 dark:hover:text-emerald-300 cursor-pointer"
+                  className="relative flex h-13 min-w-14 items-center justify-center rounded-xl border border-zinc-200/80 bg-white px-4.5 font-cjk text-2xl font-bold text-zinc-800 shadow-xs transition-all duration-150 active:scale-95 hover:border-emerald-500 hover:bg-emerald-50/50 hover:text-emerald-700 dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:border-emerald-400/40 dark:hover:text-emerald-300 cursor-pointer"
                 >
-                  {token}
+                  <span className="pointer-events-none absolute left-1.5 top-1 font-mono text-[10px] font-bold text-zinc-400 dark:text-zinc-500">
+                    [{i + 1}]
+                  </span>
+                  <span>{token}</span>
                 </button>
               ))}
             </div>
@@ -289,6 +333,7 @@ export function SentenceBuilderPage() {
                   variant="primary"
                   onClick={checkAnswer}
                   disabled={selectedTokens.length === 0}
+                  shortcut="[Enter]"
                   icon={<CheckCircle2 className="h-4 w-4" />}
                 >
                   Satz prüfen
@@ -315,6 +360,7 @@ export function SentenceBuilderPage() {
                   <KineticButton
                     variant="primary"
                     onClick={nextSentence}
+                    shortcut="[Enter]"
                     icon={<ArrowRight className="h-4 w-4" />}
                   >
                     Nächster Satz
@@ -336,6 +382,7 @@ export function SentenceBuilderPage() {
                   <KineticButton
                     variant="secondary"
                     onClick={resetCurrent}
+                    shortcut="[Enter]"
                     icon={<RotateCcw className="h-4 w-4" />}
                   >
                     Nochmal probieren
@@ -343,6 +390,18 @@ export function SentenceBuilderPage() {
                 </div>
               </div>
             )}
+
+            {/* KeyHints Footer */}
+            <div className="w-full pt-3 border-t border-zinc-100 dark:border-white/[0.05] relative">
+              <KeyHints
+                hints={[
+                  ['1–9', 'Wort wählen'],
+                  ['⌫', 'Letztes Wort weg'],
+                  ['Esc', 'Leeren'],
+                  ['↵ Enter', status === 'playing' ? 'Prüfen' : status === 'correct' ? 'Weiter' : 'Wiederholen'],
+                ]}
+              />
+            </div>
           </div>
         </div>
       </section>
