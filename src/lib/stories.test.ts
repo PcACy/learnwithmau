@@ -42,6 +42,17 @@ describe('HSK-1 Graded Reader Dataset & Integrity', () => {
     });
   });
 
+  it('ensures token hanzi fully covers the sentence hanzi for every sentence without omissions', () => {
+    const cleanPunctuation = (str: string) => str.replace(/[，。？！、\s,.?!:："'“”‘’]/g, '');
+    stories.forEach((story) => {
+      story.sentences.forEach((sent) => {
+        const full = cleanPunctuation(sent.hanzi);
+        const fromTokens = cleanPunctuation(sent.tokens.map((t) => t.hanzi).join(''));
+        expect(fromTokens, `Token mismatch in ${story.id} (${sent.id})`).toBe(full);
+      });
+    });
+  });
+
   it('verifies that all referenced audio URLs match expected asset conventions', () => {
     stories.forEach((story) => {
       if (story.audioUrl) {
