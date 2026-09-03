@@ -84,120 +84,135 @@ export function DictionaryDetailPanel({ item, card, globalIndex }: DictionaryDet
 
       <div className="double-bezel-core p-6 sm:p-8 space-y-8 relative">
         {/* 1. Header (Grosses Zeichen im Tianzige-Raster, Pinyin, Töne, Speed & Aussprache) */}
-        <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between border-b border-zinc-100 pb-7 dark:border-white/[0.06]">
-          <div className="flex items-center gap-5">
-            {/* Dynamische Tianzige Kacheln (je 1 Gitter pro Schriftzeichen) */}
-            <div className="flex items-center gap-2.5 shrink-0">
-              {item.characters.map((c, i) => {
-                const charCount = item.characters.length;
-                const boxSize =
-                  charCount === 1
-                    ? 'h-24 w-24 text-5xl'
-                    : charCount === 2
-                      ? 'h-20 w-20 sm:h-22 sm:w-22 text-4xl'
-                      : 'h-16 w-16 sm:h-18 sm:w-18 text-3xl';
+        <div className="flex flex-col gap-4 border-b border-zinc-100 pb-6 dark:border-white/[0.06]">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            {/* Linke Seite: Tianzige + Pinyin + Definition */}
+            <div className="flex items-center gap-4 sm:gap-5 min-w-0">
+              {/* Dynamische Tianzige Kacheln */}
+              <div className="flex items-center gap-2 shrink-0">
+                {item.characters.map((c, i) => {
+                  const charCount = item.characters.length;
+                  const boxSize =
+                    charCount === 1
+                      ? 'h-20 w-20 sm:h-22 sm:w-22 text-4xl sm:text-5xl'
+                      : charCount === 2
+                        ? 'h-16 w-16 sm:h-18 sm:w-18 text-3xl sm:text-4xl'
+                        : 'h-13 w-13 sm:h-15 sm:w-15 text-2xl sm:text-3xl';
 
-                return (
-                  <div
-                    key={c.char + i}
-                    className={`relative flex ${boxSize} items-center justify-center rounded-2xl border border-zinc-200/90 bg-zinc-50/70 shadow-xs dark:border-white/10 dark:bg-zinc-800/50`}
-                  >
-                    {/* Tianzige Grid Lines (Viertel-Gitter für das jeweilige Zeichen) */}
-                    <div className="pointer-events-none absolute inset-0 grid grid-cols-2 grid-rows-2 opacity-20">
-                      <div className="border-b border-r border-dashed border-current" />
-                      <div className="border-b border-dashed border-current" />
-                      <div className="border-r border-dashed border-current" />
-                      <div />
+                  return (
+                    <div
+                      key={c.char + i}
+                      className={`relative flex ${boxSize} items-center justify-center rounded-2xl border border-zinc-200/90 bg-zinc-50/70 shadow-xs dark:border-white/10 dark:bg-zinc-800/50`}
+                    >
+                      {/* Tianzige Grid Lines */}
+                      <div className="pointer-events-none absolute inset-0 grid grid-cols-2 grid-rows-2 opacity-20">
+                        <div className="border-b border-r border-dashed border-current" />
+                        <div className="border-b border-dashed border-current" />
+                        <div className="border-r border-dashed border-current" />
+                        <div />
+                      </div>
+                      <span className="font-cjk font-black text-zinc-900 dark:text-zinc-100 tracking-tight select-none">
+                        {c.char}
+                      </span>
                     </div>
-                    <span className="font-cjk font-black text-zinc-900 dark:text-zinc-100 tracking-tight select-none">
-                      {c.char}
-                    </span>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
+
+              {/* Vokabel Info (Pinyin, Siegel, Übersetzung) */}
+              <div className="min-w-0 space-y-1">
+                <div className="flex items-center gap-2">
+                  <h2 className="font-mono text-2xl sm:text-3xl font-black tracking-tight text-zinc-900 dark:text-zinc-100 whitespace-nowrap">
+                    {item.pinyin}
+                  </h2>
+                  {/* Rotes Siegel Badge für authentische Aussprache */}
+                  <span
+                    className="flex h-5 w-5 shrink-0 items-center justify-center rounded-xs bg-rose-700 text-[11px] font-bold text-white shadow-xs"
+                    title="Offizielle Standard-Aussprache (Putonghua / HSK-Norm)"
+                  >
+                    印
+                  </span>
+                </div>
+
+                <p className="text-sm sm:text-base font-semibold text-zinc-600 dark:text-zinc-300">
+                  {item.meaning}
+                </p>
+              </div>
             </div>
 
-          {/* Vokabel Info & Metadaten */}
-          <div className="space-y-1.5">
-            <div className="flex flex-wrap items-center gap-2">
-              <h2 className="font-mono text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
-                {item.pinyin}
-              </h2>
-              {/* Rotes Siegel Badge für authentische Aussprache */}
-              <span
-                className="flex h-5 w-5 items-center justify-center rounded-xs bg-rose-700 text-[11px] font-bold text-white shadow-xs"
-                title="Offizielle Standard-Aussprache (Putonghua / HSK-Norm)"
+            {/* Rechte Seite: Audio Steuerung & Speed Toggle */}
+            <div className="flex items-center gap-2.5 shrink-0 self-start sm:self-center">
+              {/* Speed Toggle */}
+              <div className="flex items-center rounded-xl bg-zinc-100/90 p-1 border border-zinc-200/60 dark:bg-zinc-800/80 dark:border-white/10 text-xs font-mono font-medium text-zinc-600 dark:text-zinc-300">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setAudioSpeed(1.0);
+                    playMainAudio(1.0);
+                  }}
+                  className={`rounded-lg px-2.5 py-1 transition-all ${
+                    audioSpeed === 1.0 ? 'bg-white shadow-xs text-zinc-900 dark:bg-zinc-900 dark:text-zinc-100 font-bold' : ''
+                  }`}
+                >
+                  1.0x
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setAudioSpeed(0.75);
+                    playMainAudio(0.75);
+                  }}
+                  className={`rounded-lg px-2.5 py-1 transition-all ${
+                    audioSpeed === 0.75 ? 'bg-white shadow-xs text-zinc-900 dark:bg-zinc-900 dark:text-zinc-100 font-bold' : ''
+                  }`}
+                >
+                  0.75x
+                </button>
+              </div>
+
+              {/* Haupt-Audio Button */}
+              <button
+                type="button"
+                onClick={() => playMainAudio()}
+                disabled={isPlaying}
+                className={`flex items-center gap-2 rounded-2xl px-4 py-2.5 text-xs font-bold text-white shadow-whisper transition-all active:scale-95 cursor-pointer ${
+                  isPlaying
+                    ? 'bg-emerald-700 animate-pulse'
+                    : 'bg-emerald-600 hover:bg-emerald-500'
+                }`}
               >
-                印
-              </span>
+                <span>Aussprache</span>
+                <Volume2 className="h-4 w-4" />
+              </button>
             </div>
+          </div>
 
-            <p className="text-sm font-medium text-zinc-600 dark:text-zinc-300 capitalize">
-              {item.meaning}
-            </p>
+          {/* Horizontale Meta-Badges Zeile (kein Umbruch, klare visuelle Ordnung) */}
+          <div className="flex flex-wrap items-center gap-2 pt-1">
+            <span className="inline-flex items-center rounded-md border border-zinc-200/80 bg-zinc-100/70 px-2.5 py-1 font-mono text-xs font-medium text-zinc-700 dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-300">
+              {enriched.strokes} Striche (画)
+            </span>
 
-            <div className="flex flex-wrap items-center gap-2 pt-0.5">
-              <span className="rounded-md border border-zinc-200 bg-zinc-100/70 px-2 py-0.5 font-mono text-[11px] font-medium text-zinc-700 dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-300">
-                {enriched.strokes} Striche (画)
-              </span>
+            <span className="inline-flex items-center rounded-md border border-zinc-200/80 bg-zinc-100/70 px-2.5 py-1 font-mono text-xs font-medium text-zinc-700 dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-300">
+              HSK 1 {hskTag}
+            </span>
 
-              <span className="rounded-md border border-zinc-200 bg-zinc-100/70 px-2 py-0.5 font-mono text-[11px] font-medium text-zinc-700 dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-300">
-                HSK 1 {hskTag}
-              </span>
+            <span className="inline-flex items-center rounded-md bg-rose-500/10 px-2.5 py-1 font-mono text-[11px] font-bold text-rose-700 dark:text-rose-400 tracking-wide uppercase">
+              A1 Essential
+            </span>
 
-              <span className="rounded-md bg-rose-500/10 px-2 py-0.5 font-mono text-[10px] font-bold text-rose-700 dark:text-rose-400 tracking-wide uppercase">
-                A1 Essential
-              </span>
+            {/* Ton-Verlauf Aufschlüsselung */}
+            <div className="inline-flex items-center gap-1.5 rounded-md border border-zinc-200/80 bg-zinc-50 px-2.5 py-1 font-mono text-xs text-zinc-600 dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-300">
+              {item.syllables.map((s, idx) => (
+                <span key={idx}>
+                  {idx > 0 && <span className="text-zinc-300 dark:text-zinc-600 mr-1.5">·</span>}
+                  <span className="font-bold">{s.marked}</span>{' '}
+                  <span className="text-[11px] text-zinc-400">({s.tone === 5 ? 'Neutral' : `${s.tone}. Ton`})</span>
+                </span>
+              ))}
             </div>
           </div>
         </div>
-
-        {/* Audio Steuerung & Speed Toggle */}
-        <div className="flex items-center gap-3">
-          {/* Speed Toggle */}
-          <div className="flex items-center rounded-xl bg-zinc-100 p-1 dark:bg-zinc-800 text-xs font-mono font-medium text-zinc-600 dark:text-zinc-300">
-            <button
-              type="button"
-              onClick={() => {
-                setAudioSpeed(1.0);
-                playMainAudio(1.0);
-              }}
-              className={`rounded-lg px-2.5 py-1 transition-all ${
-                audioSpeed === 1.0 ? 'bg-white shadow-xs text-zinc-900 dark:bg-zinc-900 dark:text-zinc-100 font-bold' : ''
-              }`}
-            >
-              1.0x
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                setAudioSpeed(0.75);
-                playMainAudio(0.75);
-              }}
-              className={`rounded-lg px-2.5 py-1 transition-all ${
-                audioSpeed === 0.75 ? 'bg-white shadow-xs text-zinc-900 dark:bg-zinc-900 dark:text-zinc-100 font-bold' : ''
-              }`}
-            >
-              0.75x
-            </button>
-          </div>
-
-          {/* Haupt-Audio Button */}
-          <button
-            type="button"
-            onClick={() => playMainAudio()}
-            disabled={isPlaying}
-            className={`flex items-center gap-2 rounded-2xl px-4 py-2.5 text-xs font-bold text-white shadow-whisper transition-all active:scale-95 ${
-              isPlaying
-                ? 'bg-emerald-700 animate-pulse'
-                : 'bg-emerald-600 hover:bg-emerald-500'
-            }`}
-          >
-            <span>Aussprache</span>
-            <Volume2 className="h-4 w-4" />
-          </button>
-        </div>
-      </div>
 
       {/* 2. RADIKAL-DEKOMPOSITION (字形拆解) */}
       <div className="space-y-4">
