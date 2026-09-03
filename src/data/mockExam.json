@@ -63,11 +63,11 @@
     "chineseText": "昨天 (zuótiān)",
     "audioUrl": "/audio/hsk1/hsk1-zuotian.mp3",
     "options": [
-      "Wahr (Bedeutet gestern)",
-      "Falsch (Bedeutet morgen)"
+      "Wahr (Bedeutet Morgen / Vormittag)",
+      "Falsch (Bedeutet gestern)"
     ],
-    "correctIndex": 0,
-    "explanation": "„昨天“ (zuótiān) bedeutet „gestern“."
+    "correctIndex": 1,
+    "explanation": "„昨天“ (zuótiān) bedeutet „gestern“. Morgen heißt „明天“ (míngtiān)."
   },
   {
     "id": "hsk1-06",

@@ -25,9 +25,11 @@ describe('applyTone – Vokal-Hierarchie', () => {
     expect(applyTone('shui', 3)).toBe('shuǐ');
   });
 
-  it('behandelt v als ü inklusive Diakritikum', () => {
+  it('behandelt v und ü inklusive Diakritikum', () => {
     expect(applyTone('lv', 3)).toBe('lǚ');
     expect(applyTone('nv', 4)).toBe('nǜ');
+    expect(applyTone('lü', 3)).toBe('lǚ');
+    expect(applyTone('nü', 4)).toBe('nǜ');
   });
 
   it('Ton 5 ist neutral und normalisiert nur v → ü', () => {

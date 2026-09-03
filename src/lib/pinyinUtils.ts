@@ -31,7 +31,7 @@ function findToneVowelIndex(lower: string): number {
   if (iuIndex !== -1) return iuIndex + 1;
   const uiIndex = lower.indexOf('ui');
   if (uiIndex !== -1) return uiIndex + 1;
-  for (const vowel of ['i', 'u', 'v'] as const) {
+  for (const vowel of ['i', 'u', 'v', 'ü'] as const) {
     const index = lower.indexOf(vowel);
     if (index !== -1) return index;
   }
