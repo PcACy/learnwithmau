@@ -101,7 +101,6 @@ export function syllableAssetUrl(plain: string, tone: Tone): string {
 }
 
 let currentAudio: HTMLAudioElement | null = null;
-let currentOnEnded: (() => void) | null = null;
 
 /**
  * Stoppt die aktuell laufende Audio-Wiedergabe sofort und setzt das Audio-Element zurück.
@@ -111,16 +110,11 @@ export function stopCurrentAudio(): void {
     try {
       currentAudio.pause();
       currentAudio.currentTime = 0;
-      currentAudio.src = '';
+      currentAudio.removeAttribute('src');
     } catch {
       // ignore
     }
     currentAudio = null;
-  }
-  if (currentOnEnded) {
-    const cb = currentOnEnded;
-    currentOnEnded = null;
-    cb();
   }
 }
 
@@ -145,14 +139,8 @@ export function playAsset(url: string, onEnded?: () => void, rate?: number): Pro
       window.clearTimeout(timeoutId);
       if (currentAudio === audio && !started) {
         currentAudio = null;
-        currentOnEnded = null;
       }
       resolve(started);
-    };
-
-    currentOnEnded = () => {
-      onEnded?.();
-      finish(false);
     };
 
     audio.addEventListener(
@@ -169,7 +157,6 @@ export function playAsset(url: string, onEnded?: () => void, rate?: number): Pro
       () => {
         if (currentAudio === audio) {
           currentAudio = null;
-          currentOnEnded = null;
         }
         onEnded?.();
         finish(true);

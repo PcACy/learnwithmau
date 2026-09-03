@@ -30,9 +30,9 @@ export function applyTheme(theme: Theme): void {
   if (typeof document === 'undefined') return;
   const dark = isDark(theme);
   document.documentElement.classList.toggle('dark', dark);
-  document.documentElement.style.backgroundColor = dark ? '#09090b' : '#fafafa';
+  document.documentElement.style.backgroundColor = dark ? '#09090b' : '#fbfbf9';
   if (document.body) {
-    document.body.style.backgroundColor = dark ? '#09090b' : '#fafafa';
+    document.body.style.backgroundColor = dark ? '#09090b' : '#fbfbf9';
   }
 }
 

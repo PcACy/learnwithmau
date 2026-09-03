@@ -160,6 +160,7 @@ export function ReviewPage() {
 
       if (nextQueue.length === 0) {
         finish(gradedTotal, nextPassed.size, session.sessionStartedAt);
+        return;
       }
       setSession({
         ...session,

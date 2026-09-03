@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   Bookmark,
   CheckCircle2,
@@ -26,6 +26,17 @@ export function DictionaryDetailPanel({ item, card, globalIndex }: DictionaryDet
   const [playingSentenceIdx, setPlayingSentenceIdx] = useState<number | null>(null);
   const [selectedChar, setSelectedChar] = useState<string | null>(null);
   const writerSectionRef = useRef<HTMLDivElement>(null);
+  const playTimerRef = useRef<number | undefined>(undefined);
+
+  // Stoppt Audio und cleart Timeouts beim Wechsel der Vokabel oder Demontage
+  useEffect(() => {
+    return () => {
+      stopCurrentAudio();
+      if (playTimerRef.current !== undefined) {
+        window.clearTimeout(playTimerRef.current);
+      }
+    };
+  }, [item.id]);
 
   const activeWriterChar =
     selectedChar && item.characters.some((c) => c.char === selectedChar)
@@ -41,14 +52,16 @@ export function DictionaryDetailPanel({ item, card, globalIndex }: DictionaryDet
 
   const playMainAudio = (rate?: number) => {
     stopCurrentAudio();
+    if (playTimerRef.current !== undefined) {
+      window.clearTimeout(playTimerRef.current);
+    }
     setIsPlaying(true);
     const done = () => setIsPlaying(false);
     if (item.audioPath) {
       void playAsset(item.audioPath, done, rate ?? audioSpeed);
-      window.setTimeout(done, 2500);
     } else {
       const durationMs = playToneSequence(item.syllables.map((s) => s.tone));
-      window.setTimeout(done, Math.max(300, durationMs));
+      playTimerRef.current = window.setTimeout(done, Math.max(300, durationMs));
     }
   };
 

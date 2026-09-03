@@ -47,6 +47,11 @@ export function GrammarPage() {
     };
   }, []);
 
+  // Audio stoppen beim Verlassen der Seite
+  useEffect(() => {
+    return () => stopCurrentAudio();
+  }, []);
+
   const [quizAnswers, setQuizAnswers] = useState<Record<string, number>>({});
   const [quizSubmitted, setQuizSubmitted] = useState<Record<string, boolean>>({});
 

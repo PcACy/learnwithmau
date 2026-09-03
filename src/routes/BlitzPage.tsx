@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
 import {
   Check,
@@ -120,6 +120,11 @@ export function BlitzPage() {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [isAnswerCorrect, setIsAnswerCorrect] = useState<boolean | null>(null);
 
+  const answeredRef = useRef(answeredCount);
+  answeredRef.current = answeredCount;
+  const scoreRef = useRef(score);
+  scoreRef.current = score;
+
   const startBlitz = useCallback(() => {
     const q = generateBlitzQuestions(20);
     setQuestions(q);
@@ -134,7 +139,7 @@ export function BlitzPage() {
     setGameState('playing');
   }, []);
 
-  // Timer-Countdown
+  // Timer-Countdown (unabhängig von Antworten/Score, um Reset-Freeze zu verhindern)
   useEffect(() => {
     if (gameState !== 'playing') return;
 
@@ -146,8 +151,8 @@ export function BlitzPage() {
           fireCelebration();
           void logSession({
             mode: 'blitz',
-            answered: answeredCount,
-            correct: score > 0 ? Math.round(score / 100) : 0,
+            answered: answeredRef.current,
+            correct: scoreRef.current > 0 ? Math.round(scoreRef.current / 100) : 0,
             durationMs: TOTAL_TIME_SEC * 1000,
           });
           return 0;
@@ -157,7 +162,7 @@ export function BlitzPage() {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [gameState, answeredCount, score, logSession]);
+  }, [gameState, logSession]);
 
   const currentQ = questions[currentIdx];
 

@@ -83,7 +83,7 @@ export function buildWordOptions(target: VocabItem, pool: readonly VocabItem[]):
   const scored = pool
     .filter((candidate) => candidate.id !== target.id)
     .map((candidate) => ({ candidate, score: wordSimilarity(target, candidate) }))
-    .sort((x, y) => y.score - x.score || Math.random() - 0.5);
+    .sort((x, y) => y.score - x.score);
 
   const distractors = sample(scored.slice(0, 8).map((entry) => entry.candidate), 3);
   return shuffled([target, ...distractors]);
