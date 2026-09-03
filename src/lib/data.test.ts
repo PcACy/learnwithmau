@@ -54,4 +54,29 @@ describe('Katalog-Integrität', () => {
       }
     }
   });
+
+  it('besitzt für alle 163 Vokabeln authentische Beispielsätze ohne Platzhalter', async () => {
+    const { getEnrichedVocab } = await import('../data/vocabDetails');
+    for (const item of VOCAB) {
+      const enriched = getEnrichedVocab(item);
+      expect(enriched.exampleSentences.length, `Keine Beispielsätze für ${item.id}`).toBeGreaterThanOrEqual(1);
+      for (const s of enriched.exampleSentences) {
+        expect(s.hanzi.length).toBeGreaterThan(0);
+        expect(s.pinyin.length).toBeGreaterThan(0);
+        expect(s.german.length).toBeGreaterThan(0);
+        // Sicherstellen, dass keine furchtbaren Auto-Templates vorkommen
+        expect(s.german).not.toContain('Das ist hallo');
+        expect(s.hanzi).not.toBe(`这是${item.hanzi}。`);
+      }
+
+      // Kollokationen dürfen keine Fake-Strings enthalten
+      for (const c of enriched.collocations) {
+        expect(c.german).not.toContain('mit hallo');
+        expect(c.hanzi).not.toBe(`${item.hanzi}好`);
+      }
+
+      // Chao-Pitch-Level muss sauber vorliegen
+      expect(enriched.chaoPitch.levels.length).toBeGreaterThanOrEqual(3);
+    }
+  });
 });

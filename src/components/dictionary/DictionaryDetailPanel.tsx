@@ -1,9 +1,8 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import {
   Bookmark,
   CheckCircle2,
   PenTool,
-  RotateCcw,
   Volume2,
 } from 'lucide-react';
 import type { VocabItem } from '../../types/vocab';
@@ -25,8 +24,13 @@ interface DictionaryDetailPanelProps {
 export function DictionaryDetailPanel({ item, card, globalIndex }: DictionaryDetailPanelProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [playingSentenceIdx, setPlayingSentenceIdx] = useState<number | null>(null);
-  const [showAnimatedWriter, setShowAnimatedWriter] = useState(false);
-  const [activeWriterChar, setActiveWriterChar] = useState<string>(item.characters[0]?.char ?? item.hanzi[0]);
+  const [selectedChar, setSelectedChar] = useState<string | null>(null);
+  const writerSectionRef = useRef<HTMLDivElement>(null);
+
+  const activeWriterChar =
+    selectedChar && item.characters.some((c) => c.char === selectedChar)
+      ? selectedChar
+      : (item.characters[0]?.char ?? item.hanzi[0]);
 
   const audioSpeed = useSettingsStore((s) => s.audioSpeed);
   const setAudioSpeed = useSettingsStore((s) => s.setAudioSpeed);
@@ -74,73 +78,85 @@ export function DictionaryDetailPanel({ item, card, globalIndex }: DictionaryDet
               <div className="border-r border-dashed border-current" />
               <div />
             </div>
-            <span className="font-cjk text-5xl font-black text-zinc-900 dark:text-zinc-100">
+            <span className="font-cjk text-5xl font-black text-zinc-900 dark:text-zinc-100 tracking-tight select-none">
               {item.hanzi}
             </span>
           </div>
 
+          {/* Vokabel Info & Metadaten */}
           <div className="space-y-1.5">
-            <div className="flex items-center gap-2">
-              <h2 className="font-mono text-3xl font-black tracking-tight text-zinc-900 dark:text-zinc-100">
+            <div className="flex flex-wrap items-center gap-2">
+              <h2 className="font-mono text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
                 {item.pinyin}
               </h2>
-              <span className="flex h-6 w-6 items-center justify-center rounded-md bg-rose-500/10 font-cjk text-xs font-bold text-rose-600 dark:text-rose-400">
+              {/* Rotes Siegel Badge für authentische Aussprache */}
+              <span
+                className="flex h-5 w-5 items-center justify-center rounded-xs bg-rose-700 text-[11px] font-bold text-white shadow-xs"
+                title="Offizielle Standard-Aussprache (Putonghua / HSK-Norm)"
+              >
                 印
               </span>
             </div>
 
-            <p className="text-sm font-semibold text-zinc-600 dark:text-zinc-300">
+            <p className="text-sm font-medium text-zinc-600 dark:text-zinc-300 capitalize">
               {item.meaning}
             </p>
 
-            <div className="flex flex-wrap items-center gap-2 pt-1">
-              <span className="rounded-lg bg-zinc-100 px-2.5 py-0.5 font-mono text-[11px] font-bold text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300">
+            <div className="flex flex-wrap items-center gap-2 pt-0.5">
+              <span className="rounded-md border border-zinc-200 bg-zinc-100/70 px-2 py-0.5 font-mono text-[11px] font-medium text-zinc-700 dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-300">
                 {enriched.strokes} Striche (画)
               </span>
-              <span className="rounded-lg bg-zinc-100 px-2.5 py-0.5 font-mono text-[11px] font-bold text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300">
+
+              <span className="rounded-md border border-zinc-200 bg-zinc-100/70 px-2 py-0.5 font-mono text-[11px] font-medium text-zinc-700 dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-300">
                 HSK 1 {hskTag}
               </span>
-              <span className="rounded-lg border border-rose-500/30 bg-rose-500/10 px-2.5 py-0.5 font-mono text-[11px] font-extrabold text-rose-700 dark:text-rose-400">
-                A1 ESSENTIAL
+
+              <span className="rounded-md bg-rose-500/10 px-2 py-0.5 font-mono text-[10px] font-bold text-rose-700 dark:text-rose-400 tracking-wide uppercase">
+                A1 Essential
               </span>
             </div>
           </div>
         </div>
 
-        {/* Audio Controls (Speed Toggles & Aussprache Button) */}
-        <div className="flex items-center gap-3 self-end sm:self-center">
-          <div className="flex items-center rounded-xl bg-zinc-100 p-1 dark:bg-zinc-800">
+        {/* Audio Steuerung & Speed Toggle */}
+        <div className="flex items-center gap-3">
+          {/* Speed Toggle */}
+          <div className="flex items-center rounded-xl bg-zinc-100 p-1 dark:bg-zinc-800 text-xs font-mono font-medium text-zinc-600 dark:text-zinc-300">
             <button
               type="button"
-              onClick={() => setAudioSpeed(1.0)}
-              className={`rounded-lg px-2.5 py-1 font-mono text-xs font-bold transition-all ${
-                audioSpeed === 1.0
-                  ? 'bg-white text-zinc-900 shadow-xs dark:bg-zinc-900 dark:text-zinc-100'
-                  : 'text-zinc-400 hover:text-zinc-700'
+              onClick={() => {
+                setAudioSpeed(1.0);
+                playMainAudio(1.0);
+              }}
+              className={`rounded-lg px-2.5 py-1 transition-all ${
+                audioSpeed === 1.0 ? 'bg-white shadow-xs text-zinc-900 dark:bg-zinc-900 dark:text-zinc-100 font-bold' : ''
               }`}
             >
               1.0x
             </button>
             <button
               type="button"
-              onClick={() => setAudioSpeed(0.75)}
-              className={`rounded-lg px-2.5 py-1 font-mono text-xs font-bold transition-all ${
-                audioSpeed === 0.75
-                  ? 'bg-white text-zinc-900 shadow-xs dark:bg-zinc-900 dark:text-zinc-100'
-                  : 'text-zinc-400 hover:text-zinc-700'
+              onClick={() => {
+                setAudioSpeed(0.75);
+                playMainAudio(0.75);
+              }}
+              className={`rounded-lg px-2.5 py-1 transition-all ${
+                audioSpeed === 0.75 ? 'bg-white shadow-xs text-zinc-900 dark:bg-zinc-900 dark:text-zinc-100 font-bold' : ''
               }`}
             >
               0.75x
             </button>
           </div>
 
+          {/* Haupt-Audio Button */}
           <button
             type="button"
             onClick={() => playMainAudio()}
-            className={`flex items-center gap-2 rounded-2xl px-5 py-2.5 text-xs font-bold text-white shadow-whisper transition-all active:scale-95 ${
+            disabled={isPlaying}
+            className={`flex items-center gap-2 rounded-2xl px-4 py-2.5 text-xs font-bold text-white shadow-whisper transition-all active:scale-95 ${
               isPlaying
-                ? 'bg-emerald-700 dark:bg-emerald-600'
-                : 'bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-600 dark:hover:bg-emerald-500'
+                ? 'bg-emerald-700 animate-pulse'
+                : 'bg-emerald-600 hover:bg-emerald-500'
             }`}
           >
             <span>Aussprache</span>
@@ -153,13 +169,15 @@ export function DictionaryDetailPanel({ item, card, globalIndex }: DictionaryDet
       <div className="rounded-3xl border border-zinc-200/80 bg-zinc-50/50 p-5 dark:border-white/10 dark:bg-zinc-800/30 space-y-3">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="space-y-1">
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400">
                 Chao Pitch Matrix
               </span>
               <span className="font-mono text-xs font-extrabold text-zinc-900 dark:text-zinc-100">
-                {enriched.chaoPitch.toneName} ({enriched.chaoPitch.contourCode}{' '}
-                {enriched.chaoPitch.label.split(' ')[0]})
+                {enriched.chaoPitch.toneName} • Kontur {enriched.chaoPitch.contourCode}
+              </span>
+              <span className="rounded-full bg-amber-500/10 px-2 py-0.5 font-mono text-[10px] font-semibold text-amber-800 dark:text-amber-300">
+                5=hoch · 3=mitte · 1=tief
               </span>
             </div>
             <p className="text-xs text-zinc-500 dark:text-zinc-400">
@@ -169,30 +187,34 @@ export function DictionaryDetailPanel({ item, card, globalIndex }: DictionaryDet
 
           {/* Chao Pitch Graphic Curve */}
           <div className="flex shrink-0 items-center justify-center rounded-2xl border border-zinc-200/80 bg-white px-5 py-3 dark:border-white/10 dark:bg-zinc-900">
-            <div className="relative flex h-14 w-32 items-center">
+            <div className="relative flex h-14 w-36 items-center">
               {/* Level Axis Grid (5 to 1) */}
-              <div className="absolute inset-0 flex flex-col justify-between text-[8px] font-mono text-zinc-300 dark:text-zinc-600 pointer-events-none">
-                <span>5</span>
-                <span>3</span>
-                <span>1</span>
+              <div className="absolute inset-0 flex flex-col justify-between text-[8px] font-mono text-zinc-400 dark:text-zinc-500 pointer-events-none">
+                <span>5 (Kopf)</span>
+                <span>3 (Mitte)</span>
+                <span>1 (Brust)</span>
               </div>
-              <svg viewBox="0 0 100 40" className="ml-4 h-full w-full overflow-visible">
-                <line x1="0" y1="5" x2="95" y2="5" stroke="currentColor" strokeDasharray="2 2" className="text-zinc-200 dark:text-zinc-800" strokeWidth="1" />
+              <svg viewBox="0 0 100 40" className="ml-10 h-full w-full overflow-visible">
+                <line x1="0" y1="6" x2="95" y2="6" stroke="currentColor" strokeDasharray="2 2" className="text-zinc-200 dark:text-zinc-800" strokeWidth="1" />
                 <line x1="0" y1="20" x2="95" y2="20" stroke="currentColor" strokeDasharray="2 2" className="text-zinc-200 dark:text-zinc-800" strokeWidth="1" />
-                <line x1="0" y1="35" x2="95" y2="35" stroke="currentColor" strokeDasharray="2 2" className="text-zinc-200 dark:text-zinc-800" strokeWidth="1" />
-                {/* Dynamische Tonkurve mit Stützpunkten */}
-                <path
-                  d={`M 10 ${40 - (enriched.chaoPitch.levels[0] || 3) * 7} Q 50 ${
-                    40 - (enriched.chaoPitch.levels[1] || 3) * 7
-                  } 90 ${40 - (enriched.chaoPitch.levels[2] || 3) * 7}`}
-                  fill="none"
-                  stroke="#f59e0b"
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                />
-                <circle cx="10" cy={40 - (enriched.chaoPitch.levels[0] || 3) * 7} r="3" fill="#f59e0b" />
-                <circle cx="50" cy={40 - (enriched.chaoPitch.levels[1] || 3) * 7} r="3" fill="#f59e0b" />
-                <circle cx="90" cy={40 - (enriched.chaoPitch.levels[2] || 3) * 7} r="3" fill="#f59e0b" />
+                <line x1="0" y1="34" x2="95" y2="34" stroke="currentColor" strokeDasharray="2 2" className="text-zinc-200 dark:text-zinc-800" strokeWidth="1" />
+                {(() => {
+                  const lvls = enriched.chaoPitch.levels;
+                  const pts = lvls.map((lvl, idx) => {
+                    const x = 5 + (idx / Math.max(1, lvls.length - 1)) * 85;
+                    const y = 34 - ((lvl - 1) / 4) * 28;
+                    return { x, y };
+                  });
+                  const pathD = pts.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join(' ');
+                  return (
+                    <>
+                      <path d={pathD} fill="none" stroke="#f59e0b" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                      {pts.map((p, i) => (
+                        <circle key={i} cx={p.x} cy={p.y} r="2.5" fill="#f59e0b" />
+                      ))}
+                    </>
+                  );
+                })()}
               </svg>
             </div>
           </div>
@@ -229,112 +251,81 @@ export function DictionaryDetailPanel({ item, card, globalIndex }: DictionaryDet
                   >
                     {part.hanzi}
                   </span>
+
                   <div className="space-y-0.5">
-                    <div className="flex items-center gap-1.5">
+                    <div className="flex items-center gap-2">
                       <span className="font-mono text-xs font-bold text-zinc-900 dark:text-zinc-100">
-                        {rad?.pinyin ?? ''}
+                        {rad ? rad.pinyin : part.id}
                       </span>
-                      <span
-                        className={`font-mono text-[10px] font-bold ${
-                          isFirst ? 'text-rose-600 dark:text-rose-400' : 'text-emerald-600 dark:text-emerald-400'
-                        }`}
-                      >
+                      <span className="text-[10px] font-semibold text-rose-600 dark:text-rose-400">
                         {posLabel}
                       </span>
                     </div>
+
                     <p className="text-xs text-zinc-600 dark:text-zinc-300">
-                      {rad?.meaning ?? 'Grundradikal'} ({isFirst ? 'Semantic' : 'Phonetic/Semantic'})
+                      {rad ? rad.meaning : part.id}
                     </p>
-                    <span className="block font-mono text-[10px] text-zinc-400">
-                      Radikal {rad?.id} • {rad?.strokes ?? 3} Striche
-                    </span>
+
+                    {rad && (
+                      <p className="text-[10px] text-zinc-400 font-mono">
+                        Radikal {rad.id} • {rad.strokes} Striche
+                      </p>
+                    )}
                   </div>
                 </div>
               );
-            }),
+            })
           )}
         </div>
 
-        {/* Kulturelle Gedächtnisstütze (Mnemonic Callout Box) */}
-        <div className="flex items-start gap-3 rounded-2xl border border-rose-500/20 bg-rose-500/[0.04] p-4 text-xs leading-relaxed text-zinc-700 dark:border-rose-400/20 dark:text-zinc-300">
-          <Bookmark className="mt-0.5 h-4 w-4 shrink-0 text-rose-600 dark:text-rose-400" />
-          <div>
-            <strong className="font-bold text-zinc-900 dark:text-zinc-100">
-              Kulturelle Gedächtnisstütze:{' '}
-            </strong>
+        {/* Cultural Mnemonic Box */}
+        <div className="rounded-2xl border border-rose-500/20 bg-rose-500/5 p-4 flex items-start gap-3">
+          <Bookmark className="h-5 w-5 shrink-0 text-rose-600 dark:text-rose-400 mt-0.5" />
+          <p className="text-xs leading-relaxed text-zinc-700 dark:text-zinc-300">
+            <strong className="font-semibold text-rose-700 dark:text-rose-300">Kulturelle Gedächtnisstütze: </strong>
             {enriched.mnemonic}
-          </div>
+          </p>
         </div>
       </div>
 
-      {/* 4. STRICHFOLGE SEQUENZ (笔顺) & Animation */}
-      <div className="space-y-3">
-        <div className="flex items-center justify-between">
+      {/* 4. STRICHFOLGE & SCHREIBTRAINER */}
+      <div ref={writerSectionRef} className="space-y-3">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <span className="font-mono text-xs font-bold uppercase tracking-wider text-zinc-900 dark:text-zinc-100">
-            Strichfolge Sequenz ({enriched.strokes} 画笔顺)
+            Strichfolge & Schreibtrainer ({enriched.strokes} Striche 画)
           </span>
 
-          <button
-            type="button"
-            onClick={() => setShowAnimatedWriter((v) => !v)}
-            className="flex items-center gap-1.5 font-mono text-xs font-bold text-emerald-700 hover:text-emerald-600 dark:text-emerald-400"
-          >
-            <RotateCcw className="h-3.5 w-3.5" />
-            <span>{showAnimatedWriter ? 'Sequenz-Kacheln anzeigen' : 'Strich-Animation abspielen'}</span>
-          </button>
+          {/* Zeichen-Auswahl für mehrsilbige Wörter */}
+          {item.characters.length > 1 && (
+            <div className="flex items-center gap-1 rounded-xl bg-zinc-100 p-1 dark:bg-zinc-800">
+              {item.characters.map((c, i) => (
+                <button
+                  key={c.char}
+                  type="button"
+                  onClick={() => setSelectedChar(c.char)}
+                  className={`flex items-center gap-1.5 rounded-lg px-3 py-1 font-cjk text-sm font-bold transition-all ${
+                    activeWriterChar === c.char
+                      ? 'bg-white text-emerald-700 shadow-xs dark:bg-zinc-900 dark:text-emerald-400'
+                      : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200'
+                  }`}
+                >
+                  <span>{c.char}</span>
+                  <span className="font-mono text-[10px] opacity-70">
+                    ({i + 1}/{item.characters.length})
+                  </span>
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
-        {showAnimatedWriter ? (
-          <div className="flex flex-col items-center rounded-3xl border border-zinc-200/80 bg-zinc-50/50 p-6 dark:border-white/10 dark:bg-zinc-800/20">
-            {item.characters.length > 1 && (
-              <div className="mb-4 flex gap-2">
-                {item.characters.map((c) => (
-                  <button
-                    key={c.char}
-                    type="button"
-                    onClick={() => setActiveWriterChar(c.char)}
-                    className={`rounded-xl px-3 py-1 font-cjk text-lg font-bold transition-all ${
-                      activeWriterChar === c.char
-                        ? 'bg-emerald-600 text-white shadow-xs'
-                        : 'bg-zinc-200/80 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300'
-                    }`}
-                  >
-                    {c.char}
-                  </button>
-                ))}
-              </div>
-            )}
-            <StrokeOrderViewer
-              character={activeWriterChar}
-              pinyin={item.pinyin}
-              meaning={item.meaning}
-              size={180}
-            />
-          </div>
-        ) : (
-          <div className="grid grid-cols-3 gap-2 sm:grid-cols-6">
-            {Array.from({ length: Math.min(6, enriched.strokes) }).map((_, sIdx) => {
-              const isLast = sIdx === Math.min(5, enriched.strokes - 1);
-              return (
-                <div
-                  key={sIdx}
-                  className="flex flex-col items-center rounded-2xl border border-zinc-200/80 bg-zinc-50/50 p-3 dark:border-white/10 dark:bg-zinc-800/30"
-                >
-                  <span
-                    className={`font-cjk text-2xl font-bold ${
-                      isLast ? 'text-emerald-600 dark:text-emerald-400' : 'text-zinc-800 dark:text-zinc-200'
-                    }`}
-                  >
-                    {item.hanzi[0]}
-                  </span>
-                  <span className="mt-1 font-mono text-[10px] text-zinc-400">
-                    {sIdx + 1}. {isLast ? '[Complete]' : 'Strich'}
-                  </span>
-                </div>
-              );
-            })}
-          </div>
-        )}
+        {/* Echter interaktiver HanziWriter mit Animation, Schrittmodus und Schreibquiz */}
+        <StrokeOrderViewer
+          character={activeWriterChar}
+          pinyin={item.characters.find((c) => c.char === activeWriterChar) ? item.pinyin : undefined}
+          meaning={item.meaning}
+          size={190}
+        />
       </div>
 
       {/* 5. HSK-1 BEISPIELSÄTZE (例句研习) */}
@@ -380,29 +371,31 @@ export function DictionaryDetailPanel({ item, card, globalIndex }: DictionaryDet
         </div>
       </div>
 
-      {/* 6. HÄUFIGE WORTVERBINDUNGEN (复合词扩展) */}
-      <div className="space-y-3">
-        <span className="font-mono text-xs font-bold uppercase tracking-wider text-zinc-900 dark:text-zinc-100">
-          Häufige Wortverbindungen (复合词扩展)
-        </span>
+      {/* 6. HÄUFIGE WORTVERBINDUNGEN (复合词扩展) - Nur anzeigen wenn reale Kollokationen existieren */}
+      {enriched.collocations.length > 0 && (
+        <div className="space-y-3">
+          <span className="font-mono text-xs font-bold uppercase tracking-wider text-zinc-900 dark:text-zinc-100">
+            Häufige Wortverbindungen (复合词扩展)
+          </span>
 
-        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-          {enriched.collocations.map((col, cIdx) => (
-            <div
-              key={cIdx}
-              className="flex items-center gap-2 rounded-xl border border-zinc-200/80 bg-zinc-50/40 p-2.5 dark:border-white/10 dark:bg-zinc-800/20 text-xs"
-            >
-              <span className="font-cjk text-base font-bold text-zinc-900 dark:text-zinc-100">
-                {col.hanzi}
-              </span>
-              <span className="font-mono text-[11px] font-bold text-emerald-700 dark:text-emerald-400">
-                {col.pinyin}
-              </span>
-              <span className="truncate text-zinc-400">({col.german})</span>
-            </div>
-          ))}
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+            {enriched.collocations.map((col, cIdx) => (
+              <div
+                key={cIdx}
+                className="flex items-center gap-2 rounded-xl border border-zinc-200/80 bg-zinc-50/40 p-2.5 dark:border-white/10 dark:bg-zinc-800/20 text-xs"
+              >
+                <span className="font-cjk text-base font-bold text-zinc-900 dark:text-zinc-100">
+                  {col.hanzi}
+                </span>
+                <span className="font-mono text-[11px] font-bold text-emerald-700 dark:text-emerald-400">
+                  {col.pinyin}
+                </span>
+                <span className="truncate text-zinc-400">({col.german})</span>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* 7. Mastery Leitner Box & Action Footer */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-t border-zinc-100 pt-6 dark:border-white/[0.06]">
@@ -416,11 +409,11 @@ export function DictionaryDetailPanel({ item, card, globalIndex }: DictionaryDet
         <div className="flex items-center gap-3">
           <button
             type="button"
-            onClick={() => setShowAnimatedWriter(true)}
+            onClick={() => writerSectionRef.current?.scrollIntoView({ behavior: 'smooth' })}
             className="flex items-center gap-2 rounded-2xl bg-rose-600 px-5 py-2.5 text-xs font-bold text-white shadow-whisper hover:bg-rose-500 transition-all active:scale-95"
           >
             <PenTool className="h-4 w-4" />
-            <span>Schreibübung starten</span>
+            <span>Schreibübung aufrufen</span>
           </button>
         </div>
       </div>
