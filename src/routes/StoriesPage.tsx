@@ -15,17 +15,20 @@ import {
   Layers,
   Pause,
   Play,
+  Sparkles,
   Volume2,
   X,
 } from 'lucide-react';
 import storiesData from '../data/stories.json';
 import type { Story, StorySentence, StoryWordToken } from '../types/story';
-import { playAsset, stopCurrentAudio } from '../lib/audio';
+import { playAsset, playToneSequence, stopCurrentAudio } from '../lib/audio';
 import { fireCelebration, fireMicroBurst } from '../lib/confetti';
 import { getCompletedStories, putCompletedStories } from '../lib/db';
 import { STORY_TO_GRAMMAR_MAP } from '../data/chapterLinks';
 import { KineticButton } from '../components/ui/KineticButton';
 import { SealBadge } from '../components/ui/SealBadge';
+import { VOCAB } from '../data';
+import { useProgressStore } from '../store/progressStore';
 
 const STORIES = storiesData as Story[];
 
@@ -47,10 +50,33 @@ export function StoriesPage() {
   const [showPinyin, setShowPinyin] = useState(true);
   const [showGerman, setShowGerman] = useState(true);
 
+  const cards = useProgressStore((s) => s.cards);
+  const review = useProgressStore((s) => s.review);
+
   // Audio Playback State
   const [playingSentenceId, setPlayingSentenceId] = useState<string | null>(null);
   const [isPlayingFull, setIsPlayingFull] = useState(false);
   const fullAudioCancelledRef = useRef(false);
+
+  useEffect(() => {
+    if (!playingSentenceId) return;
+    const el = document.getElementById(`sentence-${playingSentenceId}`);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }, [playingSentenceId]);
+
+  const playTokenAudio = useCallback((token: StoryWordToken) => {
+    stopCurrentAudio();
+    const vocab = VOCAB.find((v) => v.hanzi === token.hanzi);
+    if (vocab?.audioPath) {
+      void playAsset(vocab.audioPath);
+      return;
+    }
+    if (vocab) {
+      playToneSequence(vocab.syllables.map((s) => s.tone));
+    }
+  }, []);
 
   // Active word token for Lookup Popover
   const [activeToken, setActiveToken] = useState<StoryWordToken | null>(null);
@@ -396,6 +422,7 @@ export function StoriesPage() {
                   return (
                     <div
                       key={sent.id}
+                      id={`sentence-${sent.id}`}
                       className={`group rounded-2xl p-4 transition-all duration-200 ${
                         isCurrentActive
                           ? 'bg-emerald-500/10 ring-2 ring-emerald-500/60 shadow-whisper'
@@ -459,6 +486,7 @@ export function StoriesPage() {
                 return (
                   <div
                     key={sent.id}
+                    id={`sentence-${sent.id}`}
                     className={`rounded-3xl border p-5 sm:p-6 transition-all ${
                       isCurrentActive
                         ? 'border-emerald-500/60 bg-emerald-500/[0.06] shadow-whisper'
@@ -519,49 +547,93 @@ export function StoriesPage() {
           )}
 
           {/* 6. Wort-Lookup Popover / Dialog bei Klick auf beliebiges Wort */}
-          {activeToken && (
-            <div
-              className="fixed bottom-6 right-6 z-50 max-w-sm w-full rounded-3xl border border-zinc-200 bg-white p-6 shadow-2xl dark:border-white/10 dark:bg-zinc-900 animate-pop-in"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="flex items-start justify-between">
-                <div>
-                  <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
-                    Wort-Glossar
-                  </span>
-                  <div className="mt-1 flex items-baseline gap-3">
-                    <span className="font-cjk text-4xl font-bold text-zinc-900 dark:text-zinc-100">
-                      {activeToken.hanzi}
-                    </span>
-                    <span className="font-mono text-lg font-semibold text-emerald-700 dark:text-emerald-400">
-                      {activeToken.pinyin}
-                    </span>
-                  </div>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setActiveToken(null)}
-                  className="flex h-8 w-8 items-center justify-center rounded-full text-zinc-400 hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800 cursor-pointer"
-                >
-                  <X className="h-4 w-4" />
-                </button>
-              </div>
+          {activeToken && (() => {
+            const matchingVocab = VOCAB.find((v) => v.hanzi === activeToken.hanzi);
+            const isStudied = matchingVocab ? matchingVocab.id in cards : false;
 
-              <div className="mt-4 rounded-2xl border border-zinc-100 bg-zinc-50/70 p-3 text-xs dark:border-white/[0.04] dark:bg-zinc-950/40">
-                <span className="text-zinc-400">Bedeutung: </span>
-                <span className="font-bold text-zinc-800 dark:text-zinc-200">{activeToken.german}</span>
-              </div>
-
-              <button
-                type="button"
-                onClick={() => navigate(`/dictionary?q=${encodeURIComponent(activeToken.hanzi)}`)}
-                className="mt-3 inline-flex items-center gap-1.5 text-xs font-bold text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 cursor-pointer"
+            return (
+              <div
+                className="fixed bottom-6 right-6 z-50 max-w-sm w-full rounded-3xl border border-zinc-200/90 bg-white/95 p-6 shadow-2xl backdrop-blur-md dark:border-white/10 dark:bg-zinc-900/95 animate-pop-in"
+                onClick={(e) => e.stopPropagation()}
               >
-                <span>Im Wörterbuch nachschlagen</span>
-                <ExternalLink className="h-3 w-3" />
-              </button>
-            </div>
-          )}
+                <div className="flex items-start justify-between gap-3">
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2">
+                      <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
+                        Wort-Glossar
+                      </span>
+                      {matchingVocab ? (
+                        <span className="rounded-md bg-emerald-500/15 px-2 py-0.5 font-mono text-[10px] font-bold text-emerald-700 dark:text-emerald-300">
+                          HSK 1
+                        </span>
+                      ) : (
+                        <span className="rounded-md bg-zinc-100 dark:bg-zinc-800 px-2 py-0.5 font-mono text-[10px] font-medium text-zinc-500">
+                          Kontext
+                        </span>
+                      )}
+                    </div>
+                    <div className="mt-1 flex items-baseline gap-3">
+                      <span className="font-cjk text-4xl font-bold text-zinc-900 dark:text-zinc-100">
+                        {activeToken.hanzi}
+                      </span>
+                      <span className="font-mono text-lg font-semibold text-emerald-700 dark:text-emerald-400">
+                        {activeToken.pinyin}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => playTokenAudio(activeToken)}
+                        className="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-emerald-500/15 text-emerald-700 hover:bg-emerald-500/25 dark:text-emerald-300 transition-colors cursor-pointer"
+                        title="Aussprache anhören"
+                      >
+                        <Volume2 className="h-4 w-4" />
+                      </button>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setActiveToken(null)}
+                    className="flex h-8 w-8 items-center justify-center rounded-full text-zinc-400 hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800 cursor-pointer"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                </div>
+
+                <div className="mt-4 rounded-2xl border border-zinc-100 bg-zinc-50/70 p-3 text-xs dark:border-white/[0.04] dark:bg-zinc-950/40">
+                  <span className="text-zinc-400">Bedeutung: </span>
+                  <span className="font-bold text-zinc-800 dark:text-zinc-200">{activeToken.german}</span>
+                </div>
+
+                <div className="mt-4 flex items-center justify-between gap-2 border-t border-zinc-100 pt-3 dark:border-white/[0.05]">
+                  {matchingVocab && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        void review(matchingVocab.id, 3);
+                        fireMicroBurst();
+                      }}
+                      className={`inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-bold transition-all cursor-pointer ${
+                        isStudied
+                          ? 'border border-emerald-500/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300'
+                          : 'bg-emerald-600 text-white hover:bg-emerald-500 shadow-xs'
+                      }`}
+                    >
+                      {isStudied ? <Check className="h-3.5 w-3.5" /> : <Sparkles className="h-3.5 w-3.5" />}
+                      <span>{isStudied ? 'Im SRS aktiv' : 'Im SRS vormerken'}</span>
+                    </button>
+                  )}
+
+                  <button
+                    type="button"
+                    onClick={() => navigate(`/dictionary?q=${encodeURIComponent(activeToken.hanzi)}`)}
+                    className="ml-auto inline-flex items-center gap-1.5 text-xs font-bold text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 cursor-pointer"
+                  >
+                    <span>Wörterbuch</span>
+                    <ExternalLink className="h-3 w-3" />
+                  </button>
+                </div>
+              </div>
+            );
+          })()}
 
           {/* 7. Didaktische Kapitel-Verknüpfung zurück zu Grammatik-Lektionen */}
           {relatedGrammar.length > 0 && (

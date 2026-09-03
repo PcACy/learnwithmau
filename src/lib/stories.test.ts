@@ -1,15 +1,16 @@
 import { describe, expect, it } from 'vitest';
 import storiesData from '../data/stories.json';
 import type { Story } from '../types/story';
+import { VOCAB } from '../data';
 
 const stories = storiesData as Story[];
 
 describe('HSK-1 Graded Reader Dataset & Integrity', () => {
-  it('contains exactly 8 curated HSK-1 stories', () => {
-    expect(stories.length).toBe(8);
+  it('contains exactly 12 curated HSK-1 stories', () => {
+    expect(stories.length).toBe(12);
   });
 
-  it('ensures each story is properly ordered from 1 to 8', () => {
+  it('ensures each story is properly ordered from 1 to 12', () => {
     stories.forEach((story, idx) => {
       expect(story.order).toBe(idx + 1);
       expect(story.id).toBeTruthy();
@@ -77,6 +78,21 @@ describe('HSK-1 Graded Reader Dataset & Integrity', () => {
         expect(q.explanation.length).toBeGreaterThan(5);
       });
     });
+  });
+
+  it('deckt alle 163 HSK-1-Vokabeln im Fließtext der 12 Geschichten ab', () => {
+    const allText = stories
+      .flatMap((s) => s.sentences.map((sent) => sent.hanzi))
+      .join('');
+
+    const missing: string[] = [];
+    for (const item of VOCAB) {
+      if (!allText.includes(item.hanzi)) {
+        missing.push(item.hanzi);
+      }
+    }
+
+    expect(missing, `Fehlende HSK-1-Vokabeln in den Geschichten: ${missing.join(', ')}`).toEqual([]);
   });
 });
 

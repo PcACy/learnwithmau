@@ -160,4 +160,20 @@ export const STORY_TO_GRAMMAR_MAP: Record<string, { lessonId: string; lessonTitl
   'story-06': [{ lessonId: 'time-before-verb', lessonTitle: 'Zeitangaben vor dem Verb' }],
   'story-07': [{ lessonId: 'aspect-le', lessonTitle: 'Abgeschlossene Handlungen mit 了' }],
   'story-08': [{ lessonId: 'question-words', lessonTitle: 'W-Fragewörter (什么, 哪儿, 谁)' }],
+  'story-09': [
+    { lessonId: 'existence-zai', lessonTitle: 'Ortsangaben mit 在' },
+    { lessonId: 'time-before-verb', lessonTitle: 'Zeitangaben vor dem Verb' },
+  ],
+  'story-10': [
+    { lessonId: 'questions-ma', lessonTitle: 'Entscheidungsfragen 吗' },
+    { lessonId: 'copula-shi', lessonTitle: 'Kopula 是 (sein)' },
+  ],
+  'story-11': [
+    { lessonId: 'measure-words', lessonTitle: 'Zähleinheitswörter (个, 块)' },
+    { lessonId: 'possession-de', lessonTitle: 'Attributpartikel 的' },
+  ],
+  'story-12': [
+    { lessonId: 'question-words', lessonTitle: 'W-Fragewörter (几, 谁, 什么)' },
+    { lessonId: 'negation-bu-mei', lessonTitle: 'Verneinung mit 不 / 没' },
+  ],
 };
