@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { CSSProperties, DragEvent } from 'react';
-import { ArrowRight, HelpCircle, RotateCcw } from 'lucide-react';
+import { ArrowRight, Check, HelpCircle, RotateCcw, Volume2 } from 'lucide-react';
 import { buildAlchemyPuzzles, type AlchemyPuzzle } from '../lib/alchemyEngine';
 import { useKeyDown } from '../hooks/useKeyDown';
 import { KeyHints } from '../components/ui/Kbd';
@@ -9,6 +9,8 @@ import { useProgressStore } from '../store/progressStore';
 import { fireCelebration, fireMicroBurst } from '../lib/confetti';
 import { SealBadge } from '../components/ui/SealBadge';
 import { KineticButton } from '../components/ui/KineticButton';
+import { VOCAB } from '../data';
+import { playAsset, stopCurrentAudio } from '../lib/audio';
 
 const PUZZLES_PER_SESSION = 6;
 
@@ -60,12 +62,17 @@ export function AlchemyPage() {
   const [session, setSession] = useState<SessionState>(() => newSession());
   const [showHelp, setShowHelp] = useState(false);
   const flashTimerRef = useRef<number | undefined>(undefined);
+  const autoAdvanceTimerRef = useRef<number | undefined>(undefined);
 
   useEffect(() => {
     return () => {
       if (flashTimerRef.current !== undefined) {
         window.clearTimeout(flashTimerRef.current);
       }
+      if (autoAdvanceTimerRef.current !== undefined) {
+        window.clearTimeout(autoAdvanceTimerRef.current);
+      }
+      stopCurrentAudio();
     };
   }, []);
 
@@ -75,6 +82,10 @@ export function AlchemyPage() {
     puzzle.slots.every((slot, i) => session.slots[i]?.filledPieceId === slot.part.id);
 
   const startSession = useCallback(() => {
+    if (autoAdvanceTimerRef.current !== undefined) {
+      window.clearTimeout(autoAdvanceTimerRef.current);
+    }
+    stopCurrentAudio();
     setSession(newSession());
     setPhase('running');
   }, []);
@@ -82,6 +93,9 @@ export function AlchemyPage() {
   /** Nach gelöstem Zeichen: SRS-Grading, dann nächstes Puzzle oder Summary. */
   const completeSolve = useCallback(
     (solvedSession: SessionState) => {
+      if (autoAdvanceTimerRef.current !== undefined) {
+        window.clearTimeout(autoAdvanceTimerRef.current);
+      }
       const currentPuzzle = solvedSession.puzzles[solvedSession.index];
       const grade = solvedSession.wordErrors === 0 ? 5 : solvedSession.wordErrors <= 2 ? 4 : 3;
       void review(currentPuzzle.itemId, grade);
@@ -145,7 +159,19 @@ export function AlchemyPage() {
         };
 
         if (complete) {
-          completeSolve(intermediate);
+          fireMicroBurst();
+          const vocabItem = VOCAB.find((v) => v.id === puzzle.itemId);
+          if (vocabItem?.audioPath) {
+            void playAsset(vocabItem.audioPath);
+          }
+          setSession(intermediate);
+
+          if (autoAdvanceTimerRef.current !== undefined) {
+            window.clearTimeout(autoAdvanceTimerRef.current);
+          }
+          autoAdvanceTimerRef.current = window.setTimeout(() => {
+            completeSolve(intermediate);
+          }, 2400);
         } else {
           setSession(intermediate);
         }
@@ -179,7 +205,11 @@ export function AlchemyPage() {
     if (phase !== 'running' || !puzzle || event.metaKey || event.ctrlKey) return;
     if (event.repeat) return;
 
-    if (solved && event.key === 'Enter') {
+    if (solved && (event.key === 'Enter' || event.key === ' ')) {
+      event.preventDefault();
+      if (autoAdvanceTimerRef.current !== undefined) {
+        window.clearTimeout(autoAdvanceTimerRef.current);
+      }
       completeSolve(session);
       return;
     }
@@ -270,31 +300,61 @@ export function AlchemyPage() {
           </span>
 
           {/* Obere Leiste: Ziel-Zeichen Preview & Reset */}
-          <div className="flex items-center justify-between gap-4 relative">
-            <div className="flex items-baseline gap-3">
-              <span className="font-cjk text-6xl font-black text-zinc-900 dark:text-zinc-50">
+          <div className="flex items-center justify-between gap-4 relative flex-wrap">
+            <div className={`flex items-baseline gap-3.5 transition-all duration-300 rounded-2xl p-2 ${
+              solved ? 'bg-emerald-500/10 ring-2 ring-emerald-500/40 shadow-whisper scale-105' : ''
+            }`}>
+              <span className={`font-cjk text-6xl font-black transition-colors ${
+                solved ? 'text-emerald-700 dark:text-emerald-400' : 'text-zinc-900 dark:text-zinc-50'
+              }`}>
                 {puzzle.targetChar}
               </span>
               <div>
-                <span className="font-mono text-base font-bold text-emerald-700 dark:text-emerald-400 block">
-                  {puzzle.pinyin}
-                </span>
+                <div className="flex items-center gap-2">
+                  <span className="font-mono text-base font-bold text-emerald-700 dark:text-emerald-400 block">
+                    {puzzle.pinyin}
+                  </span>
+                  {solved && (
+                    <span className="inline-flex items-center gap-1 rounded-full bg-emerald-600 px-2 py-0.5 font-mono text-[10px] font-bold text-white shadow-xs animate-pop-in">
+                      <Check className="h-3 w-3" /> FUSIONIERT
+                    </span>
+                  )}
+                </div>
                 <span className="text-xs text-zinc-500 dark:text-zinc-400">
                   {puzzle.meaning}
                 </span>
               </div>
             </div>
 
-            {session.selectedPiece !== null && (
-              <button
-                type="button"
-                onClick={() => setSession({ ...session, selectedPiece: null })}
-                className="inline-flex h-9 items-center gap-1.5 rounded-full border border-zinc-200/80 bg-white px-3.5 text-xs font-semibold text-zinc-600 hover:border-zinc-300 hover:text-zinc-900 dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-300 cursor-pointer"
-              >
-                <RotateCcw className="h-3.5 w-3.5" />
-                Auswahl lösen
-              </button>
-            )}
+            <div className="flex items-center gap-2">
+              {(() => {
+                const vocabItem = VOCAB.find((v) => v.id === puzzle.itemId);
+                return vocabItem?.audioPath ? (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (vocabItem.audioPath) void playAsset(vocabItem.audioPath);
+                    }}
+                    aria-label="Zeichen anhören"
+                    title="Zeichen anhören"
+                    className="flex h-9 w-9 items-center justify-center rounded-xl border border-zinc-200/80 bg-white text-zinc-600 shadow-xs transition-all hover:border-emerald-600/35 hover:bg-emerald-500/10 hover:text-emerald-700 active:scale-95 dark:border-white/[0.08] dark:bg-zinc-800 dark:text-zinc-300 cursor-pointer"
+                  >
+                    <Volume2 className="h-4 w-4" />
+                  </button>
+                ) : null;
+              })()}
+
+              {session.selectedPiece !== null && !solved && (
+                <button
+                  type="button"
+                  onClick={() => setSession({ ...session, selectedPiece: null })}
+                  className="inline-flex h-9 items-center gap-1.5 rounded-full border border-zinc-200/80 bg-white px-3.5 text-xs font-semibold text-zinc-600 hover:border-zinc-300 hover:text-zinc-900 dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-300 cursor-pointer"
+                >
+                  <RotateCcw className="h-3.5 w-3.5" />
+                  Auswahl lösen
+                </button>
+              )}
+            </div>
           </div>
 
           {/* Bauplan-Slots (Tianzige-Stil) */}
@@ -403,6 +463,7 @@ export function AlchemyPage() {
                     key={`${piece.id}-${piece.hanzi}`}
                     type="button"
                     draggable={!used && !solved}
+                    title={piece.meaning ? `${piece.hanzi} (${piece.meaning})` : piece.hanzi}
                     onDragStart={(event) => {
                       event.dataTransfer.setData('text/plain', String(pieceIndex));
                       event.dataTransfer.effectAllowed = 'move';
@@ -417,9 +478,14 @@ export function AlchemyPage() {
                     <span className="pointer-events-none absolute left-1.5 top-1 font-mono text-[10px] font-bold text-zinc-400 dark:text-zinc-500">
                       [{pieceIndex + 1}]
                     </span>
-                    <span className="pointer-events-none font-cjk text-3xl font-medium text-zinc-800 dark:text-zinc-100">
+                    <span className="pointer-events-none font-cjk text-2xl font-medium text-zinc-800 dark:text-zinc-100">
                       {piece.hanzi}
                     </span>
+                    {piece.meaning && (
+                      <span className="pointer-events-none absolute bottom-1 max-w-[50px] truncate px-1 font-sans text-[9px] font-medium text-zinc-400 dark:text-zinc-500">
+                        {piece.meaning}
+                      </span>
+                    )}
                   </button>
                 );
               })}

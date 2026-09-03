@@ -32,6 +32,7 @@ export interface AlchemyPiece {
   /** Radikal-ID – eindeutig innerhalb eines Puzzles. */
   id: string;
   hanzi: string;
+  meaning?: string;
 }
 
 export interface AlchemyPuzzle {
@@ -45,7 +46,11 @@ export interface AlchemyPuzzle {
 }
 
 function buildPieces(expected: CharacterPart[], distractorCount: number): AlchemyPiece[] {
-  const correct: AlchemyPiece[] = expected.map((part) => ({ id: part.id, hanzi: part.hanzi }));
+  const correct: AlchemyPiece[] = expected.map((part) => ({
+    id: part.id,
+    hanzi: part.hanzi,
+    meaning: RADICALS_BY_ID.get(part.id)?.meaning,
+  }));
 
   const usedIds = new Set(correct.map((piece) => piece.id));
   const usedHanzi = new Set(correct.map((piece) => piece.hanzi));
@@ -54,7 +59,11 @@ function buildPieces(expected: CharacterPart[], distractorCount: number): Alchem
     .filter((radical) => !usedIds.has(radical.id))
     .flatMap((radical) => {
       const forms = [radical.hanzi, ...radical.forms].filter((form) => !usedHanzi.has(form));
-      return forms.map((hanzi) => ({ id: radical.id, hanzi }) satisfies AlchemyPiece);
+      return forms.map((hanzi) => ({
+        id: radical.id,
+        hanzi,
+        meaning: radical.meaning,
+      }) satisfies AlchemyPiece);
     });
 
   return shuffled([...correct, ...shuffled(candidates).slice(0, distractorCount)]);
