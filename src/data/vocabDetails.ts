@@ -1,74 +1,6 @@
 import type { PartOfSpeech, Collocation, ExampleSentence, VocabItem } from '../types/vocab';
 import { RADICALS_BY_ID } from './index';
 
-export interface ChaoPitchInfo {
-  toneName: string;
-  contourCode: string;
-  label: string;
-  description: string;
-  levels: number[];
-}
-
-export const CHAO_PITCH_DESCRIPTIONS: Record<number, ChaoPitchInfo> = {
-  1: {
-    toneName: '1. Ton',
-    contourCode: '55',
-    label: 'Hoch-Eben (High Flat)',
-    description: 'Beginnt auf höchster Tonlage (5) und bleibt stabil und gleichmäßig hoch.',
-    levels: [5, 5, 5],
-  },
-  2: {
-    toneName: '2. Ton',
-    contourCode: '35',
-    label: 'Steigend (Rising)',
-    description: 'Startet in mittlerer Stimmlage (3) und steigt fragend zur Höchstlage (5) auf.',
-    levels: [3, 4, 5],
-  },
-  3: {
-    toneName: '3. Ton',
-    contourCode: '214',
-    label: 'Fallend-Steigend (Dipping)',
-    description: 'Beginnt halbtief (2), fällt auf Tiefstlage (1) und schwingt auf hoch (4) empor.',
-    levels: [2, 1, 4],
-  },
-  4: {
-    toneName: '4. Ton',
-    contourCode: '51',
-    label: 'Fallend (Falling)',
-    description: 'Setzt energisch auf Höchstlage (5) an und fällt bestimmt auf Tiefstlage (1) ab.',
-    levels: [5, 3, 1],
-  },
-  5: {
-    toneName: 'Neutraler Ton',
-    contourCode: '3',
-    label: 'Leicht & Kurz (Neutral)',
-    description: 'Kurz, leicht und unbetont in der mittleren Stimmlage (3) gesprochen.',
-    levels: [3, 3, 3],
-  },
-};
-
-export function getChaoPitchInfo(item: VocabItem): ChaoPitchInfo {
-  const primaryTone = item.syllables[0]?.tone ?? 1;
-  const base = CHAO_PITCH_DESCRIPTIONS[primaryTone] || CHAO_PITCH_DESCRIPTIONS[1];
-
-  if (item.syllables.length > 1) {
-    const tones = item.syllables.map((s) => `T${s.tone}`);
-    const codes = item.syllables.map((s) => CHAO_PITCH_DESCRIPTIONS[s.tone]?.contourCode ?? '').join(' + ');
-    return {
-      toneName: `${tones.join(' + ')}`,
-      contourCode: codes,
-      label: `${item.syllables.map((s) => s.marked).join(' ')}`,
-      description: `Erste Silbe (${CHAO_PITCH_DESCRIPTIONS[item.syllables[0].tone]?.label}), gefolgt von Silbe 2 (${CHAO_PITCH_DESCRIPTIONS[item.syllables[1].tone]?.label}).`,
-      levels: [
-        ...(CHAO_PITCH_DESCRIPTIONS[item.syllables[0].tone]?.levels ?? [3, 3, 3]),
-        ...(CHAO_PITCH_DESCRIPTIONS[item.syllables[1].tone]?.levels ?? [3, 3, 3]),
-      ],
-    };
-  }
-
-  return base;
-}
-
 export const PART_OF_SPEECH_MAP: Record<string, PartOfSpeech> = {
   // Verben
   'hsk1-ai': 'verb',
@@ -2756,7 +2688,6 @@ export function getEnrichedVocab(item: VocabItem) {
   const collocations = COLLOCATIONS_MAP[item.id] || [];
   const exampleSentences = EXAMPLE_SENTENCES_MAP[item.id] || [];
   const strokes = getEstimatedStrokes(item);
-  const chaoPitch = getChaoPitchInfo(item);
 
   return {
     partOfSpeech,
@@ -2764,6 +2695,5 @@ export function getEnrichedVocab(item: VocabItem) {
     collocations,
     exampleSentences,
     strokes,
-    chaoPitch,
   };
 }

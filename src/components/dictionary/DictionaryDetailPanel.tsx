@@ -165,63 +165,7 @@ export function DictionaryDetailPanel({ item, card, globalIndex }: DictionaryDet
         </div>
       </div>
 
-      {/* 2. CHAO PITCH MATRIX */}
-      <div className="rounded-3xl border border-zinc-200/80 bg-zinc-50/50 p-5 dark:border-white/10 dark:bg-zinc-800/30 space-y-3">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="space-y-1">
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400">
-                Chao Pitch Matrix
-              </span>
-              <span className="font-mono text-xs font-extrabold text-zinc-900 dark:text-zinc-100">
-                {enriched.chaoPitch.toneName} • Kontur {enriched.chaoPitch.contourCode}
-              </span>
-              <span className="rounded-full bg-amber-500/10 px-2 py-0.5 font-mono text-[10px] font-semibold text-amber-800 dark:text-amber-300">
-                5=hoch · 3=mitte · 1=tief
-              </span>
-            </div>
-            <p className="text-xs text-zinc-500 dark:text-zinc-400">
-              {enriched.chaoPitch.description}
-            </p>
-          </div>
-
-          {/* Chao Pitch Graphic Curve */}
-          <div className="flex shrink-0 items-center justify-center rounded-2xl border border-zinc-200/80 bg-white px-5 py-3 dark:border-white/10 dark:bg-zinc-900">
-            <div className="relative flex h-14 w-36 items-center">
-              {/* Level Axis Grid (5 to 1) */}
-              <div className="absolute inset-0 flex flex-col justify-between text-[8px] font-mono text-zinc-400 dark:text-zinc-500 pointer-events-none">
-                <span>5 (Kopf)</span>
-                <span>3 (Mitte)</span>
-                <span>1 (Brust)</span>
-              </div>
-              <svg viewBox="0 0 100 40" className="ml-10 h-full w-full overflow-visible">
-                <line x1="0" y1="6" x2="95" y2="6" stroke="currentColor" strokeDasharray="2 2" className="text-zinc-200 dark:text-zinc-800" strokeWidth="1" />
-                <line x1="0" y1="20" x2="95" y2="20" stroke="currentColor" strokeDasharray="2 2" className="text-zinc-200 dark:text-zinc-800" strokeWidth="1" />
-                <line x1="0" y1="34" x2="95" y2="34" stroke="currentColor" strokeDasharray="2 2" className="text-zinc-200 dark:text-zinc-800" strokeWidth="1" />
-                {(() => {
-                  const lvls = enriched.chaoPitch.levels;
-                  const pts = lvls.map((lvl, idx) => {
-                    const x = 5 + (idx / Math.max(1, lvls.length - 1)) * 85;
-                    const y = 34 - ((lvl - 1) / 4) * 28;
-                    return { x, y };
-                  });
-                  const pathD = pts.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join(' ');
-                  return (
-                    <>
-                      <path d={pathD} fill="none" stroke="#f59e0b" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-                      {pts.map((p, i) => (
-                        <circle key={i} cx={p.x} cy={p.y} r="2.5" fill="#f59e0b" />
-                      ))}
-                    </>
-                  );
-                })()}
-              </svg>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* 3. RADIKAL-DEKOMPOSITION (字形拆解) */}
+      {/* 2. RADIKAL-DEKOMPOSITION (字形拆解) */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <span className="font-mono text-xs font-bold uppercase tracking-wider text-zinc-900 dark:text-zinc-100">

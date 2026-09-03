@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { ChevronLeft, ChevronRight, Search, X } from 'lucide-react';
 import type { VocabItem } from '../../types/vocab';
-import { PART_OF_SPEECH_LABELS, PART_OF_SPEECH_MAP, getChaoPitchInfo } from '../../data/vocabDetails';
+import { PART_OF_SPEECH_LABELS, PART_OF_SPEECH_MAP } from '../../data/vocabDetails';
 
 interface DictionaryMasterListProps {
   items: VocabItem[];
@@ -108,7 +108,6 @@ export function DictionaryMasterList({
           const isSelected = item.id === selectedId;
           const pos = PART_OF_SPEECH_MAP[item.id] || 'nomen';
           const posInfo = PART_OF_SPEECH_LABELS[pos] || { short: 'Wort' };
-          const pitch = getChaoPitchInfo(item);
           const globalIdx = (currentPage - 1) * pageSize + idx + 1;
           const hskTag = `#${String(globalIdx).padStart(2, '0')}`;
 
@@ -159,9 +158,6 @@ export function DictionaryMasterList({
                   <div className="flex items-center gap-2">
                     <span className="font-mono text-sm font-extrabold text-zinc-900 dark:text-zinc-100">
                       {item.pinyin}
-                    </span>
-                    <span className="rounded-md border border-amber-500/30 bg-amber-500/10 px-1.5 py-0.2 font-mono text-[10px] font-bold text-amber-700 dark:text-amber-400">
-                      {pitch.toneName.replace('. Ton', '')} • {pitch.contourCode}
                     </span>
                   </div>
                   <p className="truncate text-xs font-medium text-zinc-500 dark:text-zinc-400">

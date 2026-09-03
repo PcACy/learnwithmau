@@ -74,9 +74,6 @@ describe('Katalog-Integrität', () => {
         expect(c.german).not.toContain('mit hallo');
         expect(c.hanzi).not.toBe(`${item.hanzi}好`);
       }
-
-      // Chao-Pitch-Level muss sauber vorliegen
-      expect(enriched.chaoPitch.levels.length).toBeGreaterThanOrEqual(3);
     }
   });
 });
