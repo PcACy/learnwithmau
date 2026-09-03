@@ -30,6 +30,7 @@ const ROUTES: readonly [path: string, marker: string][] = [
   ['/alchemy', 'ALCHEMIE'],
   ['/number-drill', 'Session starten'],
   ['/review', 'Thematische Wiederholung'],
+  ['/stories', 'Buch-Fließtext'],
   ['/dictionary', 'Suchen'],
   ['/settings', 'Tagesziel'],
 ];
