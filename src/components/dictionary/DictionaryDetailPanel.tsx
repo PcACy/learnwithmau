@@ -50,26 +50,31 @@ export function DictionaryDetailPanel({ item, card, globalIndex }: DictionaryDet
   const mastery = getMasteryLevel(card);
   const hskTag = `#${String(globalIndex).padStart(2, '0')}`;
 
-  const playMainAudio = (rate?: number) => {
+  const playMainAudio = async (rate?: number) => {
     stopCurrentAudio();
     if (playTimerRef.current !== undefined) {
       window.clearTimeout(playTimerRef.current);
     }
     setIsPlaying(true);
+    const speed = rate ?? audioSpeed;
     const done = () => setIsPlaying(false);
+
+    let started = false;
     if (item.audioPath) {
-      void playAsset(item.audioPath, done, rate ?? audioSpeed);
-    } else {
+      started = await playAsset(item.audioPath, done, speed);
+    }
+
+    if (!started) {
       const durationMs = playToneSequence(item.syllables.map((s) => s.tone));
       playTimerRef.current = window.setTimeout(done, Math.max(300, durationMs));
     }
   };
 
-  const playSentenceAudio = (audioPath: string | undefined, idx: number) => {
+  const playSentenceAudio = async (audioPath: string | undefined, idx: number) => {
     if (!audioPath) return;
     stopCurrentAudio();
     setPlayingSentenceIdx(idx);
-    void playAsset(audioPath, () => setPlayingSentenceIdx(null));
+    await playAsset(audioPath, () => setPlayingSentenceIdx(null));
   };
 
   return (
@@ -139,8 +144,7 @@ export function DictionaryDetailPanel({ item, card, globalIndex }: DictionaryDet
               <div className="flex items-center gap-2 pt-0.5 flex-wrap">
                 <button
                   type="button"
-                  onClick={() => playMainAudio()}
-                  disabled={isPlaying}
+                  onClick={() => void playMainAudio()}
                   className={`flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-bold text-white shadow-whisper transition-all active:scale-95 cursor-pointer ${
                     isPlaying
                       ? 'bg-emerald-700 animate-pulse'
@@ -383,7 +387,7 @@ export function DictionaryDetailPanel({ item, card, globalIndex }: DictionaryDet
             <div className="flex items-center gap-1 rounded-xl bg-zinc-100 p-1 dark:bg-zinc-800">
               {item.characters.map((c, i) => (
                 <button
-                  key={c.char}
+                  key={`${c.char}-${i}`}
                   type="button"
                   onClick={() => setSelectedChar(c.char)}
                   className={`flex items-center gap-1.5 rounded-lg px-3 py-1 font-cjk text-sm font-bold transition-all ${

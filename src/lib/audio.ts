@@ -131,7 +131,12 @@ export function playAsset(url: string, onEnded?: () => void, rate?: number): Pro
     currentAudio = audio;
     audio.src = url;
     const speed = rate ?? useSettingsStore.getState().audioSpeed ?? 1.0;
-    audio.playbackRate = speed;
+    try {
+      audio.defaultPlaybackRate = speed;
+      audio.playbackRate = speed;
+    } catch {
+      // Ignore unsupported playbackRate before load
+    }
 
     const finish = (started: boolean) => {
       if (settled) return;
@@ -140,8 +145,23 @@ export function playAsset(url: string, onEnded?: () => void, rate?: number): Pro
       if (currentAudio === audio && !started) {
         currentAudio = null;
       }
+      if (!started) {
+        onEnded?.();
+      }
       resolve(started);
     };
+
+    audio.addEventListener(
+      'loadedmetadata',
+      () => {
+        try {
+          audio.playbackRate = speed;
+        } catch {
+          // ignore
+        }
+      },
+      { once: true },
+    );
 
     audio.addEventListener(
       'playing',
@@ -151,7 +171,10 @@ export function playAsset(url: string, onEnded?: () => void, rate?: number): Pro
       },
       { once: true },
     );
+
     audio.addEventListener('error', () => finish(false), { once: true });
+    audio.addEventListener('abort', () => finish(false), { once: true });
+
     audio.addEventListener(
       'ended',
       () => {
@@ -164,7 +187,7 @@ export function playAsset(url: string, onEnded?: () => void, rate?: number): Pro
       { once: true },
     );
 
-    const timeoutId = window.setTimeout(() => finish(false), 4000);
+    const timeoutId = window.setTimeout(() => finish(false), 3000);
 
     try {
       const playPromise = audio.play();
