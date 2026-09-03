@@ -4,17 +4,16 @@ import {
   ArrowRight,
   CheckCircle2,
   HelpCircle,
-  MessageSquareQuote,
-  RefreshCw,
   RotateCcw,
-  Trophy,
   XCircle,
 } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import sentencesData from '../data/sentences.json';
 import { playToneSequence } from '../lib/audio';
 import { fireCelebration, fireMicroBurst } from '../lib/confetti';
 import { shuffled } from '../lib/shuffle';
+import { SealBadge } from '../components/ui/SealBadge';
+import { KineticButton } from '../components/ui/KineticButton';
+import { SessionSummary } from '../components/game/SessionSummary';
 
 interface SentenceItem {
   id: string;
@@ -45,9 +44,9 @@ export function SentenceBuilderPage() {
   const [availableTokens, setAvailableTokens] = useState<string[]>(session.available);
   const [status, setStatus] = useState<'playing' | 'correct' | 'wrong' | 'summary'>('playing');
   const [showPinyin, setShowPinyin] = useState(false);
+  const [showHelp, setShowHelp] = useState(false);
   const [score, setScore] = useState(0);
 
-  // Initialisiert eine neue Session mit 5 zufälligen Sätzen
   const startSession = useCallback(() => {
     const newSession = initSession();
     setSession(newSession);
@@ -60,10 +59,8 @@ export function SentenceBuilderPage() {
   }, []);
 
   const sessionSentences = session.sentences;
-
   const currentSentence = sessionSentences[currentIndex];
 
-  // Token auswählen (von Vorrat in den Satz)
   const addToken = (token: string, index: number) => {
     if (status !== 'playing') return;
     const newAvailable = [...availableTokens];
@@ -72,7 +69,6 @@ export function SentenceBuilderPage() {
     setSelectedTokens([...selectedTokens, token]);
   };
 
-  // Token abwählen (vom Satz zurück in den Vorrat)
   const removeToken = (token: string, index: number) => {
     if (status !== 'playing') return;
     const newSelected = [...selectedTokens];
@@ -81,7 +77,6 @@ export function SentenceBuilderPage() {
     setAvailableTokens([...availableTokens, token]);
   };
 
-  // Satz prüfen
   const checkAnswer = () => {
     if (!currentSentence || selectedTokens.length === 0) return;
     const isCorrect = selectedTokens.join('') === currentSentence.tokens.join('');
@@ -90,14 +85,13 @@ export function SentenceBuilderPage() {
       setStatus('correct');
       setScore((s) => s + 1);
       fireMicroBurst();
-      playToneSequence([1, 4]); // Bestätigungston
+      playToneSequence([1, 4]);
     } else {
       setStatus('wrong');
-      playToneSequence([3, 3]); // Fehlerton
+      playToneSequence([3, 3]);
     }
   };
 
-  // Nächster Satz oder Zusammenfassung
   const nextSentence = () => {
     if (currentIndex + 1 < sessionSentences.length) {
       const nextIdx = currentIndex + 1;
@@ -113,7 +107,6 @@ export function SentenceBuilderPage() {
     }
   };
 
-  // Zurücksetzen des aktuellen Versuchs
   const resetCurrent = () => {
     if (!currentSentence) return;
     setSelectedTokens([]);
@@ -124,207 +117,224 @@ export function SentenceBuilderPage() {
   if (!currentSentence) return null;
 
   if (status === 'summary') {
+    const accuracy = Math.round((score / ROUNDS_PER_SESSION) * 100);
     return (
-      <div className="reveal mx-auto max-w-lg space-y-6 py-12 text-center" style={{ '--index': 0 } as CSSProperties}>
-        <div className="flex justify-center">
-          <span className="flex h-20 w-20 items-center justify-center rounded-3xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 shadow-whisper">
-            <Trophy className="h-10 w-10" />
-          </span>
-        </div>
-
-        <div className="space-y-2">
-          <h1 className="text-3xl font-bold tracking-tight">Runde abgeschlossen!</h1>
-          <p className="text-sm text-zinc-500 dark:text-zinc-400">
-            Du hast {score} von {ROUNDS_PER_SESSION} Sätzen auf Anhieb richtig gebaut.
-          </p>
-        </div>
-
-        <div className="flex flex-wrap justify-center gap-3 pt-4">
-          <button
-            type="button"
-            onClick={startSession}
-            className="flex items-center gap-2 rounded-2xl bg-emerald-600 px-6 py-3.5 text-sm font-bold text-white shadow-whisper transition-all hover:bg-emerald-500 active:translate-y-px"
-          >
-            <RefreshCw className="h-4 w-4" />
-            Noch eine Runde
-          </button>
-          <Link
-            to="/"
-            className="flex items-center gap-2 rounded-2xl border border-zinc-200/80 bg-white px-5 py-3.5 text-sm font-semibold text-zinc-700 shadow-xs dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-200"
-          >
-            Zurück zur Übersicht
-          </Link>
-        </div>
-      </div>
+      <SessionSummary
+        headline={score === ROUNDS_PER_SESSION ? 'Makelloser Satzbau!' : 'Runde abgeschlossen'}
+        stats={[
+          { label: 'Richtig', value: `${score} / ${ROUNDS_PER_SESSION}` },
+          { label: 'Trefferquote', value: `${accuracy}%` },
+          { label: 'Sätze', value: String(ROUNDS_PER_SESSION) },
+        ]}
+        onRestart={startSession}
+        restartLabel="Neue Sätze bauen"
+      />
     );
   }
 
   return (
-    <div className="mx-auto max-w-3xl space-y-8 pb-16">
-      {/* Header */}
-      <div className="reveal flex items-center justify-between" style={{ '--index': 0 } as CSSProperties}>
-        <div>
-          <p className="flex items-center gap-1.5 font-mono text-xs font-semibold uppercase tracking-[0.1em] text-emerald-700 dark:text-emerald-400">
-            <MessageSquareQuote className="h-3.5 w-3.5" />
-            Grammatik & Satzbau
-          </p>
-          <h1 className="mt-1 text-2xl font-bold tracking-tight sm:text-3xl">Satzbau-Baukasten</h1>
-        </div>
-        <span className="rounded-full bg-zinc-100 px-3.5 py-1 font-mono text-xs font-bold text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300">
-          Satz {currentIndex + 1} von {ROUNDS_PER_SESSION}
-        </span>
-      </div>
-
-      {/* Deutsche Vorgabe & Pinyin */}
+    <div className="mx-auto max-w-3xl space-y-6 pb-20" aria-live="polite">
+      {/* 1. Header */}
       <div
-        className="reveal relative rounded-[2rem] border border-zinc-200/80 bg-white p-7 text-center shadow-whisper dark:border-white/10 dark:bg-zinc-900"
-        style={{ '--index': 1 } as CSSProperties}
+        className="reveal flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
+        style={{ '--index': 0 } as CSSProperties}
       >
-        <p className="text-xs font-semibold uppercase tracking-[0.08em] text-zinc-400 dark:text-zinc-500">
-          Baue diesen deutschen Satz auf Chinesisch:
-        </p>
-        <h2 className="mt-3 text-2xl font-bold tracking-tight text-zinc-900 sm:text-3xl dark:text-zinc-100">
-          „{currentSentence.german}“
-        </h2>
+        <div className="space-y-1">
+          <div className="flex items-center gap-2.5">
+            <SealBadge sealChar="句" label="SATZBAU-MEISTER" variant="jade" />
+            <span className="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+              Satz {currentIndex + 1} / {ROUNDS_PER_SESSION}
+            </span>
+          </div>
+          <h1 className="text-2xl font-black tracking-tight sm:text-3xl text-zinc-900 dark:text-zinc-50">
+            SVO-Syntax-Baukasten
+          </h1>
+        </div>
 
-        {showPinyin ? (
-          <p className="mt-3 font-mono text-sm font-semibold text-emerald-700 dark:text-emerald-400">
-            {currentSentence.pinyin}
-          </p>
-        ) : (
+        <div className="flex items-center gap-3">
           <button
             type="button"
-            onClick={() => setShowPinyin(true)}
-            className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-zinc-400 hover:text-emerald-600 dark:hover:text-emerald-400"
+            onClick={() => setShowHelp((v) => !v)}
+            className="inline-flex items-center gap-1.5 rounded-full border border-zinc-200/80 bg-white/90 px-3 py-1.5 text-xs font-semibold text-zinc-600 hover:text-zinc-900 dark:border-white/10 dark:bg-zinc-900/90 dark:text-zinc-400 cursor-pointer"
           >
             <HelpCircle className="h-3.5 w-3.5" />
-            Pinyin-Tipp anzeigen
+            <span>{showHelp ? 'Hilfe schließen' : 'Tipps'}</span>
           </button>
-        )}
-      </div>
-
-      {/* Gebauter Satz (Slots) */}
-      <div
-        className={`reveal min-h-24 rounded-3xl border-2 border-dashed p-5 transition-colors duration-200 ${
-          status === 'wrong'
-            ? 'animate-shake border-red-500/60 bg-red-500/5 dark:border-red-400/50'
-            : 'border-zinc-300 bg-zinc-50/70 dark:border-zinc-700 dark:bg-zinc-950/40'
-        }`}
-        style={{ '--index': 2 } as CSSProperties}
-      >
-        {selectedTokens.length === 0 ? (
-          <div className="flex h-14 items-center justify-center text-xs font-medium text-zinc-400">
-            Klicke unten auf die Wortkarten, um den Satz zusammenzubauen
-          </div>
-        ) : (
-          <div className="flex flex-wrap items-center justify-center gap-2.5">
-            {selectedTokens.map((token, i) => (
-              <button
-                key={`${token}-${i}`}
-                type="button"
-                onClick={() => removeToken(token, i)}
-                disabled={status !== 'playing'}
-                className="font-cjk group flex h-14 items-center justify-center rounded-2xl border border-emerald-600/30 bg-white px-4 text-2xl font-bold text-zinc-900 shadow-whisper transition-all duration-150 active:scale-95 hover:border-red-400 hover:bg-red-50 dark:border-emerald-400/30 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-red-950/30"
-              >
-                <span>{token}</span>
-              </button>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* Verfügbare Wortkarten */}
-      <div className="reveal space-y-3" style={{ '--index': 3 } as CSSProperties}>
-        <p className="text-center text-xs font-semibold uppercase tracking-[0.08em] text-zinc-400">
-          Verfügbare Wortbausteine:
-        </p>
-        <div className="flex flex-wrap items-center justify-center gap-2.5">
-          {availableTokens.map((token, i) => (
-            <button
-              key={`${token}-${i}`}
-              type="button"
-              onClick={() => addToken(token, i)}
-              disabled={status !== 'playing'}
-              className="font-cjk flex h-14 items-center justify-center rounded-2xl border border-zinc-200/80 bg-white px-5 text-2xl font-bold text-zinc-800 shadow-whisper transition-all duration-150 active:scale-95 hover:border-emerald-500 hover:bg-emerald-50/50 hover:text-emerald-700 dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:border-emerald-400/40 dark:hover:bg-emerald-950/20 dark:hover:text-emerald-300"
-            >
-              {token}
-            </button>
-          ))}
+          <span className="rounded-full border border-zinc-200/80 bg-white/90 px-3.5 py-1.5 font-mono text-xs font-bold tabular-nums text-zinc-600 dark:border-white/10 dark:bg-zinc-900/90 dark:text-zinc-300">
+            Punkte: {score}
+          </span>
         </div>
       </div>
 
-      {/* Feedback & Steuerung */}
-      <div className="reveal flex flex-col items-center gap-4 pt-2" style={{ '--index': 4 } as CSSProperties}>
-        {status === 'playing' && (
-          <div className="flex items-center gap-3">
-            <button
-              type="button"
-              onClick={resetCurrent}
-              disabled={selectedTokens.length === 0}
-              className="flex h-11 items-center gap-1.5 rounded-2xl border border-zinc-200/80 bg-white px-4 text-xs font-semibold text-zinc-600 shadow-xs hover:border-zinc-300 disabled:opacity-40 dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-300"
-            >
-              <RotateCcw className="h-4 w-4" />
-              Zurücksetzen
-            </button>
+      {/* Foldable Help */}
+      {showHelp && (
+        <div className="rounded-2xl border border-zinc-200/80 bg-zinc-50/80 p-4 text-xs text-zinc-600 dark:border-white/10 dark:bg-zinc-900/60 dark:text-zinc-300 space-y-1.5 animate-pop-in">
+          <p className="font-bold text-zinc-900 dark:text-zinc-100">Satzbau-Regeln im Chinesischen:</p>
+          <p>1. Grundstellung: Subjekt + Zeit + Ort + Verb + Objekt (z. B. <code className="font-mono bg-white dark:bg-zinc-800 px-1 py-0.5 rounded">我昨天在家看书</code>).</p>
+          <p>2. Klicke auf die Wortblöcke unten, um sie in den Satz einzufügen oder herauszunehmen.</p>
+        </div>
+      )}
 
-            <button
-              type="button"
-              onClick={checkAnswer}
-              disabled={selectedTokens.length === 0}
-              className="flex h-12 items-center gap-2 rounded-2xl bg-emerald-600 px-7 text-sm font-bold text-white shadow-whisper transition-all hover:bg-emerald-500 disabled:opacity-40 active:translate-y-px"
-            >
-              <CheckCircle2 className="h-4 w-4" />
-              Satz prüfen
-            </button>
-          </div>
-        )}
+      {/* 2. Deutsche Satzvorgabe (Double-Bezel Casing) */}
+      <section
+        className="reveal double-bezel-casing shadow-whisper"
+        style={{ '--index': 1 } as CSSProperties}
+      >
+        <div className="double-bezel-core p-7 sm:p-10 space-y-7 relative">
+          {/* Authentic Calligraphy Watermark */}
+          <span className="watermark-glyph">
+            句
+          </span>
 
-        {status === 'correct' && (
-          <div className="w-full space-y-4 rounded-3xl border border-emerald-500/30 bg-emerald-500/10 p-6 text-center dark:border-emerald-400/30 dark:bg-emerald-950/30">
-            <div className="flex items-center justify-center gap-2 text-emerald-800 dark:text-emerald-300">
-              <CheckCircle2 className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
-              <span className="text-lg font-bold">Perfekt gelöst!</span>
-            </div>
-            <p className="font-mono text-base font-semibold text-emerald-700 dark:text-emerald-400">
-              {currentSentence.tokens.join(' ')} · {currentSentence.pinyin}
-            </p>
-            <p className="mx-auto max-w-lg text-xs leading-relaxed text-zinc-600 dark:text-zinc-300">
-              <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 mr-1.5">Grammatik-Tipp</span>
-              {currentSentence.explanation}
-            </p>
-            <button
-              type="button"
-              onClick={nextSentence}
-              className="mt-2 inline-flex h-11 items-center gap-2 rounded-2xl bg-emerald-600 px-6 text-sm font-bold text-white shadow-whisper transition-all hover:bg-emerald-500 active:translate-y-px"
-            >
-              Weiter zum nächsten Satz
-              <ArrowRight className="h-4 w-4" />
-            </button>
-          </div>
-        )}
+          {/* Deutscher Ausgangssatz */}
+          <div className="text-center space-y-3 relative">
+            <span className="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 block">
+              Baue diesen Satz auf Chinesisch:
+            </span>
+            <h2 className="text-2xl font-black tracking-tight text-zinc-900 sm:text-3xl dark:text-zinc-50">
+              „{currentSentence.german}“
+            </h2>
 
-        {status === 'wrong' && (
-          <div className="w-full space-y-4 rounded-3xl border border-red-500/30 bg-red-500/10 p-6 text-center dark:border-red-400/30 dark:bg-red-950/30">
-            <div className="flex items-center justify-center gap-2 text-red-800 dark:text-red-300">
-              <XCircle className="h-6 w-6 text-red-600 dark:text-red-400" />
-              <span className="text-lg font-bold">Noch nicht ganz richtig</span>
-            </div>
-            <p className="text-xs text-zinc-600 dark:text-zinc-300">
-              Achte auf die Satzstellung (Zeit vor Verb, Modalverben und Fragepartikeln am Ende).
-            </p>
-            <div className="flex justify-center gap-2">
+            {showPinyin ? (
+              <p className="font-mono text-sm font-bold text-emerald-700 dark:text-emerald-400 animate-pop-in">
+                {currentSentence.pinyin}
+              </p>
+            ) : (
               <button
                 type="button"
-                onClick={resetCurrent}
-                className="inline-flex h-11 items-center gap-2 rounded-2xl bg-zinc-900 px-5 text-sm font-semibold text-white transition-all active:translate-y-px dark:bg-zinc-100 dark:text-zinc-900"
+                onClick={() => setShowPinyin(true)}
+                className="inline-flex items-center gap-1.5 text-xs font-medium text-zinc-400 hover:text-emerald-600 dark:hover:text-emerald-400 cursor-pointer"
               >
-                <RotateCcw className="h-4 w-4" />
-                Nochmal probieren
+                <HelpCircle className="h-3.5 w-3.5" />
+                <span>Pinyin-Hinweis anzeigen</span>
               </button>
+            )}
+          </div>
+
+          {/* Gebauter Satz (Slots-Leiste) */}
+          <div
+            className={`min-h-24 rounded-2xl border-2 border-dashed p-4 transition-all duration-200 relative flex items-center justify-center ${
+              status === 'wrong'
+                ? 'animate-shake border-rose-500/60 bg-rose-500/5 dark:border-rose-400/50'
+                : 'border-zinc-200/80 bg-zinc-50/70 dark:border-white/10 dark:bg-zinc-950/40'
+            }`}
+          >
+            {selectedTokens.length === 0 ? (
+              <p className="font-mono text-xs text-zinc-400 dark:text-zinc-500 text-center select-none">
+                [Klicke auf die Wortbausteine unten, um den Satz zusammenzubauen]
+              </p>
+            ) : (
+              <div className="flex flex-wrap items-center justify-center gap-2.5">
+                {selectedTokens.map((token, i) => (
+                  <button
+                    key={`${token}-${i}`}
+                    type="button"
+                    onClick={() => removeToken(token, i)}
+                    disabled={status !== 'playing'}
+                    className="group flex h-13 items-center justify-center rounded-xl border border-emerald-600/30 bg-white px-4 font-cjk text-2xl font-bold text-zinc-900 shadow-xs transition-all duration-150 active:scale-95 hover:border-rose-400 hover:bg-rose-50/50 dark:border-emerald-400/30 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-rose-950/20 cursor-pointer"
+                  >
+                    <span>{token}</span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Verfügbare Wortkarten */}
+          <div className="space-y-2.5 relative">
+            <p className="font-mono text-xs font-semibold text-zinc-400 dark:text-zinc-500 text-center">
+              Verfügbare Wortkarten:
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-2.5">
+              {availableTokens.map((token, i) => (
+                <button
+                  key={`${token}-${i}`}
+                  type="button"
+                  onClick={() => addToken(token, i)}
+                  disabled={status !== 'playing'}
+                  className="flex h-13 items-center justify-center rounded-xl border border-zinc-200/80 bg-white px-4.5 font-cjk text-2xl font-bold text-zinc-800 shadow-xs transition-all duration-150 active:scale-95 hover:border-emerald-500 hover:bg-emerald-50/50 hover:text-emerald-700 dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:border-emerald-400/40 dark:hover:text-emerald-300 cursor-pointer"
+                >
+                  {token}
+                </button>
+              ))}
             </div>
           </div>
-        )}
-      </div>
+
+          {/* Steuerung & Feedback */}
+          <div className="pt-4 border-t border-zinc-100 dark:border-white/[0.05] relative flex flex-col items-center gap-4">
+            {status === 'playing' && (
+              <div className="flex flex-wrap items-center justify-center gap-3">
+                <button
+                  type="button"
+                  onClick={resetCurrent}
+                  disabled={selectedTokens.length === 0}
+                  className="flex h-11 items-center gap-1.5 rounded-full border border-zinc-200/80 bg-white px-4 text-xs font-semibold text-zinc-600 shadow-xs hover:border-zinc-300 disabled:opacity-30 dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-300 cursor-pointer"
+                >
+                  <RotateCcw className="h-3.5 w-3.5" />
+                  Zurücksetzen
+                </button>
+
+                <KineticButton
+                  variant="primary"
+                  onClick={checkAnswer}
+                  disabled={selectedTokens.length === 0}
+                  icon={<CheckCircle2 className="h-4 w-4" />}
+                >
+                  Satz prüfen
+                </KineticButton>
+              </div>
+            )}
+
+            {status === 'correct' && (
+              <div className="w-full space-y-3.5 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-5 text-center dark:border-emerald-400/30 dark:bg-emerald-950/25 animate-pop-in">
+                <div className="flex items-center justify-center gap-2 text-emerald-800 dark:text-emerald-300 font-bold">
+                  <CheckCircle2 className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+                  <span>Grammatikalisch perfekt gelöst!</span>
+                </div>
+                <p className="font-mono text-base font-bold text-emerald-800 dark:text-emerald-300">
+                  {currentSentence.tokens.join(' ')} · {currentSentence.pinyin}
+                </p>
+                <p className="mx-auto max-w-lg text-xs leading-relaxed text-zinc-600 dark:text-zinc-300">
+                  <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 mr-1.5">
+                    Didaktik
+                  </span>
+                  {currentSentence.explanation}
+                </p>
+                <div className="pt-2 flex justify-center">
+                  <KineticButton
+                    variant="primary"
+                    onClick={nextSentence}
+                    icon={<ArrowRight className="h-4 w-4" />}
+                  >
+                    Nächster Satz
+                  </KineticButton>
+                </div>
+              </div>
+            )}
+
+            {status === 'wrong' && (
+              <div className="w-full space-y-3 rounded-2xl border border-rose-500/30 bg-rose-500/10 p-5 text-center dark:border-rose-400/30 dark:bg-rose-950/25 animate-pop-in">
+                <div className="flex items-center justify-center gap-2 text-rose-800 dark:text-rose-300 font-bold">
+                  <XCircle className="h-5 w-5 text-rose-600 dark:text-rose-400" />
+                  <span>Noch nicht ganz richtig</span>
+                </div>
+                <p className="text-xs text-zinc-600 dark:text-zinc-300">
+                  Achte auf die Satzstellung (Zeit vor Ort/Verb, Modalverben und Fragepartikeln am Satzende).
+                </p>
+                <div className="pt-1 flex justify-center">
+                  <KineticButton
+                    variant="secondary"
+                    onClick={resetCurrent}
+                    icon={<RotateCcw className="h-4 w-4" />}
+                  >
+                    Nochmal probieren
+                  </KineticButton>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

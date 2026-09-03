@@ -26,8 +26,8 @@ beforeEach(() => {
 const ROUTES: readonly [path: string, marker: string][] = [
   ['/', 'Trainings-Zentrale'],
   ['/ear-trainer', 'Pinyin Ear-Trainer'],
-  ['/typeracer', 'Runde starten'],
-  ['/alchemy', 'Radikal wählen'],
+  ['/typeracer', 'TYPERACER'],
+  ['/alchemy', 'ALCHEMIE'],
   ['/number-drill', 'Session starten'],
   ['/review', 'Fälligkeits-Drill'],
   ['/dictionary', 'Suchen'],
