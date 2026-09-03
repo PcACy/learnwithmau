@@ -14,6 +14,7 @@ import { shuffled } from '../lib/shuffle';
 import { SealBadge } from '../components/ui/SealBadge';
 import { KineticButton } from '../components/ui/KineticButton';
 import { SessionSummary } from '../components/game/SessionSummary';
+import { useProgressStore } from '../store/progressStore';
 
 interface SentenceItem {
   id: string;
@@ -38,6 +39,7 @@ function initSession(): {
 }
 
 export function SentenceBuilderPage() {
+  const logSession = useProgressStore((s) => s.logSession);
   const [session, setSession] = useState(initSession);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedTokens, setSelectedTokens] = useState<string[]>([]);
@@ -46,6 +48,7 @@ export function SentenceBuilderPage() {
   const [showPinyin, setShowPinyin] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
   const [score, setScore] = useState(0);
+  const [sessionStartedAt, setSessionStartedAt] = useState<number>(Date.now());
 
   const startSession = useCallback(() => {
     const newSession = initSession();
@@ -56,6 +59,7 @@ export function SentenceBuilderPage() {
     setAvailableTokens(newSession.available);
     setStatus('playing');
     setShowPinyin(false);
+    setSessionStartedAt(Date.now());
   }, []);
 
   const sessionSentences = session.sentences;
@@ -102,6 +106,13 @@ export function SentenceBuilderPage() {
       setStatus('playing');
       setShowPinyin(false);
     } else {
+      const durationMs = Math.max(1000, Date.now() - sessionStartedAt);
+      void logSession({
+        mode: 'sentences',
+        answered: ROUNDS_PER_SESSION,
+        correct: score,
+        durationMs,
+      });
       setStatus('summary');
       fireCelebration();
     }

@@ -23,12 +23,3 @@ export function selectMastery(cards: Record<string, SrsCard>, totalItems: number
   return sum / totalItems;
 }
 
-/** Kompakter SRS-Status für Wörterbuch-/Karten-Badges. */
-export function cardStageLabel(card: SrsCard | undefined, now: Date): string {
-  if (!card) return 'Neu';
-  if (isDue(card, now)) return 'fällig heute';
-  if (card.intervalDays >= MASTERY_INTERVAL_DAYS) {
-    return `gemeistert · ${card.intervalDays}-Tage-Intervall`;
-  }
-  return `Intervall ${card.intervalDays} Tage`;
-}

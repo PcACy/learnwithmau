@@ -176,7 +176,7 @@ export const PART_OF_SPEECH_MAP: Record<string, PartOfSpeech> = {
   'hsk1-zaijian': 'interjektion',
 };
 
-export const PART_OF_SPEECH_INFO: Record<PartOfSpeech, { label: string; short: string; cn: string }> = {
+export const PART_OF_SPEECH_LABELS: Record<PartOfSpeech, { label: string; short: string; cn: string }> = {
   nomen: { label: 'Nomen', short: 'Nom.', cn: '名' },
   verb: { label: 'Verb', short: 'Verb', cn: '动' },
   adjektiv: { label: 'Adjektiv', short: 'Adj.', cn: '形' },
@@ -188,10 +188,8 @@ export const PART_OF_SPEECH_INFO: Record<PartOfSpeech, { label: string; short: s
   interjektion: { label: 'Interjektion', short: 'Interj.', cn: '叹' },
 };
 
-export const PART_OF_SPEECH_LABELS = PART_OF_SPEECH_INFO;
-
 // Kulturelle Gedächtnisstützen & Mnemonic Hooks für alle HSK-1-Vokabeln
-export const MNEMONIC_MAP: Record<string, string> = {
+const MNEMONIC_MAP: Record<string, string> = {
   "hsk1-nihao": "Besteht aus 你 (Mensch 亻 und du 尔) und 好 (Mutter 女 und Kind 子): Der respektvolle Gruß wünscht dem Gegenüber vollkommenes Wohlergehen und Schutz.",
   "hsk1-xiexie": "Zweimal 讠 (Worte) und 身/寸 (Körper/Dankbarkeit): Wiederholte aufrichtige Worte des Dankes aus tiefstem Herzen.",
   "hsk1-mingtian": "Sonne (日) und Mond (月) strahlen zusammen hell (明); dazu der Himmel (天): Das Licht des kommenden neuen Tages.",
@@ -358,7 +356,7 @@ export const MNEMONIC_MAP: Record<string, string> = {
 };
 
 // Authentische Kollokationen (nur reale chinesische Wortverbindungen)
-export const COLLOCATIONS_MAP: Record<string, Collocation[]> = {
+const COLLOCATIONS_MAP: Record<string, Collocation[]> = {
   "hsk1-hao": [
     {
       "hanzi": "好看",
@@ -695,7 +693,7 @@ export const COLLOCATIONS_MAP: Record<string, Collocation[]> = {
 };
 
 // 100 % authentische HSK-1 Beispielsätze für ausnahmslos alle 163 Wörter
-export const EXAMPLE_SENTENCES_MAP: Record<string, ExampleSentence[]> = {
+const EXAMPLE_SENTENCES_MAP: Record<string, ExampleSentence[]> = {
   "hsk1-nihao": [
     {
       "hanzi": "你好！很高兴认识你。",
@@ -2665,7 +2663,7 @@ export const EXAMPLE_SENTENCES_MAP: Record<string, ExampleSentence[]> = {
 };
 
 // Gesamt-Strichanzahl berechnen
-export function getEstimatedStrokes(item: VocabItem): number {
+function getEstimatedStrokes(item: VocabItem): number {
   if (item.strokes) return item.strokes;
   let total = 0;
   for (const charDec of item.characters) {
@@ -2678,7 +2676,7 @@ export function getEstimatedStrokes(item: VocabItem): number {
 }
 
 // Mnemonic mit vollständiger Abdeckung aller Zeichen
-export function getMnemonic(item: VocabItem): string {
+function getMnemonic(item: VocabItem): string {
   if (MNEMONIC_MAP[item.id]) return MNEMONIC_MAP[item.id];
   if (item.characters.length === 1) {
     const parts = item.characters[0].parts.map((p) => {

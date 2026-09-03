@@ -14,7 +14,7 @@ const GERMAN_WEEKDAYS = [
 ] as const;
 
 /** Kanonische Zahlwörter 0–999 (mit 零-Lückenfüller, formal ohne Kurzformen). */
-export function numberToChinese(n: number): string {
+function numberToChinese(n: number): string {
   if (n < 0 || !Number.isInteger(n) || n > 999) throw new RangeError(`nicht darstellbar: ${n}`);
   if (n < 10) return DIGITS[n];
 
@@ -39,7 +39,7 @@ export function numberToChinese(n: number): string {
 }
 
 /** Uhrzeit im HSK-1-Stil: X点 / X点半 / X点Y分. */
-export function timeToChinese(hour: number, minute: number): string {
+function timeToChinese(hour: number, minute: number): string {
   const hourPart = hour === 2 ? '两点' : `${numberToChinese(hour)}点`;
   if (minute === 30) return `${hourPart}半`;
   if (minute === 0) return `${hourPart}整`;
@@ -47,7 +47,7 @@ export function timeToChinese(hour: number, minute: number): string {
 }
 
 /** Datum als X月Y号. */
-export function dateToChinese(month: number, day: number): string {
+function dateToChinese(month: number, day: number): string {
   return `${numberToChinese(month)}月${numberToChinese(day)}号`;
 }
 

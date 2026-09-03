@@ -17,7 +17,7 @@ function todayGoal(now: Date): DailyGoal {
 }
 
 /** Rollt den Streak beim ersten Lerntag des Tages weiter (Reset nach >1 Tag Pause). */
-export function touchStreak(streak: StreakData, today: string): StreakData {
+function touchStreak(streak: StreakData, today: string): StreakData {
   if (streak.lastActiveDate === today) return streak;
 
   const [y, m, d] = today.split('-').map(Number);

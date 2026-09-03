@@ -4,108 +4,19 @@ import {
   Check,
   Flame,
   Play,
-  RefreshCw,
   Timer,
-  Trophy,
   Volume2,
   X,
   Zap,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { VOCAB } from '../data';
 import { playAsset, playToneSequence } from '../lib/audio';
 import { fireCelebration, fireMicroBurst } from '../lib/confetti';
-import { shuffled } from '../lib/shuffle';
 import { useProgressStore } from '../store/progressStore';
-import type { VocabItem } from '../types/vocab';
-
-interface BlitzQuestion {
-  id: string;
-  type: 'meaning' | 'pinyin' | 'tone';
-  item: VocabItem;
-  prompt: string;
-  options: string[];
-  correctAnswer: string;
-  audioUrl?: string | null;
-}
+import { generateBlitzQuestions, type BlitzQuestion } from '../lib/blitzGenerator';
+import { SessionSummary } from '../components/game/SessionSummary';
 
 const TOTAL_TIME_SEC = 90;
-
-function generateBlitzQuestions(count = 15): BlitzQuestion[] {
-  const shuffledVocab = shuffled(VOCAB);
-  const questions: BlitzQuestion[] = [];
-
-  for (let i = 0; i < count; i++) {
-    const item = shuffledVocab[i % shuffledVocab.length];
-    const qType: 'meaning' | 'pinyin' | 'tone' = i % 3 === 0 ? 'tone' : i % 3 === 1 ? 'meaning' : 'pinyin';
-
-    if (qType === 'meaning') {
-      const correct = item.meaning.split(',')[0].trim();
-      const distinctDistractors = Array.from(
-        new Set(
-          VOCAB.map((v) => v.meaning.split(',')[0].trim()).filter((m) => m !== correct),
-        ),
-      );
-      const distractors = shuffled(distinctDistractors).slice(0, 3);
-      const options = shuffled([correct, ...distractors]);
-
-      questions.push({
-        id: `blitz-${i}`,
-        type: 'meaning',
-        item,
-        prompt: `Welche Bedeutung hat „${item.hanzi}“?`,
-        options,
-        correctAnswer: correct,
-        audioUrl: item.audioPath,
-      });
-    } else if (qType === 'pinyin') {
-      const correct = item.pinyin;
-      const distinctDistractors = Array.from(
-        new Set(
-          VOCAB.map((v) => v.pinyin).filter((p) => p !== correct),
-        ),
-      );
-      const distractors = shuffled(distinctDistractors).slice(0, 3);
-      const options = shuffled([correct, ...distractors]);
-
-      questions.push({
-        id: `blitz-${i}`,
-        type: 'pinyin',
-        item,
-        prompt: `Welches Pinyin passt zu „${item.hanzi}“?`,
-        options,
-        correctAnswer: correct,
-        audioUrl: item.audioPath,
-      });
-    } else {
-      const firstTone = item.syllables[0]?.tone ?? 1;
-      const toneNames: Record<number, string> = {
-        1: 'Ton 1 (ˉ)',
-        2: 'Ton 2 (ˊ)',
-        3: 'Ton 3 (ˇ)',
-        4: 'Ton 4 (ˋ)',
-        5: 'Neutraler Ton',
-      };
-      const correct = toneNames[firstTone] || 'Ton 1 (ˉ)';
-      const standardOptions = ['Ton 1 (ˉ)', 'Ton 2 (ˊ)', 'Ton 3 (ˇ)', 'Ton 4 (ˋ)'];
-      const options = firstTone === 5
-        ? shuffled(['Neutraler Ton', 'Ton 1 (ˉ)', 'Ton 2 (ˊ)', 'Ton 4 (ˋ)'])
-        : standardOptions;
-
-      questions.push({
-        id: `blitz-${i}`,
-        type: 'tone',
-        item,
-        prompt: `Welchen Ton hat die erste Silbe von „${item.hanzi}“ (${item.syllables[0]?.plain})?`,
-        options,
-        correctAnswer: correct,
-        audioUrl: item.audioPath,
-      });
-    }
-  }
-
-  return questions;
-}
 
 export function BlitzPage() {
   const logSession = useProgressStore((s) => s.logSession);
@@ -250,57 +161,17 @@ export function BlitzPage() {
     const accuracy = answeredCount > 0 ? Math.round(((score / 100) / answeredCount) * 100) : 0;
 
     return (
-      <div className="reveal mx-auto max-w-lg space-y-6 py-12 text-center" style={{ '--index': 0 } as CSSProperties}>
-        <div className="flex justify-center">
-          <span className="flex h-20 w-20 items-center justify-center rounded-3xl bg-amber-500/10 text-amber-500 shadow-whisper">
-            <Trophy className="h-10 w-10 fill-amber-500" />
-          </span>
-        </div>
-
-        <div className="space-y-2">
-          <h1 className="text-3xl font-bold tracking-tight">Zeit abgelaufen!</h1>
-          <p className="text-sm text-zinc-500 dark:text-zinc-400">
-            Klasse Durchlauf! Hier ist deine Auswertung:
-          </p>
-        </div>
-
-        {/* Score Card */}
-        <div className="grid grid-cols-4 gap-2 rounded-3xl border border-zinc-200/80 bg-white p-5 shadow-whisper dark:border-white/10 dark:bg-zinc-900">
-          <div>
-            <p className="font-mono text-xl font-bold text-emerald-600 dark:text-emerald-400">{score}</p>
-            <p className="text-[10px] text-zinc-400">Punkte</p>
-          </div>
-          <div>
-            <p className="font-mono text-xl font-bold text-amber-500">{bestStreak}</p>
-            <p className="text-[10px] text-zinc-400">Beste Serie</p>
-          </div>
-          <div>
-            <p className="font-mono text-xl font-bold text-zinc-800 dark:text-zinc-200">{answeredCount}</p>
-            <p className="text-[10px] text-zinc-400">Gelöst</p>
-          </div>
-          <div>
-            <p className="font-mono text-xl font-bold text-sky-500">{accuracy}%</p>
-            <p className="text-[10px] text-zinc-400">Genauigkeit</p>
-          </div>
-        </div>
-
-        <div className="flex flex-wrap justify-center gap-3 pt-4">
-          <button
-            type="button"
-            onClick={startBlitz}
-            className="flex items-center gap-2 rounded-2xl bg-emerald-600 px-6 py-3.5 text-sm font-bold text-white shadow-whisper transition-all hover:bg-emerald-500 active:translate-y-px"
-          >
-            <RefreshCw className="h-4 w-4" />
-            Nochmal spielen
-          </button>
-          <Link
-            to="/"
-            className="flex items-center gap-2 rounded-2xl border border-zinc-200/80 bg-white px-5 py-3.5 text-sm font-semibold text-zinc-700 shadow-xs dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-200"
-          >
-            Zurück zum Arcade
-          </Link>
-        </div>
-      </div>
+      <SessionSummary
+        headline="Zeit abgelaufen!"
+        stats={[
+          { label: 'Punkte', value: String(score) },
+          { label: 'Beste Serie', value: String(bestStreak) },
+          { label: 'Gelöst', value: String(answeredCount) },
+          { label: 'Trefferquote', value: `${accuracy}%` },
+        ]}
+        onRestart={startBlitz}
+        restartLabel="Nochmal spielen"
+      />
     );
   }
 
