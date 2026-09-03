@@ -77,8 +77,6 @@ export function AppShell() {
     { to: '/settings', label: 'Einstellungen', icon: Settings },
   ];
 
-  const isSubpage = location.pathname !== '/';
-
   return (
     <div className="min-h-dvh bg-[#fbfbf9] text-zinc-900 dark:bg-[#09090b] dark:text-zinc-100">
       <header className="sticky top-0 z-30 border-b border-zinc-200/80 bg-[#fbfbf9]/90 backdrop-blur-md dark:border-white/[0.08] dark:bg-[#09090b]/90">
@@ -124,17 +122,6 @@ export function AppShell() {
           </div>
 
           <div className="flex items-center gap-2.5">
-            {/* Escape Shortcut Hint on Subpages */}
-            {isSubpage && (
-              <Link
-                to="/"
-                title="Zurück zur Zentrale (Escape)"
-                className="hidden md:inline-flex items-center gap-1.5 rounded-full border border-zinc-200/80 bg-white/80 px-2.5 py-1 text-[11px] font-mono font-semibold text-zinc-500 hover:border-emerald-500/40 hover:text-emerald-700 dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-400"
-              >
-                <span>[Esc] Zentrale</span>
-              </Link>
-            )}
-
             {/* Streak Counter with Amber Streak Accent */}
             {streak > 0 && (
               <Link
