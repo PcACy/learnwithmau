@@ -9,6 +9,7 @@ import { useProgressStore } from '../store/progressStore';
 import { DictionaryMasterList } from '../components/dictionary/DictionaryMasterList';
 import { DictionaryDetailPanel } from '../components/dictionary/DictionaryDetailPanel';
 import { PART_OF_SPEECH_MAP } from '../data/vocabDetails';
+import { SealBadge } from '../components/ui/SealBadge';
 
 export function DictionaryPage() {
   const [searchParams] = useSearchParams();
@@ -20,7 +21,6 @@ export function DictionaryPage() {
   const query = internalQuery ?? (paramQ ?? '');
 
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const [page, setPage] = useState<number>(1);
   const [internalSelectedId, setInternalSelectedId] = useState<string | null>(null);
 
   const matchedIdFromUrl = useMemo(() => {
@@ -80,12 +80,10 @@ export function DictionaryPage() {
 
   const handleQueryChange = (q: string) => {
     setInternalQuery(q);
-    setPage(1);
   };
 
   const handleCategoryChange = (cat: string) => {
     setSelectedCategory(cat);
-    setPage(1);
   };
 
   const selectedItem = useMemo(() => {
@@ -106,22 +104,23 @@ export function DictionaryPage() {
     <div className="space-y-6 pb-16">
       {/* 1. Header */}
       <div className="reveal flex flex-wrap items-end justify-between gap-4" style={{ '--index': 0 } as CSSProperties}>
-        <div>
-          <div className="flex items-center gap-2">
-            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-500/10 font-cjk text-sm font-bold text-emerald-700 dark:text-emerald-400">
-              典
-            </span>
-            <span className="font-mono text-xs font-semibold uppercase tracking-[0.15em] text-emerald-700 dark:text-emerald-400">
-              Wörterbuch & Referenz
+        <div className="space-y-1.5">
+          <div className="flex items-center gap-2.5">
+            <SealBadge sealChar="典" label="HSK 1 WÖRTERBUCH" variant="jade" />
+            <span className="font-mono text-xs font-semibold uppercase tracking-[0.12em] text-zinc-500 dark:text-zinc-400">
+              Referenz & Schriftzeichen-Anatomie
             </span>
           </div>
-          <h1 className="mt-1 text-3xl font-extrabold tracking-tight sm:text-4xl">
-            HSK-1 Schriftzeichen & Vokabular
+          <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl text-zinc-900 dark:text-zinc-100">
+            HSK-1 Schriftzeichen &amp; Vokabular
           </h1>
+          <p className="text-xs text-zinc-500 dark:text-zinc-400 max-w-xl">
+            Umfassendes Nachschlagewerk mit Strichfolge, Radikal-Anatomie und authentischen Beispielsätzen.
+          </p>
         </div>
 
         <div className="flex items-center gap-2 font-mono text-xs text-zinc-500 dark:text-zinc-400">
-          <span className="rounded-full border border-zinc-200 bg-white px-3.5 py-1.5 font-bold shadow-xs dark:border-white/10 dark:bg-zinc-900">
+          <span className="rounded-full border border-zinc-200/80 bg-white px-3.5 py-1.5 font-bold shadow-xs dark:border-white/10 dark:bg-zinc-900">
             {filteredItems.length} von {VOCAB.length} Wörtern
           </span>
         </div>
@@ -140,9 +139,6 @@ export function DictionaryPage() {
             onQueryChange={handleQueryChange}
             selectedCategory={selectedCategory}
             onCategoryChange={handleCategoryChange}
-            page={page}
-            onPageChange={setPage}
-            pageSize={6}
             inputRef={searchInputRef}
           />
         </div>
@@ -169,9 +165,6 @@ export function DictionaryPage() {
             onQueryChange={handleQueryChange}
             selectedCategory={selectedCategory}
             onCategoryChange={handleCategoryChange}
-            page={page}
-            onPageChange={setPage}
-            pageSize={6}
             inputRef={searchInputRef}
           />
         ) : (
@@ -179,7 +172,7 @@ export function DictionaryPage() {
             <button
               type="button"
               onClick={() => setInternalMobileView('list')}
-              className="inline-flex items-center gap-2 rounded-xl border border-zinc-200 bg-white px-4 py-2 text-xs font-bold text-zinc-700 shadow-xs dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-200"
+              className="inline-flex items-center gap-2 rounded-xl border border-zinc-200/80 bg-white px-4 py-2 text-xs font-bold text-zinc-700 shadow-xs dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-200"
             >
               <ArrowLeft className="h-4 w-4" />
               Zurück zur Liste

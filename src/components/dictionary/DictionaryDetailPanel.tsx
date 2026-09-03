@@ -73,28 +73,49 @@ export function DictionaryDetailPanel({ item, card, globalIndex }: DictionaryDet
   };
 
   return (
-    <div className="rounded-[2.5rem] border border-zinc-200/80 bg-white p-6 sm:p-8 shadow-whisper dark:border-white/10 dark:bg-zinc-900 space-y-8 relative overflow-hidden">
+    <div className="double-bezel-casing relative overflow-hidden rounded-[2.5rem]">
       {/* Background Chinese Calligraphy Watermark */}
-      <span className="font-cjk pointer-events-none select-none absolute -bottom-10 -right-6 text-[160px] font-black text-zinc-950/[0.03] dark:text-white/[0.03]">
-        {item.hanzi}
+      <span
+        aria-hidden="true"
+        className="watermark-glyph select-none pointer-events-none absolute -bottom-12 -right-8 text-[200px] leading-none opacity-[0.03] dark:opacity-[0.04]"
+      >
+        典
       </span>
 
-      {/* 1. Header (Grosses Zeichen im Tianzige-Raster, Pinyin, Töne, Speed & Aussprache) */}
-      <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between border-b border-zinc-100 pb-7 dark:border-white/[0.06]">
-        <div className="flex items-center gap-5">
-          {/* Grosses Zeichen im Tianzige Raster */}
-          <div className="relative flex h-24 w-24 shrink-0 items-center justify-center rounded-2xl border border-zinc-200/80 bg-zinc-50/50 shadow-xs dark:border-white/10 dark:bg-zinc-800/40">
-            {/* Tianzige Grid Lines */}
-            <div className="pointer-events-none absolute inset-0 grid grid-cols-2 grid-rows-2 opacity-20">
-              <div className="border-b border-r border-dashed border-current" />
-              <div className="border-b border-dashed border-current" />
-              <div className="border-r border-dashed border-current" />
-              <div />
+      <div className="double-bezel-core p-6 sm:p-8 space-y-8 relative">
+        {/* 1. Header (Grosses Zeichen im Tianzige-Raster, Pinyin, Töne, Speed & Aussprache) */}
+        <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between border-b border-zinc-100 pb-7 dark:border-white/[0.06]">
+          <div className="flex items-center gap-5">
+            {/* Dynamische Tianzige Kacheln (je 1 Gitter pro Schriftzeichen) */}
+            <div className="flex items-center gap-2.5 shrink-0">
+              {item.characters.map((c, i) => {
+                const charCount = item.characters.length;
+                const boxSize =
+                  charCount === 1
+                    ? 'h-24 w-24 text-5xl'
+                    : charCount === 2
+                      ? 'h-20 w-20 sm:h-22 sm:w-22 text-4xl'
+                      : 'h-16 w-16 sm:h-18 sm:w-18 text-3xl';
+
+                return (
+                  <div
+                    key={c.char + i}
+                    className={`relative flex ${boxSize} items-center justify-center rounded-2xl border border-zinc-200/90 bg-zinc-50/70 shadow-xs dark:border-white/10 dark:bg-zinc-800/50`}
+                  >
+                    {/* Tianzige Grid Lines (Viertel-Gitter für das jeweilige Zeichen) */}
+                    <div className="pointer-events-none absolute inset-0 grid grid-cols-2 grid-rows-2 opacity-20">
+                      <div className="border-b border-r border-dashed border-current" />
+                      <div className="border-b border-dashed border-current" />
+                      <div className="border-r border-dashed border-current" />
+                      <div />
+                    </div>
+                    <span className="font-cjk font-black text-zinc-900 dark:text-zinc-100 tracking-tight select-none">
+                      {c.char}
+                    </span>
+                  </div>
+                );
+              })}
             </div>
-            <span className="font-cjk text-5xl font-black text-zinc-900 dark:text-zinc-100 tracking-tight select-none">
-              {item.hanzi}
-            </span>
-          </div>
 
           {/* Vokabel Info & Metadaten */}
           <div className="space-y-1.5">
@@ -467,6 +488,7 @@ export function DictionaryDetailPanel({ item, card, globalIndex }: DictionaryDet
           </button>
         </div>
       </div>
+    </div>
     </div>
   );
 }
