@@ -101,6 +101,7 @@ export function syllableAssetUrl(plain: string, tone: Tone): string {
 }
 
 let currentAudio: HTMLAudioElement | null = null;
+let currentOnEnded: (() => void) | null = null;
 
 /**
  * Stoppt die aktuell laufende Audio-Wiedergabe sofort und setzt das Audio-Element zurück.
@@ -116,6 +117,11 @@ export function stopCurrentAudio(): void {
     }
     currentAudio = null;
   }
+  if (currentOnEnded) {
+    const cb = currentOnEnded;
+    currentOnEnded = null;
+    cb();
+  }
 }
 
 /**
@@ -124,6 +130,7 @@ export function stopCurrentAudio(): void {
  */
 export function playAsset(url: string, onEnded?: () => void, rate?: number): Promise<boolean> {
   stopCurrentAudio();
+  currentOnEnded = onEnded ?? null;
 
   return new Promise((resolve) => {
     let settled = false;
@@ -146,6 +153,9 @@ export function playAsset(url: string, onEnded?: () => void, rate?: number): Pro
         currentAudio = null;
       }
       if (!started) {
+        if (currentOnEnded === onEnded) {
+          currentOnEnded = null;
+        }
         onEnded?.();
       }
       resolve(started);
@@ -180,6 +190,9 @@ export function playAsset(url: string, onEnded?: () => void, rate?: number): Pro
       () => {
         if (currentAudio === audio) {
           currentAudio = null;
+        }
+        if (currentOnEnded === onEnded) {
+          currentOnEnded = null;
         }
         onEnded?.();
         finish(true);

@@ -32,6 +32,7 @@ export function DictionaryDetailPanel({ item, card, globalIndex }: DictionaryDet
   useEffect(() => {
     return () => {
       stopCurrentAudio();
+      setIsPlaying(false);
       if (playTimerRef.current !== undefined) {
         window.clearTimeout(playTimerRef.current);
       }
@@ -147,11 +148,11 @@ export function DictionaryDetailPanel({ item, card, globalIndex }: DictionaryDet
                   onClick={() => void playMainAudio()}
                   className={`flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-bold text-white shadow-whisper transition-all active:scale-95 cursor-pointer ${
                     isPlaying
-                      ? 'bg-emerald-700 animate-pulse'
+                      ? 'bg-emerald-700 ring-2 ring-emerald-400/40'
                       : 'bg-emerald-600 hover:bg-emerald-500'
                   }`}
                 >
-                  <Volume2 className="h-3.5 w-3.5" />
+                  <Volume2 className={`h-3.5 w-3.5 transition-transform ${isPlaying ? 'scale-110 text-emerald-200' : ''}`} />
                   <span>Aussprache</span>
                 </button>
 
