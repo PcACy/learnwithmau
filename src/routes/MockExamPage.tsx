@@ -19,6 +19,10 @@ import mockExamData from '../data/mockExam.json';
 import type { ExamQuestion, ExamSubmission } from '../types/exam';
 import { playAsset, stopCurrentAudio } from '../lib/audio';
 import { fireCelebration } from '../lib/confetti';
+import { useKeyDown } from '../hooks/useKeyDown';
+import { KeyHints } from '../components/ui/Kbd';
+import { SealBadge } from '../components/ui/SealBadge';
+import { KineticButton } from '../components/ui/KineticButton';
 
 const QUESTIONS = mockExamData as ExamQuestion[];
 const DEFAULT_TIME_SEC = 35 * 60; // 35 Minuten
@@ -136,87 +140,150 @@ export function MockExamPage() {
     });
   };
 
+  useKeyDown((event) => {
+    if (event.metaKey || event.ctrlKey || event.altKey) return;
+    if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) return;
+
+    if (phase === 'intro' && event.key === 'Enter') {
+      startExam();
+      return;
+    }
+
+    if (phase !== 'exam' || !currentQ) return;
+
+    if (event.code === 'Space') {
+      if (currentQ.audioUrl) {
+        event.preventDefault();
+        void playAsset(currentQ.audioUrl);
+      }
+      return;
+    }
+
+    if (event.key === 'ArrowRight' || event.key === 'j') {
+      event.preventDefault();
+      setCurrentIndex((i) => Math.min(QUESTIONS.length - 1, i + 1));
+      return;
+    }
+
+    if (event.key === 'ArrowLeft' || event.key === 'k') {
+      event.preventDefault();
+      setCurrentIndex((i) => Math.max(0, i - 1));
+      return;
+    }
+
+    if (event.key === 'm' || event.key === 'M') {
+      event.preventDefault();
+      toggleMark(currentQ.id);
+      return;
+    }
+
+    // Number keys 1-4
+    const digit = Number.parseInt(event.key, 10);
+    if (digit >= 1 && digit <= currentQ.options.length) {
+      event.preventDefault();
+      selectOption(digit - 1);
+      return;
+    }
+
+    // Letter keys A-D
+    const lower = event.key.toLowerCase();
+    if (lower >= 'a' && lower <= 'd') {
+      const optIdx = lower.charCodeAt(0) - 97;
+      if (optIdx < currentQ.options.length) {
+        event.preventDefault();
+        selectOption(optIdx);
+      }
+    }
+  });
+
   // ================= 1. INTRO PHASE =================
   if (phase === 'intro') {
     return (
       <div className="reveal mx-auto max-w-2xl space-y-8 py-8" style={{ '--index': 0 } as CSSProperties}>
-        <div>
-          <div className="flex items-center gap-2">
-            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-500/10 font-cjk text-sm font-bold text-emerald-700 dark:text-emerald-400">
-              考
-            </span>
-            <span className="font-mono text-xs font-semibold uppercase tracking-[0.15em] text-emerald-700 dark:text-emerald-400">
-              Offizielle Simulation · HSK 1
-            </span>
-          </div>
-          <h1 className="mt-2 text-3xl font-extrabold tracking-tight sm:text-4xl">HSK-1 Probeprüfung</h1>
-          <p className="mt-3 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-            Teste dein Chinesisch-Wissen unter realitätsnahen Bedingungen. Die Probeprüfung umfasst 30 Fragen aufgeteilt in Hör- und Leseverstehen.
-          </p>
-        </div>
-
-        {/* Struktur-Karten */}
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <div className="rounded-3xl border border-zinc-200/80 bg-white p-6 shadow-whisper dark:border-white/10 dark:bg-zinc-900">
-            <div className="flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-700 dark:text-emerald-400">
-                <Headphones className="h-5 w-5" />
-              </span>
-              <div>
-                <h2 className="text-base font-bold">Teil 1: Hörverstehen</h2>
-                <p className="font-mono text-xs text-zinc-500">15 Fragen · Max. 150 Pkt.</p>
-              </div>
-            </div>
-            <p className="mt-3 text-xs leading-relaxed text-zinc-500 dark:text-zinc-400">
-              Wahr/Falsch-Abgleich, Dialog-Zuordnung und Audio-Bedeutungsfragen mit nativer Aussprache.
-            </p>
-          </div>
-
-          <div className="rounded-3xl border border-zinc-200/80 bg-white p-6 shadow-whisper dark:border-white/10 dark:bg-zinc-900">
-            <div className="flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-700 dark:text-emerald-400">
-                <GraduationCap className="h-5 w-5" />
-              </span>
-              <div>
-                <h2 className="text-base font-bold">Teil 2: Leseverstehen</h2>
-                <p className="font-mono text-xs text-zinc-500">15 Fragen · Max. 150 Pkt.</p>
-              </div>
-            </div>
-            <p className="mt-3 text-xs leading-relaxed text-zinc-500 dark:text-zinc-400">
-              Schriftzeichenerkennung, Satzbau, Lückentexte und logische Gesprächsführung.
-            </p>
-          </div>
-        </div>
-
-        {/* Prüfungsregeln */}
-        <div className="rounded-3xl border border-zinc-200/80 bg-white p-6 shadow-whisper dark:border-white/10 dark:bg-zinc-900">
-          <h2 className="text-sm font-bold uppercase tracking-wider text-zinc-400">Prüfungsbedingungen</h2>
-          <ul className="mt-4 space-y-2.5 text-xs leading-relaxed text-zinc-600 dark:text-zinc-300">
-            <li className="flex items-start gap-2">
-              <span className="font-mono font-bold text-emerald-600 dark:text-emerald-400">01</span>
-              <span><strong>Zeitlimit:</strong> 35 Minuten für alle 30 Fragen (kann bei Bedarf pausiert werden).</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="font-mono font-bold text-emerald-600 dark:text-emerald-400">02</span>
-              <span><strong>Bestehensgrenze:</strong> Mindestens 180 von 300 Punkten (60 %).</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="font-mono font-bold text-emerald-600 dark:text-emerald-400">03</span>
-              <span><strong>Flexibles Springen:</strong> Du kannst jederzeit zwischen Fragen vor- und zurückspringen und unklare Fragen für später markieren.</span>
-            </li>
-          </ul>
-        </div>
-
-        <button
-          type="button"
-          onClick={startExam}
-          className="group inline-flex w-full items-center justify-center gap-3 rounded-full bg-emerald-600 py-4 text-base font-bold text-white shadow-whisper transition-all duration-300 ease-[var(--ease-spring)] hover:bg-emerald-500 active:scale-[0.99]"
-        >
-          <span>Probeprüfung jetzt starten</span>
-          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20 transition-transform group-hover:translate-x-0.5">
-            <Play className="h-4 w-4 fill-white" />
+        <div className="flex items-center gap-2.5">
+          <SealBadge sealChar="考" label="OFFIZIELLE SIMULATION" variant="jade" />
+          <span className="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+            HSK-1 Zertifizierung
           </span>
-        </button>
+        </div>
+
+        <section className="double-bezel-casing shadow-whisper">
+          <div className="double-bezel-core p-7 sm:p-10 space-y-6 relative">
+            <span className="watermark-glyph">考</span>
+
+            <div className="space-y-2 relative">
+              <h1 className="text-3xl font-black tracking-tight sm:text-4xl text-zinc-900 dark:text-zinc-50">
+                HSK-1 Probeprüfung
+              </h1>
+              <p className="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+                Teste dein Chinesisch-Wissen unter realitätsnahen Bedingungen. Die Probeprüfung umfasst 30 Fragen aufgeteilt in Hör- und Leseverstehen.
+              </p>
+            </div>
+
+            {/* Struktur-Karten */}
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 relative">
+              <div className="rounded-2xl border border-zinc-200/80 bg-zinc-50/70 p-5 dark:border-white/10 dark:bg-zinc-950/50">
+                <div className="flex items-center gap-3">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-700 dark:text-emerald-400">
+                    <Headphones className="h-5 w-5" />
+                  </span>
+                  <div>
+                    <h2 className="text-sm font-bold text-zinc-900 dark:text-zinc-100">Teil 1: Hörverstehen</h2>
+                    <p className="font-mono text-xs text-zinc-500">15 Fragen · Max. 150 Pkt.</p>
+                  </div>
+                </div>
+                <p className="mt-3 text-xs leading-relaxed text-zinc-500 dark:text-zinc-400">
+                  Wahr/Falsch-Abgleich, Dialog-Zuordnung und Audio-Bedeutungsfragen mit nativer Aussprache.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-zinc-200/80 bg-zinc-50/70 p-5 dark:border-white/10 dark:bg-zinc-950/50">
+                <div className="flex items-center gap-3">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-700 dark:text-emerald-400">
+                    <GraduationCap className="h-5 w-5" />
+                  </span>
+                  <div>
+                    <h2 className="text-sm font-bold text-zinc-900 dark:text-zinc-100">Teil 2: Leseverstehen</h2>
+                    <p className="font-mono text-xs text-zinc-500">15 Fragen · Max. 150 Pkt.</p>
+                  </div>
+                </div>
+                <p className="mt-3 text-xs leading-relaxed text-zinc-500 dark:text-zinc-400">
+                  Schriftzeichenerkennung, Satzbau, Lückentexte und logische Gesprächsführung.
+                </p>
+              </div>
+            </div>
+
+            {/* Prüfungsregeln */}
+            <div className="rounded-2xl border border-zinc-200/80 bg-zinc-50/70 p-5 dark:border-white/10 dark:bg-zinc-950/50 relative">
+              <h2 className="text-xs font-bold uppercase tracking-wider text-zinc-400">Prüfungsbedingungen</h2>
+              <ul className="mt-3 space-y-2 text-xs leading-relaxed text-zinc-600 dark:text-zinc-300">
+                <li className="flex items-start gap-2">
+                  <span className="font-mono font-bold text-emerald-600 dark:text-emerald-400">01</span>
+                  <span><strong>Zeitlimit:</strong> 35 Minuten für alle 30 Fragen (kann bei Bedarf pausiert werden).</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="font-mono font-bold text-emerald-600 dark:text-emerald-400">02</span>
+                  <span><strong>Bestehensgrenze:</strong> Mindestens 180 von 300 Punkten (60 %).</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="font-mono font-bold text-emerald-600 dark:text-emerald-400">03</span>
+                  <span><strong>Flexibles Springen:</strong> Jederzeit zwischen Fragen wechseln und unklare markieren.</span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="pt-2 relative">
+              <KineticButton
+                variant="primary"
+                onClick={startExam}
+                shortcut="[Enter]"
+                icon={<Play className="h-4 w-4 fill-white" />}
+              >
+                Probeprüfung jetzt starten
+              </KineticButton>
+            </div>
+          </div>
+        </section>
       </div>
     );
   }
@@ -293,8 +360,10 @@ export function MockExamPage() {
           className="reveal rounded-[2.5rem] p-1.5 bg-gradient-to-b from-white/10 to-white/5 border border-zinc-200/80 dark:border-white/10 dark:bg-white/[0.02] shadow-whisper"
           style={{ '--index': 2 } as CSSProperties}
         >
-          <div className="rounded-[calc(2.5rem-0.375rem)] bg-white p-7 sm:p-9 dark:bg-zinc-900 shadow-[inset_0_1px_1px_rgba(255,255,255,0.08)] space-y-6">
-            <div className="flex items-start justify-between gap-4">
+          <div className="rounded-[calc(2.5rem-0.375rem)] bg-white p-7 sm:p-9 dark:bg-zinc-900 shadow-[inset_0_1px_1px_rgba(255,255,255,0.08)] space-y-6 relative">
+            <span className="watermark-glyph">考</span>
+
+            <div className="flex items-start justify-between gap-4 relative">
               <div>
                 <span className="font-mono text-xs font-semibold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
                   Frage {currentIndex + 1} von 30 · {currentQ.section === 'listening' ? 'Hörverstehen' : 'Leseverstehen'}
@@ -314,14 +383,14 @@ export function MockExamPage() {
                     ? 'border-amber-500/40 bg-amber-500/15 text-amber-600 dark:text-amber-300'
                     : 'border-zinc-200/80 bg-zinc-50 text-zinc-400 hover:border-zinc-300 dark:border-white/10 dark:bg-zinc-950/50'
                 }`}
-                title="Frage für spätere Durchsicht markieren"
+                title="Frage für spätere Durchsicht markieren (M)"
               >
                 <Bookmark className={`h-4 w-4 ${isCurrentMarked ? 'fill-current' : ''}`} />
               </button>
             </div>
 
             {/* Chinese Text / Audio Prompts */}
-            <div className="flex flex-col items-center justify-center rounded-2xl border border-zinc-200/60 bg-zinc-50/50 p-6 text-center dark:border-white/[0.05] dark:bg-zinc-950/40">
+            <div className="flex flex-col items-center justify-center rounded-2xl border border-zinc-200/60 bg-zinc-50/50 p-6 text-center dark:border-white/[0.05] dark:bg-zinc-950/40 relative">
               {currentQ.chineseText && (
                 <span className="font-cjk text-3xl font-semibold sm:text-4xl text-zinc-900 dark:text-zinc-100">
                   {currentQ.chineseText}
@@ -332,16 +401,16 @@ export function MockExamPage() {
                 <button
                   type="button"
                   onClick={() => playAsset(currentQ.audioUrl!)}
-                  className="mt-4 inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-5 py-2.5 text-xs font-bold text-emerald-800 transition-all hover:bg-emerald-500/20 active:translate-y-px dark:text-emerald-300"
+                  className="mt-4 inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-5 py-2.5 text-xs font-bold text-emerald-800 transition-all hover:bg-emerald-500/20 active:translate-y-px dark:text-emerald-300 cursor-pointer"
                 >
                   <Volume2 className="h-4 w-4" />
-                  Audio abspielen / wiederholen
+                  Audio abspielen / wiederholen (␣)
                 </button>
               )}
             </div>
 
             {/* Antwort-Optionen */}
-            <div className="space-y-3">
+            <div className="space-y-3 relative">
               {currentQ.options.map((opt, optIdx) => {
                 const isSelected = selectedOpt === optIdx;
                 return (
@@ -349,14 +418,14 @@ export function MockExamPage() {
                     key={optIdx}
                     type="button"
                     onClick={() => selectOption(optIdx)}
-                    className={`flex w-full items-center gap-4 rounded-2xl border p-4 text-left text-sm font-semibold transition-all duration-150 ${
+                    className={`flex w-full items-center gap-4 rounded-2xl border-2 p-4 text-left text-sm font-semibold transition-all duration-150 cursor-pointer select-none ${
                       isSelected
-                        ? 'border-emerald-500 bg-emerald-500/10 text-emerald-800 dark:border-emerald-400 dark:text-emerald-300 shadow-whisper'
+                        ? 'border-emerald-500 bg-emerald-500/10 text-emerald-800 dark:border-emerald-400 dark:text-emerald-300 shadow-whisper font-bold'
                         : 'border-zinc-200/80 bg-white text-zinc-700 hover:border-zinc-300 hover:bg-zinc-50 dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800/50'
                     }`}
                   >
                     <span
-                      className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full border font-mono text-xs font-bold ${
+                      className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-xl border font-mono text-xs font-bold ${
                         isSelected
                           ? 'border-emerald-600 bg-emerald-600 text-white dark:border-emerald-400 dark:bg-emerald-400 dark:text-zinc-950'
                           : 'border-zinc-300 text-zinc-400 dark:border-zinc-700'
@@ -371,12 +440,12 @@ export function MockExamPage() {
             </div>
 
             {/* Navigation Footer (Vor / Zurück) */}
-            <div className="flex items-center justify-between pt-4 border-t border-zinc-100 dark:border-white/[0.05]">
+            <div className="flex items-center justify-between pt-4 border-t border-zinc-100 dark:border-white/[0.05] relative">
               <button
                 type="button"
                 disabled={currentIndex === 0}
                 onClick={() => setCurrentIndex((i) => Math.max(0, i - 1))}
-                className="flex items-center gap-2 rounded-xl border border-zinc-200/80 bg-white px-4 py-2.5 text-xs font-bold text-zinc-700 transition-all hover:bg-zinc-50 disabled:opacity-30 disabled:pointer-events-none dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-200"
+                className="flex items-center gap-2 rounded-xl border border-zinc-200/80 bg-white px-4 py-2.5 text-xs font-bold text-zinc-700 transition-all hover:bg-zinc-50 disabled:opacity-30 disabled:pointer-events-none dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-200 cursor-pointer"
               >
                 <ChevronLeft className="h-4 w-4" />
                 Vorherige
@@ -386,7 +455,7 @@ export function MockExamPage() {
                 <button
                   type="button"
                   onClick={() => setCurrentIndex((i) => Math.min(QUESTIONS.length - 1, i + 1))}
-                  className="flex items-center gap-2 rounded-xl bg-emerald-600 px-5 py-2.5 text-xs font-bold text-white shadow-whisper transition-all hover:bg-emerald-500"
+                  className="flex items-center gap-2 rounded-xl bg-emerald-600 px-5 py-2.5 text-xs font-bold text-white shadow-whisper transition-all hover:bg-emerald-500 cursor-pointer"
                 >
                   Nächste
                   <ChevronRight className="h-4 w-4" />
@@ -395,12 +464,24 @@ export function MockExamPage() {
                 <button
                   type="button"
                   onClick={() => setShowSubmitModal(true)}
-                  className="flex items-center gap-2 rounded-xl bg-emerald-600 px-5 py-2.5 text-xs font-bold text-white shadow-whisper transition-all hover:bg-emerald-500"
+                  className="flex items-center gap-2 rounded-xl bg-emerald-600 px-5 py-2.5 text-xs font-bold text-white shadow-whisper transition-all hover:bg-emerald-500 cursor-pointer"
                 >
                   Prüfung abgeben
                   <CheckCircle2 className="h-4 w-4" />
                 </button>
               )}
+            </div>
+
+            {/* KeyHints Footer */}
+            <div className="pt-2 border-t border-zinc-100 dark:border-white/[0.05] flex justify-center">
+              <KeyHints
+                hints={[
+                  ['A–D / 1–4', 'Antwort wählen'],
+                  ['← / →', 'Frage wechseln'],
+                  ['M', isCurrentMarked ? 'Markierung lösen' : 'Markieren'],
+                  ...(currentQ.audioUrl ? ([['␣', 'Audio wiederholen']] as [string, string][]) : []),
+                ]}
+              />
             </div>
           </div>
         </div>
