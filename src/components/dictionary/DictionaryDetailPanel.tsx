@@ -84,20 +84,20 @@ export function DictionaryDetailPanel({ item, card, globalIndex }: DictionaryDet
 
       <div className="double-bezel-core p-6 sm:p-8 space-y-8 relative">
         {/* 1. Header (Grosses Zeichen im Tianzige-Raster, Pinyin, Töne, Speed & Aussprache) */}
-        <div className="flex flex-col gap-4 border-b border-zinc-100 pb-6 dark:border-white/[0.06]">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div className="flex flex-col gap-4 border-b border-zinc-100 pb-5 dark:border-white/[0.06]">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3.5">
             {/* Linke Seite: Tianzige + Pinyin + Definition */}
-            <div className="flex items-center gap-4 sm:gap-5 min-w-0">
+            <div className="flex items-center gap-3.5 sm:gap-4 min-w-0">
               {/* Dynamische Tianzige Kacheln */}
-              <div className="flex items-center gap-2 shrink-0">
+              <div className="flex items-center gap-1.5 shrink-0">
                 {item.characters.map((c, i) => {
                   const charCount = item.characters.length;
                   const boxSize =
                     charCount === 1
-                      ? 'h-20 w-20 sm:h-22 sm:w-22 text-4xl sm:text-5xl'
+                      ? 'h-18 w-18 sm:h-20 sm:w-20 text-4xl'
                       : charCount === 2
-                        ? 'h-16 w-16 sm:h-18 sm:w-18 text-3xl sm:text-4xl'
-                        : 'h-13 w-13 sm:h-15 sm:w-15 text-2xl sm:text-3xl';
+                        ? 'h-15 w-15 sm:h-16 sm:w-16 text-2xl sm:text-3xl'
+                        : 'h-12 w-12 sm:h-14 sm:w-14 text-xl sm:text-2xl';
 
                   return (
                     <div
@@ -120,12 +120,11 @@ export function DictionaryDetailPanel({ item, card, globalIndex }: DictionaryDet
               </div>
 
               {/* Vokabel Info (Pinyin, Siegel, Übersetzung) */}
-              <div className="min-w-0 space-y-1">
+              <div className="min-w-0 space-y-0.5">
                 <div className="flex items-center gap-2">
                   <h2 className="font-mono text-2xl sm:text-3xl font-black tracking-tight text-zinc-900 dark:text-zinc-100 whitespace-nowrap">
                     {item.pinyin}
                   </h2>
-                  {/* Rotes Siegel Badge für authentische Aussprache */}
                   <span
                     className="flex h-5 w-5 shrink-0 items-center justify-center rounded-xs bg-rose-700 text-[11px] font-bold text-white shadow-xs"
                     title="Offizielle Standard-Aussprache (Putonghua / HSK-Norm)"
@@ -134,16 +133,16 @@ export function DictionaryDetailPanel({ item, card, globalIndex }: DictionaryDet
                   </span>
                 </div>
 
-                <p className="text-sm sm:text-base font-semibold text-zinc-600 dark:text-zinc-300">
+                <p className="text-sm font-semibold text-zinc-600 dark:text-zinc-300">
                   {item.meaning}
                 </p>
               </div>
             </div>
 
             {/* Rechte Seite: Audio Steuerung & Speed Toggle */}
-            <div className="flex items-center gap-2.5 shrink-0 self-start sm:self-center">
+            <div className="flex items-center gap-2 shrink-0 self-start sm:self-center">
               {/* Speed Toggle */}
-              <div className="flex items-center rounded-xl bg-zinc-100/90 p-1 border border-zinc-200/60 dark:bg-zinc-800/80 dark:border-white/10 text-xs font-mono font-medium text-zinc-600 dark:text-zinc-300">
+              <div className="flex items-center rounded-xl bg-zinc-100/90 p-0.5 border border-zinc-200/60 dark:bg-zinc-800/80 dark:border-white/10 text-xs font-mono font-medium text-zinc-600 dark:text-zinc-300">
                 <button
                   type="button"
                   onClick={() => {
@@ -175,34 +174,34 @@ export function DictionaryDetailPanel({ item, card, globalIndex }: DictionaryDet
                 type="button"
                 onClick={() => playMainAudio()}
                 disabled={isPlaying}
-                className={`flex items-center gap-2 rounded-2xl px-4 py-2.5 text-xs font-bold text-white shadow-whisper transition-all active:scale-95 cursor-pointer ${
+                className={`flex items-center gap-1.5 rounded-xl px-3.5 py-1.5 text-xs font-bold text-white shadow-whisper transition-all active:scale-95 cursor-pointer ${
                   isPlaying
                     ? 'bg-emerald-700 animate-pulse'
                     : 'bg-emerald-600 hover:bg-emerald-500'
                 }`}
               >
                 <span>Aussprache</span>
-                <Volume2 className="h-4 w-4" />
+                <Volume2 className="h-3.5 w-3.5" />
               </button>
             </div>
           </div>
 
           {/* Horizontale Meta-Badges Zeile (kein Umbruch, klare visuelle Ordnung) */}
-          <div className="flex flex-wrap items-center gap-2 pt-1">
-            <span className="inline-flex items-center rounded-md border border-zinc-200/80 bg-zinc-100/70 px-2.5 py-1 font-mono text-xs font-medium text-zinc-700 dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-300">
+          <div className="flex flex-wrap items-center gap-2 pt-0.5">
+            <span className="inline-flex items-center rounded-md border border-zinc-200/80 bg-zinc-100/70 px-2.5 py-0.5 font-mono text-xs font-medium text-zinc-700 dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-300">
               {enriched.strokes} Striche (画)
             </span>
 
-            <span className="inline-flex items-center rounded-md border border-zinc-200/80 bg-zinc-100/70 px-2.5 py-1 font-mono text-xs font-medium text-zinc-700 dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-300">
+            <span className="inline-flex items-center rounded-md border border-zinc-200/80 bg-zinc-100/70 px-2.5 py-0.5 font-mono text-xs font-medium text-zinc-700 dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-300">
               HSK 1 {hskTag}
             </span>
 
-            <span className="inline-flex items-center rounded-md bg-rose-500/10 px-2.5 py-1 font-mono text-[11px] font-bold text-rose-700 dark:text-rose-400 tracking-wide uppercase">
+            <span className="inline-flex items-center rounded-md bg-rose-500/10 px-2.5 py-0.5 font-mono text-[10px] font-bold text-rose-700 dark:text-rose-400 tracking-wide uppercase">
               A1 Essential
             </span>
 
             {/* Ton-Verlauf Aufschlüsselung */}
-            <div className="inline-flex items-center gap-1.5 rounded-md border border-zinc-200/80 bg-zinc-50 px-2.5 py-1 font-mono text-xs text-zinc-600 dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-300">
+            <div className="inline-flex items-center gap-1.5 rounded-md border border-zinc-200/80 bg-zinc-50 px-2.5 py-0.5 font-mono text-xs text-zinc-600 dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-300">
               {item.syllables.map((s, idx) => (
                 <span key={idx}>
                   {idx > 0 && <span className="text-zinc-300 dark:text-zinc-600 mr-1.5">·</span>}
@@ -280,81 +279,84 @@ export function DictionaryDetailPanel({ item, card, globalIndex }: DictionaryDet
                   </span>
                 </div>
 
-                {/* Komponenten-Gleichung (A + B → Zielzeichen) */}
-                <div className="flex flex-col lg:flex-row items-stretch lg:items-center gap-3">
-                  <div className="grid flex-1 grid-cols-1 sm:grid-cols-2 gap-2.5">
-                    {charDec.parts.map((part, pIdx) => {
-                      const rad = RADICALS_BY_ID.get(part.id);
-                      const posLabel = POSITION_LABELS[part.position] || part.position;
+                {/* Komponenten-Gitter (dynamisch 2 oder 3 Spalten) */}
+                <div
+                  className={`grid gap-2.5 ${
+                    charDec.parts.length >= 3 ? 'grid-cols-1 sm:grid-cols-3' : 'grid-cols-1 sm:grid-cols-2'
+                  }`}
+                >
+                  {charDec.parts.map((part, pIdx) => {
+                    const rad = RADICALS_BY_ID.get(part.id);
+                    const posLabel = POSITION_LABELS[part.position] || part.position;
 
-                      return (
-                        <div
-                          key={pIdx}
-                          className="flex items-center gap-3.5 rounded-xl border border-zinc-200/80 bg-white p-3 shadow-xs dark:border-white/[0.08] dark:bg-zinc-900"
-                        >
-                          {/* Radikal/Komponenten-Symbol im Tianzige */}
-                          <div className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-zinc-200/80 bg-zinc-50/70 font-cjk text-2xl font-black text-zinc-900 shadow-xs dark:border-white/10 dark:bg-zinc-800/60 dark:text-zinc-100">
-                            <div className="pointer-events-none absolute inset-0 grid grid-cols-2 grid-rows-2 opacity-15">
-                              <div className="border-b border-r border-dashed border-current" />
-                              <div className="border-b border-dashed border-current" />
-                              <div className="border-r border-dashed border-current" />
-                              <div />
-                            </div>
-                            <span>{part.hanzi}</span>
+                    return (
+                      <div
+                        key={pIdx}
+                        className="flex items-center gap-3 rounded-xl border border-zinc-200/80 bg-white p-3 shadow-xs dark:border-white/[0.08] dark:bg-zinc-900"
+                      >
+                        {/* Radikal/Komponenten-Symbol im Tianzige */}
+                        <div className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-zinc-200/80 bg-zinc-50/70 font-cjk text-xl font-black text-zinc-900 shadow-xs dark:border-white/10 dark:bg-zinc-800/60 dark:text-zinc-100">
+                          <div className="pointer-events-none absolute inset-0 grid grid-cols-2 grid-rows-2 opacity-15">
+                            <div className="border-b border-r border-dashed border-current" />
+                            <div className="border-b border-dashed border-current" />
+                            <div className="border-r border-dashed border-current" />
+                            <div />
                           </div>
-
-                          {/* Info */}
-                          <div className="min-w-0 flex-1 space-y-1">
-                            <div className="flex flex-wrap items-center gap-1.5">
-                              <span className="font-mono text-xs font-bold text-zinc-900 dark:text-zinc-100">
-                                {rad ? rad.pinyin : part.hanzi}
-                              </span>
-                              <span className="rounded-md border border-zinc-200/70 bg-zinc-100/70 px-1.5 py-0.2 font-mono text-[10px] font-semibold text-zinc-600 dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-300">
-                                {posLabel}
-                              </span>
-                              {rad && rad.hanzi !== part.hanzi && (
-                                <span className="font-mono text-[10px] text-emerald-700 dark:text-emerald-400">
-                                  ({rad.hanzi})
-                                </span>
-                              )}
-                            </div>
-
-                            <p className="text-xs font-medium text-zinc-700 dark:text-zinc-200 truncate" title={rad ? rad.meaning : part.id}>
-                              {rad ? rad.meaning : part.id}
-                            </p>
-
-                            <p className="font-mono text-[10px] text-zinc-400 dark:text-zinc-500">
-                              {rad ? `${rad.strokes} Striche` : ''}
-                              {pIdx === 0 && isCompound ? ' · Hauptradikal' : isCompound ? ' · Komponente' : ' · Grundzeichen'}
-                            </p>
-                          </div>
+                          <span>{part.hanzi}</span>
                         </div>
-                      );
-                    })}
-                  </div>
 
-                  {/* Ergebnis-Pfeil & Assembliertes Zeichen (nur bei Zusammensetzungen) */}
-                  {isCompound && (
-                    <div className="flex lg:flex-col items-center justify-center gap-2 shrink-0 py-1 lg:py-0 px-2">
-                      <span className="font-mono text-sm font-bold text-emerald-600 dark:text-emerald-400 select-none">
-                        →
-                      </span>
-                      <div className="flex items-center gap-2 rounded-xl border border-emerald-600/30 bg-emerald-500/[0.08] px-3.5 py-2 dark:border-emerald-500/30 dark:bg-emerald-500/[0.12]">
-                        <span className="font-cjk text-2xl font-black text-emerald-900 dark:text-emerald-200">
-                          {charDec.char}
-                        </span>
-                        <div className="text-left">
-                          <p className="font-mono text-xs font-bold text-emerald-800 dark:text-emerald-300">
-                            {syllable?.marked}
+                        {/* Info */}
+                        <div className="min-w-0 flex-1 space-y-0.5">
+                          <div className="flex flex-wrap items-center gap-1.5">
+                            <span className="font-mono text-xs font-bold text-zinc-900 dark:text-zinc-100">
+                              {rad ? rad.pinyin : part.hanzi}
+                            </span>
+                            <span className="rounded-md border border-zinc-200/70 bg-zinc-100/70 px-1.5 py-0.2 font-mono text-[10px] font-semibold text-zinc-600 dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-300">
+                              {posLabel}
+                            </span>
+                            {rad && rad.hanzi !== part.hanzi && (
+                              <span className="font-mono text-[10px] text-emerald-700 dark:text-emerald-400">
+                                ({rad.hanzi})
+                              </span>
+                            )}
+                          </div>
+
+                          <p className="text-xs font-medium text-zinc-700 dark:text-zinc-200 leading-tight">
+                            {rad ? rad.meaning : part.id}
                           </p>
-                          <p className="font-mono text-[9px] font-semibold uppercase tracking-wider text-emerald-700/80 dark:text-emerald-400/80">
-                            Zielzeichen
+
+                          <p className="font-mono text-[10px] text-zinc-400 dark:text-zinc-500">
+                            {rad ? `${rad.strokes} Striche` : ''}
+                            {pIdx === 0 && isCompound ? ' · Hauptradikal' : isCompound ? ' · Komponente' : ' · Grundzeichen'}
                           </p>
                         </div>
                       </div>
-                    </div>
-                  )}
+                    );
+                  })}
                 </div>
+
+                {/* Didaktische Baukasten-Formelzeile am Fuß der Kachel */}
+                {isCompound && (
+                  <div className="flex flex-wrap items-center justify-center gap-2 rounded-xl border border-emerald-600/20 bg-emerald-500/[0.04] px-4 py-2 text-xs font-mono text-zinc-700 dark:border-emerald-500/20 dark:bg-emerald-500/[0.06] dark:text-zinc-300">
+                    {charDec.parts.map((p, pIdx) => {
+                      const r = RADICALS_BY_ID.get(p.id);
+                      return (
+                        <span key={pIdx} className="inline-flex items-center gap-1.5">
+                          {pIdx > 0 && <span className="font-bold text-emerald-600 dark:text-emerald-400">+</span>}
+                          <span className="font-cjk text-sm font-black text-zinc-900 dark:text-zinc-100">{p.hanzi}</span>
+                          <span className="text-[11px] text-zinc-500 dark:text-zinc-400">
+                            ({r ? r.meaning.split('/')[0] : p.id})
+                          </span>
+                        </span>
+                      );
+                    })}
+                    <span className="font-bold text-emerald-600 dark:text-emerald-400 ml-1">→</span>
+                    <span className="inline-flex items-center gap-1.5 font-bold text-emerald-800 dark:text-emerald-300">
+                      <span className="font-cjk text-base font-black">{charDec.char}</span>
+                      <span>({syllable?.marked})</span>
+                    </span>
+                  </div>
+                )}
               </div>
             );
           })}
