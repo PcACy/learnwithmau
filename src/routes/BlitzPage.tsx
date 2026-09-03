@@ -15,6 +15,10 @@ import { fireCelebration, fireMicroBurst } from '../lib/confetti';
 import { useProgressStore } from '../store/progressStore';
 import { generateBlitzQuestions, type BlitzQuestion } from '../lib/blitzGenerator';
 import { SessionSummary } from '../components/game/SessionSummary';
+import { useKeyDown } from '../hooks/useKeyDown';
+import { KeyHints } from '../components/ui/Kbd';
+import { SealBadge } from '../components/ui/SealBadge';
+import { KineticButton } from '../components/ui/KineticButton';
 
 const TOTAL_TIME_SEC = 90;
 
@@ -120,39 +124,73 @@ export function BlitzPage() {
     }, 600);
   };
 
+  useKeyDown((event) => {
+    if (event.metaKey || event.ctrlKey || event.altKey) return;
+    if (event.repeat) return;
+
+    if (gameState === 'intro' && event.key === 'Enter') {
+      startBlitz();
+      return;
+    }
+
+    if (gameState !== 'playing' || !currentQ || selectedOption !== null) return;
+
+    if (event.code === 'Space' || event.key === 'r' || event.key === 'R') {
+      if (currentQ.audioUrl) {
+        event.preventDefault();
+        void playAsset(currentQ.audioUrl);
+      }
+      return;
+    }
+
+    const digit = Number.parseInt(event.key, 10);
+    if (digit >= 1 && digit <= currentQ.options.length) {
+      handleAnswer(currentQ.options[digit - 1]);
+    }
+  });
+
   if (gameState === 'intro') {
     return (
-      <div className="reveal mx-auto max-w-lg space-y-6 py-12 text-center" style={{ '--index': 0 } as CSSProperties}>
-        <div className="flex justify-center">
-          <span className="flex h-20 w-20 items-center justify-center rounded-3xl bg-amber-500/10 text-amber-500 shadow-whisper">
-            <Zap className="h-10 w-10 fill-amber-500" />
-          </span>
+      <div className="mx-auto max-w-lg space-y-6 py-6 text-center">
+        <div className="reveal flex justify-center" style={{ '--index': 0 } as CSSProperties}>
+          <SealBadge sealChar="电" label="BLITZ-DRILL" variant="cinnabar" />
         </div>
 
-        <div className="space-y-2">
-          <h1 className="text-3xl font-bold tracking-tight">2-Minuten-Blitzsession</h1>
-          <p className="text-sm text-zinc-500 dark:text-zinc-400">
-            Beantworte so viele Vokabel-, Pinyin- und Ton-Fragen wie möglich in 90 Sekunden.
-            Halte deine Serie für Punkte-Multiplikatoren!
-          </p>
-        </div>
+        <section
+          className="reveal double-bezel-casing shadow-whisper"
+          style={{ '--index': 1 } as CSSProperties}
+        >
+          <div className="double-bezel-core p-7 sm:p-10 space-y-6 relative">
+            <span className="watermark-glyph">电</span>
 
-        <div className="flex flex-col items-center justify-center gap-3 pt-4">
-          <button
-            type="button"
-            onClick={startBlitz}
-            className="flex h-14 items-center gap-2 rounded-2xl bg-emerald-600 px-8 text-base font-bold text-white shadow-whisper transition-all hover:bg-emerald-500 active:translate-y-px"
-          >
-            <Play className="h-5 w-5 fill-white" />
-            Blitzsession starten
-          </button>
-          <Link
-            to="/"
-            className="text-xs font-semibold text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
-          >
-            Abbrechen
-          </Link>
-        </div>
+            <div className="space-y-2 relative">
+              <h1 className="text-3xl font-black tracking-tight sm:text-4xl text-zinc-900 dark:text-zinc-50">
+                90-Sekunden-Blitz
+              </h1>
+              <p className="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+                Beantworte so viele Vokabel-, Pinyin- und Ton-Fragen wie möglich in 90 Sekunden.
+                Halte deine Serie für Punkte-Multiplikatoren!
+              </p>
+            </div>
+
+            <div className="flex flex-col items-center justify-center gap-3 pt-2 relative">
+              <KineticButton
+                variant="primary"
+                onClick={startBlitz}
+                shortcut="[Enter]"
+                icon={<Play className="h-4 w-4 fill-white" />}
+              >
+                Blitzsession starten
+              </KineticButton>
+              <Link
+                to="/"
+                className="text-xs font-semibold text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
+              >
+                Zurück zur Zentrale
+              </Link>
+            </div>
+          </div>
+        </section>
       </div>
     );
   }
@@ -180,18 +218,18 @@ export function BlitzPage() {
   return (
     <div className="mx-auto max-w-2xl space-y-6 pb-16">
       {/* Top Header Bar (Timer, Streak, Score) */}
-      <div className="reveal flex items-center justify-between rounded-3xl border border-zinc-200/80 bg-white p-4 shadow-whisper dark:border-white/10 dark:bg-zinc-900" style={{ '--index': 0 } as CSSProperties}>
+      <div className="reveal flex items-center justify-between rounded-2xl border border-zinc-200/80 bg-white p-4 shadow-whisper dark:border-white/10 dark:bg-zinc-900" style={{ '--index': 0 } as CSSProperties}>
         {/* Timer */}
         <div className="flex items-center gap-2">
-          <Timer className={`h-5 w-5 ${timeLeft <= 15 ? 'text-red-500 animate-pulse' : 'text-emerald-600 dark:text-emerald-400'}`} />
-          <span className={`font-mono text-lg font-bold tabular-nums ${timeLeft <= 15 ? 'text-red-500' : ''}`}>
+          <Timer className={`h-5 w-5 ${timeLeft <= 15 ? 'text-rose-500 animate-pulse' : 'text-emerald-600 dark:text-emerald-400'}`} />
+          <span className={`font-mono text-lg font-bold tabular-nums ${timeLeft <= 15 ? 'text-rose-500 font-extrabold' : ''}`}>
             {Math.floor(timeLeft / 60)}:{(timeLeft % 60).toString().padStart(2, '0')}
           </span>
         </div>
 
         {/* Streak Indicator */}
         <div className="flex items-center gap-1.5 font-mono text-sm font-bold">
-          <Flame className={`h-4 w-4 ${streak > 0 ? 'text-amber-500 fill-amber-500' : 'text-zinc-300 dark:text-zinc-700'}`} />
+          <Flame className={`h-4 w-4 ${streak > 0 ? 'text-amber-500 fill-amber-500 animate-bounce' : 'text-zinc-300 dark:text-zinc-700'}`} />
           <span>{streak}× Serie</span>
         </div>
 
@@ -203,29 +241,35 @@ export function BlitzPage() {
       </div>
 
       {/* Frage-Karte */}
-      <div
-        className="reveal flex flex-col items-center rounded-[2.5rem] border border-zinc-200/80 bg-white p-8 text-center shadow-whisper dark:border-white/10 dark:bg-zinc-900"
+      <section
+        className="reveal double-bezel-casing shadow-whisper"
         style={{ '--index': 1 } as CSSProperties}
       >
-        <div className="flex items-center gap-2">
-          <span className="font-cjk text-6xl font-extrabold text-zinc-900 dark:text-zinc-100">
-            {currentQ.item.hanzi}
-          </span>
-          {currentQ.audioUrl && (
-            <button
-              type="button"
-              onClick={() => playAsset(currentQ.audioUrl!)}
-              className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-600 hover:bg-emerald-500/20 dark:text-emerald-400"
-            >
-              <Volume2 className="h-5 w-5" />
-            </button>
-          )}
-        </div>
+        <div className="double-bezel-core p-8 text-center relative space-y-4">
+          <span className="watermark-glyph">电</span>
 
-        <p className="mt-4 text-sm font-semibold text-zinc-600 dark:text-zinc-300">
-          {currentQ.prompt}
-        </p>
-      </div>
+          <div className="flex items-center justify-center gap-3 relative">
+            <span className="font-cjk text-6xl font-black text-zinc-900 dark:text-zinc-50">
+              {currentQ.item.hanzi}
+            </span>
+            {currentQ.audioUrl && (
+              <button
+                type="button"
+                onClick={() => playAsset(currentQ.audioUrl!)}
+                aria-label="Audio abspielen (␣)"
+                title="Audio abspielen (␣)"
+                className="flex h-10 w-10 items-center justify-center rounded-xl border border-zinc-200/80 bg-white text-emerald-600 shadow-xs transition-all hover:bg-emerald-50 active:scale-95 dark:border-white/10 dark:bg-zinc-800 dark:text-emerald-400 cursor-pointer"
+              >
+                <Volume2 className="h-5 w-5" />
+              </button>
+            )}
+          </div>
+
+          <p className="text-sm font-semibold text-zinc-600 dark:text-zinc-300 relative">
+            {currentQ.prompt}
+          </p>
+        </div>
+      </section>
 
       {/* Antwort-Optionen */}
       <div className="reveal grid grid-cols-1 gap-3 sm:grid-cols-2" style={{ '--index': 2 } as CSSProperties}>
@@ -240,22 +284,37 @@ export function BlitzPage() {
               type="button"
               onClick={() => handleAnswer(option)}
               disabled={selectedOption !== null}
-              className={`flex h-14 items-center justify-between rounded-2xl border px-5 text-left text-sm font-semibold transition-all duration-150 active:scale-98 ${
+              className={`relative flex h-14 items-center justify-between rounded-2xl border-2 px-5 text-left text-sm font-semibold transition-all duration-150 select-none cursor-pointer active:scale-98 ${
                 isCorrect
-                  ? 'animate-pop-in border-emerald-500 bg-emerald-500 text-white shadow-emerald-500/30'
+                  ? 'animate-pop-in border-emerald-500 bg-emerald-500 text-white shadow-emerald-500/30 font-bold'
                   : isWrong
-                    ? 'animate-shake border-red-500 bg-red-500 text-white'
+                    ? 'animate-shake border-rose-500 bg-rose-500 text-white font-bold'
                     : selectedOption !== null && option === currentQ.correctAnswer
                       ? 'border-emerald-500 bg-emerald-500/20 text-emerald-800 dark:text-emerald-300'
                       : 'border-zinc-200/80 bg-white text-zinc-800 hover:border-emerald-500/40 hover:bg-zinc-50 dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800'
               }`}
             >
-              <span>{option}</span>
+              <div className="flex items-center gap-3">
+                <span className="font-mono text-xs font-bold text-zinc-400 dark:text-zinc-500">
+                  [{idx + 1}]
+                </span>
+                <span>{option}</span>
+              </div>
               {isCorrect && <Check className="h-5 w-5 text-white" />}
               {isWrong && <X className="h-5 w-5 text-white" />}
             </button>
           );
         })}
+      </div>
+
+      {/* KeyHints Footer */}
+      <div className="flex justify-center pt-2">
+        <KeyHints
+          hints={[
+            ['1–4', 'Schnell-Antwort'],
+            ['␣ / R', 'Audio anhören'],
+          ]}
+        />
       </div>
     </div>
   );
