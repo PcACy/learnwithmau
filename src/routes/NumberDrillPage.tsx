@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
+import { ArrowRight } from 'lucide-react';
 import {
   buildDrillQuestion,
   promptItemIds,
@@ -10,6 +11,10 @@ import { useKeyDown } from '../hooks/useKeyDown';
 import { KeyHints } from '../components/ui/Kbd';
 import { SessionSummary } from '../components/game/SessionSummary';
 import { useProgressStore } from '../store/progressStore';
+import { SealBadge } from '../components/ui/SealBadge';
+import { KineticButton } from '../components/ui/KineticButton';
+import { playToneSequence } from '../lib/audio';
+import { fireMicroBurst } from '../lib/confetti';
 
 const QUESTIONS_PER_SESSION = 12;
 const QUESTION_TIME_MS = 6000;
@@ -102,10 +107,14 @@ export function NumberDrillPage() {
       });
 
       if (correct) {
+        fireMicroBurst();
+        playToneSequence([1, 4]);
         const grade = reactionMs < FAST_ANSWER_MS ? 5 : 4;
         for (const itemId of promptItemIds(currentQuestion.prompt)) {
           await review(itemId, grade);
         }
+      } else {
+        playToneSequence([3, 3]);
       }
     },
     [review],
@@ -113,7 +122,7 @@ export function NumberDrillPage() {
 
   const next = useCallback(() => {
     const current = drillRef.current;
-    if (!current || current.answeredIndex == null) return;
+    if (!current || (current.answeredIndex == null && !current.timedOut)) return;
 
     const isLast = current.index === current.questions.length - 1;
     if (isLast) {
@@ -148,8 +157,15 @@ export function NumberDrillPage() {
   }, [phase, drill, answered, answer]);
 
   useKeyDown((event) => {
-    if (phase !== 'drill' || event.metaKey || event.ctrlKey) return;
+    if (event.metaKey || event.ctrlKey) return;
     if (event.repeat) return;
+
+    if (phase === 'intro' && event.key === 'Enter') {
+      startSession();
+      return;
+    }
+
+    if (phase !== 'drill') return;
 
     if (event.key === 'Enter') {
       next();
@@ -161,29 +177,58 @@ export function NumberDrillPage() {
 
   if (phase === 'intro') {
     return (
-      <div className="reveal mx-auto max-w-2xl py-6">
-        <p className="font-mono text-xs font-medium uppercase tracking-[0.1em] text-emerald-700 dark:text-emerald-400">
-          Modus 4 · Tempo
-        </p>
-        <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Number &amp; Time Drill</h1>
-        <p className="mt-5 max-w-prose text-base leading-relaxed text-zinc-500 dark:text-zinc-400">
-          Schnellerkennung: Zahlen, Uhrzeiten und Daten erscheinen als Schriftzeichen – du wählst
-          die passende Bedeutung unter Zeitdruck.
-        </p>
+      <div className="mx-auto max-w-2xl space-y-6">
+        <div className="reveal flex items-center gap-2.5" style={{ '--index': 0 } as CSSProperties}>
+          <SealBadge sealChar="数" label="ZAHLEN & ZEIT" variant="jade" />
+          <span className="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+            Tempo-Drill
+          </span>
+        </div>
 
-        <ul className="mt-8 max-w-prose space-y-3 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
-          <li className="flex gap-3"><span className="font-mono font-semibold text-emerald-700 dark:text-emerald-400">01</span>{QUESTIONS_PER_SESSION} Fragen, je {QUESTION_TIME_MS / 1000} Sekunden – danach zählt die Frage als falsch.</li>
-          <li className="flex gap-3"><span className="font-mono font-semibold text-emerald-700 dark:text-emerald-400">02</span>Richtige Antwort unter {FAST_ANSWER_MS / 1000} s = SRS Grade 5, sonst 4.</li>
-          <li className="flex gap-3"><span className="font-mono font-semibold text-emerald-700 dark:text-emerald-400">03</span>Zahlen füttern direkt die SRS-Karten ihrer Schriftzeichen (一 bis 百).</li>
-        </ul>
-
-        <button
-          type="button"
-          onClick={startSession}
-          className="mt-10 inline-flex h-12 items-center rounded-xl bg-emerald-600 px-7 text-sm font-semibold text-white transition-all duration-200 ease-[var(--ease-spring)] hover:bg-emerald-500 active:translate-y-px focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+        <section
+          className="reveal double-bezel-casing shadow-whisper"
+          style={{ '--index': 1 } as CSSProperties}
         >
-          Session starten
-        </button>
+          <div className="double-bezel-core p-7 sm:p-10 space-y-6 relative">
+            <span className="watermark-glyph">数</span>
+
+            <div>
+              <h1 className="text-3xl font-black tracking-tight sm:text-4xl text-zinc-900 dark:text-zinc-50">
+                Number &amp; Time Drill
+              </h1>
+              <p className="mt-3 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+                Schnellerkennung: Zahlen, Uhrzeiten und Daten erscheinen als Schriftzeichen – du wählst
+                die passende Bedeutung unter Zeitdruck.
+              </p>
+            </div>
+
+            <ul className="space-y-3 text-xs leading-relaxed text-zinc-600 dark:text-zinc-300">
+              <li className="flex gap-3">
+                <span className="font-mono font-bold text-emerald-700 dark:text-emerald-400">01</span>
+                <span>{QUESTIONS_PER_SESSION} Fragen, je {QUESTION_TIME_MS / 1000} Sekunden – danach zählt die Frage als falsch.</span>
+              </li>
+              <li className="flex gap-3">
+                <span className="font-mono font-bold text-emerald-700 dark:text-emerald-400">02</span>
+                <span>Richtige Antwort unter {FAST_ANSWER_MS / 1000} s = SRS Grade 5, sonst 4.</span>
+              </li>
+              <li className="flex gap-3">
+                <span className="font-mono font-bold text-emerald-700 dark:text-emerald-400">03</span>
+                <span>Zahlen füttern direkt die SRS-Karten ihrer Schriftzeichen (一 bis 百).</span>
+              </li>
+            </ul>
+
+            <div className="pt-2">
+              <KineticButton
+                variant="primary"
+                onClick={startSession}
+                shortcut="[Enter]"
+                icon={<ArrowRight className="h-4 w-4" />}
+              >
+                Session starten
+              </KineticButton>
+            </div>
+          </div>
+        </section>
       </div>
     );
   }
@@ -209,26 +254,33 @@ export function NumberDrillPage() {
 
   return (
     <div className="mx-auto max-w-3xl space-y-6" aria-live="polite">
-      <div className="reveal flex items-end justify-between gap-4" style={{ '--index': 0 } as CSSProperties}>
-        <div>
-          <p className="font-mono text-xs font-medium uppercase tracking-[0.1em] text-emerald-700 dark:text-emerald-400">
-            Frage {drill.index + 1}/{drill.questions.length} · {KIND_LABELS[question.kind]}
-          </p>
-          <h1 className="mt-1 text-2xl font-bold tracking-tight">Was bedeutet das?</h1>
+      <div className="reveal flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4" style={{ '--index': 0 } as CSSProperties}>
+        <div className="space-y-1">
+          <div className="flex items-center gap-2.5">
+            <SealBadge sealChar="数" label="ZAHLEN & ZEIT" variant="jade" />
+            <span className="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+              Frage {drill.index + 1} / {drill.questions.length} · {KIND_LABELS[question.kind]}
+            </span>
+          </div>
+          <h1 className="text-2xl font-black tracking-tight sm:text-3xl text-zinc-900 dark:text-zinc-50">
+            Was bedeutet das?
+          </h1>
         </div>
-        <p className="font-mono text-sm tabular-nums text-zinc-500 dark:text-zinc-400">{drill.correctCount} richtig</p>
+        <span className="rounded-full border border-zinc-200/80 bg-white/90 px-3.5 py-1.5 font-mono text-xs font-bold tabular-nums text-zinc-600 dark:border-white/10 dark:bg-zinc-900/90 dark:text-zinc-300">
+          {drill.correctCount} richtig
+        </span>
       </div>
 
       {!answered && (
         <div
           role="timer"
           aria-label="Countdown für diese Frage"
-          className="reveal h-1.5 overflow-hidden rounded-full bg-zinc-200/80 dark:bg-zinc-800"
+          className="reveal h-2 overflow-hidden rounded-full bg-zinc-200/80 dark:bg-zinc-800"
           style={{ '--index': 1 } as CSSProperties}
         >
           <div
             className={`h-full w-full origin-left rounded-full transition-transform duration-100 ease-linear ${
-              secondsLeft > 0.3 ? 'bg-emerald-600/80' : 'bg-rose-500'
+              secondsLeft > 0.3 ? 'bg-emerald-600' : 'bg-rose-500'
             }`}
             style={{ transform: `scaleX(${secondsLeft})` }}
           />
@@ -236,77 +288,96 @@ export function NumberDrillPage() {
       )}
 
       <section
-        className="reveal rounded-[2.5rem] border border-zinc-200/70 bg-white p-7 shadow-whisper sm:p-9 dark:border-white/[0.06] dark:bg-zinc-900"
+        className="reveal double-bezel-casing shadow-whisper"
         style={{ '--index': 2 } as CSSProperties}
       >
-        <p className="text-center font-cjk text-5xl font-semibold tracking-wide sm:text-6xl">{question.prompt}</p>
+        <div className="double-bezel-core p-7 sm:p-10 space-y-8 relative">
+          <span className="watermark-glyph">数</span>
 
-        <div className="mt-10 grid grid-cols-2 gap-4">
-          {question.options.map((option, i) => {
-            const isSelected = drill.answeredIndex === i;
-            const showAsCorrect = answered && i === question.correctIndex;
-            const showAsWrong = answered && isSelected && !showAsCorrect;
-
-            let cls =
-              'relative flex h-24 items-center justify-center rounded-[1.75rem] border transition-all duration-200 ease-[var(--ease-spring)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 ';
-            if (!answered) {
-              cls +=
-                'border-zinc-200/80 bg-zinc-50 hover:-translate-y-0.5 hover:border-emerald-600/35 active:translate-y-px dark:border-white/[0.08] dark:bg-zinc-950/40 dark:hover:border-emerald-400/30';
-            } else if (showAsCorrect) {
-              cls += 'border-emerald-500/60 bg-emerald-500/10';
-            } else if (showAsWrong) {
-              cls += 'border-rose-500/60 bg-rose-500/10';
-            } else {
-              cls += 'border-zinc-200/50 bg-transparent opacity-50 dark:border-white/[0.04]';
-            }
-
-            return (
-              <button
-                key={`${option}-${i}`}
-                type="button"
-                disabled={answered}
-                onClick={() => answer(i)}
-                aria-label={`Option ${i + 1}: ${option}`}
-                className={cls}
-              >
-                <span className="absolute left-3 top-3 font-mono text-[11px] font-medium text-zinc-400 dark:text-zinc-500">
-                  {i + 1}
-                </span>
-                <span className="font-mono text-2xl font-bold tabular-nums text-zinc-800 dark:text-zinc-100">
-                  {option}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-
-        {answered && (
-          <p
-            className={`reveal mt-8 text-center text-sm font-semibold ${
-              drill.answeredIndex === question.correctIndex
-                ? 'text-emerald-700 dark:text-emerald-400'
-                : 'text-rose-600 dark:text-rose-400'
-            }`}
-          >
-            {drill.timedOut
-              ? 'Zeit abgelaufen!'
-              : drill.answeredIndex === question.correctIndex
-                ? 'Richtig!'
-                : 'Leider daneben.'}
-            {' '}
-            <span className="font-normal text-zinc-500 dark:text-zinc-400">
-              {question.prompt} = {question.options[question.correctIndex]}
-            </span>
+          <p className="text-center font-cjk text-6xl font-black tracking-wide text-zinc-900 dark:text-zinc-50 relative">
+            {question.prompt}
           </p>
-        )}
 
-        <div className="mt-8 flex justify-center">
-          <KeyHints
-            hints={[
-              ['1–4', 'Antwort wählen'],
-              ...(answered ? ([['↵', 'Nächste Frage']] as [string, string][]) : []),
-            ]}
-          />
+          <div className="grid grid-cols-2 gap-4 relative">
+            {question.options.map((option, i) => {
+              const isSelected = drill.answeredIndex === i;
+              const showAsCorrect = answered && i === question.correctIndex;
+              const showAsWrong = answered && isSelected && !showAsCorrect;
+
+              let cls =
+                'relative flex h-24 items-center justify-center rounded-2xl border-2 transition-all duration-200 select-none cursor-pointer ';
+              if (!answered) {
+                cls +=
+                  'border-zinc-200/80 bg-white hover:-translate-y-0.5 hover:border-emerald-600/40 active:translate-y-px dark:border-white/[0.08] dark:bg-zinc-900';
+              } else if (showAsCorrect) {
+                cls += 'border-emerald-600/60 bg-emerald-500/10 font-bold';
+              } else if (showAsWrong) {
+                cls += 'border-rose-500/60 bg-rose-500/10';
+              } else {
+                cls += 'border-zinc-200/50 bg-transparent opacity-40 dark:border-white/[0.04]';
+              }
+
+              return (
+                <button
+                  key={`${option}-${i}`}
+                  type="button"
+                  disabled={answered}
+                  onClick={() => answer(i)}
+                  aria-label={`Option ${i + 1}: ${option}`}
+                  className={cls}
+                >
+                  <span className="absolute left-3 top-3 font-mono text-[11px] font-bold text-zinc-400 dark:text-zinc-500">
+                    [{i + 1}]
+                  </span>
+                  <span className="font-mono text-2xl font-bold tabular-nums text-zinc-800 dark:text-zinc-100">
+                    {option}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          {answered && (
+            <div
+              className={`rounded-2xl border p-4 text-center text-sm font-semibold animate-pop-in relative ${
+                drill.answeredIndex === question.correctIndex
+                  ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-800 dark:text-emerald-300'
+                  : 'border-rose-500/30 bg-rose-500/10 text-rose-700 dark:text-rose-300'
+              }`}
+            >
+              <p className="font-bold">
+                {drill.timedOut
+                  ? 'Zeit abgelaufen!'
+                  : drill.answeredIndex === question.correctIndex
+                    ? 'Richtig gelöst!'
+                    : 'Leider daneben.'}
+              </p>
+              <p className="mt-1 font-mono text-xs text-zinc-600 dark:text-zinc-300 font-normal">
+                {question.prompt} = {question.options[question.correctIndex]}
+              </p>
+            </div>
+          )}
+
+          {/* Steuerung & KeyHints */}
+          <div className="pt-3 border-t border-zinc-100 dark:border-white/[0.05] relative flex flex-col items-center gap-4">
+            {answered && (
+              <KineticButton
+                variant="primary"
+                onClick={next}
+                shortcut="[Enter]"
+                icon={<ArrowRight className="h-4 w-4" />}
+              >
+                {drill.index === drill.questions.length - 1 ? 'Zur Auswertung' : 'Nächste Frage'}
+              </KineticButton>
+            )}
+
+            <KeyHints
+              hints={[
+                ['1–4', 'Antwort wählen'],
+                ...(answered ? ([['↵ Enter', 'Nächste Frage']] as [string, string][]) : []),
+              ]}
+            />
+          </div>
         </div>
       </section>
     </div>
