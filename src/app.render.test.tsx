@@ -24,7 +24,7 @@ beforeEach(() => {
 
 /** Marker pro Route – schlägt fehl, sobald eine Seite beim Öffnen crasht. */
 const ROUTES: readonly [path: string, marker: string][] = [
-  ['/', 'Trainingsmodi'],
+  ['/', 'Trainings-Zentrale'],
   ['/ear-trainer', 'Pinyin Ear-Trainer'],
   ['/typeracer', 'Runde starten'],
   ['/alchemy', 'Radikal wählen'],

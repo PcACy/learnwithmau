@@ -1,15 +1,25 @@
 import { useState } from 'react';
-import { BookOpen, BookOpenText, Flame, Gamepad2, GraduationCap, HardDrive, LineChart, Settings } from 'lucide-react';
+import {
+  BookOpen,
+  BookOpenText,
+  Flame,
+  GraduationCap,
+  HardDrive,
+  LineChart,
+  Settings,
+  Sparkles,
+} from 'lucide-react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useProgressStore } from '../../store/progressStore';
 import { useKeyDown } from '../../hooks/useKeyDown';
 import { ThemeToggle } from './ThemeToggle';
 import { BackupModal } from '../dashboard/BackupModal';
+import { SealBadge } from '../ui/SealBadge';
 
 function ShellSkeleton() {
   return (
-    <div className="min-h-dvh bg-zinc-50 dark:bg-zinc-950" aria-busy="true" aria-label="Lade Fortschritt">
-      <header className="sticky top-0 border-b border-zinc-200/60 bg-zinc-50/80 backdrop-blur dark:border-white/[0.06] dark:bg-zinc-950/80">
+    <div className="min-h-dvh bg-[#fbfbf9] dark:bg-[#09090b]" aria-busy="true" aria-label="Lade Fortschritt">
+      <header className="sticky top-0 border-b border-zinc-200/60 bg-[#fbfbf9]/85 backdrop-blur-md dark:border-white/[0.06] dark:bg-[#09090b]/85">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-8">
           <div className="skeleton-shimmer h-9 w-40 rounded-2xl" />
           <div className="flex gap-2">
@@ -58,30 +68,38 @@ export function AppShell() {
   }
 
   const NAV_LINKS = [
-    { to: '/', label: 'Arcade', icon: Gamepad2 },
+    { to: '/', label: 'Zentrale', icon: Sparkles },
     { to: '/dictionary', label: 'Wörterbuch', icon: BookOpen },
     { to: '/grammar', label: 'Grammatik', icon: GraduationCap },
     { to: '/stories', label: 'Lesen', icon: BookOpenText },
+    { to: '/exam', label: 'Prüfung', icon: GraduationCap },
     { to: '/stats', label: 'Fortschritt', icon: LineChart },
     { to: '/settings', label: 'Einstellungen', icon: Settings },
   ];
 
+  const isSubpage = location.pathname !== '/';
+
   return (
-    <div className="min-h-dvh bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100">
-      <header className="sticky top-0 z-10 border-b border-zinc-200/60 bg-zinc-50/80 backdrop-blur-md dark:border-white/[0.06] dark:bg-zinc-950/80">
+    <div className="min-h-dvh bg-[#fbfbf9] text-zinc-900 dark:bg-[#09090b] dark:text-zinc-100">
+      <header className="sticky top-0 z-30 border-b border-zinc-200/80 bg-[#fbfbf9]/90 backdrop-blur-md dark:border-white/[0.08] dark:bg-[#09090b]/90">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-8">
           <div className="flex items-center gap-6">
             <Link
               to="/"
-              className="group flex items-center gap-3 transition-transform duration-200 ease-[var(--ease-spring)] active:scale-[0.98]"
+              className="group flex items-center gap-3 transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] active:scale-[0.98]"
             >
-              <span className="font-cjk flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-600 text-lg font-semibold text-white shadow-whisper transition-transform duration-200 group-hover:-rotate-6 dark:bg-emerald-500 dark:text-zinc-950">
-                汉
-              </span>
-              <span className="text-base font-bold tracking-tight">Hanzi Arcade</span>
+              <SealBadge sealChar="汉" label="HSK 1" variant="cinnabar" size="sm" />
+              <div className="hidden sm:block">
+                <span className="text-sm font-black tracking-tight text-zinc-900 dark:text-zinc-50 block leading-tight">
+                  Hanzi Arcade
+                </span>
+                <span className="font-mono text-[10px] text-zinc-400 block tracking-widest uppercase">
+                  Modern Classic
+                </span>
+              </div>
             </Link>
 
-            {/* Desktop Navigation Links */}
+            {/* Desktop Navigation Links (Milled Pills) */}
             <nav className="hidden items-center gap-1 sm:flex" aria-label="Hauptnavigation">
               {NAV_LINKS.map((link) => {
                 const isActive =
@@ -91,10 +109,10 @@ export function AppShell() {
                   <Link
                     key={link.to}
                     to={link.to}
-                    className={`flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-semibold transition-all ${
+                    className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition-all duration-150 ${
                       isActive
-                        ? 'bg-emerald-500/15 text-emerald-800 dark:bg-emerald-400/20 dark:text-emerald-300'
-                        : 'text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800/60 dark:hover:text-zinc-100'
+                        ? 'border border-emerald-600/30 bg-emerald-600/10 text-emerald-800 font-bold dark:border-emerald-500/30 dark:bg-emerald-500/15 dark:text-emerald-300'
+                        : 'text-zinc-600 hover:bg-zinc-100/80 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800/60 dark:hover:text-zinc-100'
                     }`}
                   >
                     <Icon className="h-3.5 w-3.5" />
@@ -105,19 +123,36 @@ export function AppShell() {
             </nav>
           </div>
 
-          <div className="flex items-center gap-2">
-            {streak > 0 && (
-              <span className="flex h-9 items-center gap-1.5 rounded-full border border-emerald-600/25 bg-emerald-500/10 px-3.5 font-mono text-sm font-medium text-emerald-700 dark:border-emerald-400/20 dark:text-emerald-400">
-                <Flame className="h-4 w-4 animate-pulse-soft" aria-hidden />
-                {streak}
-              </span>
+          <div className="flex items-center gap-2.5">
+            {/* Escape Shortcut Hint on Subpages */}
+            {isSubpage && (
+              <Link
+                to="/"
+                title="Zurück zur Zentrale (Escape)"
+                className="hidden md:inline-flex items-center gap-1.5 rounded-full border border-zinc-200/80 bg-white/80 px-2.5 py-1 text-[11px] font-mono font-semibold text-zinc-500 hover:border-emerald-500/40 hover:text-emerald-700 dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-400"
+              >
+                <span>[Esc] Zentrale</span>
+              </Link>
             )}
+
+            {/* Streak Counter with Amber Streak Accent */}
+            {streak > 0 && (
+              <Link
+                to="/stats"
+                className="flex h-9 items-center gap-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 px-3 font-mono text-xs font-bold text-amber-700 dark:border-amber-500/20 dark:text-amber-400 hover:bg-amber-500/15 transition-all"
+                title={`${streak} Tage Lernserie`}
+              >
+                <Flame className="h-3.5 w-3.5 fill-current animate-pulse-soft" aria-hidden />
+                <span>{streak}d</span>
+              </Link>
+            )}
+
             <button
               type="button"
               onClick={() => setBackupOpen(true)}
               aria-label="Backup und Wiederherstellung öffnen"
               title="Backup & Wiederherstellung"
-              className="flex h-10 w-10 items-center justify-center rounded-xl border border-zinc-200/80 bg-white text-zinc-700 shadow-whisper transition-all duration-200 ease-[var(--ease-spring)] hover:-translate-y-0.5 hover:border-emerald-600/35 hover:bg-zinc-50 active:translate-y-0 dark:border-white/[0.08] dark:bg-zinc-900 dark:text-zinc-300 dark:hover:border-emerald-400/30 dark:hover:bg-zinc-800"
+              className="flex h-9 w-9 items-center justify-center rounded-xl border border-zinc-200/80 bg-white text-zinc-700 shadow-xs transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-emerald-600/35 hover:bg-zinc-50 active:scale-95 dark:border-white/[0.08] dark:bg-zinc-900 dark:text-zinc-300 dark:hover:border-emerald-400/30 dark:hover:bg-zinc-800 cursor-pointer"
             >
               <HardDrive className="h-4 w-4" aria-hidden />
             </button>
@@ -134,4 +169,3 @@ export function AppShell() {
     </div>
   );
 }
-
