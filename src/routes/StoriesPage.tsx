@@ -1,18 +1,20 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   AlignLeft,
+  BookOpen,
   Check,
   CheckCircle2,
   ChevronLeft,
   ChevronRight,
+  ExternalLink,
   Eye,
   EyeOff,
   Languages,
   Layers,
   Pause,
   Play,
-  Sparkles,
   Volume2,
   X,
 } from 'lucide-react';
@@ -21,11 +23,26 @@ import type { Story, StorySentence, StoryWordToken } from '../types/story';
 import { playAsset, stopCurrentAudio } from '../lib/audio';
 import { fireCelebration, fireMicroBurst } from '../lib/confetti';
 import { getCompletedStories, putCompletedStories } from '../lib/db';
+import { STORY_TO_GRAMMAR_MAP } from '../data/chapterLinks';
+import { KineticButton } from '../components/ui/KineticButton';
+import { SealBadge } from '../components/ui/SealBadge';
 
 const STORIES = storiesData as Story[];
 
 export function StoriesPage() {
-  const [selectedStoryId, setSelectedStoryId] = useState<string>(STORIES[0].id);
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
+  const paramId = searchParams.get('id');
+  const [activeStoryId, setActiveStoryId] = useState<string | null>(null);
+
+  const selectedStoryId =
+    activeStoryId && STORIES.some((s) => s.id === activeStoryId)
+      ? activeStoryId
+      : paramId && STORIES.some((s) => s.id === paramId)
+        ? paramId
+        : STORIES[0].id;
+
   const [viewMode, setViewMode] = useState<'reader' | 'sentences'>('reader');
   const [showPinyin, setShowPinyin] = useState(true);
   const [showGerman, setShowGerman] = useState(true);
@@ -66,6 +83,7 @@ export function StoriesPage() {
   const currentStory = STORIES.find((s) => s.id === selectedStoryId) || STORIES[0];
   const currentIndex = STORIES.findIndex((s) => s.id === selectedStoryId);
   const isCurrentCompleted = completedStories.has(currentStory.id);
+  const relatedGrammar = STORY_TO_GRAMMAR_MAP[currentStory.id] || [];
 
   // Stop audio on unmount or story change
   useEffect(() => {
@@ -160,34 +178,40 @@ export function StoriesPage() {
   }, []);
 
   return (
-    <div className="space-y-10 pb-20" onClick={() => setActiveToken(null)}>
+    <div className="space-y-10 pb-24" onClick={() => setActiveToken(null)}>
       {/* 1. Header & Fortschritt */}
-      <div className="reveal flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between" style={{ '--index': 0 } as CSSProperties}>
-        <div>
-          <div className="flex items-center gap-2">
-            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-500/10 font-cjk text-sm font-bold text-emerald-700 dark:text-emerald-400">
-              读
-            </span>
-            <span className="font-mono text-xs font-semibold uppercase tracking-[0.15em] text-emerald-700 dark:text-emerald-400">
-              Graded Reader · HSK 1
+      <div
+        className="reveal flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
+        style={{ '--index': 0 } as CSSProperties}
+      >
+        <div className="space-y-1.5">
+          <div className="flex items-center gap-2.5">
+            <SealBadge sealChar="读" label="HSK 1 LESETEXTE" variant="jade" />
+            <span className="font-mono text-xs font-semibold uppercase tracking-[0.12em] text-zinc-500 dark:text-zinc-400">
+              Immersiver Graded Reader
             </span>
           </div>
-          <h1 className="mt-1.5 text-3xl font-extrabold tracking-tight sm:text-4xl">Geschichten & Lesetexte</h1>
+          <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl text-zinc-900 dark:text-zinc-50">
+            Geschichten & Dialoge
+          </h1>
         </div>
 
         {/* Global Progress Pill */}
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 rounded-full border border-zinc-200/80 bg-white px-4 py-2 text-xs font-semibold shadow-xs dark:border-white/10 dark:bg-zinc-900">
+          <div className="flex items-center gap-2.5 rounded-full border border-zinc-200/80 bg-white/90 px-4 py-2 text-xs font-semibold shadow-xs dark:border-white/10 dark:bg-zinc-900/90">
             <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
-            <span>
-              {completedStories.size} von {STORIES.length} Geschichten gemeistert
+            <span className="font-mono text-zinc-700 dark:text-zinc-300">
+              {completedStories.size} / {STORIES.length} gelesen
             </span>
           </div>
         </div>
       </div>
 
-      {/* 2. Story Selector Chips (Horizontal scrollbar) */}
-      <div className="reveal flex gap-2 overflow-x-auto pb-2 scrollbar-none" style={{ '--index': 1 } as CSSProperties}>
+      {/* 2. Story Selector Chips (Horizontal scrollbare Milled-Pills) */}
+      <div
+        className="reveal flex gap-2.5 overflow-x-auto pb-2 scrollbar-none"
+        style={{ '--index': 1 } as CSSProperties}
+      >
         {STORIES.map((story, idx) => {
           const isSel = story.id === currentStory.id;
           const isDone = completedStories.has(story.id);
@@ -201,19 +225,19 @@ export function StoriesPage() {
                 stopCurrentAudio();
                 setIsPlayingFull(false);
                 setPlayingSentenceId(null);
-                setSelectedStoryId(story.id);
+                setActiveStoryId(story.id);
                 setActiveToken(null);
               }}
-              className={`group flex shrink-0 items-center gap-2.5 rounded-2xl border px-4 py-2.5 text-xs font-semibold transition-all duration-200 ease-[var(--ease-spring)] ${
+              className={`group flex shrink-0 items-center gap-2.5 rounded-2xl border px-4 py-2.5 text-xs font-semibold transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] ${
                 isSel
-                  ? 'border-emerald-600 bg-emerald-600 text-white shadow-whisper dark:border-emerald-500 dark:bg-emerald-500 dark:text-zinc-950'
+                  ? 'border-emerald-600 bg-emerald-600 text-white shadow-whisper dark:border-emerald-500 dark:bg-emerald-600'
                   : 'border-zinc-200/80 bg-white text-zinc-700 hover:border-emerald-500/40 hover:bg-zinc-50 dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800'
               }`}
             >
               <span
                 className={`flex h-5 w-5 items-center justify-center rounded-md font-mono text-[10px] font-bold ${
                   isSel
-                    ? 'bg-white/20 text-white dark:bg-zinc-950/20 dark:text-zinc-950'
+                    ? 'bg-white/20 text-white'
                     : isDone
                       ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-400'
                       : 'bg-zinc-100 text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400'
@@ -229,7 +253,7 @@ export function StoriesPage() {
 
       {/* 3. Steuerungs-Leiste (Toggles & Vorleser) */}
       <div
-        className="reveal flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-zinc-200/80 bg-white p-3 shadow-xs dark:border-white/10 dark:bg-zinc-900"
+        className="reveal flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-zinc-200/80 bg-white/90 p-3 shadow-xs dark:border-white/10 dark:bg-zinc-900/90"
         style={{ '--index': 2 } as CSSProperties}
       >
         {/* Ansichtsmodus (Dual-Mode: Buch vs. Satzkarten) */}
@@ -237,7 +261,7 @@ export function StoriesPage() {
           <button
             type="button"
             onClick={() => setViewMode('reader')}
-            className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-bold transition-all ${
+            className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-bold transition-all cursor-pointer ${
               viewMode === 'reader'
                 ? 'bg-white text-emerald-800 shadow-xs dark:bg-zinc-900 dark:text-emerald-300'
                 : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100'
@@ -249,7 +273,7 @@ export function StoriesPage() {
           <button
             type="button"
             onClick={() => setViewMode('sentences')}
-            className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-bold transition-all ${
+            className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-bold transition-all cursor-pointer ${
               viewMode === 'sentences'
                 ? 'bg-white text-emerald-800 shadow-xs dark:bg-zinc-900 dark:text-emerald-300'
                 : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100'
@@ -265,7 +289,7 @@ export function StoriesPage() {
           <button
             type="button"
             onClick={() => setShowPinyin((v) => !v)}
-            className={`flex items-center gap-1.5 rounded-xl border px-3 py-1.5 text-xs font-semibold transition-all ${
+            className={`flex items-center gap-1.5 rounded-xl border px-3 py-1.5 text-xs font-semibold transition-all cursor-pointer ${
               showPinyin
                 ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-800 dark:text-emerald-300'
                 : 'border-zinc-200 bg-zinc-50 text-zinc-500 dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-400'
@@ -279,7 +303,7 @@ export function StoriesPage() {
           <button
             type="button"
             onClick={() => setShowGerman((v) => !v)}
-            className={`flex items-center gap-1.5 rounded-xl border px-3 py-1.5 text-xs font-semibold transition-all ${
+            className={`flex items-center gap-1.5 rounded-xl border px-3 py-1.5 text-xs font-semibold transition-all cursor-pointer ${
               showGerman
                 ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-800 dark:text-emerald-300'
                 : 'border-zinc-200 bg-zinc-50 text-zinc-500 dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-400'
@@ -295,10 +319,10 @@ export function StoriesPage() {
         <button
           type="button"
           onClick={playFullStory}
-          className={`flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-bold transition-all ${
+          className={`flex items-center gap-2 rounded-full px-4 py-2 text-xs font-bold transition-all shadow-whisper cursor-pointer ${
             isPlayingFull
-              ? 'bg-amber-600 text-white hover:bg-amber-500 shadow-whisper'
-              : 'bg-emerald-600 text-white hover:bg-emerald-500 shadow-whisper'
+              ? 'bg-amber-600 text-white hover:bg-amber-500'
+              : 'bg-emerald-600 text-white hover:bg-emerald-500'
           }`}
         >
           {isPlayingFull ? (
@@ -317,28 +341,31 @@ export function StoriesPage() {
 
       {/* 4. Haupt-Lese-Container (Double-Bezel Architecture) */}
       <div
-        className="reveal rounded-[2.5rem] p-1.5 bg-gradient-to-b from-white/10 to-white/5 border border-zinc-200/80 dark:border-white/10 shadow-whisper relative"
+        className="reveal double-bezel-casing shadow-whisper relative"
         style={{ '--index': 3 } as CSSProperties}
       >
-        <div className="relative overflow-hidden rounded-[calc(2.5rem-0.375rem)] bg-white p-7 sm:p-10 dark:bg-zinc-900 shadow-[inset_0_1px_1px_rgba(255,255,255,0.08)] space-y-8">
+        <div className="double-bezel-core p-7 sm:p-11 space-y-9">
           {/* Authentic Calligraphy Watermark */}
-          <span className="font-cjk pointer-events-none select-none absolute -bottom-6 -right-3 text-[140px] font-black text-zinc-950/[0.03] dark:text-white/[0.03]">
-            {currentStory.hanziTag}
+          <span className="watermark-glyph">
+            {currentStory.hanziTag || '读'}
           </span>
 
           {/* Story Header */}
-          <div className="relative space-y-1.5 max-w-2xl">
-            <div className="flex items-center gap-2">
-              <span className="rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-0.5 font-mono text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
-                Geschichte {currentIndex + 1} von {STORIES.length}
-              </span>
+          <div className="relative space-y-2 max-w-2xl">
+            <div className="flex flex-wrap items-center gap-2.5">
+              <SealBadge
+                sealChar="印"
+                label={`TEXT ${String(currentIndex + 1).padStart(2, '0')}`}
+                variant="cinnabar"
+                size="sm"
+              />
               <span className="rounded-full border border-zinc-200 px-2.5 py-0.5 font-mono text-[10px] font-semibold text-zinc-500 dark:border-white/10">
-                {currentStory.difficulty} · ~{currentStory.wordCount} Wörter
+                {currentStory.difficulty} · ~{currentStory.wordCount} Zeichen
               </span>
               {isCurrentCompleted && (
                 <span className="flex items-center gap-1 rounded-full border border-emerald-500/30 bg-emerald-500/15 px-2.5 py-0.5 font-mono text-[10px] font-bold text-emerald-800 dark:text-emerald-300">
                   <Check className="h-3 w-3" />
-                  Gemeistert
+                  Gelesen
                 </span>
               )}
             </div>
@@ -349,17 +376,17 @@ export function StoriesPage() {
             <p className="font-mono text-sm font-semibold text-emerald-700 dark:text-emerald-400">
               {currentStory.pinyinTitle} · {currentStory.germanTitle}
             </p>
-            <p className="text-xs leading-relaxed text-zinc-500 dark:text-zinc-400 pt-1">
+            <p className="text-xs leading-relaxed text-zinc-500 dark:text-zinc-400 pt-0.5">
               {currentStory.summary}
             </p>
           </div>
 
           {/* 5A. Modus 1: Buch-Fließtext (Immersiv) */}
           {viewMode === 'reader' && (
-            <div className="space-y-6 rounded-3xl border border-zinc-100 bg-zinc-50/60 p-6 sm:p-8 dark:border-white/[0.04] dark:bg-zinc-950/40">
+            <div className="space-y-6 rounded-3xl border border-zinc-100 bg-zinc-50/70 p-6 sm:p-9 dark:border-white/[0.04] dark:bg-zinc-950/40 relative">
               <div className="text-xs font-semibold text-zinc-400 flex items-center justify-between">
                 <span>Tipp: Klicke auf ein beliebiges Wort im Text für die Sofort-Übersetzung</span>
-                <span>Buchansicht</span>
+                <span className="font-mono text-[10px] uppercase tracking-wider">Buchansicht</span>
               </div>
 
               <div className="space-y-4">
@@ -376,20 +403,20 @@ export function StoriesPage() {
                       }`}
                     >
                       {/* Chinese text with interactive clickable tokens */}
-                      <div className="flex flex-wrap items-baseline gap-x-1 gap-y-2">
+                      <div className="flex flex-wrap items-baseline gap-x-1.5 gap-y-2.5 leading-[1.9]">
                         {sent.tokens.map((token, tIdx) => (
                           <button
                             key={tIdx}
                             type="button"
                             onClick={(e) => handleWordClick(token, e)}
-                            className="group/word inline-flex flex-col items-center rounded-lg px-1.5 py-0.5 hover:bg-emerald-500/20 active:scale-95 transition-all text-left"
+                            className="group/word inline-flex flex-col items-center rounded-lg px-1.5 py-0.5 hover:bg-emerald-500/20 active:scale-95 transition-all text-left cursor-pointer"
                           >
                             {showPinyin && (
                               <span className="font-mono text-xs font-semibold text-emerald-700 dark:text-emerald-400 tracking-tight">
                                 {token.pinyin}
                               </span>
                             )}
-                            <span className="font-cjk text-2xl sm:text-3xl font-semibold text-zinc-900 dark:text-zinc-100 group-hover/word:text-emerald-800 dark:group-hover/word:text-emerald-300">
+                            <span className="font-cjk text-2xl sm:text-3xl font-medium text-zinc-900 dark:text-zinc-100 group-hover/word:text-emerald-800 dark:group-hover/word:text-emerald-300">
                               {token.hanzi}
                             </span>
                           </button>
@@ -399,7 +426,7 @@ export function StoriesPage() {
                         <button
                           type="button"
                           onClick={() => playSentenceAudio(sent)}
-                          className={`ml-2 inline-flex h-8 w-8 items-center justify-center rounded-full border transition-all ${
+                          className={`ml-2 inline-flex h-8 w-8 items-center justify-center rounded-full border transition-all cursor-pointer ${
                             isCurrentActive
                               ? 'border-emerald-600 bg-emerald-600 text-white shadow-whisper'
                               : 'border-zinc-200 bg-white text-zinc-500 opacity-60 group-hover:opacity-100 hover:border-emerald-500 hover:text-emerald-700 dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-300'
@@ -412,7 +439,7 @@ export function StoriesPage() {
 
                       {/* German translation (optional toggle) */}
                       {showGerman && (
-                        <p className="mt-2 text-xs font-medium text-zinc-500 dark:text-zinc-400 pl-1.5 border-l-2 border-emerald-500/40">
+                        <p className="mt-2 text-xs font-medium text-zinc-500 dark:text-zinc-400 pl-2 border-l-2 border-emerald-500/40">
                           {sent.german}
                         </p>
                       )}
@@ -444,20 +471,20 @@ export function StoriesPage() {
                           Satz {sIdx + 1}
                         </span>
 
-                        <div className="flex flex-wrap items-baseline gap-x-1.5 gap-y-2">
+                        <div className="flex flex-wrap items-baseline gap-x-1.5 gap-y-2.5">
                           {sent.tokens.map((token, tIdx) => (
                             <button
                               key={tIdx}
                               type="button"
                               onClick={(e) => handleWordClick(token, e)}
-                              className="group/word inline-flex flex-col items-center rounded-lg px-2 py-1 hover:bg-emerald-500/20 active:scale-95 transition-all text-left"
+                              className="group/word inline-flex flex-col items-center rounded-lg px-2 py-1 hover:bg-emerald-500/20 active:scale-95 transition-all text-left cursor-pointer"
                             >
                               {showPinyin && (
                                 <span className="font-mono text-xs font-semibold text-emerald-700 dark:text-emerald-400">
                                   {token.pinyin}
                                 </span>
                               )}
-                              <span className="font-cjk text-2xl sm:text-3xl font-semibold text-zinc-900 dark:text-zinc-100">
+                              <span className="font-cjk text-2xl sm:text-3xl font-medium text-zinc-900 dark:text-zinc-100">
                                 {token.hanzi}
                               </span>
                             </button>
@@ -475,7 +502,7 @@ export function StoriesPage() {
                       <button
                         type="button"
                         onClick={() => playSentenceAudio(sent)}
-                        className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border transition-all ${
+                        className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border transition-all cursor-pointer ${
                           isCurrentActive
                             ? 'border-emerald-600 bg-emerald-600 text-white shadow-whisper'
                             : 'border-zinc-200 bg-zinc-50 text-zinc-700 hover:border-emerald-500/50 hover:bg-emerald-50 hover:text-emerald-800 dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:text-emerald-300'
@@ -514,31 +541,71 @@ export function StoriesPage() {
                 <button
                   type="button"
                   onClick={() => setActiveToken(null)}
-                  className="flex h-8 w-8 items-center justify-center rounded-full text-zinc-400 hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800"
+                  className="flex h-8 w-8 items-center justify-center rounded-full text-zinc-400 hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800 cursor-pointer"
                 >
                   <X className="h-4 w-4" />
                 </button>
               </div>
 
               <div className="mt-4 rounded-2xl border border-zinc-100 bg-zinc-50/70 p-3 text-xs dark:border-white/[0.04] dark:bg-zinc-950/40">
-                <span className="text-zinc-400">Deutsche Bedeutung: </span>
+                <span className="text-zinc-400">Bedeutung: </span>
                 <span className="font-bold text-zinc-800 dark:text-zinc-200">{activeToken.german}</span>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => navigate(`/dictionary?q=${encodeURIComponent(activeToken.hanzi)}`)}
+                className="mt-3 inline-flex items-center gap-1.5 text-xs font-bold text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 cursor-pointer"
+              >
+                <span>Im Wörterbuch nachschlagen</span>
+                <ExternalLink className="h-3 w-3" />
+              </button>
+            </div>
+          )}
+
+          {/* 7. Didaktische Kapitel-Verknüpfung zurück zu Grammatik-Lektionen */}
+          {relatedGrammar.length > 0 && (
+            <div className="rounded-3xl border border-zinc-200/80 bg-zinc-50/60 p-5 dark:border-white/10 dark:bg-zinc-800/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="space-y-1">
+                <div className="flex items-center gap-2">
+                  <BookOpen className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                  <span className="font-mono text-xs font-bold uppercase tracking-wider text-zinc-900 dark:text-zinc-100">
+                    Verknüpfte Grammatik-Lektion
+                  </span>
+                </div>
+                <p className="text-xs text-zinc-500 dark:text-zinc-400">
+                  Die Grammatikregeln dieser Geschichte systematisch im Kompendium vertiefen:
+                </p>
+              </div>
+
+              <div className="flex flex-wrap gap-2">
+                {relatedGrammar.map((rg) => (
+                  <button
+                    key={rg.lessonId}
+                    type="button"
+                    onClick={() => navigate('/grammar')}
+                    className="inline-flex items-center gap-1.5 rounded-xl border border-emerald-500/30 bg-white px-3 py-1.5 text-xs font-bold text-emerald-800 hover:bg-emerald-50 dark:border-emerald-500/20 dark:bg-zinc-900 dark:text-emerald-300 dark:hover:bg-zinc-800 cursor-pointer"
+                  >
+                    <span>{rg.lessonTitle}</span>
+                    <ExternalLink className="h-3 w-3" />
+                  </button>
+                ))}
               </div>
             </div>
           )}
 
-          {/* 7. Leseverständnis-Quiz (Comprehension Checks) */}
-          <div className="space-y-4 pt-4 border-t border-zinc-100 dark:border-white/[0.05]">
+          {/* 8. Leseverständnis-Quiz (Comprehension Checks) */}
+          <div className="space-y-4 pt-2 border-t border-zinc-100 dark:border-white/[0.05]">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-base font-bold text-zinc-900 dark:text-zinc-100">
+                <h3 className="font-mono text-xs font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
                   Leseverständnis-Check
                 </h3>
-                <p className="text-xs text-zinc-500">
-                  Überprüfe, ob du den Inhalt der Geschichte vollständig verstanden hast.
+                <p className="text-xs text-zinc-500 mt-0.5">
+                  Überprüfe, ob du den Textinhalt vollständig erfasst hast.
                 </p>
               </div>
-              <Sparkles className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+              <SealBadge sealChar="考" label="QUIZ" variant="stone" size="sm" />
             </div>
 
             <div className="space-y-4">
@@ -576,7 +643,7 @@ export function StoriesPage() {
                             key={optIdx}
                             type="button"
                             onClick={() => handleSelectQuiz(qIdx, optIdx)}
-                            className={`flex w-full items-center justify-between rounded-xl border p-3 text-left text-xs font-medium transition-all ${btnStyle}`}
+                            className={`flex w-full items-center justify-between rounded-xl border p-3 text-left text-xs font-medium transition-all cursor-pointer ${btnStyle}`}
                           >
                             <span>{opt}</span>
                             {submitted && optIdx === quiz.correctIndex && (
@@ -604,7 +671,7 @@ export function StoriesPage() {
             </div>
           </div>
 
-          {/* 8. Lektionsabschluss & Footer Navigation */}
+          {/* 9. Lektionsabschluss & Footer Navigation mit KineticButton */}
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between pt-6 border-t border-zinc-100 dark:border-white/[0.05]">
             <button
               type="button"
@@ -614,43 +681,41 @@ export function StoriesPage() {
                 stopCurrentAudio();
                 setIsPlayingFull(false);
                 setPlayingSentenceId(null);
-                setSelectedStoryId(STORIES[currentIndex - 1].id);
+                setActiveStoryId(STORIES[currentIndex - 1].id);
                 setActiveToken(null);
               }}
-              className="inline-flex items-center gap-2 rounded-2xl border border-zinc-200/80 bg-white px-5 py-3 text-xs font-bold text-zinc-700 hover:bg-zinc-50 disabled:opacity-30 disabled:pointer-events-none dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-200"
+              className="inline-flex items-center gap-2 rounded-full border border-zinc-200/80 bg-white px-5 py-2.5 text-xs font-bold text-zinc-700 hover:bg-zinc-50 disabled:opacity-30 disabled:pointer-events-none dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-200 cursor-pointer"
             >
               <ChevronLeft className="h-4 w-4" />
-              Vorherige Geschichte
+              <span>Vorherige Geschichte</span>
             </button>
 
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center gap-3">
               {!isCurrentCompleted && (
-                <button
-                  type="button"
+                <KineticButton
+                  variant="primary"
                   onClick={() => markCompleted(currentStory.id)}
-                  className="inline-flex items-center gap-2 rounded-2xl bg-emerald-600 px-6 py-3 text-xs font-bold text-white shadow-whisper transition-all hover:bg-emerald-500"
+                  icon={<Check className="h-4 w-4" />}
                 >
-                  <Check className="h-4 w-4" />
-                  Als gemeistert markieren
-                </button>
+                  Als gelesen markieren
+                </KineticButton>
               )}
 
               {currentIndex < STORIES.length - 1 && (
-                <button
-                  type="button"
+                <KineticButton
+                  variant="secondary"
                   onClick={() => {
                     fullAudioCancelledRef.current = true;
                     stopCurrentAudio();
                     setIsPlayingFull(false);
                     setPlayingSentenceId(null);
-                    setSelectedStoryId(STORIES[currentIndex + 1].id);
+                    setActiveStoryId(STORIES[currentIndex + 1].id);
                     setActiveToken(null);
                   }}
-                  className="inline-flex items-center gap-2 rounded-2xl bg-zinc-900 px-5 py-3 text-xs font-bold text-white hover:bg-zinc-800 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-100"
+                  icon={<ChevronRight className="h-4 w-4" />}
                 >
                   Nächste Geschichte
-                  <ChevronRight className="h-4 w-4" />
-                </button>
+                </KineticButton>
               )}
             </div>
           </div>

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { VOCAB } from '../data';
 import { stripToneMarks } from '../lib/pinyinUtils';
@@ -10,14 +11,29 @@ import { DictionaryDetailPanel } from '../components/dictionary/DictionaryDetail
 import { PART_OF_SPEECH_MAP } from '../data/vocabDetails';
 
 export function DictionaryPage() {
+  const [searchParams] = useSearchParams();
   const cards = useProgressStore((s) => s.cards);
   const searchInputRef = useRef<HTMLInputElement | null>(null);
 
-  const [query, setQuery] = useState('');
+  const paramQ = searchParams.get('q');
+  const [internalQuery, setInternalQuery] = useState<string | null>(null);
+  const query = internalQuery ?? (paramQ ?? '');
+
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [page, setPage] = useState<number>(1);
-  const [selectedId, setSelectedId] = useState<string>(VOCAB[0]?.id ?? '');
-  const [mobileView, setMobileView] = useState<'list' | 'detail'>('list');
+  const [internalSelectedId, setInternalSelectedId] = useState<string | null>(null);
+
+  const matchedIdFromUrl = useMemo(() => {
+    if (!paramQ) return null;
+    const match = VOCAB.find(
+      (v) => v.hanzi === paramQ || v.pinyin.toLowerCase() === paramQ.toLowerCase()
+    );
+    return match?.id ?? null;
+  }, [paramQ]);
+
+  const selectedId = internalSelectedId ?? (matchedIdFromUrl ?? (VOCAB[0]?.id ?? ''));
+  const [internalMobileView, setInternalMobileView] = useState<'list' | 'detail' | null>(null);
+  const mobileView = internalMobileView ?? (paramQ ? 'detail' : 'list');
 
   useEffect(() => {
     return () => stopCurrentAudio();
@@ -63,7 +79,7 @@ export function DictionaryPage() {
   }, [query, selectedCategory]);
 
   const handleQueryChange = (q: string) => {
-    setQuery(q);
+    setInternalQuery(q);
     setPage(1);
   };
 
@@ -82,8 +98,8 @@ export function DictionaryPage() {
   }, [selectedItem]);
 
   const handleSelect = (id: string) => {
-    setSelectedId(id);
-    setMobileView('detail');
+    setInternalSelectedId(id);
+    setInternalMobileView('detail');
   };
 
   return (
@@ -162,7 +178,7 @@ export function DictionaryPage() {
           <div className="space-y-4">
             <button
               type="button"
-              onClick={() => setMobileView('list')}
+              onClick={() => setInternalMobileView('list')}
               className="inline-flex items-center gap-2 rounded-xl border border-zinc-200 bg-white px-4 py-2 text-xs font-bold text-zinc-700 shadow-xs dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-200"
             >
               <ArrowLeft className="h-4 w-4" />
