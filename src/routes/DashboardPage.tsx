@@ -105,9 +105,6 @@ export function DashboardPage() {
         <div className="space-y-1.5">
           <div className="flex items-center gap-2.5">
             <SealBadge sealChar="汉" label="ZENTRALE · HSK 1" variant="cinnabar" />
-            <span className="font-mono text-xs font-semibold uppercase tracking-[0.12em] text-zinc-500 dark:text-zinc-400">
-              Modern Classic Chinese
-            </span>
           </div>
           <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl text-zinc-900 dark:text-zinc-50">
             Trainings-Zentrale
