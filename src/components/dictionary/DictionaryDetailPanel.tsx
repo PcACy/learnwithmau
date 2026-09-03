@@ -85,104 +85,99 @@ export function DictionaryDetailPanel({ item, card, globalIndex }: DictionaryDet
       <div className="double-bezel-core p-6 sm:p-8 space-y-8 relative">
         {/* 1. Header (Grosses Zeichen im Tianzige-Raster, Pinyin, Töne, Speed & Aussprache) */}
         <div className="flex flex-col gap-4 border-b border-zinc-100 pb-5 dark:border-white/[0.06]">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3.5">
-            {/* Linke Seite: Tianzige + Pinyin + Definition */}
-            <div className="flex items-center gap-3.5 sm:gap-4 min-w-0">
-              {/* Dynamische Tianzige Kacheln */}
-              <div className="flex items-center gap-1.5 shrink-0">
-                {item.characters.map((c, i) => {
-                  const charCount = item.characters.length;
-                  const boxSize =
-                    charCount === 1
-                      ? 'h-18 w-18 sm:h-20 sm:w-20 text-4xl'
-                      : charCount === 2
-                        ? 'h-15 w-15 sm:h-16 sm:w-16 text-2xl sm:text-3xl'
-                        : 'h-12 w-12 sm:h-14 sm:w-14 text-xl sm:text-2xl';
+          <div className="flex items-start gap-4 min-w-0">
+            {/* Dynamische Tianzige Kacheln */}
+            <div className="flex items-center gap-1.5 shrink-0 pt-0.5">
+              {item.characters.map((c, i) => {
+                const charCount = item.characters.length;
+                const boxSize =
+                  charCount === 1
+                    ? 'h-20 w-20 text-4xl sm:text-5xl'
+                    : charCount === 2
+                      ? 'h-16 w-16 text-3xl sm:text-4xl'
+                      : 'h-13 w-13 text-2xl';
 
-                  return (
-                    <div
-                      key={c.char + i}
-                      className={`relative flex ${boxSize} items-center justify-center rounded-2xl border border-zinc-200/90 bg-zinc-50/70 shadow-xs dark:border-white/10 dark:bg-zinc-800/50`}
-                    >
-                      {/* Tianzige Grid Lines */}
-                      <div className="pointer-events-none absolute inset-0 grid grid-cols-2 grid-rows-2 opacity-20">
-                        <div className="border-b border-r border-dashed border-current" />
-                        <div className="border-b border-dashed border-current" />
-                        <div className="border-r border-dashed border-current" />
-                        <div />
-                      </div>
-                      <span className="font-cjk font-black text-zinc-900 dark:text-zinc-100 tracking-tight select-none">
-                        {c.char}
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
-
-              {/* Vokabel Info (Pinyin, Siegel, Übersetzung) */}
-              <div className="min-w-0 space-y-0.5">
-                <div className="flex items-center gap-2">
-                  <h2 className="font-mono text-2xl sm:text-3xl font-black tracking-tight text-zinc-900 dark:text-zinc-100 whitespace-nowrap">
-                    {item.pinyin}
-                  </h2>
-                  <span
-                    className="flex h-5 w-5 shrink-0 items-center justify-center rounded-xs bg-rose-700 text-[11px] font-bold text-white shadow-xs"
-                    title="Offizielle Standard-Aussprache (Putonghua / HSK-Norm)"
+                return (
+                  <div
+                    key={c.char + i}
+                    className={`relative flex ${boxSize} items-center justify-center rounded-2xl border border-zinc-200/90 bg-zinc-50/70 shadow-xs dark:border-white/10 dark:bg-zinc-800/50`}
                   >
-                    印
-                  </span>
-                </div>
-
-                <p className="text-sm font-semibold text-zinc-600 dark:text-zinc-300">
-                  {item.meaning}
-                </p>
-              </div>
+                    {/* Tianzige Grid Lines */}
+                    <div className="pointer-events-none absolute inset-0 grid grid-cols-2 grid-rows-2 opacity-20">
+                      <div className="border-b border-r border-dashed border-current" />
+                      <div className="border-b border-dashed border-current" />
+                      <div className="border-r border-dashed border-current" />
+                      <div />
+                    </div>
+                    <span className="font-cjk font-black text-zinc-900 dark:text-zinc-100 tracking-tight select-none">
+                      {c.char}
+                    </span>
+                  </div>
+                );
+              })}
             </div>
 
-            {/* Rechte Seite: Audio Steuerung & Speed Toggle */}
-            <div className="flex items-center gap-2 shrink-0 self-start sm:self-center">
-              {/* Speed Toggle */}
-              <div className="flex items-center rounded-xl bg-zinc-100/90 p-0.5 border border-zinc-200/60 dark:bg-zinc-800/80 dark:border-white/10 text-xs font-mono font-medium text-zinc-600 dark:text-zinc-300">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setAudioSpeed(1.0);
-                    playMainAudio(1.0);
-                  }}
-                  className={`rounded-lg px-2.5 py-1 transition-all ${
-                    audioSpeed === 1.0 ? 'bg-white shadow-xs text-zinc-900 dark:bg-zinc-900 dark:text-zinc-100 font-bold' : ''
-                  }`}
+            {/* Vokabel Info (Pinyin, Siegel, Übersetzung & Audio-Player) */}
+            <div className="min-w-0 flex-1 space-y-1.5">
+              <div className="flex items-center gap-2 flex-wrap">
+                <h2 className="font-mono text-2xl sm:text-3xl font-black tracking-tight text-zinc-900 dark:text-zinc-100 whitespace-nowrap">
+                  {item.pinyin}
+                </h2>
+                <span
+                  className="flex h-5 w-5 shrink-0 items-center justify-center rounded-xs bg-rose-700 text-[11px] font-bold text-white shadow-xs"
+                  title="Offizielle Standard-Aussprache (Putonghua / HSK-Norm)"
                 >
-                  1.0x
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setAudioSpeed(0.75);
-                    playMainAudio(0.75);
-                  }}
-                  className={`rounded-lg px-2.5 py-1 transition-all ${
-                    audioSpeed === 0.75 ? 'bg-white shadow-xs text-zinc-900 dark:bg-zinc-900 dark:text-zinc-100 font-bold' : ''
-                  }`}
-                >
-                  0.75x
-                </button>
+                  印
+                </span>
               </div>
 
-              {/* Haupt-Audio Button */}
-              <button
-                type="button"
-                onClick={() => playMainAudio()}
-                disabled={isPlaying}
-                className={`flex items-center gap-1.5 rounded-xl px-3.5 py-1.5 text-xs font-bold text-white shadow-whisper transition-all active:scale-95 cursor-pointer ${
-                  isPlaying
-                    ? 'bg-emerald-700 animate-pulse'
-                    : 'bg-emerald-600 hover:bg-emerald-500'
-                }`}
-              >
-                <span>Aussprache</span>
-                <Volume2 className="h-3.5 w-3.5" />
-              </button>
+              <p className="text-sm sm:text-base font-semibold text-zinc-600 dark:text-zinc-300">
+                {item.meaning}
+              </p>
+
+              {/* Kompakte Audio-Aussprache-Leiste */}
+              <div className="flex items-center gap-2 pt-0.5 flex-wrap">
+                <button
+                  type="button"
+                  onClick={() => playMainAudio()}
+                  disabled={isPlaying}
+                  className={`flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-bold text-white shadow-whisper transition-all active:scale-95 cursor-pointer ${
+                    isPlaying
+                      ? 'bg-emerald-700 animate-pulse'
+                      : 'bg-emerald-600 hover:bg-emerald-500'
+                  }`}
+                >
+                  <Volume2 className="h-3.5 w-3.5" />
+                  <span>Aussprache</span>
+                </button>
+
+                <div className="flex items-center rounded-xl bg-zinc-100/90 p-0.5 border border-zinc-200/60 dark:bg-zinc-800/80 dark:border-white/10 text-xs font-mono font-medium text-zinc-600 dark:text-zinc-300">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setAudioSpeed(1.0);
+                      playMainAudio(1.0);
+                    }}
+                    className={`rounded-lg px-2 py-1 transition-all ${
+                      audioSpeed === 1.0 ? 'bg-white shadow-xs text-zinc-900 dark:bg-zinc-900 dark:text-zinc-100 font-bold' : ''
+                    }`}
+                  >
+                    1.0x
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setAudioSpeed(0.75);
+                      playMainAudio(0.75);
+                    }}
+                    className={`rounded-lg px-2 py-1 transition-all ${
+                      audioSpeed === 0.75 ? 'bg-white shadow-xs text-zinc-900 dark:bg-zinc-900 dark:text-zinc-100 font-bold' : ''
+                    }`}
+                  >
+                    0.75x
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
 
