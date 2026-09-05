@@ -1,14 +1,15 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import type { CSSProperties } from 'react';
 import {
   ArrowRight,
   CheckCircle2,
   HelpCircle,
   RotateCcw,
+  Volume2,
   XCircle,
 } from 'lucide-react';
 import sentencesData from '../data/sentences.json';
-import { playToneSequence } from '../lib/audio';
+import { playAsset, playToneSequence, stopCurrentAudio } from '../lib/audio';
 import { fireCelebration, fireMicroBurst } from '../lib/confetti';
 import { shuffled } from '../lib/shuffle';
 import { SealBadge } from '../components/ui/SealBadge';
@@ -24,6 +25,7 @@ interface SentenceItem {
   pinyin: string;
   tokens: string[];
   explanation: string;
+  audioUrl?: string;
 }
 
 const SENTENCES: SentenceItem[] = sentencesData as SentenceItem[];
@@ -51,8 +53,22 @@ export function SentenceBuilderPage() {
   const [showHelp, setShowHelp] = useState(false);
   const [score, setScore] = useState(0);
   const [sessionStartedAt, setSessionStartedAt] = useState<number>(Date.now());
+  const [isPlayingAudio, setIsPlayingAudio] = useState(false);
+
+  useEffect(() => {
+    return () => stopCurrentAudio();
+  }, []);
+
+  const playSentenceAudio = useCallback((audioUrl?: string) => {
+    if (!audioUrl) return;
+    stopCurrentAudio();
+    setIsPlayingAudio(true);
+    void playAsset(audioUrl, () => setIsPlayingAudio(false));
+  }, []);
 
   const startSession = useCallback(() => {
+    stopCurrentAudio();
+    setIsPlayingAudio(false);
     const newSession = initSession();
     setSession(newSession);
     setCurrentIndex(0);
@@ -91,7 +107,11 @@ export function SentenceBuilderPage() {
       setStatus('correct');
       setScore((s) => s + 1);
       fireMicroBurst();
-      playToneSequence([1, 4]);
+      if (currentSentence.audioUrl) {
+        playSentenceAudio(currentSentence.audioUrl);
+      } else {
+        playToneSequence([1, 4]);
+      }
     } else {
       setStatus('wrong');
       playToneSequence([3, 3]);
@@ -99,6 +119,8 @@ export function SentenceBuilderPage() {
   };
 
   const nextSentence = () => {
+    stopCurrentAudio();
+    setIsPlayingAudio(false);
     if (currentIndex + 1 < sessionSentences.length) {
       const nextIdx = currentIndex + 1;
       const nextItem = sessionSentences[nextIdx];
@@ -154,6 +176,11 @@ export function SentenceBuilderPage() {
         return;
       }
     } else if (status === 'correct') {
+      if (event.key === 'r' || event.key === 'R') {
+        event.preventDefault();
+        playSentenceAudio(currentSentence.audioUrl);
+        return;
+      }
       if (event.key === 'Enter' || event.key === ' ') {
         event.preventDefault();
         nextSentence();
@@ -347,9 +374,28 @@ export function SentenceBuilderPage() {
                   <CheckCircle2 className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
                   <span>Grammatikalisch perfekt gelöst!</span>
                 </div>
-                <p className="font-mono text-base font-bold text-emerald-800 dark:text-emerald-300">
-                  {currentSentence.tokens.join(' ')} · {currentSentence.pinyin}
+
+                <div className="flex items-center justify-center gap-3">
+                  <span className="font-cjk text-2xl sm:text-3xl font-bold text-emerald-950 dark:text-emerald-100">
+                    {currentSentence.tokens.join('')}
+                  </span>
+                  {currentSentence.audioUrl && (
+                    <button
+                      type="button"
+                      onClick={() => playSentenceAudio(currentSentence.audioUrl)}
+                      className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-emerald-500/30 bg-white/95 text-emerald-800 shadow-xs transition-all hover:bg-emerald-50 hover:scale-105 active:scale-95 dark:border-emerald-400/30 dark:bg-zinc-900 dark:text-emerald-300 cursor-pointer"
+                      title="Satz anhören (Taste 'r')"
+                      aria-label="Satz anhören"
+                    >
+                      <Volume2 className={`h-4.5 w-4.5 ${isPlayingAudio ? 'animate-pulse text-emerald-600 dark:text-emerald-400' : ''}`} />
+                    </button>
+                  )}
+                </div>
+
+                <p className="font-mono text-sm font-semibold text-emerald-700 dark:text-emerald-400">
+                  {currentSentence.pinyin}
                 </p>
+
                 <p className="mx-auto max-w-lg text-xs leading-relaxed text-zinc-600 dark:text-zinc-300">
                   <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 mr-1.5">
                     Didaktik
