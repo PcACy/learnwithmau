@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { CSSProperties } from 'react';
-import { ArrowRight, CheckCircle2, Volume2, Layers } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Layers, PenTool, Volume2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import type { SrsGrade } from '../types/srs';
 import type { VocabItem } from '../types/vocab';
@@ -14,6 +14,7 @@ import { useProgressStore } from '../store/progressStore';
 import { fireCelebration, fireMicroBurst } from '../lib/confetti';
 import { SealBadge } from '../components/ui/SealBadge';
 import { KineticButton } from '../components/ui/KineticButton';
+import { StrokeOrderViewer } from '../components/dictionary/StrokeOrderViewer';
 
 type Phase = 'intro' | 'drill' | 'summary' | 'empty';
 
@@ -117,11 +118,17 @@ export function ReviewPage() {
 
   const [phase, setPhase] = useState<Phase>('intro');
   const [session, setSession] = useState<SessionState | null>(null);
+  const [showStrokePad, setShowStrokePad] = useState(false);
+  const [selectedCharIndex, setSelectedCharIndex] = useState(0);
 
   const currentId = session?.queue[0] ?? null;
   const currentItem: VocabItem | undefined =
     currentId !== null ? VOCAB_BY_ID.get(currentId) : undefined;
   const revealed = session?.revealed ?? false;
+
+  useEffect(() => {
+    setSelectedCharIndex(0);
+  }, [currentId]);
 
   useEffect(() => {
     return () => stopCurrentAudio();
@@ -235,6 +242,12 @@ export function ReviewPage() {
     }
 
     if (phase !== 'drill') return;
+
+    if (event.key === 'w' || event.key === 'W') {
+      event.preventDefault();
+      setShowStrokePad((prev) => !prev);
+      return;
+    }
 
     if (event.code === 'Space') {
       event.preventDefault();
@@ -557,10 +570,69 @@ export function ReviewPage() {
         <div className="double-bezel-core p-8 sm:p-14 text-center space-y-8 relative">
           <span className="watermark-glyph">{session.deckTag}</span>
 
-          <div className="relative">
+          <div className="relative space-y-3">
             <p className="font-cjk text-7xl sm:text-8xl font-black tracking-normal text-zinc-900 dark:text-zinc-50 select-none">
               {currentItem.hanzi}
             </p>
+
+            <div className="flex items-center justify-center pt-1">
+              <button
+                type="button"
+                onClick={() => setShowStrokePad((v) => !v)}
+                className={`inline-flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-xs font-semibold shadow-xs transition-all cursor-pointer active:scale-95 ${
+                  showStrokePad
+                    ? 'border-emerald-600/40 bg-emerald-500/15 text-emerald-800 dark:border-emerald-500/40 dark:text-emerald-300'
+                    : 'border-zinc-200/80 bg-white/90 text-zinc-600 hover:text-zinc-900 hover:border-zinc-300 dark:border-white/10 dark:bg-zinc-900/90 dark:text-zinc-400 dark:hover:text-zinc-200'
+                }`}
+                title="Strichfolge üben & Zeichen schreiben (Taste 'w')"
+                aria-label="Strichfolge üben"
+              >
+                <PenTool className="h-3.5 w-3.5" />
+                <span>{showStrokePad ? 'Schreibpad schließen' : 'Strichfolge üben'}</span>
+                <kbd className="rounded bg-zinc-200/60 dark:bg-zinc-800 px-1 py-0.2 font-mono text-[10px] text-zinc-500 dark:text-zinc-400">
+                  W
+                </kbd>
+              </button>
+            </div>
+
+            {/* Ausklappbares Schreibpad mit HanziWriter */}
+            {showStrokePad && (
+              <div className="mx-auto max-w-sm rounded-3xl border border-emerald-500/25 bg-emerald-500/[0.03] p-4 sm:p-5 dark:border-emerald-500/20 dark:bg-emerald-950/20 space-y-3 animate-pop-in">
+                {/* Zeichen-Auswahl für mehrsilbige Wörter */}
+                {currentItem.characters.length > 1 && (
+                  <div className="flex items-center justify-center gap-1.5 flex-wrap pb-1">
+                    {currentItem.characters.map((c, i) => (
+                      <button
+                        key={`${c.char}-${i}`}
+                        type="button"
+                        onClick={() => setSelectedCharIndex(i)}
+                        className={`flex items-center gap-1 rounded-lg px-2.5 py-1 font-cjk text-sm font-bold transition-all cursor-pointer ${
+                          selectedCharIndex === i
+                            ? 'bg-emerald-600 text-white shadow-xs'
+                            : 'bg-white text-zinc-700 hover:bg-zinc-100 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800'
+                        }`}
+                      >
+                        <span>{c.char}</span>
+                        <span className="font-mono text-[10px] opacity-75">({i + 1})</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+
+                <div className="flex justify-center">
+                  <StrokeOrderViewer
+                    character={
+                      currentItem.characters[selectedCharIndex]?.char ??
+                      currentItem.hanzi[0] ??
+                      ''
+                    }
+                    pinyin={revealed ? currentItem.pinyin : undefined}
+                    meaning={revealed ? currentItem.meaning : undefined}
+                    size={175}
+                  />
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="relative min-h-[5.5rem] flex flex-col items-center justify-center">
@@ -637,8 +709,12 @@ export function ReviewPage() {
                   ['1–4', 'Bewerten'],
                   ['Enter', 'Gut'],
                   ['Space', 'Audio'],
+                  ['W', 'Schreibpad'],
                 ]
-              : [['Space / Enter', 'Aufdecken']]
+              : [
+                  ['Space / Enter', 'Aufdecken'],
+                  ['W', 'Schreibpad'],
+                ]
           }
         />
         <button
