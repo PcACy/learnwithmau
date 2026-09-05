@@ -423,5 +423,430 @@
     ],
     "correctIndex": 0,
     "explanation": "„会 (huì = können) + 说 (shuō = sprechen) + 汉语 (Hànyǔ = Chinesisch)“: Ich kann Chinesisch sprechen."
+  },
+  {
+    "id": "hsk1-31",
+    "section": "listening",
+    "part": 1,
+    "prompt": "Stimmt das gehörte Wort mit der deutschen Übersetzung „Katze“ überein?",
+    "chineseText": "猫 (māo)",
+    "audioUrl": "/audio/hsk1/hsk1-31.mp3",
+    "options": [
+      "Wahr (Bedeutet Katze)",
+      "Falsch (Bedeutet Hund)"
+    ],
+    "correctIndex": 0,
+    "explanation": "„猫“ (māo) bedeutet „Katze“. Hund heißt „狗“ (gǒu)."
+  },
+  {
+    "id": "hsk1-32",
+    "section": "listening",
+    "part": 1,
+    "prompt": "Stimmt das gehörte Wort mit der deutschen Übersetzung „Brot“ überein?",
+    "chineseText": "米饭 (mǐfàn)",
+    "audioUrl": "/audio/hsk1/hsk1-32.mp3",
+    "options": [
+      "Wahr (Bedeutet Brot)",
+      "Falsch (Bedeutet gekochter Reis)"
+    ],
+    "correctIndex": 1,
+    "explanation": "„米饭“ (mǐfàn) bedeutet „gekochter Reis“, nicht Brot."
+  },
+  {
+    "id": "hsk1-33",
+    "section": "listening",
+    "part": 1,
+    "prompt": "Stimmt das gehörte Wort mit der Tätigkeit „ein Buch lesen“ überein?",
+    "chineseText": "看书 (kànshū)",
+    "audioUrl": "/audio/hsk1/hsk1-33.mp3",
+    "options": [
+      "Wahr (Bedeutet ein Buch lesen)",
+      "Falsch (Bedeutet fernsehen)"
+    ],
+    "correctIndex": 0,
+    "explanation": "„看书“ (kànshū) setzt sich aus „看“ (sehen/lesen) und „书“ (Buch) zusammen."
+  },
+  {
+    "id": "hsk1-34",
+    "section": "listening",
+    "part": 1,
+    "prompt": "Stimmt das gehörte Wort mit „Wasser trinken“ überein?",
+    "chineseText": "喝水 (hēshuǐ)",
+    "audioUrl": "/audio/hsk1/hsk1-34.mp3",
+    "options": [
+      "Wahr (Bedeutet Wasser trinken)",
+      "Falsch (Bedeutet Tee trinken)"
+    ],
+    "correctIndex": 0,
+    "explanation": "„喝水“ (hēshuǐ) bedeutet „Wasser trinken“. Tee trinken heißt „喝茶“ (hēchá)."
+  },
+  {
+    "id": "hsk1-35",
+    "section": "listening",
+    "part": 1,
+    "prompt": "Stimmt das Wort mit der Bedeutung „Flughafen“ überein?",
+    "chineseText": "火车站 (huǒchēzhàn)",
+    "audioUrl": "/audio/hsk1/hsk1-35.mp3",
+    "options": [
+      "Wahr (Bedeutet Flughafen)",
+      "Falsch (Bedeutet Bahnhof)"
+    ],
+    "correctIndex": 1,
+    "explanation": "„火车站“ (huǒchēzhàn) bedeutet „Bahnhof“. Flughafen heißt „飞机场“."
+  },
+  {
+    "id": "hsk1-36",
+    "section": "listening",
+    "part": 2,
+    "prompt": "Welcher Gegenstand wird im Audio genannt?",
+    "chineseText": "电脑 (diànnǎo)",
+    "audioUrl": "/audio/hsk1/hsk1-36.mp3",
+    "options": [
+      "Computer (电脑)",
+      "Fernseher (电视)",
+      "Film (电影)"
+    ],
+    "correctIndex": 0,
+    "explanation": "„电脑“ (diànnǎo, wörtl. „elektrisches Gehirn“) bedeutet Computer."
+  },
+  {
+    "id": "hsk1-37",
+    "section": "listening",
+    "part": 2,
+    "prompt": "Welche Eigenschaft wird im Audio beschrieben?",
+    "chineseText": "漂亮 (piàoliang)",
+    "audioUrl": "/audio/hsk1/hsk1-37.mp3",
+    "options": [
+      "Groß (大)",
+      "Schön / hübsch (漂亮)",
+      "Kalt (冷)"
+    ],
+    "correctIndex": 1,
+    "explanation": "„漂亮“ (piàoliang) bedeutet „hübsch / schön“."
+  },
+  {
+    "id": "hsk1-38",
+    "section": "listening",
+    "part": 2,
+    "prompt": "Welcher Beruf wird im Audio genannt?",
+    "chineseText": "医生 (yīshēng)",
+    "audioUrl": "/audio/hsk1/hsk1-38.mp3",
+    "options": [
+      "Lehrer (老师)",
+      "Arzt (医生)",
+      "Schüler (学生)"
+    ],
+    "correctIndex": 1,
+    "explanation": "„医生“ (yīshēng) bedeutet „Arzt / Ärztin“."
+  },
+  {
+    "id": "hsk1-39",
+    "section": "listening",
+    "part": 2,
+    "prompt": "Welche Uhrzeit hörst du?",
+    "chineseText": "三点十分 (sān diǎn shí fēn)",
+    "audioUrl": "/audio/hsk1/hsk1-39.mp3",
+    "options": [
+      "03:00 Uhr (三点整)",
+      "03:10 Uhr (三点十分)",
+      "03:30 Uhr (三点半)"
+    ],
+    "correctIndex": 1,
+    "explanation": "„三点十分“ (sān diǎn shí fēn) bedeutet 3 Uhr und 10 Minuten (03:10 Uhr)."
+  },
+  {
+    "id": "hsk1-40",
+    "section": "listening",
+    "part": 2,
+    "prompt": "Welcher Ort wird im Audio genannt?",
+    "chineseText": "商店 (shāngdiàn)",
+    "audioUrl": "/audio/hsk1/hsk1-40.mp3",
+    "options": [
+      "Geschäft / Laden (商店)",
+      "Krankenhaus (医院)",
+      "Schule (学校)"
+    ],
+    "correctIndex": 0,
+    "explanation": "„商店“ (shāngdiàn) bedeutet Geschäft / Laden."
+  },
+  {
+    "id": "hsk1-41",
+    "section": "listening",
+    "part": 3,
+    "prompt": "Jemand stellt dir die Frage im Audio. Was möchte die Person wissen?",
+    "chineseText": "你叫什么名字？ (Nǐ jiào shénme míngzi?)",
+    "audioUrl": "/audio/hsk1/hsk1-41.mp3",
+    "options": [
+      "Deinen Namen",
+      "Dein Alter",
+      "Deine Nationalität"
+    ],
+    "correctIndex": 0,
+    "explanation": "„你叫什么名字？“ fragt: „Wie heißt du? / Wie ist dein Name?“."
+  },
+  {
+    "id": "hsk1-42",
+    "section": "listening",
+    "part": 3,
+    "prompt": "Jemand begrüßt dich mit dieser Frage. Welche Erwiderung ist natürlich?",
+    "chineseText": "你好吗？ (Nǐ hǎo ma?)",
+    "audioUrl": "/audio/hsk1/hsk1-42.mp3",
+    "options": [
+      "我很好。 (Mir geht es sehr gut.)",
+      "没关系。 (Macht nichts.)",
+      "不客气。 (Gern geschehen.)"
+    ],
+    "correctIndex": 0,
+    "explanation": "Auf „你好吗？“ (Wie geht es dir?) antwortet man mit „我很好。“ (Mir geht es gut)."
+  },
+  {
+    "id": "hsk1-43",
+    "section": "listening",
+    "part": 3,
+    "prompt": "Was bedeutet die gehörte Frage beim Einkaufen?",
+    "chineseText": "这个多少钱？ (Zhè ge duōshao qián?)",
+    "audioUrl": "/audio/hsk1/hsk1-43.mp3",
+    "options": [
+      "Wo ist das Geschäft?",
+      "Wie viel kostet das?",
+      "Gefällt dir das?"
+    ],
+    "correctIndex": 1,
+    "explanation": "„这个多少钱？“ (Zhè ge duōshao qián?) bedeutet: „Wie viel kostet das?“."
+  },
+  {
+    "id": "hsk1-44",
+    "section": "listening",
+    "part": 3,
+    "prompt": "Wo befindet sich die Person laut Audio?",
+    "chineseText": "他在学校。 (Tā zài xuéxiào.)",
+    "audioUrl": "/audio/hsk1/hsk1-44.mp3",
+    "options": [
+      "Zu Hause (在家)",
+      "In der Schule (在学校)",
+      "Im Krankenhaus (在医院)"
+    ],
+    "correctIndex": 1,
+    "explanation": "„他在学校。“ bedeutet „Er ist in der Schule.“."
+  },
+  {
+    "id": "hsk1-45",
+    "section": "listening",
+    "part": 3,
+    "prompt": "Wonach erkundigt sich der Sprecher?",
+    "chineseText": "今天天气怎么样？ (Jīntiān tiānqì zěnmeyàng?)",
+    "audioUrl": "/audio/hsk1/hsk1-45.mp3",
+    "options": [
+      "Nach dem heutigen Wetter",
+      "Nach der heutigen Uhrzeit",
+      "Nach dem heutigen Essen"
+    ],
+    "correctIndex": 0,
+    "explanation": "„天气“ (tiānqì) bedeutet Wetter und „怎么样“ (zěnmeyàng) fragt nach der Beschaffenheit: „Wie ist das Wetter heute?“."
+  },
+  {
+    "id": "hsk1-46",
+    "section": "reading",
+    "part": 1,
+    "prompt": "Passen Schriftzeichen und deutsche Bedeutung zusammen?",
+    "chineseText": "狗 (gǒu) — „Hund“",
+    "options": [
+      "Richtig (Bedeutet Hund)",
+      "Falsch (Bedeutet Katze)"
+    ],
+    "correctIndex": 0,
+    "explanation": "„狗“ (gǒu) bedeutet „Hund“."
+  },
+  {
+    "id": "hsk1-47",
+    "section": "reading",
+    "part": 1,
+    "prompt": "Passen Schriftzeichen und deutsche Bedeutung zusammen?",
+    "chineseText": "热 (rè) — „kalt“",
+    "options": [
+      "Richtig (Bedeutet kalt)",
+      "Falsch (Bedeutet heiß / warm)"
+    ],
+    "correctIndex": 1,
+    "explanation": "„热“ (rè) bedeutet „heiß / warm“. Kalt heißt „冷“ (lěng)."
+  },
+  {
+    "id": "hsk1-48",
+    "section": "reading",
+    "part": 1,
+    "prompt": "Passen Schriftzeichen und deutsche Bedeutung zusammen?",
+    "chineseText": "北京 (Běijīng) — „Peking“",
+    "options": [
+      "Richtig (Chinas Hauptstadt)",
+      "Falsch (Ein Name einer Person)"
+    ],
+    "correctIndex": 0,
+    "explanation": "„北京“ (Běijīng) ist die Hauptstadt Chinas (Peking)."
+  },
+  {
+    "id": "hsk1-49",
+    "section": "reading",
+    "part": 1,
+    "prompt": "Passen Schriftzeichen und deutsche Bedeutung zusammen?",
+    "chineseText": "衣服 (yīfu) — „Kleidung“",
+    "options": [
+      "Richtig (Bedeutet Kleidung)",
+      "Falsch (Bedeutet Essen)"
+    ],
+    "correctIndex": 0,
+    "explanation": "„衣服“ (yīfu) bedeutet „Kleidung / Anziehsachen“."
+  },
+  {
+    "id": "hsk1-50",
+    "section": "reading",
+    "part": 1,
+    "prompt": "Passen Schriftzeichen und deutsche Bedeutung zusammen?",
+    "chineseText": "写字 (xiězì) — „sprechen“",
+    "options": [
+      "Richtig (Bedeutet sprechen)",
+      "Falsch (Bedeutet Schriftzeichen schreiben)"
+    ],
+    "correctIndex": 1,
+    "explanation": "„写字“ (xiězì) bedeutet „Zeichen schreiben“. Sprechen heißt „说话“ (shuōhuà)."
+  },
+  {
+    "id": "hsk1-51",
+    "section": "reading",
+    "part": 2,
+    "prompt": "Welches Zähleinheitswort gehört in die Lücke: „我买了一___苹果。“ (Wǒ mǎi le yí ___ píngguǒ.)?",
+    "chineseText": "我买了一___苹果。",
+    "options": [
+      "个 (gè - allgemeines ZEW)",
+      "本 (běn - ZEW für Bücher)",
+      "岁 (suì - Lebensjahre)"
+    ],
+    "correctIndex": 0,
+    "explanation": "Für Äpfel (苹果) verwendet man das allgemeine Zähleinheitswort „个“ (gè)."
+  },
+  {
+    "id": "hsk1-52",
+    "section": "reading",
+    "part": 2,
+    "prompt": "Welches Fragewort passt in die Lücke: „你想吃___？“ (Nǐ xiǎng chī ___?)?",
+    "chineseText": "你想吃___？",
+    "options": [
+      "什么 (shénme - was)",
+      "哪儿 (nǎr - wo)",
+      "谁 (shéi - wer)"
+    ],
+    "correctIndex": 0,
+    "explanation": "„你想吃什么？“ fragt nach dem Essensobjekt: „Was möchtest du essen?“."
+  },
+  {
+    "id": "hsk1-53",
+    "section": "reading",
+    "part": 2,
+    "prompt": "Welches Verb passt in die Lücke: „我们在家___电视。“ (Wǒmen zài jiā ___ diànshì.)?",
+    "chineseText": "我们在家___电视。",
+    "options": [
+      "看 (kàn - schauen)",
+      "听 (tīng - hören)",
+      "写 (xiě - schreiben)"
+    ],
+    "correctIndex": 0,
+    "explanation": "Fernsehen heißt „看电视“ (kàn diànshì = Fernseher schauen)."
+  },
+  {
+    "id": "hsk1-54",
+    "section": "reading",
+    "part": 2,
+    "prompt": "Welches Wort drückt die Verneinung in der Vergangenheit aus: „我昨天___去学校。“ (Wǒ zuótiān ___ qù xuéxiào.)?",
+    "chineseText": "我昨天___去学校。",
+    "options": [
+      "没 (méi)",
+      "不 (bù)",
+      "很 (hěn)"
+    ],
+    "correctIndex": 0,
+    "explanation": "Für vergangene Handlungen (昨天 = gestern) verneint man Verben mit „没 (méi)“: „我昨天没去学校。“ (Ich ging gestern nicht zur Schule)."
+  },
+  {
+    "id": "hsk1-55",
+    "section": "reading",
+    "part": 2,
+    "prompt": "Welche höfliche Begrüßung passt: „老师，___！“ (Lǎoshī, ___!)?",
+    "chineseText": "老师，___！",
+    "options": [
+      "您好 (nín hǎo - Guten Tag / Höflichkeitsform)",
+      "再见 (zàijiàn - Auf Wiedersehen)",
+      "谢谢 (xièxie - Danke)"
+    ],
+    "correctIndex": 0,
+    "explanation": "Gegenüber Respektspersonen wie Lehrern (老师) verwendet man die Höflichkeitsform „您好“ (nín hǎo)."
+  },
+  {
+    "id": "hsk1-56",
+    "section": "reading",
+    "part": 3,
+    "prompt": "Was bedeutet der Satz: „他是我的中国朋友。“ (Tā shì wǒ de Zhōngguó péngyou.)?",
+    "chineseText": "他是我的中国朋友。",
+    "options": [
+      "Er ist mein chinesischer Freund.",
+      "Er reist nach China.",
+      "Er lernt mit Freunden Chinesisch."
+    ],
+    "correctIndex": 0,
+    "explanation": "„他是 (Er ist) + 我的 (mein) + 中国朋友 (chinesischer Freund)“."
+  },
+  {
+    "id": "hsk1-57",
+    "section": "reading",
+    "part": 3,
+    "prompt": "Wonach fragt der Satz: „前面那个人是谁？“ (Qiánmiàn nà ge rén shì shéi?)?",
+    "chineseText": "前面那个人是谁？",
+    "options": [
+      "Wer die Person da vorne ist.",
+      "Wo die Person wohnt.",
+      "Wie alt die Person ist."
+    ],
+    "correctIndex": 0,
+    "explanation": "„前面“ (qiánmiàn = vorne) + „那个人“ (jene Person) + „是谁“ (ist wer?)."
+  },
+  {
+    "id": "hsk1-58",
+    "section": "reading",
+    "part": 3,
+    "prompt": "Wo befinden sich die Gegenstände: „桌子上有三个杯子。“ (Zhuōzi shang yǒu sān ge bēizi.)?",
+    "chineseText": "桌子上有三个杯子。",
+    "options": [
+      "Auf dem Tisch stehen drei Becher.",
+      "Unter dem Stuhl liegen drei Bücher.",
+      "Im Zimmer sind drei Leute."
+    ],
+    "correctIndex": 0,
+    "explanation": "„桌子上“ = auf dem Tisch; „三个杯子“ = drei Becher / Tassen."
+  },
+  {
+    "id": "hsk1-59",
+    "section": "reading",
+    "part": 3,
+    "prompt": "Was hat die Person vor: „我想去商店买东西。“ (Wǒ xiǎng qù shāngdiàn mǎi dōngxi.)?",
+    "chineseText": "我想去商店买东西。",
+    "options": [
+      "Im Geschäft einkaufen gehen.",
+      "Zu Hause Freunde treffen.",
+      "Im Restaurant essen gehen."
+    ],
+    "correctIndex": 0,
+    "explanation": "„去商店“ (ins Geschäft gehen) + „买东西“ (Dinge kaufen / einkaufen)."
+  },
+  {
+    "id": "hsk1-60",
+    "section": "reading",
+    "part": 3,
+    "prompt": "Warum arbeitet die Person morgen nicht: „明天是星期天，我不去工作。“ (Míngtiān shì xīngqītiān, wǒ bú qù gōngzuò.)?",
+    "chineseText": "明天是星期天，我不去工作。",
+    "options": [
+      "Weil morgen Sonntag ist.",
+      "Weil sie krank ist.",
+      "Weil sie verreisen muss."
+    ],
+    "correctIndex": 0,
+    "explanation": "„明天“ (morgen) + „是星期天“ (ist Sonntag) + „我不去工作“ (ich gehe nicht arbeiten)."
   }
 ]

@@ -15,8 +15,8 @@ import {
   XCircle,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import mockExamData from '../data/mockExam.json';
-import type { ExamQuestion, ExamSubmission } from '../types/exam';
+import type { ExamSubmission } from '../types/exam';
+import { buildExam, EXAM_MODES, type ExamMode } from '../lib/mockExamEngine';
 import { playAsset, stopCurrentAudio } from '../lib/audio';
 import { fireCelebration } from '../lib/confetti';
 import { useKeyDown } from '../hooks/useKeyDown';
@@ -25,12 +25,15 @@ import { SealBadge } from '../components/ui/SealBadge';
 import { KineticButton } from '../components/ui/KineticButton';
 import { useProgressStore } from '../store/progressStore';
 
-const QUESTIONS = mockExamData as ExamQuestion[];
 const DEFAULT_TIME_SEC = 35 * 60; // 35 Minuten
 
 export function MockExamPage() {
   const logSession = useProgressStore((s) => s.logSession);
   const [phase, setPhase] = useState<'intro' | 'exam' | 'result'>('intro');
+  const [selectedMode, setSelectedMode] = useState<ExamMode>('set1');
+  const [activeExam, setActiveExam] = useState(() => buildExam('set1'));
+
+  const questions = activeExam.questions;
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, number>>({});
   const [marked, setMarked] = useState<Set<string>>(new Set());
@@ -41,7 +44,7 @@ export function MockExamPage() {
   const [submission, setSubmission] = useState<ExamSubmission | null>(null);
 
   const examStartedAtRef = useRef<number>(0);
-  const currentQ = QUESTIONS[currentIndex];
+  const currentQ = questions[currentIndex];
 
   // Prüfung auswerten
   const handleSubmitExam = useCallback(() => {
@@ -51,7 +54,7 @@ export function MockExamPage() {
     let listeningCorrect = 0;
     let readingCorrect = 0;
 
-    QUESTIONS.forEach((q) => {
+    questions.forEach((q) => {
       const given = answers[q.id];
       if (given === q.correctIndex) {
         if (q.section === 'listening') listeningCorrect += 1;
@@ -91,7 +94,7 @@ export function MockExamPage() {
     if (passed) {
       fireCelebration();
     }
-  }, [answers, marked, logSession]);
+  }, [answers, marked, logSession, questions]);
 
   const submitExamRef = useRef(handleSubmitExam);
   useEffect(() => {
@@ -126,14 +129,18 @@ export function MockExamPage() {
 
   // Start der Prüfung
   const startExam = useCallback(() => {
+    stopCurrentAudio();
+    const built = buildExam(selectedMode);
+    setActiveExam(built);
     setAnswers({});
     setMarked(new Set());
     setTimeLeft(DEFAULT_TIME_SEC);
     examStartedAtRef.current = Date.now();
     setCurrentIndex(0);
     setIsPaused(false);
+    setSubmission(null);
     setPhase('exam');
-  }, []);
+  }, [selectedMode]);
 
   // Antwort auswählen
   const selectOption = (optIdx: number) => {
@@ -172,7 +179,7 @@ export function MockExamPage() {
 
     if (event.key === 'ArrowRight' || event.key === 'j') {
       event.preventDefault();
-      setCurrentIndex((i) => Math.min(QUESTIONS.length - 1, i + 1));
+      setCurrentIndex((i) => Math.min(questions.length - 1, i + 1));
       return;
     }
 
@@ -264,6 +271,60 @@ export function MockExamPage() {
               </div>
             </div>
 
+            {/* Prüfungsvariante auswählen */}
+            <div className="space-y-3 relative">
+              <div className="flex items-center justify-between">
+                <h2 className="text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                  Prüfungsvariante wählen
+                </h2>
+                <span className="font-mono text-[11px] text-zinc-400">
+                  60 Fragen im Gesamtpool
+                </span>
+              </div>
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+                {EXAM_MODES.map((cfg) => {
+                  const isSelected = selectedMode === cfg.mode;
+                  return (
+                    <button
+                      key={cfg.mode}
+                      type="button"
+                      onClick={() => setSelectedMode(cfg.mode)}
+                      className={`group flex flex-col justify-between rounded-2xl border p-4 text-left transition-all duration-200 cursor-pointer ${
+                        isSelected
+                          ? 'border-emerald-600 bg-emerald-500/10 ring-2 ring-emerald-500/30 shadow-whisper dark:border-emerald-400'
+                          : 'border-zinc-200/80 bg-zinc-50/70 hover:border-zinc-300 dark:border-white/[0.08] dark:bg-zinc-950/40'
+                      }`}
+                    >
+                      <div className="space-y-1.5">
+                        <div className="flex items-center justify-between">
+                          <span
+                            className={`font-mono text-[10px] font-bold uppercase tracking-wider rounded-full px-2 py-0.5 ${
+                              isSelected
+                                ? 'bg-emerald-600 text-white dark:bg-emerald-500 dark:text-zinc-950'
+                                : 'bg-zinc-200/80 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400'
+                            }`}
+                          >
+                            {cfg.badge}
+                          </span>
+                          <span className="font-mono text-[11px] text-zinc-400">30 F.</span>
+                        </div>
+                        <h3
+                          className={`text-sm font-bold ${
+                            isSelected ? 'text-emerald-900 dark:text-emerald-300' : 'text-zinc-800 dark:text-zinc-200'
+                          }`}
+                        >
+                          {cfg.title}
+                        </h3>
+                        <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-snug">
+                          {cfg.subtitle}
+                        </p>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
             {/* Prüfungsregeln */}
             <div className="rounded-2xl border border-zinc-200/80 bg-zinc-50/70 p-5 dark:border-white/10 dark:bg-zinc-950/50 relative">
               <h2 className="text-xs font-bold uppercase tracking-wider text-zinc-400">Prüfungsbedingungen</h2>
@@ -341,7 +402,7 @@ export function MockExamPage() {
             <span>{answeredCount} von 30 beantwortet</span>
           </div>
           <div className="grid grid-cols-10 sm:grid-cols-15 gap-1.5">
-            {QUESTIONS.map((q, idx) => {
+            {questions.map((q, idx) => {
               const isAns = answers[q.id] !== undefined;
               const isCur = idx === currentIndex;
               const isM = marked.has(q.id);
@@ -462,10 +523,10 @@ export function MockExamPage() {
                 Vorherige
               </button>
 
-              {currentIndex < QUESTIONS.length - 1 ? (
+              {currentIndex < questions.length - 1 ? (
                 <button
                   type="button"
-                  onClick={() => setCurrentIndex((i) => Math.min(QUESTIONS.length - 1, i + 1))}
+                  onClick={() => setCurrentIndex((i) => Math.min(questions.length - 1, i + 1))}
                   className="flex items-center gap-2 rounded-xl bg-emerald-600 px-5 py-2.5 text-xs font-bold text-white shadow-whisper transition-all hover:bg-emerald-500 cursor-pointer"
                 >
                   Nächste
@@ -535,7 +596,7 @@ export function MockExamPage() {
 
   // ================= 3. RESULT / EVALUATION PHASE =================
   if (phase === 'result' && submission) {
-    const filteredQuestions = QUESTIONS.filter((q) => {
+    const filteredQuestions = questions.filter((q) => {
       if (resultFilter === 'errors') {
         return submission.answers[q.id] !== q.correctIndex;
       }
@@ -564,9 +625,11 @@ export function MockExamPage() {
             </div>
 
             <div>
-              <span className="font-mono text-xs font-semibold uppercase tracking-widest text-zinc-400">
-                Prüfungsergebnis
-              </span>
+              <div className="inline-flex items-center gap-1.5 mb-1.5 rounded-full bg-zinc-100 dark:bg-zinc-800 px-3 py-1">
+                <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-zinc-600 dark:text-zinc-300">
+                  {activeExam.config.title}
+                </span>
+              </div>
               <h1 className="mt-1 text-3xl font-black tracking-tight sm:text-4xl text-zinc-900 dark:text-zinc-100">
                 {submission.passed ? 'HSK 1 Bestanden!' : 'Nicht bestanden'}
               </h1>
@@ -688,7 +751,7 @@ export function MockExamPage() {
                   <div className="flex items-start justify-between gap-3">
                     <div>
                       <span className="font-mono text-xs font-bold text-zinc-400">
-                        Frage {QUESTIONS.indexOf(q) + 1} · {q.section === 'listening' ? 'Hören' : 'Lesen'}
+                        Frage {questions.indexOf(q) + 1} · {q.section === 'listening' ? 'Hören' : 'Lesen'}
                       </span>
                       <h3 className="mt-1 text-sm font-bold text-zinc-900 dark:text-zinc-100">{q.prompt}</h3>
                     </div>
