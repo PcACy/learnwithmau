@@ -78,5 +78,28 @@ describe('Achievements configuration', () => {
 
     expect(sentenceAch.calculateProgress({ ...baseData, stats: { sentencesSolved: 5 } }).unlocked).toBe(true);
     expect(blitzAch.calculateProgress({ ...baseData, stats: { blitzCompleted: 1 } }).unlocked).toBe(true);
+
+    const typeracerAch = ACHIEVEMENTS.find((a) => a.id === 'typeracer-ace')!;
+    const numberAch = ACHIEVEMENTS.find((a) => a.id === 'number-master')!;
+    const examAch = ACHIEVEMENTS.find((a) => a.id === 'exam-graduate')!;
+    const srsAch = ACHIEVEMENTS.find((a) => a.id === 'srs-veteran')!;
+
+    expect(typeracerAch.calculateProgress({ ...baseData, stats: { typeracerCorrect: 15 } }).unlocked).toBe(false);
+    expect(typeracerAch.calculateProgress({ ...baseData, stats: { typeracerCorrect: 16 } }).unlocked).toBe(true);
+
+    expect(numberAch.calculateProgress({ ...baseData, stats: { numbersCorrect: 11 } }).unlocked).toBe(false);
+    expect(numberAch.calculateProgress({ ...baseData, stats: { numbersCorrect: 12 } }).unlocked).toBe(true);
+
+    expect(examAch.calculateProgress({ ...baseData, stats: { examPassed: 0 } }).unlocked).toBe(false);
+    expect(examAch.calculateProgress({ ...baseData, stats: { examPassed: 1 } }).unlocked).toBe(true);
+
+    expect(srsAch.calculateProgress({ ...baseData, stats: { reviewCount: 49 } }).unlocked).toBe(false);
+    expect(srsAch.calculateProgress({ ...baseData, stats: { reviewCount: 50 } }).unlocked).toBe(true);
+  });
+
+  it('contains exactly 16 defined achievements across all 4 categories', () => {
+    expect(ACHIEVEMENTS.length).toBe(16);
+    const ids = new Set(ACHIEVEMENTS.map((a) => a.id));
+    expect(ids.size).toBe(16);
   });
 });

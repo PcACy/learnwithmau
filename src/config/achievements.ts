@@ -2,11 +2,15 @@ import type { LucideIcon } from 'lucide-react';
 import {
   Award,
   BookOpen,
+  CalendarClock,
   Crown,
   Flame,
   Gamepad2,
+  GraduationCap,
+  Keyboard,
   Layers,
   MessageSquareQuote,
+  ShieldCheck,
   Sparkles,
   Trophy,
   Volume2,
@@ -32,6 +36,10 @@ export interface AchievementData {
     tonesCorrect?: number;
     sentencesSolved?: number;
     blitzCompleted?: number;
+    typeracerCorrect?: number;
+    numbersCorrect?: number;
+    reviewCount?: number;
+    examPassed?: number;
   };
 }
 
@@ -99,7 +107,7 @@ export const ACHIEVEMENTS: readonly Achievement[] = [
   {
     id: 'vocab-100',
     title: 'Wort-Gelehrter',
-    description: 'Meistere mehr als 100 der 162 offiziellen HSK-1-Wörter.',
+    description: 'Meistere mehr als 100 der 163 offiziellen HSK-1-Wörter.',
     icon: Award,
     category: 'vocab',
     maxProgress: 100,
@@ -178,6 +186,54 @@ export const ACHIEVEMENTS: readonly Achievement[] = [
     calculateProgress: ({ stats }) => {
       const count = stats.blitzCompleted ?? 0;
       return { current: Math.min(1, count), unlocked: count >= 1 };
+    },
+  },
+  {
+    id: 'typeracer-ace',
+    title: 'IME-Virtuose',
+    description: 'Tippe mindestens 16 Schriftzeichen im Pinyin TypeRacer.',
+    icon: Keyboard,
+    category: 'games',
+    maxProgress: 16,
+    calculateProgress: ({ stats }) => {
+      const count = stats.typeracerCorrect ?? 0;
+      return { current: Math.min(16, count), unlocked: count >= 16 };
+    },
+  },
+  {
+    id: 'number-master',
+    title: 'Zahlen-Genie',
+    description: 'Erkenne mindestens 12 Zahlen, Uhrzeiten oder Datumsangaben im Number-Drill.',
+    icon: CalendarClock,
+    category: 'games',
+    maxProgress: 12,
+    calculateProgress: ({ stats }) => {
+      const count = stats.numbersCorrect ?? 0;
+      return { current: Math.min(12, count), unlocked: count >= 12 };
+    },
+  },
+  {
+    id: 'exam-graduate',
+    title: 'HSK-1-Zertifikat',
+    description: 'Bestehe mindestens eine offizielle HSK-1-Probeprüfung mit mindestens 180 Punkten.',
+    icon: GraduationCap,
+    category: 'mastery',
+    maxProgress: 1,
+    calculateProgress: ({ stats }) => {
+      const count = stats.examPassed ?? 0;
+      return { current: Math.min(1, count), unlocked: count >= 1 };
+    },
+  },
+  {
+    id: 'srs-veteran',
+    title: 'Gedächtnis-Titan',
+    description: 'Absolviere mindestens 50 Wiederholungen im Spaced-Repetition-Drill.',
+    icon: ShieldCheck,
+    category: 'vocab',
+    maxProgress: 50,
+    calculateProgress: ({ stats }) => {
+      const count = stats.reviewCount ?? 0;
+      return { current: Math.min(50, count), unlocked: count >= 50 };
     },
   },
 ];

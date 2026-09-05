@@ -23,11 +23,13 @@ import { useKeyDown } from '../hooks/useKeyDown';
 import { KeyHints } from '../components/ui/Kbd';
 import { SealBadge } from '../components/ui/SealBadge';
 import { KineticButton } from '../components/ui/KineticButton';
+import { useProgressStore } from '../store/progressStore';
 
 const QUESTIONS = mockExamData as ExamQuestion[];
 const DEFAULT_TIME_SEC = 35 * 60; // 35 Minuten
 
 export function MockExamPage() {
+  const logSession = useProgressStore((s) => s.logSession);
   const [phase, setPhase] = useState<'intro' | 'exam' | 'result'>('intro');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, number>>({});
@@ -77,10 +79,19 @@ export function MockExamPage() {
 
     setSubmission(sub);
     setPhase('result');
+
+    const durationMs = Math.max(1000, Date.now() - examStartedAtRef.current);
+    void logSession({
+      mode: 'exam',
+      answered: Object.keys(answers).length,
+      correct: listeningCorrect + readingCorrect,
+      durationMs,
+    });
+
     if (passed) {
       fireCelebration();
     }
-  }, [answers, marked]);
+  }, [answers, marked, logSession]);
 
   const submitExamRef = useRef(handleSubmitExam);
   useEffect(() => {

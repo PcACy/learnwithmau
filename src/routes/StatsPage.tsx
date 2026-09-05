@@ -3,9 +3,16 @@ import type { CSSProperties } from 'react';
 import {
   ArrowRight,
   BookOpen,
+  CalendarClock,
   Crown,
+  FlaskConical,
+  Gamepad2,
+  GraduationCap,
+  Headphones,
+  Keyboard,
   LineChart,
   Lock,
+  MessageSquareQuote,
   Play,
   RotateCcw,
   Trophy,
@@ -32,11 +39,19 @@ export function StatsPage() {
     tonesCorrect: number;
     sentencesSolved: number;
     blitzCompleted: number;
+    typeracerCorrect: number;
+    numbersCorrect: number;
+    reviewCount: number;
+    examPassed: number;
   }>({
     alchemySolved: 0,
     tonesCorrect: 0,
     sentencesSolved: 0,
     blitzCompleted: 0,
+    typeracerCorrect: 0,
+    numbersCorrect: 0,
+    reviewCount: 0,
+    examPassed: 0,
   });
 
   useEffect(() => {
@@ -49,15 +64,34 @@ export function StatsPage() {
         let tonesCorrect = 0;
         let sentencesSolved = 0;
         let blitzCompleted = 0;
+        let typeracerCorrect = 0;
+        let numbersCorrect = 0;
+        let reviewCount = 0;
+        let examPassed = 0;
 
         for (const row of rows) {
           if (row.mode === 'alchemy') alchemySolved += row.correct;
           else if (row.mode === 'ear-trainer') tonesCorrect += row.correct;
           else if (row.mode === 'sentences') sentencesSolved += row.correct;
           else if (row.mode === 'blitz') blitzCompleted += 1;
+          else if (row.mode === 'typeracer') typeracerCorrect += row.correct;
+          else if (row.mode === 'number-drill') numbersCorrect += row.correct;
+          else if (row.mode === 'review') reviewCount += row.answered;
+          else if (row.mode === 'exam') {
+            if (row.correct >= 18) examPassed += 1;
+          }
         }
 
-        setSessionStats({ alchemySolved, tonesCorrect, sentencesSolved, blitzCompleted });
+        setSessionStats({
+          alchemySolved,
+          tonesCorrect,
+          sentencesSolved,
+          blitzCompleted,
+          typeracerCorrect,
+          numbersCorrect,
+          reviewCount,
+          examPassed,
+        });
       })
       .catch(() => undefined);
 
@@ -185,10 +219,78 @@ export function StatsPage() {
         </section>
       </div>
 
+      {/* Trainings- & Spiel-Aktivitäten */}
+      <section
+        className="reveal space-y-4 rounded-[2.5rem] border border-zinc-200/70 bg-white p-7 shadow-whisper dark:border-white/[0.06] dark:bg-zinc-900"
+        style={{ '--index': 4 } as CSSProperties}
+      >
+        <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h2 className="flex items-center gap-2 text-xl font-bold tracking-tight">
+              <Gamepad2 className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+              Trainings- & Spiel-Aktivitäten
+            </h2>
+            <p className="text-xs text-zinc-500 dark:text-zinc-400">
+              Absolvierte Runden und gelöste Aufgaben in den interaktiven Lernmodi
+            </p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6 pt-2">
+          {/* TypeRacer */}
+          <div className="flex flex-col items-center rounded-2xl border border-zinc-200/80 bg-zinc-50/60 p-3.5 text-center dark:border-white/[0.06] dark:bg-zinc-950/40">
+            <Keyboard className="h-4 w-4 text-emerald-600 dark:text-emerald-400 mb-1" />
+            <span className="font-mono text-2xl font-extrabold text-zinc-900 dark:text-zinc-100">{sessionStats.typeracerCorrect}</span>
+            <span className="mt-1 text-xs font-bold text-zinc-800 dark:text-zinc-200">TypeRacer</span>
+            <span className="text-[10px] text-zinc-400">Zeichen getippt</span>
+          </div>
+
+          {/* Alchemy */}
+          <div className="flex flex-col items-center rounded-2xl border border-zinc-200/80 bg-zinc-50/60 p-3.5 text-center dark:border-white/[0.06] dark:bg-zinc-950/40">
+            <FlaskConical className="h-4 w-4 text-emerald-600 dark:text-emerald-400 mb-1" />
+            <span className="font-mono text-2xl font-extrabold text-zinc-900 dark:text-zinc-100">{sessionStats.alchemySolved}</span>
+            <span className="mt-1 text-xs font-bold text-zinc-800 dark:text-zinc-200">Alchemie</span>
+            <span className="text-[10px] text-zinc-400">Zeichen fusioniert</span>
+          </div>
+
+          {/* Satzbau */}
+          <div className="flex flex-col items-center rounded-2xl border border-zinc-200/80 bg-zinc-50/60 p-3.5 text-center dark:border-white/[0.06] dark:bg-zinc-950/40">
+            <MessageSquareQuote className="h-4 w-4 text-emerald-600 dark:text-emerald-400 mb-1" />
+            <span className="font-mono text-2xl font-extrabold text-zinc-900 dark:text-zinc-100">{sessionStats.sentencesSolved}</span>
+            <span className="mt-1 text-xs font-bold text-zinc-800 dark:text-zinc-200">Satzbau</span>
+            <span className="text-[10px] text-zinc-400">Sätze gelöst</span>
+          </div>
+
+          {/* Ear-Trainer */}
+          <div className="flex flex-col items-center rounded-2xl border border-zinc-200/80 bg-zinc-50/60 p-3.5 text-center dark:border-white/[0.06] dark:bg-zinc-950/40">
+            <Headphones className="h-4 w-4 text-emerald-600 dark:text-emerald-400 mb-1" />
+            <span className="font-mono text-2xl font-extrabold text-zinc-900 dark:text-zinc-100">{sessionStats.tonesCorrect}</span>
+            <span className="mt-1 text-xs font-bold text-zinc-800 dark:text-zinc-200">Ear-Trainer</span>
+            <span className="text-[10px] text-zinc-400">Töne erkannt</span>
+          </div>
+
+          {/* Numbers */}
+          <div className="flex flex-col items-center rounded-2xl border border-zinc-200/80 bg-zinc-50/60 p-3.5 text-center dark:border-white/[0.06] dark:bg-zinc-950/40">
+            <CalendarClock className="h-4 w-4 text-emerald-600 dark:text-emerald-400 mb-1" />
+            <span className="font-mono text-2xl font-extrabold text-zinc-900 dark:text-zinc-100">{sessionStats.numbersCorrect}</span>
+            <span className="mt-1 text-xs font-bold text-zinc-800 dark:text-zinc-200">Zahlen & Zeit</span>
+            <span className="text-[10px] text-zinc-400">Angaben erkannt</span>
+          </div>
+
+          {/* Exam */}
+          <div className="flex flex-col items-center rounded-2xl border border-zinc-200/80 bg-zinc-50/60 p-3.5 text-center dark:border-white/[0.06] dark:bg-zinc-950/40">
+            <GraduationCap className="h-4 w-4 text-emerald-600 dark:text-emerald-400 mb-1" />
+            <span className="font-mono text-2xl font-extrabold text-zinc-900 dark:text-zinc-100">{sessionStats.examPassed}</span>
+            <span className="mt-1 text-xs font-bold text-zinc-800 dark:text-zinc-200">HSK 1 Prüfung</span>
+            <span className="text-[10px] text-zinc-400">Examen bestanden</span>
+          </div>
+        </div>
+      </section>
+
       {/* Achievements- & Trophäen-Galerie */}
       <section
         className="reveal space-y-5 rounded-[2.5rem] border border-zinc-200/70 bg-white p-7 shadow-whisper dark:border-white/[0.06] dark:bg-zinc-900"
-        style={{ '--index': 4 } as CSSProperties}
+        style={{ '--index': 5 } as CSSProperties}
       >
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
