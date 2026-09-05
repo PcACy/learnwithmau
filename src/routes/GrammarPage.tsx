@@ -29,23 +29,22 @@ export function GrammarPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const paramLesson = searchParams.get('lesson');
 
-  const [selectedLessonId, setSelectedLessonId] = useState<string>(() => {
+  const [internalSelectedId, setInternalSelectedId] = useState<string>(() => {
     if (paramLesson && LESSONS.some((l) => l.id === paramLesson)) {
       return paramLesson;
     }
     return LESSONS[0].id;
   });
 
-  useEffect(() => {
-    if (paramLesson && LESSONS.some((l) => l.id === paramLesson) && paramLesson !== selectedLessonId) {
-      setSelectedLessonId(paramLesson);
-    }
-  }, [paramLesson, selectedLessonId]);
+  const selectedLessonId =
+    paramLesson && LESSONS.some((l) => l.id === paramLesson)
+      ? paramLesson
+      : internalSelectedId;
 
   const handleSelectLesson = useCallback(
     (id: string) => {
       stopCurrentAudio();
-      setSelectedLessonId(id);
+      setInternalSelectedId(id);
       setSearchParams({ lesson: id }, { replace: true });
     },
     [setSearchParams],

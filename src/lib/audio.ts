@@ -107,6 +107,7 @@ let currentOnEnded: (() => void) | null = null;
  * Stoppt die aktuell laufende Audio-Wiedergabe sofort und setzt das Audio-Element zurück.
  */
 export function stopCurrentAudio(): void {
+  currentOnEnded = null;
   if (currentAudio) {
     try {
       currentAudio.pause();
@@ -117,16 +118,12 @@ export function stopCurrentAudio(): void {
     }
     currentAudio = null;
   }
-  if (currentOnEnded) {
-    const cb = currentOnEnded;
-    currentOnEnded = null;
-    cb();
-  }
 }
 
 /**
  * Versucht, eine MP3-Asset-Datei abzuspielen.
  * Stoppt vorherige Wiedergaben sofort und fängt unterbrochene play()-Aufrufe ab.
+ * onEnded wird ausschließlich bei vollständigem, ununterbrochenem Abspielen aufgerufen.
  */
 export function playAsset(url: string, onEnded?: () => void, rate?: number): Promise<boolean> {
   stopCurrentAudio();
@@ -148,15 +145,9 @@ export function playAsset(url: string, onEnded?: () => void, rate?: number): Pro
     const finish = (started: boolean) => {
       if (settled) return;
       settled = true;
-      window.clearTimeout(timeoutId);
+      clearTimeout(timeoutId);
       if (currentAudio === audio && !started) {
         currentAudio = null;
-      }
-      if (!started) {
-        if (currentOnEnded === onEnded) {
-          currentOnEnded = null;
-        }
-        onEnded?.();
       }
       resolve(started);
     };
@@ -176,7 +167,7 @@ export function playAsset(url: string, onEnded?: () => void, rate?: number): Pro
     audio.addEventListener(
       'playing',
       () => {
-        window.clearTimeout(timeoutId);
+        clearTimeout(timeoutId);
         finish(true);
       },
       { once: true },
@@ -193,14 +184,14 @@ export function playAsset(url: string, onEnded?: () => void, rate?: number): Pro
         }
         if (currentOnEnded === onEnded) {
           currentOnEnded = null;
+          onEnded?.();
         }
-        onEnded?.();
         finish(true);
       },
       { once: true },
     );
 
-    const timeoutId = window.setTimeout(() => finish(false), 3000);
+    const timeoutId = setTimeout(() => finish(false), 3000);
 
     try {
       const playPromise = audio.play();
@@ -210,12 +201,12 @@ export function playAsset(url: string, onEnded?: () => void, rate?: number): Pro
             // Started successfully
           })
           .catch(() => {
-            window.clearTimeout(timeoutId);
+            clearTimeout(timeoutId);
             finish(false);
           });
       }
     } catch {
-      window.clearTimeout(timeoutId);
+      clearTimeout(timeoutId);
       finish(false);
     }
   });

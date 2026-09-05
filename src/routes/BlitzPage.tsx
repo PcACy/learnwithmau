@@ -36,9 +36,15 @@ export function BlitzPage() {
   const [isAnswerCorrect, setIsAnswerCorrect] = useState<boolean | null>(null);
 
   const answeredRef = useRef(answeredCount);
-  answeredRef.current = answeredCount;
   const scoreRef = useRef(score);
-  scoreRef.current = score;
+
+  useEffect(() => {
+    answeredRef.current = answeredCount;
+  }, [answeredCount]);
+
+  useEffect(() => {
+    scoreRef.current = score;
+  }, [score]);
 
   const startBlitz = useCallback(() => {
     const q = generateBlitzQuestions(20);

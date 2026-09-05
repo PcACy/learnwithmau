@@ -52,7 +52,7 @@ export function SentenceBuilderPage() {
   const [showPinyin, setShowPinyin] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
   const [score, setScore] = useState(0);
-  const [sessionStartedAt, setSessionStartedAt] = useState<number>(Date.now());
+  const [sessionStartedAt, setSessionStartedAt] = useState<number>(() => Date.now());
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
 
   useEffect(() => {

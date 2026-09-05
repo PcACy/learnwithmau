@@ -161,6 +161,8 @@ export function StoriesPage() {
       await new Promise<void>((resolve) => {
         void playAsset(sentence.audioUrl!, () => {
           resolve();
+        }).then((started) => {
+          if (!started) resolve();
         });
       });
       // Kurze Pause zwischen Sätzen für angenehmes Zuhören
@@ -178,6 +180,11 @@ export function StoriesPage() {
   // Wort-Klick Handler
   const handleWordClick = (token: StoryWordToken, e: React.MouseEvent) => {
     e.stopPropagation();
+    if (isPlayingFull) {
+      fullAudioCancelledRef.current = true;
+      setIsPlayingFull(false);
+      setPlayingSentenceId(null);
+    }
     setActiveToken(token);
     playTokenAudio(token);
     fireMicroBurst();

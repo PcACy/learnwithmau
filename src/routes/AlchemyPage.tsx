@@ -61,8 +61,10 @@ export function AlchemyPage() {
   const [phase, setPhase] = useState<Phase>('running');
   const [session, setSession] = useState<SessionState>(() => newSession());
   const [showHelp, setShowHelp] = useState(false);
+  const [dragOverSlot, setDragOverSlot] = useState<number | null>(null);
   const flashTimerRef = useRef<number | undefined>(undefined);
   const autoAdvanceTimerRef = useRef<number | undefined>(undefined);
+  const isAdvancingRef = useRef(false);
 
   useEffect(() => {
     return () => {
@@ -85,6 +87,7 @@ export function AlchemyPage() {
     if (autoAdvanceTimerRef.current !== undefined) {
       window.clearTimeout(autoAdvanceTimerRef.current);
     }
+    isAdvancingRef.current = false;
     stopCurrentAudio();
     setSession(newSession());
     setPhase('running');
@@ -93,6 +96,8 @@ export function AlchemyPage() {
   /** Nach gelöstem Zeichen: SRS-Grading, dann nächstes Puzzle oder Summary. */
   const completeSolve = useCallback(
     (solvedSession: SessionState) => {
+      if (isAdvancingRef.current) return;
+      isAdvancingRef.current = true;
       if (autoAdvanceTimerRef.current !== undefined) {
         window.clearTimeout(autoAdvanceTimerRef.current);
       }
@@ -117,6 +122,7 @@ export function AlchemyPage() {
 
       fireMicroBurst();
       const nextPuzzle = solvedSession.puzzles[solvedSession.index + 1];
+      isAdvancingRef.current = false;
       setSession({
         ...solvedSession,
         index: solvedSession.index + 1,
@@ -207,6 +213,7 @@ export function AlchemyPage() {
 
     if (solved && (event.key === 'Enter' || event.key === ' ')) {
       event.preventDefault();
+      if (isAdvancingRef.current) return;
       if (autoAdvanceTimerRef.current !== undefined) {
         window.clearTimeout(autoAdvanceTimerRef.current);
       }
@@ -241,6 +248,7 @@ export function AlchemyPage() {
 
   const handleDrop = (event: DragEvent<HTMLElement>, slotIndex: number) => {
     event.preventDefault();
+    setDragOverSlot(null);
     const pieceIndex = Number.parseInt(event.dataTransfer.getData('text/plain'), 10);
     if (!Number.isNaN(pieceIndex)) placePiece(pieceIndex, slotIndex);
   };
@@ -373,6 +381,9 @@ export function AlchemyPage() {
               } else if (state.filledPieceId) {
                 slotClass +=
                   'border-emerald-600/50 bg-emerald-500/10 font-bold shadow-xs';
+              } else if (dragOverSlot === slotIndex) {
+                slotClass +=
+                  'border-emerald-600 bg-emerald-500/20 ring-2 ring-emerald-500/40 shadow-whisper scale-105';
               } else if (isTarget) {
                 slotClass +=
                   'cursor-pointer border-dashed border-emerald-600 bg-emerald-500/[0.08] hover:bg-emerald-500/15 active:scale-95 animate-pulse-soft';
@@ -399,7 +410,16 @@ export function AlchemyPage() {
                     }
                   }}
                   onDragOver={(event) => {
-                    if (isTarget) event.preventDefault();
+                    if (!state.filledPieceId) {
+                      event.preventDefault();
+                      event.dataTransfer.dropEffect = 'move';
+                    }
+                  }}
+                  onDragEnter={() => {
+                    if (!state.filledPieceId) setDragOverSlot(slotIndex);
+                  }}
+                  onDragLeave={() => {
+                    setDragOverSlot((cur) => (cur === slotIndex ? null : cur));
                   }}
                   onDrop={(event) => handleDrop(event, slotIndex)}
                   className={slotClass}
@@ -468,6 +488,9 @@ export function AlchemyPage() {
                       event.dataTransfer.setData('text/plain', String(pieceIndex));
                       event.dataTransfer.effectAllowed = 'move';
                       setSession({ ...session, selectedPiece: pieceIndex });
+                    }}
+                    onDragEnd={() => {
+                      setDragOverSlot(null);
                     }}
                     onClick={() => !used && setSession({ ...session, selectedPiece: isSelected ? null : pieceIndex })}
                     disabled={used}

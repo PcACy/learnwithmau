@@ -54,11 +54,28 @@ export function AppShell() {
   const navigate = useNavigate();
 
   // Globale Navigation: Escape kehrt von jeder Sub-Page zum Dashboard zurück.
-  // Ausnahme: Der TypeRacer nutzt Escape selbst (Eingabe leeren).
+  // Intelligente Entfokussierung: Wenn ein Input/Suchfeld aktiv ist, entfokussiert Escape dieses zuerst.
+  // Zudem werden bereits abgefangene Events (defaultPrevented) und TypeRacer respektiert.
   useKeyDown((event) => {
     if (event.metaKey || event.ctrlKey || event.altKey || event.repeat) return;
-    if (backupOpen) return;
-    if (event.key === 'Escape' && location.pathname !== '/' && location.pathname !== '/typeracer') {
+    if (backupOpen || event.defaultPrevented) return;
+    if (event.key !== 'Escape') return;
+
+    // Wenn ein Eingabeelement aktiv ist, nur entfokussieren (blur), nicht navigieren
+    const activeEl = typeof document !== 'undefined' ? document.activeElement : null;
+    if (
+      activeEl instanceof HTMLElement &&
+      (activeEl.tagName === 'INPUT' ||
+        activeEl.tagName === 'TEXTAREA' ||
+        activeEl.isContentEditable)
+    ) {
+      event.preventDefault();
+      activeEl.blur();
+      return;
+    }
+
+    if (location.pathname !== '/' && location.pathname !== '/typeracer') {
+      event.preventDefault();
       navigate('/');
     }
   });
