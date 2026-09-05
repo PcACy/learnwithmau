@@ -229,7 +229,7 @@ export function DashboardPage() {
               ) : nextGrammarLesson ? (
                 <KineticButton
                   variant="primary"
-                  onClick={() => navigate('/grammar')}
+                  onClick={() => navigate(`/grammar?lesson=${encodeURIComponent(nextGrammarLesson.id)}`)}
                 >
                   Lektion starten
                 </KineticButton>
@@ -300,7 +300,7 @@ export function DashboardPage() {
               <div>
                 <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100">Grammatik-Kompendium</h3>
                 <p className="font-mono text-xs text-emerald-700 dark:text-emerald-400 uppercase tracking-wider mt-0.5">
-                  10 Didaktische Lektionen
+                  {LESSONS.length} Didaktische Lektionen
                 </p>
                 <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed">
                   SVO-Satzbau, Kopula 是, Ortsangaben 在, Entscheidungsfragen 吗 und Vollendung 了.

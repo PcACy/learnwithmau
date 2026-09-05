@@ -687,7 +687,7 @@ export function StoriesPage() {
                   <button
                     key={rg.lessonId}
                     type="button"
-                    onClick={() => navigate('/grammar')}
+                    onClick={() => navigate(`/grammar?lesson=${encodeURIComponent(rg.lessonId)}`)}
                     className="inline-flex items-center gap-1.5 rounded-xl border border-emerald-500/30 bg-white px-3 py-1.5 text-xs font-bold text-emerald-800 hover:bg-emerald-50 dark:border-emerald-500/20 dark:bg-zinc-900 dark:text-emerald-300 dark:hover:bg-zinc-800 cursor-pointer"
                   >
                     <span>{rg.lessonTitle}</span>

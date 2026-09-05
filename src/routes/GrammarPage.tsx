@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import type { CSSProperties } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   AlertTriangle,
   BookOpen,
@@ -26,7 +26,30 @@ const LESSONS = grammarData as GrammarLesson[];
 
 export function GrammarPage() {
   const navigate = useNavigate();
-  const [selectedLessonId, setSelectedLessonId] = useState<string>(LESSONS[0].id);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const paramLesson = searchParams.get('lesson');
+
+  const [selectedLessonId, setSelectedLessonId] = useState<string>(() => {
+    if (paramLesson && LESSONS.some((l) => l.id === paramLesson)) {
+      return paramLesson;
+    }
+    return LESSONS[0].id;
+  });
+
+  useEffect(() => {
+    if (paramLesson && LESSONS.some((l) => l.id === paramLesson) && paramLesson !== selectedLessonId) {
+      setSelectedLessonId(paramLesson);
+    }
+  }, [paramLesson, selectedLessonId]);
+
+  const handleSelectLesson = useCallback(
+    (id: string) => {
+      stopCurrentAudio();
+      setSelectedLessonId(id);
+      setSearchParams({ lesson: id }, { replace: true });
+    },
+    [setSearchParams],
+  );
   const [completedLessons, setCompletedLessons] = useState<Set<string>>(() => {
     try {
       const saved = typeof window !== 'undefined' ? localStorage.getItem('hanzi_completed_grammar') : null;
@@ -132,10 +155,7 @@ export function GrammarPage() {
             <button
               key={lesson.id}
               type="button"
-              onClick={() => {
-                stopCurrentAudio();
-                setSelectedLessonId(lesson.id);
-              }}
+              onClick={() => handleSelectLesson(lesson.id)}
               className={`group flex shrink-0 items-center gap-2.5 rounded-2xl border px-4 py-2.5 text-xs font-semibold transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] ${
                 isSel
                   ? 'border-emerald-600 bg-emerald-600 text-white shadow-whisper dark:border-emerald-500 dark:bg-emerald-600'
@@ -493,10 +513,7 @@ export function GrammarPage() {
             <button
               type="button"
               disabled={currentIndex === 0}
-              onClick={() => {
-                stopCurrentAudio();
-                setSelectedLessonId(LESSONS[currentIndex - 1].id);
-              }}
+              onClick={() => handleSelectLesson(LESSONS[currentIndex - 1].id)}
               className="inline-flex items-center gap-2 rounded-full border border-zinc-200/80 bg-white px-5 py-2.5 text-xs font-bold text-zinc-700 hover:bg-zinc-50 disabled:opacity-30 disabled:pointer-events-none dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-200 cursor-pointer"
             >
               <ChevronLeft className="h-4 w-4" />
@@ -517,10 +534,7 @@ export function GrammarPage() {
               {currentIndex < LESSONS.length - 1 && (
                 <KineticButton
                   variant="secondary"
-                  onClick={() => {
-                    stopCurrentAudio();
-                    setSelectedLessonId(LESSONS[currentIndex + 1].id);
-                  }}
+                  onClick={() => handleSelectLesson(LESSONS[currentIndex + 1].id)}
                   icon={<ChevronRight className="h-4 w-4" />}
                 >
                   Nächste Lektion

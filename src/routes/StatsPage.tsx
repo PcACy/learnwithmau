@@ -146,11 +146,11 @@ export function StatsPage() {
               Vokabel-Meisterungsstufen (HSK 1)
             </h2>
             <p className="text-xs text-zinc-500 dark:text-zinc-400">
-              Fortschritt aller 162 Wörter basierend auf dem SM-2-Gedächtnis-Intervall
+              Fortschritt aller {VOCAB.length} Wörter basierend auf dem SM-2-Gedächtnis-Intervall
             </p>
           </div>
           <span className="font-mono text-xs font-semibold text-zinc-400">
-            {162 - masteryCounts[0]} / 162 gelernt
+            {VOCAB.length - masteryCounts[0]} / {VOCAB.length} gelernt
           </span>
         </div>
 

@@ -21,30 +21,60 @@
         "pinyin": "Wǒ hē chá.",
         "german": "Ich trinke Tee.",
         "breakdown": [
-          { "part": "我 (Wǒ)", "meaning": "Ich" },
-          { "part": "喝 (hē)", "meaning": "trinken" },
-          { "part": "茶 (chá)", "meaning": "Tee" }
-        ]
+          {
+            "part": "我 (Wǒ)",
+            "meaning": "Ich"
+          },
+          {
+            "part": "喝 (hē)",
+            "meaning": "trinken"
+          },
+          {
+            "part": "茶 (chá)",
+            "meaning": "Tee"
+          }
+        ],
+        "audioUrl": "/audio/grammar/g01-01.mp3"
       },
       {
         "hanzi": "他吃苹果。",
         "pinyin": "Tā chī píngguǒ.",
         "german": "Er isst einen Apfel / Äpfel.",
         "breakdown": [
-          { "part": "他 (Tā)", "meaning": "Er" },
-          { "part": "吃 (chī)", "meaning": "essen" },
-          { "part": "苹果 (píngguǒ)", "meaning": "Apfel" }
-        ]
+          {
+            "part": "他 (Tā)",
+            "meaning": "Er"
+          },
+          {
+            "part": "吃 (chī)",
+            "meaning": "essen"
+          },
+          {
+            "part": "苹果 (píngguǒ)",
+            "meaning": "Apfel"
+          }
+        ],
+        "audioUrl": "/audio/grammar/g01-02.mp3"
       },
       {
         "hanzi": "我们看书。",
         "pinyin": "Wǒmen kàn shū.",
         "german": "Wir lesen ein Buch.",
         "breakdown": [
-          { "part": "我们 (Wǒmen)", "meaning": "Wir" },
-          { "part": "看 (kàn)", "meaning": "sehen/lesen" },
-          { "part": "书 (shū)", "meaning": "Buch" }
-        ]
+          {
+            "part": "我们 (Wǒmen)",
+            "meaning": "Wir"
+          },
+          {
+            "part": "看 (kàn)",
+            "meaning": "sehen/lesen"
+          },
+          {
+            "part": "书 (shū)",
+            "meaning": "Buch"
+          }
+        ],
+        "audioUrl": "/audio/grammar/g01-03.mp3"
       }
     ],
     "pitfalls": [
@@ -57,7 +87,11 @@
     "quizzes": [
       {
         "question": "Wie lautet die richtige chinesische Übersetzung für: „Ich trinke Wasser.“?",
-        "options": ["我水喝。(Wǒ shuǐ hē.)", "我喝水。(Wǒ hē shuǐ.)", "喝水我。(Hē shuǐ wǒ.)"],
+        "options": [
+          "我水喝。(Wǒ shuǐ hē.)",
+          "我喝水。(Wǒ hē shuǐ.)",
+          "喝水我。(Hē shuǐ wǒ.)"
+        ],
         "correctIndex": 1,
         "explanation": "Chinesisch folgt strikt der SVO-Reihenfolge: Subjekt (我) + Verb (喝) + Objekt (水)."
       }
@@ -85,21 +119,44 @@
         "pinyin": "Wǒ shì Zhōngguórén.",
         "german": "Ich bin Chinese / Chinesin.",
         "breakdown": [
-          { "part": "我 (Wǒ)", "meaning": "Ich" },
-          { "part": "是 (shì)", "meaning": "sein" },
-          { "part": "中国人 (Zhōngguórén)", "meaning": "Chinese" }
-        ]
+          {
+            "part": "我 (Wǒ)",
+            "meaning": "Ich"
+          },
+          {
+            "part": "是 (shì)",
+            "meaning": "sein"
+          },
+          {
+            "part": "中国人 (Zhōngguórén)",
+            "meaning": "Chinese"
+          }
+        ],
+        "audioUrl": "/audio/grammar/g02-01.mp3"
       },
       {
         "hanzi": "他不是老师，他是学生。",
         "pinyin": "Tā bú shì lǎoshī, tā shì xuésheng.",
         "german": "Er ist kein Lehrer, er ist Schüler.",
         "breakdown": [
-          { "part": "他 (Tā)", "meaning": "Er" },
-          { "part": "不是 (bú shì)", "meaning": "ist nicht" },
-          { "part": "老师 (lǎoshī)", "meaning": "Lehrer" },
-          { "part": "学生 (xuésheng)", "meaning": "Schüler" }
-        ]
+          {
+            "part": "他 (Tā)",
+            "meaning": "Er"
+          },
+          {
+            "part": "不是 (bú shì)",
+            "meaning": "ist nicht"
+          },
+          {
+            "part": "老师 (lǎoshī)",
+            "meaning": "Lehrer"
+          },
+          {
+            "part": "学生 (xuésheng)",
+            "meaning": "Schüler"
+          }
+        ],
+        "audioUrl": "/audio/grammar/g02-02.mp3"
       }
     ],
     "pitfalls": [
@@ -112,7 +169,11 @@
     "quizzes": [
       {
         "question": "Welcher Satz verneint korrekt: „Er ist kein Arzt.“?",
-        "options": ["他没有医生。(Tā méiyǒu yīshēng.)", "他不是医生。(Tā bú shì yīshēng.)", "他不医生。(Tā bù yīshēng.)"],
+        "options": [
+          "他没有医生。(Tā méiyǒu yīshēng.)",
+          "他不是医生。(Tā bú shì yīshēng.)",
+          "他不医生。(Tā bù yīshēng.)"
+        ],
         "correctIndex": 1,
         "explanation": "„不是“ (bú shì) verneint das Seins-Verb „是“ (shì)."
       }
@@ -140,20 +201,40 @@
         "pinyin": "Wǒ yǒu yì zhī māo.",
         "german": "Ich habe eine Katze.",
         "breakdown": [
-          { "part": "我 (Wǒ)", "meaning": "Ich" },
-          { "part": "有 (yǒu)", "meaning": "haben" },
-          { "part": "一只猫 (yì zhī māo)", "meaning": "eine Katze" }
-        ]
+          {
+            "part": "我 (Wǒ)",
+            "meaning": "Ich"
+          },
+          {
+            "part": "有 (yǒu)",
+            "meaning": "haben"
+          },
+          {
+            "part": "一只猫 (yì zhī māo)",
+            "meaning": "eine Katze"
+          }
+        ],
+        "audioUrl": "/audio/grammar/g03-01.mp3"
       },
       {
         "hanzi": "他没有时间。",
         "pinyin": "Tā méiyǒu shíjiān.",
         "german": "Er hat keine Zeit.",
         "breakdown": [
-          { "part": "他 (Tā)", "meaning": "Er" },
-          { "part": "没有 (méiyǒu)", "meaning": "nicht haben" },
-          { "part": "时间 (shíjiān)", "meaning": "Zeit" }
-        ]
+          {
+            "part": "他 (Tā)",
+            "meaning": "Er"
+          },
+          {
+            "part": "没有 (méiyǒu)",
+            "meaning": "nicht haben"
+          },
+          {
+            "part": "时间 (shíjiān)",
+            "meaning": "Zeit"
+          }
+        ],
+        "audioUrl": "/audio/grammar/g03-02.mp3"
       }
     ],
     "pitfalls": [
@@ -166,7 +247,11 @@
     "quizzes": [
       {
         "question": "Wie sagst du auf Chinesisch: „Ich habe keine Zeit.“?",
-        "options": ["我不是时间。(Wǒ bú shì shíjiān.)", "我不有时间。(Wǒ bù yǒu shíjiān.)", "我没有时间。(Wǒ méiyǒu shíjiān.)"],
+        "options": [
+          "我不是时间。(Wǒ bú shì shíjiān.)",
+          "我不有时间。(Wǒ bù yǒu shíjiān.)",
+          "我没有时间。(Wǒ méiyǒu shíjiān.)"
+        ],
         "correctIndex": 2,
         "explanation": "Besitzverneinung erfordert zwingend „没有“ (méiyǒu)."
       }
@@ -194,20 +279,40 @@
         "pinyin": "Māma zài yīyuàn gōngzuò.",
         "german": "Mama arbeitet im Krankenhaus.",
         "breakdown": [
-          { "part": "妈妈 (Māma)", "meaning": "Mama" },
-          { "part": "在医院 (zài yīyuàn)", "meaning": "im Krankenhaus" },
-          { "part": "工作 (gōngzuò)", "meaning": "arbeiten" }
-        ]
+          {
+            "part": "妈妈 (Māma)",
+            "meaning": "Mama"
+          },
+          {
+            "part": "在医院 (zài yīyuàn)",
+            "meaning": "im Krankenhaus"
+          },
+          {
+            "part": "工作 (gōngzuò)",
+            "meaning": "arbeiten"
+          }
+        ],
+        "audioUrl": "/audio/grammar/g04-01.mp3"
       },
       {
         "hanzi": "我们在饭馆吃米饭。",
         "pinyin": "Wǒmen zài fànguǎn chī mǐfàn.",
         "german": "Wir essen im Restaurant Reis.",
         "breakdown": [
-          { "part": "我们 (Wǒmen)", "meaning": "Wir" },
-          { "part": "在饭馆 (zài fànguǎn)", "meaning": "im Restaurant" },
-          { "part": "吃米饭 (chī mǐfàn)", "meaning": "Reis essen" }
-        ]
+          {
+            "part": "我们 (Wǒmen)",
+            "meaning": "Wir"
+          },
+          {
+            "part": "在饭馆 (zài fànguǎn)",
+            "meaning": "im Restaurant"
+          },
+          {
+            "part": "吃米饭 (chī mǐfàn)",
+            "meaning": "Reis essen"
+          }
+        ],
+        "audioUrl": "/audio/grammar/g04-02.mp3"
       }
     ],
     "pitfalls": [
@@ -220,7 +325,11 @@
     "quizzes": [
       {
         "question": "Welche Wortstellung ist grammatikalisch korrekt für: „Er trinkt Tee zu Hause.“?",
-        "options": ["他在家喝茶。(Tā zài jiā hē chá.)", "他喝茶在家。(Tā hē chá zài jiā.)", "在家他喝茶是。(Zài jiā tā hē chá shì.)"],
+        "options": [
+          "他在家喝茶。(Tā zài jiā hē chá.)",
+          "他喝茶在家。(Tā hē chá zài jiā.)",
+          "在家他喝茶是。(Zài jiā tā hē chá shì.)"
+        ],
         "correctIndex": 0,
         "explanation": "Subjekt (他) + Ort mit 在 (在家) + Verb und Objekt (喝茶)."
       }
@@ -250,30 +359,60 @@
         "pinyin": "Nǐ xǐhuan chī Zhōngguó cài ma?",
         "german": "Magst du chinesisches Essen?",
         "breakdown": [
-          { "part": "你喜欢 (Nǐ xǐhuan)", "meaning": "du magst" },
-          { "part": "吃中国菜 (chī Zhōngguó cài)", "meaning": "chinesisches Essen essen" },
-          { "part": "吗 (ma)", "meaning": "Fragepartikel" }
-        ]
+          {
+            "part": "你喜欢 (Nǐ xǐhuan)",
+            "meaning": "du magst"
+          },
+          {
+            "part": "吃中国菜 (chī Zhōngguó cài)",
+            "meaning": "chinesisches Essen essen"
+          },
+          {
+            "part": "吗 (ma)",
+            "meaning": "Fragepartikel"
+          }
+        ],
+        "audioUrl": "/audio/grammar/g05-01.mp3"
       },
       {
         "hanzi": "今天天气怎么样？",
         "pinyin": "Jīntiān tiānqì zěnmeyàng?",
         "german": "Wie ist das Wetter heute?",
         "breakdown": [
-          { "part": "今天 (Jīntiān)", "meaning": "Heute" },
-          { "part": "天气 (tiānqì)", "meaning": "Wetter" },
-          { "part": "怎么样 (zěnmeyàng)", "meaning": "wie / wie beschaffen" }
-        ]
+          {
+            "part": "今天 (Jīntiān)",
+            "meaning": "Heute"
+          },
+          {
+            "part": "天气 (tiānqì)",
+            "meaning": "Wetter"
+          },
+          {
+            "part": "怎么样 (zěnmeyàng)",
+            "meaning": "wie / wie beschaffen"
+          }
+        ],
+        "audioUrl": "/audio/grammar/g05-02.mp3"
       },
       {
         "hanzi": "他在哪儿？",
         "pinyin": "Tā zài nǎr?",
         "german": "Wo ist er?",
         "breakdown": [
-          { "part": "他 (Tā)", "meaning": "Er" },
-          { "part": "在 (zài)", "meaning": "sich befinden" },
-          { "part": "哪儿 (nǎr)", "meaning": "wo" }
-        ]
+          {
+            "part": "他 (Tā)",
+            "meaning": "Er"
+          },
+          {
+            "part": "在 (zài)",
+            "meaning": "sich befinden"
+          },
+          {
+            "part": "哪儿 (nǎr)",
+            "meaning": "wo"
+          }
+        ],
+        "audioUrl": "/audio/grammar/g05-03.mp3"
       }
     ],
     "pitfalls": [
@@ -286,7 +425,11 @@
     "quizzes": [
       {
         "question": "Wie fragst du auf Chinesisch: „Trinkst du Tee?“?",
-        "options": ["你喝茶吗？(Nǐ hē chá ma?)", "你喝茶什么？(Nǐ hē chá shénme?)", "吗你喝茶？(Ma nǐ hē chá?)"],
+        "options": [
+          "你喝茶吗？(Nǐ hē chá ma?)",
+          "你喝茶什么？(Nǐ hē chá shénme?)",
+          "吗你喝茶？(Ma nǐ hē chá?)"
+        ],
         "correctIndex": 0,
         "explanation": "Aussagesatz (你喝茶) + Fragepartikel (吗)."
       }
@@ -314,20 +457,40 @@
         "pinyin": "Zhè shì wǒ de diànnǎo.",
         "german": "Das ist mein Computer.",
         "breakdown": [
-          { "part": "这是 (Zhè shì)", "meaning": "Das ist" },
-          { "part": "我的 (wǒ de)", "meaning": "mein" },
-          { "part": "电脑 (diànnǎo)", "meaning": "Computer" }
-        ]
+          {
+            "part": "这是 (Zhè shì)",
+            "meaning": "Das ist"
+          },
+          {
+            "part": "我的 (wǒ de)",
+            "meaning": "mein"
+          },
+          {
+            "part": "电脑 (diànnǎo)",
+            "meaning": "Computer"
+          }
+        ],
+        "audioUrl": "/audio/grammar/g06-01.mp3"
       },
       {
         "hanzi": "她是我的好朋友。",
         "pinyin": "Tā shì wǒ de hǎo péngyou.",
         "german": "Sie ist meine gute Freundin.",
         "breakdown": [
-          { "part": "她是 (Tā shì)", "meaning": "Sie ist" },
-          { "part": "我的 (wǒ de)", "meaning": "mein(e)" },
-          { "part": "好朋友 (hǎo péngyou)", "meaning": "guter Freund" }
-        ]
+          {
+            "part": "她是 (Tā shì)",
+            "meaning": "Sie ist"
+          },
+          {
+            "part": "我的 (wǒ de)",
+            "meaning": "mein(e)"
+          },
+          {
+            "part": "好朋友 (hǎo péngyou)",
+            "meaning": "guter Freund"
+          }
+        ],
+        "audioUrl": "/audio/grammar/g06-02.mp3"
       }
     ],
     "pitfalls": [
@@ -340,7 +503,11 @@
     "quizzes": [
       {
         "question": "Wie drückt man „Das Buch des Lehrers“ auf Chinesisch aus?",
-        "options": ["书的老师 (Shū de lǎoshī)", "老师书的 (Lǎoshī shū de)", "老师的书 (Lǎoshī de shū)"],
+        "options": [
+          "书的老师 (Shū de lǎoshī)",
+          "老师书的 (Lǎoshī shū de)",
+          "老师的书 (Lǎoshī de shū)"
+        ],
         "correctIndex": 2,
         "explanation": "Besitzer (老师) + 的 + Besitz (书) = 老师的书."
       }
@@ -370,21 +537,44 @@
         "pinyin": "Zhuōzi shang yǒu sān gè píngguǒ.",
         "german": "Auf dem Tisch liegen drei Äpfel.",
         "breakdown": [
-          { "part": "桌子上 (Zhuōzi shang)", "meaning": "auf dem Tisch" },
-          { "part": "有 (yǒu)", "meaning": "gibt es" },
-          { "part": "三个 (sān gè)", "meaning": "drei [Stück]" },
-          { "part": "苹果 (píngguǒ)", "meaning": "Äpfel" }
-        ]
+          {
+            "part": "桌子上 (Zhuōzi shang)",
+            "meaning": "auf dem Tisch"
+          },
+          {
+            "part": "有 (yǒu)",
+            "meaning": "gibt es"
+          },
+          {
+            "part": "三个 (sān gè)",
+            "meaning": "drei [Stück]"
+          },
+          {
+            "part": "苹果 (píngguǒ)",
+            "meaning": "Äpfel"
+          }
+        ],
+        "audioUrl": "/audio/grammar/g07-01.mp3"
       },
       {
         "hanzi": "我想买一本书。",
         "pinyin": "Wǒ xiǎng mǎi yì běn shū.",
         "german": "Ich möchte ein Buch kaufen.",
         "breakdown": [
-          { "part": "我想买 (Wǒ xiǎng mǎi)", "meaning": "ich möchte kaufen" },
-          { "part": "一本 (yì běn)", "meaning": "ein [Buch-Klassifikator]" },
-          { "part": "书 (shū)", "meaning": "Buch" }
-        ]
+          {
+            "part": "我想买 (Wǒ xiǎng mǎi)",
+            "meaning": "ich möchte kaufen"
+          },
+          {
+            "part": "一本 (yì běn)",
+            "meaning": "ein [Buch-Klassifikator]"
+          },
+          {
+            "part": "书 (shū)",
+            "meaning": "Buch"
+          }
+        ],
+        "audioUrl": "/audio/grammar/g07-02.mp3"
       }
     ],
     "pitfalls": [
@@ -397,7 +587,11 @@
     "quizzes": [
       {
         "question": "Welches Zählwort füllt die Lücke korrekt aus: „我买两 ___ 书。“?",
-        "options": ["个 (gè)", "本 (běn)", "岁 (suì)"],
+        "options": [
+          "个 (gè)",
+          "本 (běn)",
+          "岁 (suì)"
+        ],
         "correctIndex": 1,
         "explanation": "Für Bücher („书“) ist „本“ (běn) das vorgeschriebene Zählwort."
       }
@@ -425,20 +619,40 @@
         "pinyin": "Wǒ míngtiān xiàwǔ qù xuéxiào.",
         "german": "Ich gehe morgen Nachmittag zur Schule.",
         "breakdown": [
-          { "part": "我 (Wǒ)", "meaning": "Ich" },
-          { "part": "明天下午 (míngtiān xiàwǔ)", "meaning": "morgen Nachmittag" },
-          { "part": "去学校 (qù xuéxiào)", "meaning": "zur Schule gehen" }
-        ]
+          {
+            "part": "我 (Wǒ)",
+            "meaning": "Ich"
+          },
+          {
+            "part": "明天下午 (míngtiān xiàwǔ)",
+            "meaning": "morgen Nachmittag"
+          },
+          {
+            "part": "去学校 (qù xuéxiào)",
+            "meaning": "zur Schule gehen"
+          }
+        ],
+        "audioUrl": "/audio/grammar/g08-01.mp3"
       },
       {
         "hanzi": "现在几点？现在三点十分。",
         "pinyin": "Xiànzài jǐ diǎn? Xiànzài sān diǎn shí fēn.",
         "german": "Wie spät ist es jetzt? Es ist jetzt 3:10 Uhr.",
         "breakdown": [
-          { "part": "现在 (Xiànzài)", "meaning": "Jetzt" },
-          { "part": "三点 (sān diǎn)", "meaning": "3 Uhr" },
-          { "part": "十分 (shí fēn)", "meaning": "10 Minuten" }
-        ]
+          {
+            "part": "现在 (Xiànzài)",
+            "meaning": "Jetzt"
+          },
+          {
+            "part": "三点 (sān diǎn)",
+            "meaning": "3 Uhr"
+          },
+          {
+            "part": "十分 (shí fēn)",
+            "meaning": "10 Minuten"
+          }
+        ],
+        "audioUrl": "/audio/grammar/g08-02.mp3"
       }
     ],
     "pitfalls": [
@@ -484,20 +698,40 @@
         "pinyin": "Wǒ huì shuō Hànyǔ, wǒ bú huì xiě hànzì.",
         "german": "Ich kann Chinesisch sprechen, ich kann keine Schriftzeichen schreiben.",
         "breakdown": [
-          { "part": "我会说 (Wǒ huì shuō)", "meaning": "ich kann sprechen" },
-          { "part": "汉语 (Hànyǔ)", "meaning": "Chinesisch" },
-          { "part": "我不会写 (wǒ bú huì xiě)", "meaning": "ich kann nicht schreiben" },
-          { "part": "汉字 (hànzì)", "meaning": "Schriftzeichen" }
-        ]
+          {
+            "part": "我会说 (Wǒ huì shuō)",
+            "meaning": "ich kann sprechen"
+          },
+          {
+            "part": "汉语 (Hànyǔ)",
+            "meaning": "Chinesisch"
+          },
+          {
+            "part": "我不会写 (wǒ bú huì xiě)",
+            "meaning": "ich kann nicht schreiben"
+          },
+          {
+            "part": "汉字 (hànzì)",
+            "meaning": "Schriftzeichen"
+          }
+        ],
+        "audioUrl": "/audio/grammar/g09-01.mp3"
       },
       {
         "hanzi": "我想去看电影。",
         "pinyin": "Wǒ xiǎng qù kàn diànyǐng.",
         "german": "Ich möchte ins Kino gehen.",
         "breakdown": [
-          { "part": "我想去 (Wǒ xiǎng qù)", "meaning": "ich möchte gehen" },
-          { "part": "看电影 (kàn diànyǐng)", "meaning": "Film schauen" }
-        ]
+          {
+            "part": "我想去 (Wǒ xiǎng qù)",
+            "meaning": "ich möchte gehen"
+          },
+          {
+            "part": "看电影 (kàn diànyǐng)",
+            "meaning": "Film schauen"
+          }
+        ],
+        "audioUrl": "/audio/grammar/g09-02.mp3"
       }
     ],
     "pitfalls": [
@@ -510,7 +744,11 @@
     "quizzes": [
       {
         "question": "Wie sagst du: „Ich möchte heute chinesisches Essen essen.“?",
-        "options": ["我想今天吃中国菜。(Wǒ xiǎng jīntiān chī Zhōngguó cài.)", "我今天想吃中国菜。(Wǒ jīntiān xiǎng chī Zhōngguó cài.)", "我吃中国菜想今天。(Wǒ chī Zhōngguó cài xiǎng jīntiān.)"],
+        "options": [
+          "我想今天吃中国菜。(Wǒ xiǎng jīntiān chī Zhōngguó cài.)",
+          "我今天想吃中国菜。(Wǒ jīntiān xiǎng chī Zhōngguó cài.)",
+          "我吃中国菜想今天。(Wǒ chī Zhōngguó cài xiǎng jīntiān.)"
+        ],
         "correctIndex": 1,
         "explanation": "Subjekt (我) + Zeit (今天) + Modalverb (想) + Hauptverb & Objekt (吃中国菜)."
       }
@@ -539,20 +777,40 @@
         "pinyin": "Wǒ mǎi le yí jiàn piàoliang de yīfu.",
         "german": "Ich habe ein hübsches Kleidungsstück gekauft.",
         "breakdown": [
-          { "part": "我买了 (Wǒ mǎi le)", "meaning": "ich habe gekauft" },
-          { "part": "一件 (yí jiàn)", "meaning": "ein [Kleidungs-Zählwort]" },
-          { "part": "漂亮的衣服 (piàoliang de yīfu)", "meaning": "hübsche Kleidung" }
-        ]
+          {
+            "part": "我买了 (Wǒ mǎi le)",
+            "meaning": "ich habe gekauft"
+          },
+          {
+            "part": "一件 (yí jiàn)",
+            "meaning": "ein [Kleidungs-Zählwort]"
+          },
+          {
+            "part": "漂亮的衣服 (piàoliang de yīfu)",
+            "meaning": "hübsche Kleidung"
+          }
+        ],
+        "audioUrl": "/audio/grammar/g10-01.mp3"
       },
       {
         "hanzi": "太好了！请进，请坐！",
         "pinyin": "Tài hǎo le! Qǐng jìn, qǐng zuò!",
         "german": "Großartig! Bitte herein, bitte nehmen Sie Platz!",
         "breakdown": [
-          { "part": "太好了 (Tài hǎo le)", "meaning": "Großartig / Zu schön" },
-          { "part": "请进 (Qǐng jìn)", "meaning": "bitte herein" },
-          { "part": "请坐 (qǐng zuò)", "meaning": "bitte setzen" }
-        ]
+          {
+            "part": "太好了 (Tài hǎo le)",
+            "meaning": "Großartig / Zu schön"
+          },
+          {
+            "part": "请进 (Qǐng jìn)",
+            "meaning": "bitte herein"
+          },
+          {
+            "part": "请坐 (qǐng zuò)",
+            "meaning": "bitte setzen"
+          }
+        ],
+        "audioUrl": "/audio/grammar/g10-02.mp3"
       }
     ],
     "pitfalls": [
@@ -565,7 +823,11 @@
     "quizzes": [
       {
         "question": "Wie drückt man „Großartig! / Zu schön!“ auf Chinesisch aus?",
-        "options": ["太好。(Tài hǎo.)", "太好了。(Tài hǎo le.)", "好了太。(Hǎo le tài.)"],
+        "options": [
+          "太好。(Tài hǎo.)",
+          "太好了。(Tài hǎo le.)",
+          "好了太。(Hǎo le tài.)"
+        ],
         "correctIndex": 1,
         "explanation": "Das feste Konstruktionsmuster für überschwängliche Ausrufe lautet „太 + Adjektiv + 了“."
       }
@@ -594,31 +856,64 @@
         "pinyin": "Wǒ hé tā shì hǎo péngyou.",
         "german": "Er und ich sind gute Freunde.",
         "breakdown": [
-          { "part": "我和他 (Wǒ hé tā)", "meaning": "ich und er" },
-          { "part": "是 (shì)", "meaning": "sein" },
-          { "part": "好朋友 (hǎo péngyou)", "meaning": "gute Freunde" }
-        ]
+          {
+            "part": "我和他 (Wǒ hé tā)",
+            "meaning": "ich und er"
+          },
+          {
+            "part": "是 (shì)",
+            "meaning": "sein"
+          },
+          {
+            "part": "好朋友 (hǎo péngyou)",
+            "meaning": "gute Freunde"
+          }
+        ],
+        "audioUrl": "/audio/grammar/g11-01.mp3"
       },
       {
         "hanzi": "我们都喜欢喝中国茶。",
         "pinyin": "Wǒmen dōu xǐhuan hē Zhōngguó chá.",
         "german": "Wir alle trinken gerne chinesischen Tee.",
         "breakdown": [
-          { "part": "我们 (Wǒmen)", "meaning": "Wir" },
-          { "part": "都 (dōu)", "meaning": "alle" },
-          { "part": "喜欢喝 (xǐhuan hē)", "meaning": "gerne trinken" },
-          { "part": "中国茶 (Zhōngguó chá)", "meaning": "chinesischer Tee" }
-        ]
+          {
+            "part": "我们 (Wǒmen)",
+            "meaning": "Wir"
+          },
+          {
+            "part": "都 (dōu)",
+            "meaning": "alle"
+          },
+          {
+            "part": "喜欢喝 (xǐhuan hē)",
+            "meaning": "gerne trinken"
+          },
+          {
+            "part": "中国茶 (Zhōngguó chá)",
+            "meaning": "chinesischer Tee"
+          }
+        ],
+        "audioUrl": "/audio/grammar/g11-02.mp3"
       },
       {
         "hanzi": "我们明天去学校吧！",
         "pinyin": "Wǒmen míngtiān qù xuéxiào ba!",
         "german": "Lass uns morgen zur Schule gehen!",
         "breakdown": [
-          { "part": "我们明天 (Wǒmen míngtiān)", "meaning": "wir morgen" },
-          { "part": "去学校 (qù xuéxiào)", "meaning": "zur Schule gehen" },
-          { "part": "吧 (ba)", "meaning": "Vorschlags-Partikel" }
-        ]
+          {
+            "part": "我们明天 (Wǒmen míngtiān)",
+            "meaning": "wir morgen"
+          },
+          {
+            "part": "去学校 (qù xuéxiào)",
+            "meaning": "zur Schule gehen"
+          },
+          {
+            "part": "吧 (ba)",
+            "meaning": "Vorschlags-Partikel"
+          }
+        ],
+        "audioUrl": "/audio/grammar/g11-03.mp3"
       }
     ],
     "pitfalls": [
@@ -631,7 +926,11 @@
     "quizzes": [
       {
         "question": "Welcher Satz drückt korrekt aus: „Wir alle sind Schüler.“?",
-        "options": ["我们是都学生。(Wǒmen shì dōu xuésheng.)", "都是我们学生。(Dōu shì wǒmen xuésheng.)", "我们都是学生。(Wǒmen dōu shì xuésheng.)"],
+        "options": [
+          "我们是都学生。(Wǒmen shì dōu xuésheng.)",
+          "都是我们学生。(Dōu shì wǒmen xuésheng.)",
+          "我们都是学生。(Wǒmen dōu shì xuésheng.)"
+        ],
         "correctIndex": 2,
         "explanation": "„都“ (dōu) steht unmittelbar vor dem Prädikat/Verb: 我们 (Subjekt) + 都 + 是学生."
       }
@@ -660,21 +959,44 @@
         "pinyin": "Wǒ zuò fēijī qù Běijīng.",
         "german": "Ich fliege mit dem Flugzeug nach Peking.",
         "breakdown": [
-          { "part": "我 (Wǒ)", "meaning": "Ich" },
-          { "part": "坐飞机 (zuò fēijī)", "meaning": "das Flugzeug nehmen" },
-          { "part": "去北京 (qù Běijīng)", "meaning": "nach Peking reisen" }
-        ]
+          {
+            "part": "我 (Wǒ)",
+            "meaning": "Ich"
+          },
+          {
+            "part": "坐飞机 (zuò fēijī)",
+            "meaning": "das Flugzeug nehmen"
+          },
+          {
+            "part": "去北京 (qù Běijīng)",
+            "meaning": "nach Peking reisen"
+          }
+        ],
+        "audioUrl": "/audio/grammar/g12-01.mp3"
       },
       {
         "hanzi": "今天天气很好，不冷也不热。",
         "pinyin": "Jīntiān tiānqì hěn hǎo, bù lěng yě bú rè.",
         "german": "Heute ist das Wetter gut, weder kalt noch heiß.",
         "breakdown": [
-          { "part": "今天天气 (Jīntiān tiānqì)", "meaning": "heutiges Wetter" },
-          { "part": "很好 (hěn hǎo)", "meaning": "gut" },
-          { "part": "不冷 (bù lěng)", "meaning": "nicht kalt" },
-          { "part": "也不热 (yě bú rè)", "meaning": "auch nicht heiß" }
-        ]
+          {
+            "part": "今天天气 (Jīntiān tiānqì)",
+            "meaning": "heutiges Wetter"
+          },
+          {
+            "part": "很好 (hěn hǎo)",
+            "meaning": "gut"
+          },
+          {
+            "part": "不冷 (bù lěng)",
+            "meaning": "nicht kalt"
+          },
+          {
+            "part": "也不热 (yě bú rè)",
+            "meaning": "auch nicht heiß"
+          }
+        ],
+        "audioUrl": "/audio/grammar/g12-02.mp3"
       }
     ],
     "pitfalls": [
@@ -687,7 +1009,11 @@
     "quizzes": [
       {
         "question": "Wie drückt man „Ich fahre mit dem Taxi nach Hause.“ auf Chinesisch aus?",
-        "options": ["我坐出租车回家。(Wǒ zuò chūzūchē huí jiā.)", "我回家给出租车。(Wǒ huí jiā gěi chūzūchē.)", "坐出租车我回家是。(Zuò chūzūchē wǒ huí jiā shì.)"],
+        "options": [
+          "我坐出租车回家。(Wǒ zuò chūzūchē huí jiā.)",
+          "我回家给出租车。(Wǒ huí jiā gěi chūzūchē.)",
+          "坐出租车我回家是。(Zuò chūzūchē wǒ huí jiā shì.)"
+        ],
         "correctIndex": 0,
         "explanation": "Serielles Satzmuster: Subjekt (我) + Transportmittel (坐出租车) + Zielhandlung (回家)."
       }
