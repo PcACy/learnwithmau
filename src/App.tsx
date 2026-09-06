@@ -1,25 +1,27 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { AppShell } from './components/layout/AppShell';
 import { MODES, type ModeConfig } from './config/modes';
-import { AlchemyPage } from './routes/AlchemyPage';
-import { BlitzPage } from './routes/BlitzPage';
-import { DashboardPage } from './routes/DashboardPage';
-import { DictionaryPage } from './routes/DictionaryPage';
-import { EarTrainerPage } from './routes/EarTrainerPage';
-import { NumberDrillPage } from './routes/NumberDrillPage';
-import { ReviewPage } from './routes/ReviewPage';
-import { SentenceBuilderPage } from './routes/SentenceBuilderPage';
-import { SettingsPage } from './routes/SettingsPage';
-import { StatsPage } from './routes/StatsPage';
-import { TypeRacerPage } from './routes/TypeRacerPage';
-import { MockExamPage } from './routes/MockExamPage';
-import { GrammarPage } from './routes/GrammarPage';
-import { StoriesPage } from './routes/StoriesPage';
-import { DialoguePage } from './routes/DialoguePage';
-import { PinyinPage } from './routes/PinyinPage';
-import { StrokeGuidePage } from './routes/StrokeGuidePage';
-import { CulturePage } from './routes/CulturePage';
-import { MistakesPage } from './routes/MistakesPage';
+import {
+  AlchemyPage,
+  BlitzPage,
+  CulturePage,
+  DashboardPage,
+  DialoguePage,
+  DictionaryPage,
+  EarTrainerPage,
+  GrammarPage,
+  MistakesPage,
+  MockExamPage,
+  NumberDrillPage,
+  PinyinPage,
+  ReviewPage,
+  SentenceBuilderPage,
+  SettingsPage,
+  StatsPage,
+  StoriesPage,
+  StrokeGuidePage,
+  TypeRacerPage,
+} from './routes/lazyRoutes';
 
 function renderMode(mode: ModeConfig) {
   switch (mode.id) {

@@ -1,7 +1,8 @@
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { renderToString } from 'react-dom/server';
 import { MemoryRouter } from 'react-router-dom';
 import { AppRoutes } from './App';
+import { preloadAllRoutes } from './routes/lazyRoutes';
 import { useProgressStore } from './store/progressStore';
 
 (globalThis as Record<string, unknown>).indexedDB ??= {
@@ -46,6 +47,10 @@ const ROUTES: readonly [path: string, marker: string][] = [
 ];
 
 describe('Alle Routen rendern ohne Crash', () => {
+  beforeAll(async () => {
+    await preloadAllRoutes();
+  });
+
   it.each(ROUTES)('öffnet %s', (path, marker) => {
     const html = renderToString(
       <MemoryRouter initialEntries={[path]}>

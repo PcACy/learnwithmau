@@ -54,19 +54,46 @@ export default defineConfig({
       output: {
         manualChunks(id) {
           if (id.includes('node_modules')) {
-            if (id.includes('react') || id.includes('react-dom') || id.includes('react-router')) {
-              return 'vendor-react';
-            }
             if (id.includes('lucide-react')) {
               return 'vendor-lucide';
             }
-            if (id.includes('dexie') || id.includes('canvas-confetti') || id.includes('zustand') || id.includes('hanzi-writer')) {
+            if (id.includes('hanzi-writer')) {
+              return 'vendor-hanzi-writer';
+            }
+            if (id.includes('dexie') || id.includes('canvas-confetti') || id.includes('zustand')) {
               return 'vendor-libs';
+            }
+            if (id.includes('/react/') || id.includes('/react-dom/') || id.includes('react-router')) {
+              return 'vendor-react';
             }
             return 'vendor-misc';
           }
+          if (id.includes('/src/data/vocabDetails')) {
+            return 'data-vocab-details';
+          }
+          if (id.includes('/src/data/stories.json')) {
+            return 'data-stories';
+          }
+          if (id.includes('/src/data/dialogues.json')) {
+            return 'data-dialogues';
+          }
+          if (id.includes('/src/data/mockExam.json')) {
+            return 'data-exam';
+          }
+          if (id.includes('/src/data/pinyinData')) {
+            return 'data-pinyin';
+          }
+          if (id.includes('/src/data/grammar.json') || id.includes('/src/data/grammarPitfalls')) {
+            return 'data-grammar';
+          }
+          if (id.includes('/src/data/strokeGuideData')) {
+            return 'data-strokes';
+          }
+          if (id.includes('/src/data/cultureNotes')) {
+            return 'data-culture';
+          }
           if (id.includes('/src/data/')) {
-            return 'data-hsk';
+            return 'data-vocab-core';
           }
         },
       },

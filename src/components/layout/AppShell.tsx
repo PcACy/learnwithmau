@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { Suspense, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import {
   Award,
   BookOpen,
@@ -314,7 +314,9 @@ export function AppShell() {
 
       <main className="mx-auto max-w-6xl px-4 pt-6 pb-28 sm:py-10 sm:px-8">
         <div key={location.pathname} className="route-transition-container">
-          <Outlet />
+          <Suspense fallback={<div className="min-h-[60vh]" />}>
+            <Outlet />
+          </Suspense>
         </div>
       </main>
 

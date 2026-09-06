@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import HanziWriter from 'hanzi-writer';
+import type HanziWriter from 'hanzi-writer';
 import {
   Check,
   ChevronLeft,
@@ -94,65 +94,79 @@ export function StrokeOrderViewer({ character, pinyin, meaning, size = 190 }: St
     setQuizStatus('idle');
     setQuizFeedback('');
 
-    const writer = HanziWriter.create(containerRef.current, character, {
-      width: size,
-      height: size,
-      padding: 16,
-      strokeColor,
-      outlineColor,
-      drawingColor,
-      highlightColor,
-      drawingWidth: 18,
-      showOutline: true,
-      showCharacter: true,
-      strokeAnimationSpeed: 1.1,
-      delayBetweenStrokes: 180,
-      charDataLoader: (char, onComplete, onErr) => {
-        fetch(`/data/strokes/${encodeURIComponent(char)}.json`)
-          .then((res) => {
-            if (!res.ok) throw new Error(`Status ${res.status}`);
-            return res.json();
-          })
-          .then((data) => {
-            if (cancelled) return;
-            if (data && Array.isArray(data.strokes)) {
-              setTotalStrokes(data.strokes.length);
-            }
-            onComplete(data);
-          })
-          .catch(() => {
-            if (cancelled) return;
-            // Fallback auf CDN falls lokale Datei fehlt
-            fetch(`https://cdn.jsdelivr.net/npm/hanzi-writer-data@2.0/${encodeURIComponent(char)}.json`)
-              .then((r) => r.json())
+    import('hanzi-writer')
+      .then(({ default: HanziWriter }) => {
+        if (cancelled || !containerRef.current) return;
+
+        const writer = HanziWriter.create(containerRef.current, character, {
+          width: size,
+          height: size,
+          padding: 16,
+          strokeColor,
+          outlineColor,
+          drawingColor,
+          highlightColor,
+          drawingWidth: 18,
+          showOutline: true,
+          showCharacter: true,
+          strokeAnimationSpeed: 1.1,
+          delayBetweenStrokes: 180,
+          charDataLoader: (char, onComplete, onErr) => {
+            fetch(`/data/strokes/${encodeURIComponent(char)}.json`)
+              .then((res) => {
+                if (!res.ok) throw new Error(`Status ${res.status}`);
+                return res.json();
+              })
               .then((data) => {
                 if (cancelled) return;
-                if (data && Array.isArray(data.strokes)) setTotalStrokes(data.strokes.length);
+                if (data && Array.isArray(data.strokes)) {
+                  setTotalStrokes(data.strokes.length);
+                }
                 onComplete(data);
               })
-              .catch((err) => {
-                if (!cancelled) onErr(err);
+              .catch(() => {
+                if (cancelled) return;
+                // Fallback auf CDN falls lokale Datei fehlt
+                fetch(`https://cdn.jsdelivr.net/npm/hanzi-writer-data@2.0/${encodeURIComponent(char)}.json`)
+                  .then((r) => r.json())
+                  .then((data) => {
+                    if (cancelled) return;
+                    if (data && Array.isArray(data.strokes)) setTotalStrokes(data.strokes.length);
+                    onComplete(data);
+                  })
+                  .catch((err) => {
+                    if (!cancelled) onErr(err);
+                  });
               });
-          });
-      },
-      onLoadCharDataSuccess: () => {
-        if (cancelled) return;
-        setLoading(false);
-        setIsPlaying(true);
-        void writer.animateCharacter({
-          onComplete: () => {
-            if (!cancelled) setIsPlaying(false);
+          },
+          onLoadCharDataSuccess: () => {
+            if (cancelled) return;
+            setLoading(false);
+            setIsPlaying(true);
+            void writer.animateCharacter({
+              onComplete: () => {
+                if (!cancelled) setIsPlaying(false);
+              },
+            });
           },
         });
-      },
-    });
 
-    writerRef.current = writer;
+        writerRef.current = writer;
+      })
+      .catch((err) => {
+        if (!cancelled) {
+          setLoading(false);
+          setQuizFeedback('Fehler beim Laden des Strichfolge-Moduls');
+          console.error(err);
+        }
+      });
 
     return () => {
       cancelled = true;
-      writer.cancelQuiz();
-      writerRef.current = null;
+      if (writerRef.current) {
+        writerRef.current.cancelQuiz();
+        writerRef.current = null;
+      }
     };
   }, [character, size, strokeColor, outlineColor, drawingColor, highlightColor]);
 

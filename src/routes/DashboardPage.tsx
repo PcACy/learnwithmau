@@ -30,16 +30,16 @@ import { VOCAB } from '../data';
 import { selectDueItemIds, selectMastery } from '../lib/srsQuery';
 import { getCompletedDialogues, getCompletedGrammar, getCompletedStories } from '../lib/db';
 import { filterActiveMistakes } from '../lib/mistakeBank';
-import grammarData from '../data/grammar.json';
-import storiesData from '../data/stories.json';
-import type { GrammarLesson } from '../types/grammar';
-import type { Story } from '../types/story';
+import {
+  LESSONS_META,
+  STORIES_META,
+  TOTAL_GRAMMAR_LESSONS,
+  TOTAL_STORIES,
+} from '../data/curriculumMeta';
 import { KineticButton } from '../components/ui/KineticButton';
 import { SealBadge } from '../components/ui/SealBadge';
 
 const ALL_ITEM_IDS: readonly string[] = VOCAB.map((item) => item.id);
-const LESSONS = grammarData as GrammarLesson[];
-const STORIES = storiesData as Story[];
 
 export function DashboardPage() {
   const cards = useProgressStore((s) => s.cards);
@@ -78,11 +78,11 @@ export function DashboardPage() {
   const goalReached = dailyGoal.completedReviews >= dailyGoal.targetReviews;
 
   const nextGrammarLesson = useMemo(() => {
-    return LESSONS.find((l) => !completedGrammar.includes(l.id));
+    return LESSONS_META.find((l) => !completedGrammar.includes(l.id));
   }, [completedGrammar]);
 
   const nextStory = useMemo(() => {
-    return STORIES.find((s) => !completedStories.includes(s.id));
+    return STORIES_META.find((s) => !completedStories.includes(s.id));
   }, [completedStories]);
 
   const SHORTCUT_ROUTES = [
@@ -318,7 +318,7 @@ export function DashboardPage() {
       </div>
 
       {/* 2.5 LEHRBUCH-FUNDAMENT · PHONETIK, STRICHE & KULTUR */}
-      <section className="space-y-5">
+      <section className="space-y-5 cv-auto-section">
         <div className="flex items-baseline justify-between border-b border-zinc-200/80 dark:border-white/[0.08] pb-3">
           <div className="flex items-center gap-3">
             <SealBadge sealChar="基" label="FUNDAMENT" variant="cinnabar" size="sm" />
@@ -435,7 +435,7 @@ export function DashboardPage() {
       {/* 3. 3-SÄULEN CURRICULUM ARCHITEKTUR */}
 
       {/* SÄULE 1: LEHRBUCH & SPRACHVERSTÄNDNIS */}
-      <section className="space-y-5">
+      <section className="space-y-5 cv-auto-section">
         <div className="flex items-baseline justify-between border-b border-zinc-200/80 dark:border-white/[0.08] pb-3">
           <div className="flex items-center gap-3">
             <SealBadge sealChar="书" label="SÄULE 1" variant="jade" size="sm" />
@@ -464,13 +464,13 @@ export function DashboardPage() {
                   <GraduationCap className="h-5 w-5" />
                 </span>
                 <span className="font-mono text-xs font-semibold text-emerald-700 dark:text-emerald-400">
-                  {completedGrammar.length} / {LESSONS.length} gemeistert
+                  {completedGrammar.length} / {TOTAL_GRAMMAR_LESSONS} gemeistert
                 </span>
               </div>
               <div>
                 <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100">Grammatik-Kompendium</h3>
                 <p className="font-mono text-xs text-emerald-700 dark:text-emerald-400 uppercase tracking-wider mt-0.5">
-                  {LESSONS.length} Didaktische Lektionen
+                  {TOTAL_GRAMMAR_LESSONS} Didaktische Lektionen
                 </p>
                 <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed">
                   SVO-Satzbau, Kopula 是, Ortsangaben 在, Entscheidungsfragen 吗 und Vollendung 了.
@@ -496,7 +496,7 @@ export function DashboardPage() {
                   <BookOpenText className="h-5 w-5" />
                 </span>
                 <span className="font-mono text-xs font-semibold text-emerald-700 dark:text-emerald-400">
-                  {completedStories.length} / {STORIES.length} gelesen
+                  {completedStories.length} / {TOTAL_STORIES} gelesen
                 </span>
               </div>
               <div>
@@ -582,7 +582,7 @@ export function DashboardPage() {
       </section>
 
       {/* SÄULE 2: SCHRIFT & MOTORIK */}
-      <section className="space-y-5">
+      <section className="space-y-5 cv-auto-section">
         <div className="flex items-baseline justify-between border-b border-zinc-200/80 dark:border-white/[0.08] pb-3">
           <div className="flex items-center gap-3">
             <SealBadge sealChar="技" label="SÄULE 2" variant="stone" size="sm" />
@@ -712,7 +712,7 @@ export function DashboardPage() {
       </section>
 
       {/* SÄULE 3: PRÜFUNG & GEDÄCHTNIS */}
-      <section className="space-y-5">
+      <section className="space-y-5 cv-auto-section">
         <div className="flex items-baseline justify-between border-b border-zinc-200/80 dark:border-white/[0.08] pb-3">
           <div className="flex items-center gap-3">
             <SealBadge sealChar="考" label="SÄULE 3" variant="cinnabar" size="sm" />

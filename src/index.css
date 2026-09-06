@@ -165,6 +165,20 @@ html.dark body {
 }
 
 /* ==========================================================================
+   Modern CSS Containment & Offscreen Virtualization
+   ========================================================================== */
+
+@utility cv-auto-section {
+  content-visibility: auto;
+  contain-intrinsic-size: auto none auto 380px;
+}
+
+@utility cv-auto-card {
+  content-visibility: auto;
+  contain-intrinsic-size: auto none auto 68px;
+}
+
+/* ==========================================================================
    View Transitions & Page Motion System
    ========================================================================== */
 
