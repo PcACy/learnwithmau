@@ -20,7 +20,7 @@ import { filterActiveMistakes } from '../../lib/mistakeBank';
 import { ThemeToggle } from './ThemeToggle';
 import { BackupModal } from '../dashboard/BackupModal';
 import { SealBadge } from '../ui/SealBadge';
-import { preloadAllRoutes } from '../../routes/lazyRoutes';
+import { preloadAllRoutes, ROUTE_PRELOAD_MAP } from '../../routes/lazyRoutes';
 
 const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
@@ -255,6 +255,9 @@ export function AppShell() {
                     key={link.to}
                     to={link.to}
                     viewTransition
+                    onMouseEnter={() => void ROUTE_PRELOAD_MAP[link.to]?.()}
+                    onFocus={() => void ROUTE_PRELOAD_MAP[link.to]?.()}
+                    onTouchStart={() => void ROUTE_PRELOAD_MAP[link.to]?.()}
                     ref={(el) => {
                       if (el) linkRefs.current.set(link.to, el);
                       else linkRefs.current.delete(link.to);
@@ -344,6 +347,9 @@ export function AppShell() {
                 key={link.to}
                 to={link.to}
                 viewTransition
+                onTouchStart={() => void ROUTE_PRELOAD_MAP[link.to]?.()}
+                onMouseEnter={() => void ROUTE_PRELOAD_MAP[link.to]?.()}
+                onFocus={() => void ROUTE_PRELOAD_MAP[link.to]?.()}
                 className={`flex flex-col items-center justify-center gap-0.5 px-1 py-1 text-[9px] font-semibold transition-all duration-150 active:scale-95 touch-manipulation ${
                   isActive
                     ? 'text-emerald-700 font-bold dark:text-emerald-400'

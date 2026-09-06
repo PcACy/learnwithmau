@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { memo, useEffect, useRef } from 'react';
 import { Search, X } from 'lucide-react';
 import type { VocabItem } from '../../types/vocab';
 import { PART_OF_SPEECH_LABELS, PART_OF_SPEECH_MAP } from '../../data/vocabDetails';
@@ -18,7 +18,93 @@ interface DictionaryMasterListProps {
   inputRef: React.RefObject<HTMLInputElement | null>;
 }
 
-export function DictionaryMasterList({
+interface DictionaryCardItemProps {
+  item: VocabItem;
+  isSelected: boolean;
+  hskTag: string;
+  onSelect(id: string): void;
+  activeRef: React.Ref<HTMLDivElement> | null;
+}
+
+const DictionaryCardItem = memo(function DictionaryCardItem({
+  item,
+  isSelected,
+  hskTag,
+  onSelect,
+  activeRef,
+}: DictionaryCardItemProps) {
+  const pos = PART_OF_SPEECH_MAP[item.id] || 'nomen';
+  const posInfo = PART_OF_SPEECH_LABELS[pos] || { short: 'Wort' };
+
+  return (
+    <div
+      ref={activeRef}
+      role="button"
+      tabIndex={0}
+      onClick={() => onSelect(item.id)}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onSelect(item.id);
+        }
+      }}
+      className={`group relative flex cursor-pointer items-center justify-between gap-3 rounded-2xl border p-2.5 sm:p-3 transition-colors duration-150 ${
+        isSelected
+          ? 'border-emerald-600 bg-emerald-500/[0.04] shadow-whisper ring-1 ring-emerald-600/30 dark:border-emerald-500 dark:bg-emerald-500/[0.08]'
+          : 'border-zinc-200/80 bg-white hover:border-zinc-300 hover:shadow-xs dark:border-white/10 dark:bg-zinc-900 dark:hover:border-white/20'
+      }`}
+    >
+      {/* Aktiver Akzentstreifen links */}
+      {isSelected && (
+        <span className="absolute -left-[1px] bottom-2.5 top-2.5 w-1 rounded-r-full bg-emerald-600 dark:bg-emerald-400" />
+      )}
+
+      <div className="flex items-center gap-3 min-w-0">
+        {/* Quadratische Tianzige-Box */}
+        <div
+          className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border relative overflow-hidden ${
+            isSelected
+              ? 'border-emerald-500/40 bg-white text-emerald-950 dark:border-emerald-500/40 dark:bg-zinc-800 dark:text-emerald-100'
+              : 'border-zinc-200/90 bg-zinc-50/80 text-zinc-900 dark:border-white/10 dark:bg-zinc-800/60 dark:text-zinc-100'
+          }`}
+        >
+          {/* Subtle Tianzige-Grid */}
+          <div className="pointer-events-none absolute inset-0 grid grid-cols-2 grid-rows-2 opacity-15">
+            <div className="border-b border-r border-dashed border-current" />
+            <div className="border-b border-dashed border-current" />
+            <div className="border-r border-dashed border-current" />
+            <div />
+          </div>
+          <span className="font-cjk text-xl font-bold tracking-tight select-none">{item.hanzi}</span>
+        </div>
+
+        {/* Wort-Details (Pinyin & Übersetzung) */}
+        <div className="min-w-0 space-y-0.5">
+          <div className="flex items-center gap-2">
+            <span className="font-mono text-sm font-extrabold text-zinc-900 dark:text-zinc-100">
+              {item.pinyin}
+            </span>
+          </div>
+          <p className="truncate text-xs font-medium text-zinc-500 dark:text-zinc-400">
+            {item.meaning}
+          </p>
+        </div>
+      </div>
+
+      {/* Badges rechts */}
+      <div className="flex shrink-0 flex-col items-end gap-1">
+        <span className="font-mono text-[10px] font-extrabold text-rose-600 dark:text-rose-400 tracking-wider">
+          HSK 1 {hskTag}
+        </span>
+        <span className="rounded-md bg-zinc-100 px-1.5 py-0.5 font-mono text-[10px] font-bold text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400">
+          {posInfo.short}
+        </span>
+      </div>
+    </div>
+  );
+});
+
+export const DictionaryMasterList = memo(function DictionaryMasterList({
   items,
   allItemsCount,
   selectedId,
@@ -118,80 +204,16 @@ export function DictionaryMasterList({
 
       {/* 3. Flüssig scrollbare Vokabelliste */}
       <div className="max-h-[calc(100vh-14.5rem)] overflow-y-auto space-y-2 pr-1 scrollbar-thin">
-        {items.map((item, idx) => {
-          const isSelected = item.id === selectedId;
-          const pos = PART_OF_SPEECH_MAP[item.id] || 'nomen';
-          const posInfo = PART_OF_SPEECH_LABELS[pos] || { short: 'Wort' };
-          const hskTag = `#${String(idx + 1).padStart(2, '0')}`;
-
-          return (
-            <div
-              key={item.id}
-              ref={isSelected ? activeItemRef : null}
-              role="button"
-              tabIndex={0}
-              onClick={() => onSelect(item.id)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.preventDefault();
-                  onSelect(item.id);
-                }
-              }}
-              className={`group relative flex cursor-pointer items-center justify-between gap-3 rounded-2xl border p-2.5 sm:p-3 transition-all duration-150 ${
-                isSelected
-                  ? 'border-emerald-600 bg-emerald-500/[0.04] shadow-whisper ring-1 ring-emerald-600/30 dark:border-emerald-500 dark:bg-emerald-500/[0.08]'
-                  : 'border-zinc-200/80 bg-white hover:border-zinc-300 hover:shadow-xs dark:border-white/10 dark:bg-zinc-900 dark:hover:border-white/20'
-              }`}
-            >
-              {/* Aktiver Akzentstreifen links */}
-              {isSelected && (
-                <span className="absolute -left-[1px] bottom-2.5 top-2.5 w-1 rounded-r-full bg-emerald-600 dark:bg-emerald-400" />
-              )}
-
-              <div className="flex items-center gap-3 min-w-0">
-                {/* Quadratische Tianzige-Box */}
-                <div
-                  className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border relative overflow-hidden ${
-                    isSelected
-                      ? 'border-emerald-500/40 bg-white text-emerald-950 dark:border-emerald-500/40 dark:bg-zinc-800 dark:text-emerald-100'
-                      : 'border-zinc-200/90 bg-zinc-50/80 text-zinc-900 dark:border-white/10 dark:bg-zinc-800/60 dark:text-zinc-100'
-                  }`}
-                >
-                  {/* Subtle Tianzige-Grid */}
-                  <div className="pointer-events-none absolute inset-0 grid grid-cols-2 grid-rows-2 opacity-15">
-                    <div className="border-b border-r border-dashed border-current" />
-                    <div className="border-b border-dashed border-current" />
-                    <div className="border-r border-dashed border-current" />
-                    <div />
-                  </div>
-                  <span className="font-cjk text-xl font-bold tracking-tight select-none">{item.hanzi}</span>
-                </div>
-
-                {/* Wort-Details (Pinyin & Übersetzung) */}
-                <div className="min-w-0 space-y-0.5">
-                  <div className="flex items-center gap-2">
-                    <span className="font-mono text-sm font-extrabold text-zinc-900 dark:text-zinc-100">
-                      {item.pinyin}
-                    </span>
-                  </div>
-                  <p className="truncate text-xs font-medium text-zinc-500 dark:text-zinc-400">
-                    {item.meaning}
-                  </p>
-                </div>
-              </div>
-
-              {/* Badges rechts */}
-              <div className="flex shrink-0 flex-col items-end gap-1">
-                <span className="font-mono text-[10px] font-extrabold text-rose-600 dark:text-rose-400 tracking-wider">
-                  HSK 1 {hskTag}
-                </span>
-                <span className="rounded-md bg-zinc-100 px-1.5 py-0.5 font-mono text-[10px] font-bold text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400">
-                  {posInfo.short}
-                </span>
-              </div>
-            </div>
-          );
-        })}
+        {items.map((item, idx) => (
+          <DictionaryCardItem
+            key={item.id}
+            item={item}
+            isSelected={item.id === selectedId}
+            hskTag={`#${String(idx + 1).padStart(2, '0')}`}
+            onSelect={onSelect}
+            activeRef={item.id === selectedId ? activeItemRef : null}
+          />
+        ))}
 
         {items.length === 0 && (
           <div className="rounded-2xl border border-dashed border-zinc-200 p-8 text-center text-xs text-zinc-500 dark:border-white/10">
@@ -201,4 +223,4 @@ export function DictionaryMasterList({
       </div>
     </div>
   );
-}
+});

@@ -73,7 +73,7 @@ export function DashboardPage() {
     () => filterActiveMistakes(mistakes).length,
     [mistakes],
   );
-  const mastery = selectMastery(cards, VOCAB.length);
+  const mastery = useMemo(() => selectMastery(cards, VOCAB.length), [cards]);
   const masteryPercent = Math.round(mastery * 100);
   const goalReached = dailyGoal.completedReviews >= dailyGoal.targetReviews;
 

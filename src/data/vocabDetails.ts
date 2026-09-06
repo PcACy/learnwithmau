@@ -356,7 +356,7 @@ const MNEMONIC_MAP: Record<string, string> = {
 };
 
 // Authentische Kollokationen (nur reale chinesische Wortverbindungen)
-const COLLOCATIONS_MAP: Record<string, Collocation[]> = {
+export const COLLOCATIONS_MAP: Record<string, Collocation[]> = {
   "hsk1-hao": [
     {
       "hanzi": "好看",

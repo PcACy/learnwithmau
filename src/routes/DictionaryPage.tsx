@@ -1,21 +1,50 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { ArrowLeft, Printer } from 'lucide-react';
 import { VOCAB } from '../data';
+import type { VocabItem } from '../types/vocab';
 import { stripToneMarks } from '../lib/pinyinUtils';
 import { stopCurrentAudio } from '../lib/audio';
 import { useProgressStore } from '../store/progressStore';
 import { DictionaryMasterList } from '../components/dictionary/DictionaryMasterList';
 import { DictionaryDetailPanel } from '../components/dictionary/DictionaryDetailPanel';
-import { PART_OF_SPEECH_MAP, getEnrichedVocab } from '../data/vocabDetails';
+import { PART_OF_SPEECH_MAP, COLLOCATIONS_MAP } from '../data/vocabDetails';
 import { SealBadge } from '../components/ui/SealBadge';
 import { TianzigePrintModal } from '../components/dictionary/TianzigePrintModal';
 
 import { useKeyDown } from '../hooks/useKeyDown';
 
+interface SearchIndexEntry {
+  item: VocabItem;
+  pos: string;
+  hanzi: string;
+  meaningLower: string;
+  pinyinLower: string;
+  pinyinPlain: string;
+  syllablesPlain: string[];
+  collocationTexts: string[];
+}
+
+const VOCAB_SEARCH_INDEX: SearchIndexEntry[] = VOCAB.map((item) => {
+  const pos = PART_OF_SPEECH_MAP[item.id] || 'nomen';
+  const collocations = COLLOCATIONS_MAP[item.id] || [];
+  return {
+    item,
+    pos,
+    hanzi: item.hanzi,
+    meaningLower: item.meaning.toLowerCase(),
+    pinyinLower: item.pinyin.toLowerCase(),
+    pinyinPlain: stripToneMarks(item.pinyin),
+    syllablesPlain: item.syllables.map((s) => s.plain),
+    collocationTexts: collocations.map(
+      (col) =>
+        `${col.hanzi} ${col.german.toLowerCase()} ${col.pinyin.toLowerCase()} ${stripToneMarks(col.pinyin)}`,
+    ),
+  };
+});
+
 export function DictionaryPage() {
   const [searchParams] = useSearchParams();
-  const cards = useProgressStore((s) => s.cards);
   const searchInputRef = useRef<HTMLInputElement | null>(null);
   const [printModalOpen, setPrintModalOpen] = useState(false);
 
@@ -51,65 +80,75 @@ export function DictionaryPage() {
     }
   });
 
-  // Filterung nach Query & Wortart-Kategorie
+  // Filterung nach Query & Wortart-Kategorie mit vorkompiliertem Suchindex
   const filteredItems = useMemo(() => {
     const trimmed = query.trim();
+    if (!trimmed && selectedCategory === 'all') {
+      return VOCAB as VocabItem[];
+    }
     const qLower = trimmed.toLowerCase();
     const qPlain = stripToneMarks(trimmed);
 
-    return VOCAB.filter((item) => {
-      // 1. Kategorie-Filter
-      if (selectedCategory !== 'all') {
-        const pos = PART_OF_SPEECH_MAP[item.id] || 'nomen';
-        if (pos !== selectedCategory) {
-          return false;
-        }
+    const matches: VocabItem[] = [];
+    for (let i = 0; i < VOCAB_SEARCH_INDEX.length; i++) {
+      const entry = VOCAB_SEARCH_INDEX[i];
+      if (selectedCategory !== 'all' && entry.pos !== selectedCategory) {
+        continue;
+      }
+      if (!trimmed) {
+        matches.push(entry.item);
+        continue;
       }
 
-      // 2. Textsuche (inkl. Beispielsätze und Kollokationen)
-      if (!trimmed) return true;
-      const enriched = getEnrichedVocab(item);
-      const matchCollocation = enriched.collocations?.some(
-        (col) =>
-          col.hanzi.includes(trimmed) ||
-          col.german.toLowerCase().includes(qLower) ||
-          col.pinyin.toLowerCase().includes(qLower) ||
-          stripToneMarks(col.pinyin).includes(qPlain),
-      );
+      // 1. Schneller Primär-Treffer auf Hanzi, Bedeutung oder Pinyin
+      if (
+        entry.hanzi.includes(trimmed) ||
+        entry.meaningLower.includes(qLower) ||
+        entry.pinyinLower.includes(qLower) ||
+        entry.pinyinPlain.includes(qPlain) ||
+        entry.syllablesPlain.some((plain) => plain.startsWith(qPlain))
+      ) {
+        matches.push(entry.item);
+        continue;
+      }
 
-      return (
-        item.hanzi.includes(trimmed) ||
-        item.meaning.toLowerCase().includes(qLower) ||
-        item.pinyin.toLowerCase().includes(qLower) ||
-        item.syllables.some((syllable) => syllable.plain.startsWith(qPlain)) ||
-        stripToneMarks(item.pinyin).includes(qPlain) ||
-        Boolean(matchCollocation)
-      );
-    });
+      // 2. Kollokationen-Fallback
+      if (
+        entry.collocationTexts.some((text) =>
+          text.includes(qLower) || text.includes(trimmed) || text.includes(qPlain),
+        )
+      ) {
+        matches.push(entry.item);
+      }
+    }
+    return matches;
   }, [query, selectedCategory]);
 
-  const handleQueryChange = (q: string) => {
+  const handleQueryChange = useCallback((q: string) => {
     setInternalQuery(q);
-  };
+  }, []);
 
-  const handleCategoryChange = (cat: string) => {
+  const handleCategoryChange = useCallback((cat: string) => {
     setSelectedCategory(cat);
-  };
+  }, []);
 
   const selectedItem = useMemo(() => {
     if (filteredItems.length === 0) return null;
     return filteredItems.find((it) => it.id === selectedId) || filteredItems[0];
   }, [filteredItems, selectedId]);
 
+  // Selektive Zustand-Subscription: Rendert nur neu, wenn sich die gewählte Vokabel ändert
+  const selectedCard = useProgressStore((s) => (selectedItem ? s.cards[selectedItem.id] : undefined));
+
   const selectedGlobalIndex = useMemo(() => {
     if (!selectedItem) return -1;
     return VOCAB.findIndex((it) => it.id === selectedItem.id);
   }, [selectedItem]);
 
-  const handleSelect = (id: string) => {
+  const handleSelect = useCallback((id: string) => {
     setInternalSelectedId(id);
     setInternalMobileView('detail');
-  };
+  }, []);
 
   return (
     <div className="space-y-6 pb-16">
@@ -168,7 +207,7 @@ export function DictionaryPage() {
           {selectedItem ? (
             <DictionaryDetailPanel
               item={selectedItem}
-              card={cards[selectedItem.id]}
+              card={selectedCard}
               globalIndex={selectedGlobalIndex + 1}
             />
           ) : (
@@ -212,7 +251,7 @@ export function DictionaryPage() {
             {selectedItem ? (
               <DictionaryDetailPanel
                 item={selectedItem}
-                card={cards[selectedItem.id]}
+                card={selectedCard}
                 globalIndex={selectedGlobalIndex + 1}
               />
             ) : (

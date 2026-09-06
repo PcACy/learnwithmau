@@ -7,7 +7,7 @@ import type { Radical } from '../types/vocab';
 
 type StrokeTab = 'basic' | 'rules' | 'radicals';
 
-const RADICALS_LIST = radicalsData as Radical[];
+const TOP_RADICALS = (radicalsData as Radical[]).slice(0, 30);
 
 export function StrokeGuidePage() {
   const [activeTab, setActiveTab] = useState<StrokeTab>('basic');
@@ -285,7 +285,7 @@ export function StrokeGuidePage() {
           </div>
 
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {RADICALS_LIST.slice(0, 30).map((radical) => (
+            {TOP_RADICALS.map((radical) => (
               <div
                 key={radical.id}
                 className="rounded-2xl border border-zinc-200/70 bg-white/90 p-3.5 shadow-xs dark:border-white/[0.06] dark:bg-zinc-900/80 flex items-center gap-3"

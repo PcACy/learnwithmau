@@ -114,8 +114,9 @@ function validateVocab(rawItems: unknown[]): VocabItem[] {
   });
 }
 
-/** Validierter HSK-1-Katalog (wirft beim Modul-Load bei korrupten Daten). */
-export const VOCAB: readonly VocabItem[] = validateVocab(rawVocab as VocabItem[]);
+/** Validierter HSK-1-Katalog (In Dev/Test vollständig validiert, in Prod ohne Startup-Overhead). */
+export const VOCAB: readonly VocabItem[] =
+  import.meta.env?.DEV !== false ? validateVocab(rawVocab as VocabItem[]) : (rawVocab as VocabItem[]);
 
 export const VOCAB_BY_ID: ReadonlyMap<string, VocabItem> = new Map(
   VOCAB.map((item) => [item.id, item]),

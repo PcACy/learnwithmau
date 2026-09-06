@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo, useEffect, useRef } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import {
   Volume2,
   BookOpen,
@@ -23,6 +23,32 @@ import type { Tone } from '../types/vocab';
 type PinyinTab = 'initials' | 'finals' | 'tones' | 'orthography';
 
 const VOCAB_MAP_BY_HANZI = new Map(VOCAB.map((v) => [v.hanzi, v]));
+
+const INITIALS_BY_CATEGORY: { label: string; items: InitialData[] }[] = (() => {
+  const groups: { label: string; items: InitialData[] }[] = [];
+  for (const item of INITIALS) {
+    let group = groups.find((g) => g.label === item.categoryLabel);
+    if (!group) {
+      group = { label: item.categoryLabel, items: [] };
+      groups.push(group);
+    }
+    group.items.push(item);
+  }
+  return groups;
+})();
+
+const FINALS_BY_CATEGORY: { label: string; items: FinalData[] }[] = (() => {
+  const groups: { label: string; items: FinalData[] }[] = [];
+  for (const item of FINALS) {
+    let group = groups.find((g) => g.label === item.categoryLabel);
+    if (!group) {
+      group = { label: item.categoryLabel, items: [] };
+      groups.push(group);
+    }
+    group.items.push(item);
+  }
+  return groups;
+})();
 
 export function PinyinPage() {
   const [activeTab, setActiveTab] = useState<PinyinTab>('initials');
@@ -65,34 +91,6 @@ export function PinyinPage() {
   const playToneSound = useCallback((tone: Tone) => {
     stopCurrentAudio();
     playToneSequence([tone]);
-  }, []);
-
-  // Group initials by category
-  const initialsByCategory = useMemo(() => {
-    const groups: { label: string; items: InitialData[] }[] = [];
-    for (const item of INITIALS) {
-      let group = groups.find((g) => g.label === item.categoryLabel);
-      if (!group) {
-        group = { label: item.categoryLabel, items: [] };
-        groups.push(group);
-      }
-      group.items.push(item);
-    }
-    return groups;
-  }, []);
-
-  // Group finals by category
-  const finalsByCategory = useMemo(() => {
-    const groups: { label: string; items: FinalData[] }[] = [];
-    for (const item of FINALS) {
-      let group = groups.find((g) => g.label === item.categoryLabel);
-      if (!group) {
-        group = { label: item.categoryLabel, items: [] };
-        groups.push(group);
-      }
-      group.items.push(item);
-    }
-    return groups;
   }, []);
 
   return (
@@ -153,7 +151,7 @@ export function PinyinPage() {
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
           {/* List of initials grouped */}
           <div className="space-y-6 lg:col-span-5">
-            {initialsByCategory.map((group) => (
+            {INITIALS_BY_CATEGORY.map((group) => (
               <div key={group.label} className="space-y-2">
                 <h3 className="font-mono text-[11px] font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
                   {group.label}
@@ -277,7 +275,7 @@ export function PinyinPage() {
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
           {/* List of finals grouped */}
           <div className="space-y-6 lg:col-span-5">
-            {finalsByCategory.map((group) => (
+            {FINALS_BY_CATEGORY.map((group) => (
               <div key={group.label} className="space-y-2">
                 <h3 className="font-mono text-[11px] font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
                   {group.label}

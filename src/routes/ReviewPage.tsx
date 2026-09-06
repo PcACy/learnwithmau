@@ -78,6 +78,8 @@ export function ReviewPage() {
   const [selectedDeckId, setSelectedDeckId] = useState<string>('all');
   const [freshLimit, setFreshLimit] = useState<number | 'all'>(10);
 
+  const [phase, setPhase] = useState<Phase>('intro');
+
   const allItemIds = useMemo(() => [...VOCAB_BY_ID.keys()], []);
 
   const selectedDeck = useMemo(
@@ -92,18 +94,20 @@ export function ReviewPage() {
 
   const now = useMemo(() => new Date(), []);
 
+  // Während aktiver Drills (Drill/Summary) wird die Neuberechnung aller 8 Decks übersprungen
   const masterSummary = useMemo(
-    () => summarizeQueue(cards, allItemIds, now),
-    [cards, allItemIds, now],
+    () => (phase === 'intro' ? summarizeQueue(cards, allItemIds, now) : { dueCount: 0, freshCount: 0, learnedCount: 0 }),
+    [cards, allItemIds, now, phase],
   );
 
   const deckSummaries = useMemo(() => {
+    if (phase !== 'intro') return new Map<string, ReturnType<typeof summarizeQueue>>();
     const map = new Map<string, ReturnType<typeof summarizeQueue>>();
     for (const d of THEMATIC_DECKS) {
       map.set(d.id, summarizeQueue(cards, d.itemIds, now));
     }
     return map;
-  }, [cards, now]);
+  }, [cards, now, phase]);
 
   const currentSummary = useMemo(
     () => (selectedDeckId === 'all' ? masterSummary : (deckSummaries.get(selectedDeckId) ?? masterSummary)),
@@ -116,8 +120,6 @@ export function ReviewPage() {
     typeof effectiveMaxFresh === 'number' ? effectiveMaxFresh : currentSummary.freshCount,
   );
   const plannedSessionTotal = currentSummary.dueCount + queuedFreshCount;
-
-  const [phase, setPhase] = useState<Phase>('intro');
   const [session, setSession] = useState<SessionState | null>(null);
   const [showStrokePad, setShowStrokePad] = useState(false);
   const [selectedCharIndex, setSelectedCharIndex] = useState(0);
