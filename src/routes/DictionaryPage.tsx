@@ -8,7 +8,7 @@ import { stopCurrentAudio } from '../lib/audio';
 import { useProgressStore } from '../store/progressStore';
 import { DictionaryMasterList } from '../components/dictionary/DictionaryMasterList';
 import { DictionaryDetailPanel } from '../components/dictionary/DictionaryDetailPanel';
-import { PART_OF_SPEECH_MAP } from '../data/vocabDetails';
+import { PART_OF_SPEECH_MAP, getEnrichedVocab } from '../data/vocabDetails';
 import { SealBadge } from '../components/ui/SealBadge';
 import { TianzigePrintModal } from '../components/dictionary/TianzigePrintModal';
 
@@ -67,14 +67,24 @@ export function DictionaryPage() {
         }
       }
 
-      // 2. Textsuche
+      // 2. Textsuche (inkl. Beispielsätze und Kollokationen)
       if (!trimmed) return true;
+      const enriched = getEnrichedVocab(item);
+      const matchCollocation = enriched.collocations?.some(
+        (col) =>
+          col.hanzi.includes(trimmed) ||
+          col.german.toLowerCase().includes(qLower) ||
+          col.pinyin.toLowerCase().includes(qLower) ||
+          stripToneMarks(col.pinyin).includes(qPlain),
+      );
+
       return (
         item.hanzi.includes(trimmed) ||
         item.meaning.toLowerCase().includes(qLower) ||
         item.pinyin.toLowerCase().includes(qLower) ||
         item.syllables.some((syllable) => syllable.plain.startsWith(qPlain)) ||
-        stripToneMarks(item.pinyin).includes(qPlain)
+        stripToneMarks(item.pinyin).includes(qPlain) ||
+        Boolean(matchCollocation)
       );
     });
   }, [query, selectedCategory]);

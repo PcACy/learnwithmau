@@ -689,6 +689,2454 @@ const COLLOCATIONS_MAP: Record<string, Collocation[]> = {
       "pinyin": "chábēi",
       "german": "Teetasse"
     }
+  ],
+  "hsk1-mingtian": [
+      {
+          "hanzi": "明天见",
+          "pinyin": "míngtiān jiàn",
+          "german": "bis morgen"
+      },
+      {
+          "hanzi": "明天上午",
+          "pinyin": "míngtiān shàngwǔ",
+          "german": "morgen Vormittag"
+      },
+      {
+          "hanzi": "明天下午",
+          "pinyin": "míngtiān xiàwǔ",
+          "german": "morgen Nachmittag"
+      }
+  ],
+  "hsk1-xingqi": [
+      {
+          "hanzi": "星期一",
+          "pinyin": "xīngqīyī",
+          "german": "Montag"
+      },
+      {
+          "hanzi": "这个星期",
+          "pinyin": "zhè ge xīngqī",
+          "german": "diese Woche"
+      },
+      {
+          "hanzi": "下个星期",
+          "pinyin": "xià ge xīngqī",
+          "german": "nächste Woche"
+      }
+  ],
+  "hsk1-xuesheng": [
+      {
+          "hanzi": "好学生",
+          "pinyin": "hǎo xuésheng",
+          "german": "guter Schüler"
+      },
+      {
+          "hanzi": "大学生",
+          "pinyin": "dàxuéshēng",
+          "german": "Student (an einer Hochschule)"
+      },
+      {
+          "hanzi": "小学生",
+          "pinyin": "xiǎoxuéshēng",
+          "german": "Grundschüler"
+      }
+  ],
+  "hsk1-tongxue": [
+      {
+          "hanzi": "老同学",
+          "pinyin": "lǎo tóngxué",
+          "german": "alter Mitschüler / alter Freund"
+      },
+      {
+          "hanzi": "男同学",
+          "pinyin": "nán tóngxué",
+          "german": "Mitschüler"
+      },
+      {
+          "hanzi": "女同学",
+          "pinyin": "nǚ tóngxué",
+          "german": "Mitschülerin"
+      }
+  ],
+  "hsk1-pengyou": [
+      {
+          "hanzi": "好朋友",
+          "pinyin": "hǎo péngyou",
+          "german": "guter Freund"
+      },
+      {
+          "hanzi": "老朋友",
+          "pinyin": "lǎo péngyou",
+          "german": "alter Freund"
+      },
+      {
+          "hanzi": "新朋友",
+          "pinyin": "xīn péngyou",
+          "german": "neuer Freund"
+      }
+  ],
+  "hsk1-hanyu": [
+      {
+          "hanzi": "学汉语",
+          "pinyin": "xué Hànyǔ",
+          "german": "Chinesisch lernen"
+      },
+      {
+          "hanzi": "说汉语",
+          "pinyin": "shuō Hànyǔ",
+          "german": "Chinesisch sprechen"
+      },
+      {
+          "hanzi": "汉语书",
+          "pinyin": "Hànyǔ shū",
+          "german": "Chinesischbuch"
+      }
+  ],
+  "hsk1-zhuozi": [
+      {
+          "hanzi": "一张桌子",
+          "pinyin": "yì zhāng zhuōzi",
+          "german": "ein Tisch"
+      },
+      {
+          "hanzi": "桌子上",
+          "pinyin": "zhuōzi shang",
+          "german": "auf dem Tisch"
+      },
+      {
+          "hanzi": "大桌子",
+          "pinyin": "dà zhuōzi",
+          "german": "großer Tisch"
+      }
+  ],
+  "hsk1-pingguo": [
+      {
+          "hanzi": "吃苹果",
+          "pinyin": "chī píngguǒ",
+          "german": "Apfel essen"
+      },
+      {
+          "hanzi": "买苹果",
+          "pinyin": "mǎi píngguǒ",
+          "german": "Äpfel kaufen"
+      },
+      {
+          "hanzi": "大苹果",
+          "pinyin": "dà píngguǒ",
+          "german": "großer Apfel"
+      }
+  ],
+  "hsk1-yue": [
+      {
+          "hanzi": "一月",
+          "pinyin": "yīyuè",
+          "german": "Januar"
+      },
+      {
+          "hanzi": "上个月",
+          "pinyin": "shàng ge yuè",
+          "german": "letzter Monat"
+      },
+      {
+          "hanzi": "下个月",
+          "pinyin": "xià ge yuè",
+          "german": "nächster Monat"
+      }
+  ],
+  "hsk1-ri": [
+      {
+          "hanzi": "生日",
+          "pinyin": "shēngrì",
+          "german": "Geburtstag"
+      },
+      {
+          "hanzi": "今天几日",
+          "pinyin": "jīntiān jǐ rì",
+          "german": "der wievielte Tag ist heute"
+      },
+      {
+          "hanzi": "日月",
+          "pinyin": "rì yuè",
+          "german": "Sonne und Mond"
+      }
+  ],
+  "hsk1-shi": [
+      {
+          "hanzi": "十个",
+          "pinyin": "shí ge",
+          "german": "zehn Stück"
+      },
+      {
+          "hanzi": "十点",
+          "pinyin": "shí diǎn",
+          "german": "zehn Uhr"
+      },
+      {
+          "hanzi": "十五",
+          "pinyin": "shíwǔ",
+          "german": "fünfzehn"
+      }
+  ],
+  "hsk1-yi": [
+      {
+          "hanzi": "一个人",
+          "pinyin": "yí ge rén",
+          "german": "eine Person / alleine"
+      },
+      {
+          "hanzi": "一起",
+          "pinyin": "yìqǐ",
+          "german": "zusammen / gemeinsam"
+      },
+      {
+          "hanzi": "一点儿",
+          "pinyin": "yìdiǎnr",
+          "german": "ein wenig / ein bisschen"
+      }
+  ],
+  "hsk1-er": [
+      {
+          "hanzi": "二十",
+          "pinyin": "èrshí",
+          "german": "zwanzig"
+      },
+      {
+          "hanzi": "二月",
+          "pinyin": "èryuè",
+          "german": "Februar"
+      },
+      {
+          "hanzi": "第二",
+          "pinyin": "dì-èr",
+          "german": "zweiter / zweitens"
+      }
+  ],
+  "hsk1-san": [
+      {
+          "hanzi": "三个",
+          "pinyin": "sān ge",
+          "german": "drei Stück"
+      },
+      {
+          "hanzi": "三月",
+          "pinyin": "sānyuè",
+          "german": "März"
+      },
+      {
+          "hanzi": "三点",
+          "pinyin": "sān diǎn",
+          "german": "drei Uhr"
+      }
+  ],
+  "hsk1-si": [
+      {
+          "hanzi": "四个",
+          "pinyin": "sì ge",
+          "german": "vier Stück"
+      },
+      {
+          "hanzi": "四月",
+          "pinyin": "sìyuè",
+          "german": "April"
+      },
+      {
+          "hanzi": "四点",
+          "pinyin": "sì diǎn",
+          "german": "vier Uhr"
+      }
+  ],
+  "hsk1-wu": [
+      {
+          "hanzi": "五个",
+          "pinyin": "wǔ ge",
+          "german": "fünf Stück"
+      },
+      {
+          "hanzi": "五月",
+          "pinyin": "wǔyuè",
+          "german": "Mai"
+      },
+      {
+          "hanzi": "五十",
+          "pinyin": "wǔshí",
+          "german": "fünfzig"
+      }
+  ],
+  "hsk1-liu": [
+      {
+          "hanzi": "六个",
+          "pinyin": "liù ge",
+          "german": "sechs Stück"
+      },
+      {
+          "hanzi": "六月",
+          "pinyin": "liùyuè",
+          "german": "Juni"
+      },
+      {
+          "hanzi": "星期六",
+          "pinyin": "xīngqīliù",
+          "german": "Samstag"
+      }
+  ],
+  "hsk1-qi": [
+      {
+          "hanzi": "七个",
+          "pinyin": "qī ge",
+          "german": "sieben Stück"
+      },
+      {
+          "hanzi": "七月",
+          "pinyin": "qīyuè",
+          "german": "Juli"
+      },
+      {
+          "hanzi": "七点",
+          "pinyin": "qī diǎn",
+          "german": "sieben Uhr"
+      }
+  ],
+  "hsk1-ba": [
+      {
+          "hanzi": "八个",
+          "pinyin": "bā ge",
+          "german": "acht Stück"
+      },
+      {
+          "hanzi": "八月",
+          "pinyin": "bāyuè",
+          "german": "August"
+      },
+      {
+          "hanzi": "八点",
+          "pinyin": "bā diǎn",
+          "german": "acht Uhr"
+      }
+  ],
+  "hsk1-jiu": [
+      {
+          "hanzi": "九个",
+          "pinyin": "jiǔ ge",
+          "german": "neun Stück"
+      },
+      {
+          "hanzi": "九月",
+          "pinyin": "jiǔyuè",
+          "german": "September"
+      },
+      {
+          "hanzi": "九点",
+          "pinyin": "jiǔ diǎn",
+          "german": "neun Uhr"
+      }
+  ],
+  "hsk1-bai": [
+      {
+          "hanzi": "一百",
+          "pinyin": "yī bǎi",
+          "german": "einhundert"
+      },
+      {
+          "hanzi": "几百",
+          "pinyin": "jǐ bǎi",
+          "german": "einige Hundert"
+      },
+      {
+          "hanzi": "五百",
+          "pinyin": "wǔ bǎi",
+          "german": "fünfhundert"
+      }
+  ],
+  "hsk1-wo": [
+      {
+          "hanzi": "我们",
+          "pinyin": "wǒmen",
+          "german": "wir"
+      },
+      {
+          "hanzi": "我的",
+          "pinyin": "wǒ de",
+          "german": "mein / meine"
+      },
+      {
+          "hanzi": "我家",
+          "pinyin": "wǒ jiā",
+          "german": "meine Familie / mein Zuhause"
+      }
+  ],
+  "hsk1-ni": [
+      {
+          "hanzi": "你们",
+          "pinyin": "nǐmen",
+          "german": "ihr"
+      },
+      {
+          "hanzi": "你的",
+          "pinyin": "nǐ de",
+          "german": "dein / deine"
+      },
+      {
+          "hanzi": "你家",
+          "pinyin": "nǐ jiā",
+          "german": "deine Familie / dein Zuhause"
+      }
+  ],
+  "hsk1-ta": [
+      {
+          "hanzi": "他们",
+          "pinyin": "tāmen",
+          "german": "sie (Plural)"
+      },
+      {
+          "hanzi": "他的",
+          "pinyin": "tā de",
+          "german": "sein / seine"
+      },
+      {
+          "hanzi": "他好吗",
+          "pinyin": "tā hǎo ma",
+          "german": "geht es ihm gut?"
+      }
+  ],
+  "hsk1-ta-nv": [
+      {
+          "hanzi": "她们",
+          "pinyin": "tāmen",
+          "german": "sie (Frauen, Plural)"
+      },
+      {
+          "hanzi": "她的",
+          "pinyin": "tā de",
+          "german": "ihr / ihre"
+      },
+      {
+          "hanzi": "她是谁",
+          "pinyin": "tā shì shéi",
+          "german": "wer ist sie?"
+      }
+  ],
+  "hsk1-women": [
+      {
+          "hanzi": "我们家",
+          "pinyin": "wǒmen jiā",
+          "german": "unsere Familie"
+      },
+      {
+          "hanzi": "我们的",
+          "pinyin": "wǒmen de",
+          "german": "unser / unsere"
+      },
+      {
+          "hanzi": "我们走",
+          "pinyin": "wǒmen zǒu",
+          "german": "lass uns gehen"
+      }
+  ],
+  "hsk1-tamen": [
+      {
+          "hanzi": "他们家",
+          "pinyin": "tāmen jiā",
+          "german": "ihre Familie"
+      },
+      {
+          "hanzi": "他们的",
+          "pinyin": "tāmen de",
+          "german": "ihr / ihre (Plural)"
+      },
+      {
+          "hanzi": "他们都",
+          "pinyin": "tāmen dōu",
+          "german": "sie alle"
+      }
+  ],
+  "hsk1-ma": [
+      {
+          "hanzi": "好吗",
+          "pinyin": "hǎo ma",
+          "german": "in Ordnung? / gut?"
+      },
+      {
+          "hanzi": "对吗",
+          "pinyin": "duì ma",
+          "german": "stimmt das?"
+      },
+      {
+          "hanzi": "是他吗",
+          "pinyin": "shì tā ma",
+          "german": "ist er das?"
+      }
+  ],
+  "hsk1-ne": [
+      {
+          "hanzi": "你呢",
+          "pinyin": "nǐ ne",
+          "german": "und du?"
+      },
+      {
+          "hanzi": "书呢",
+          "pinyin": "shū ne",
+          "german": "wo ist das Buch?"
+      },
+      {
+          "hanzi": "妈妈呢",
+          "pinyin": "māma ne",
+          "german": "und wo ist Mama?"
+      }
+  ],
+  "hsk1-bu": [
+      {
+          "hanzi": "不是",
+          "pinyin": "bú shì",
+          "german": "ist nicht / nein"
+      },
+      {
+          "hanzi": "不去",
+          "pinyin": "bú qù",
+          "german": "nicht gehen"
+      },
+      {
+          "hanzi": "不能",
+          "pinyin": "bù néng",
+          "german": "nicht können / darf nicht"
+      }
+  ],
+  "hsk1-mei": [
+      {
+          "hanzi": "没有",
+          "pinyin": "méiyǒu",
+          "german": "nicht haben / es gibt nicht"
+      },
+      {
+          "hanzi": "没去",
+          "pinyin": "méi qù",
+          "german": "nicht gegangen sein"
+      },
+      {
+          "hanzi": "没看",
+          "pinyin": "méi kàn",
+          "german": "nicht gesehen / nicht gelesen"
+      }
+  ],
+  "hsk1-de": [
+      {
+          "hanzi": "我的",
+          "pinyin": "wǒ de",
+          "german": "mein / meine"
+      },
+      {
+          "hanzi": "你的",
+          "pinyin": "nǐ de",
+          "german": "dein / deine"
+      },
+      {
+          "hanzi": "好的",
+          "pinyin": "hǎo de",
+          "german": "in Ordnung / einverstanden"
+      }
+  ],
+  "hsk1-shi-be": [
+      {
+          "hanzi": "是的",
+          "pinyin": "shì de",
+          "german": "ja / genau so ist es"
+      },
+      {
+          "hanzi": "不是",
+          "pinyin": "bú shì",
+          "german": "ist nicht"
+      },
+      {
+          "hanzi": "是谁",
+          "pinyin": "shì shéi",
+          "german": "wer ist das?"
+      }
+  ],
+  "hsk1-you": [
+      {
+          "hanzi": "有人",
+          "pinyin": "yǒu rén",
+          "german": "jemand ist da"
+      },
+      {
+          "hanzi": "有钱",
+          "pinyin": "yǒu qián",
+          "german": "Geld haben / wohlhabend sein"
+      },
+      {
+          "hanzi": "有时间",
+          "pinyin": "yǒu shíjiān",
+          "german": "Zeit haben"
+      }
+  ],
+  "hsk1-shei": [
+      {
+          "hanzi": "谁的",
+          "pinyin": "shéi de",
+          "german": "wessen?"
+      },
+      {
+          "hanzi": "是谁",
+          "pinyin": "shì shéi",
+          "german": "wer ist das?"
+      },
+      {
+          "hanzi": "他是谁",
+          "pinyin": "tā shì shéi",
+          "german": "wer ist er?"
+      }
+  ],
+  "hsk1-shenme": [
+      {
+          "hanzi": "什么人",
+          "pinyin": "shénme rén",
+          "german": "welche Art von Person / wer?"
+      },
+      {
+          "hanzi": "看什么",
+          "pinyin": "kàn shénme",
+          "german": "was schaust du an?"
+      },
+      {
+          "hanzi": "做什么",
+          "pinyin": "zuò shénme",
+          "german": "was tust du?"
+      }
+  ],
+  "hsk1-duoshao": [
+      {
+          "hanzi": "多少钱",
+          "pinyin": "duōshao qián",
+          "german": "wie viel kostet das?"
+      },
+      {
+          "hanzi": "多少人",
+          "pinyin": "duōshao rén",
+          "german": "wie viele Personen?"
+      },
+      {
+          "hanzi": "多少个",
+          "pinyin": "duōshao ge",
+          "german": "wie viele Stück?"
+      }
+  ],
+  "hsk1-ji": [
+      {
+          "hanzi": "几天",
+          "pinyin": "jǐ tiān",
+          "german": "ein paar Tage / wie viele Tage?"
+      },
+      {
+          "hanzi": "几点",
+          "pinyin": "jǐ diǎn",
+          "german": "wie viel Uhr?"
+      },
+      {
+          "hanzi": "几个",
+          "pinyin": "jǐ ge",
+          "german": "wie viele? / einige Stück"
+      }
+  ],
+  "hsk1-zheer": [
+      {
+          "hanzi": "在这儿",
+          "pinyin": "zài zhèr",
+          "german": "hier sein / sich hier befinden"
+      },
+      {
+          "hanzi": "来这儿",
+          "pinyin": "lái zhèr",
+          "german": "hierher kommen"
+      },
+      {
+          "hanzi": "这儿的人",
+          "pinyin": "zhèr de rén",
+          "german": "die Leute hier"
+      }
+  ],
+  "hsk1-zaijian": [
+      {
+          "hanzi": "明天再见",
+          "pinyin": "míngtiān zàijiàn",
+          "german": "bis morgen!"
+      },
+      {
+          "hanzi": "老师再见",
+          "pinyin": "lǎoshī zàijiàn",
+          "german": "auf Wiedersehen, Lehrer!"
+      },
+      {
+          "hanzi": "说再见",
+          "pinyin": "shuō zàijiàn",
+          "german": "Auf Wiedersehen sagen"
+      }
+  ],
+  "hsk1-mingzi": [
+      {
+          "hanzi": "叫什么名字",
+          "pinyin": "jiào shénme míngzi",
+          "german": "wie heißt du mit Namen?"
+      },
+      {
+          "hanzi": "中国名字",
+          "pinyin": "Zhōngguó míngzi",
+          "german": "chinesischer Name"
+      },
+      {
+          "hanzi": "写名字",
+          "pinyin": "xiě míngzi",
+          "german": "den Namen schreiben"
+      }
+  ],
+  "hsk1-baba": [
+      {
+          "hanzi": "我爸爸",
+          "pinyin": "wǒ bàba",
+          "german": "mein Vater"
+      },
+      {
+          "hanzi": "爸爸妈妈",
+          "pinyin": "bàba māma",
+          "german": "Eltern (Vater und Mutter)"
+      },
+      {
+          "hanzi": "好爸爸",
+          "pinyin": "hǎo bàba",
+          "german": "guter Vater"
+      }
+  ],
+  "hsk1-mama": [
+      {
+          "hanzi": "我妈妈",
+          "pinyin": "wǒ māma",
+          "german": "meine Mutter"
+      },
+      {
+          "hanzi": "妈妈做的菜",
+          "pinyin": "māma zuò de cài",
+          "german": "das von Mama gekochte Essen"
+      },
+      {
+          "hanzi": "爱妈妈",
+          "pinyin": "ài māma",
+          "german": "Mama lieb haben"
+      }
+  ],
+  "hsk1-xuexiao": [
+      {
+          "hanzi": "去学校",
+          "pinyin": "qù xuéxiào",
+          "german": "zur Schule gehen"
+      },
+      {
+          "hanzi": "在学校",
+          "pinyin": "zài xuéxiào",
+          "german": "in der Schule sein"
+      },
+      {
+          "hanzi": "我们学校",
+          "pinyin": "wǒmen xuéxiào",
+          "german": "unsere Schule"
+      }
+  ],
+  "hsk1-mao": [
+      {
+          "hanzi": "大猫",
+          "pinyin": "dà māo",
+          "german": "große Katze"
+      },
+      {
+          "hanzi": "小猫",
+          "pinyin": "xiǎo māo",
+          "german": "Kätzchen / kleine Katze"
+      },
+      {
+          "hanzi": "两只猫",
+          "pinyin": "liǎng zhī māo",
+          "german": "zwei Katzen"
+      }
+  ],
+  "hsk1-ai": [
+      {
+          "hanzi": "我爱你",
+          "pinyin": "wǒ ài nǐ",
+          "german": "ich liebe dich"
+      },
+      {
+          "hanzi": "爱吃",
+          "pinyin": "ài chī",
+          "german": "sehr gerne essen"
+      },
+      {
+          "hanzi": "爱学习",
+          "pinyin": "ài xuéxí",
+          "german": "gerne lernen"
+      }
+  ],
+  "hsk1-xihuan": [
+      {
+          "hanzi": "喜欢吃",
+          "pinyin": "xǐhuan chī",
+          "german": "gerne essen"
+      },
+      {
+          "hanzi": "喜欢喝茶",
+          "pinyin": "xǐhuan hē chá",
+          "german": "gerne Tee trinken"
+      },
+      {
+          "hanzi": "很喜欢",
+          "pinyin": "hěn xǐhuan",
+          "german": "sehr mögen"
+      }
+  ],
+  "hsk1-hui": [
+      {
+          "hanzi": "会说汉语",
+          "pinyin": "huì shuō Hànyǔ",
+          "german": "Chinesisch sprechen können"
+      },
+      {
+          "hanzi": "会做饭",
+          "pinyin": "huì zuò fàn",
+          "german": "kochen können"
+      },
+      {
+          "hanzi": "不会",
+          "pinyin": "bú huì",
+          "german": "nicht können"
+      }
+  ],
+  "hsk1-he": [
+      {
+          "hanzi": "喝水",
+          "pinyin": "hē shuǐ",
+          "german": "Wasser trinken"
+      },
+      {
+          "hanzi": "喝茶",
+          "pinyin": "hē chá",
+          "german": "Tee trinken"
+      },
+      {
+          "hanzi": "想喝",
+          "pinyin": "xiǎng hē",
+          "german": "trinken möchten"
+      }
+  ],
+  "hsk1-nin": [
+      {
+          "hanzi": "您好",
+          "pinyin": "nín hǎo",
+          "german": "Guten Tag (höflich)"
+      },
+      {
+          "hanzi": "请问您",
+          "pinyin": "qǐngwèn nín",
+          "german": "darf ich Sie fragen"
+      },
+      {
+          "hanzi": "您的",
+          "pinyin": "nín de",
+          "german": "Ihr / Ihre (höflich)"
+      }
+  ],
+  "hsk1-zhe": [
+      {
+          "hanzi": "这个人",
+          "pinyin": "zhè ge rén",
+          "german": "dieser Mensch"
+      },
+      {
+          "hanzi": "这些",
+          "pinyin": "zhèxiē",
+          "german": "diese hier (Plural)"
+      },
+      {
+          "hanzi": "这是",
+          "pinyin": "zhè shì",
+          "german": "das ist / dies ist"
+      }
+  ],
+  "hsk1-na": [
+      {
+          "hanzi": "那个人",
+          "pinyin": "nà ge rén",
+          "german": "jener Mensch"
+      },
+      {
+          "hanzi": "那些",
+          "pinyin": "nàxiē",
+          "german": "jene dort (Plural)"
+      },
+      {
+          "hanzi": "那是",
+          "pinyin": "nà shì",
+          "german": "das dort ist"
+      }
+  ],
+  "hsk1-naer": [
+      {
+          "hanzi": "在那儿",
+          "pinyin": "zài nàr",
+          "german": "dort sein"
+      },
+      {
+          "hanzi": "去那儿",
+          "pinyin": "qù nàr",
+          "german": "dorthin gehen"
+      },
+      {
+          "hanzi": "看那儿",
+          "pinyin": "kàn nàr",
+          "german": "schau dorthin"
+      }
+  ],
+  "hsk1-na-which": [
+      {
+          "hanzi": "哪个人",
+          "pinyin": "nǎ ge rén",
+          "german": "welcher Mensch?"
+      },
+      {
+          "hanzi": "哪个学校",
+          "pinyin": "nǎ ge xuéxiào",
+          "german": "welche Schule?"
+      },
+      {
+          "hanzi": "哪年",
+          "pinyin": "nǎ nián",
+          "german": "welches Jahr?"
+      }
+  ],
+  "hsk1-naer-which": [
+      {
+          "hanzi": "在哪儿",
+          "pinyin": "zài nǎr",
+          "german": "wo befindet sich...?"
+      },
+      {
+          "hanzi": "去哪儿",
+          "pinyin": "qù nǎr",
+          "german": "wohin gehst du?"
+      },
+      {
+          "hanzi": "从哪儿来",
+          "pinyin": "cóng nǎr lái",
+          "german": "woher kommst du?"
+      }
+  ],
+  "hsk1-zenme": [
+      {
+          "hanzi": "怎么去",
+          "pinyin": "zěnme qù",
+          "german": "wie gelangt man dorthin?"
+      },
+      {
+          "hanzi": "怎么说",
+          "pinyin": "zěnme shuō",
+          "german": "wie sagt man das?"
+      },
+      {
+          "hanzi": "怎么写",
+          "pinyin": "zěnme xiě",
+          "german": "wie schreibt man das?"
+      }
+  ],
+  "hsk1-zenmeyang": [
+      {
+          "hanzi": "怎么样",
+          "pinyin": "zěnmeyàng",
+          "german": "wie steht es darum?"
+      },
+      {
+          "hanzi": "天气怎么样",
+          "pinyin": "tiānqì zěnmeyàng",
+          "german": "wie ist das Wetter?"
+      },
+      {
+          "hanzi": "今天怎么样",
+          "pinyin": "jīntiān zěnmeyàng",
+          "german": "wie läuft es heute?"
+      }
+  ],
+  "hsk1-ling": [
+      {
+          "hanzi": "零点",
+          "pinyin": "líng diǎn",
+          "german": "null Uhr / Mitternacht"
+      },
+      {
+          "hanzi": "二零二四年",
+          "pinyin": "èr líng èr sì nián",
+          "german": "das Jahr 2024"
+      },
+      {
+          "hanzi": "一百零一",
+          "pinyin": "yì bǎi líng yī",
+          "german": "einhundertundeins"
+      }
+  ],
+  "hsk1-ge": [
+      {
+          "hanzi": "一个人",
+          "pinyin": "yí ge rén",
+          "german": "eine Person"
+      },
+      {
+          "hanzi": "这个",
+          "pinyin": "zhè ge",
+          "german": "dieses hier"
+      },
+      {
+          "hanzi": "那个",
+          "pinyin": "nà ge",
+          "german": "jenes dort"
+      }
+  ],
+  "hsk1-sui": [
+      {
+          "hanzi": "几岁",
+          "pinyin": "jǐ suì",
+          "german": "wie alt? (für Kinder)"
+      },
+      {
+          "hanzi": "十八岁",
+          "pinyin": "shíbā suì",
+          "german": "achtzehn Jahre alt"
+      },
+      {
+          "hanzi": "岁数",
+          "pinyin": "suìshu",
+          "german": "Lebensalter"
+      }
+  ],
+  "hsk1-ben": [
+      {
+          "hanzi": "一本书",
+          "pinyin": "yì běn shū",
+          "german": "ein Buch"
+      },
+      {
+          "hanzi": "这本书",
+          "pinyin": "zhè běn shū",
+          "german": "dieses Buch"
+      },
+      {
+          "hanzi": "几本书",
+          "pinyin": "jǐ běn shū",
+          "german": "einige Bücher"
+      }
+  ],
+  "hsk1-xie": [
+      {
+          "hanzi": "这些",
+          "pinyin": "zhèxiē",
+          "german": "diese hier"
+      },
+      {
+          "hanzi": "那些",
+          "pinyin": "nàxiē",
+          "german": "jene dort"
+      },
+      {
+          "hanzi": "一些人",
+          "pinyin": "yìxiē rén",
+          "german": "einige Leute"
+      }
+  ],
+  "hsk1-kuai": [
+      {
+          "hanzi": "一块钱",
+          "pinyin": "yí kuài qián",
+          "german": "ein Yuan (Geld)"
+      },
+      {
+          "hanzi": "几块钱",
+          "pinyin": "jǐ kuài qián",
+          "german": "ein paar Yuan"
+      },
+      {
+          "hanzi": "十块",
+          "pinyin": "shí kuài",
+          "german": "zehn Yuan"
+      }
+  ],
+  "hsk1-hen": [
+      {
+          "hanzi": "很好",
+          "pinyin": "hěn hǎo",
+          "german": "sehr gut"
+      },
+      {
+          "hanzi": "很大",
+          "pinyin": "hěn dà",
+          "german": "sehr groß"
+      },
+      {
+          "hanzi": "很高兴",
+          "pinyin": "hěn gāoxìng",
+          "german": "sehr erfreut"
+      }
+  ],
+  "hsk1-tai": [
+      {
+          "hanzi": "太好了",
+          "pinyin": "tài hǎo le",
+          "german": "ausgezeichnet! / super!"
+      },
+      {
+          "hanzi": "太大了",
+          "pinyin": "tài dà le",
+          "german": "viel zu groß"
+      },
+      {
+          "hanzi": "不太热",
+          "pinyin": "bú tài rè",
+          "german": "nicht allzu heiß"
+      }
+  ],
+  "hsk1-dou": [
+      {
+          "hanzi": "我们都",
+          "pinyin": "wǒmen dōu",
+          "german": "wir alle"
+      },
+      {
+          "hanzi": "都是",
+          "pinyin": "dōu shì",
+          "german": "sind alle..."
+      },
+      {
+          "hanzi": "都会",
+          "pinyin": "dōu huì",
+          "german": "können alle..."
+      }
+  ],
+  "hsk1-he-and": [
+      {
+          "hanzi": "我和你",
+          "pinyin": "wǒ hé nǐ",
+          "german": "ich und du"
+      },
+      {
+          "hanzi": "爸爸和妈妈",
+          "pinyin": "bàba hé māma",
+          "german": "Papa und Mama"
+      },
+      {
+          "hanzi": "猫和狗",
+          "pinyin": "māo hé gǒu",
+          "german": "Katze und Hund"
+      }
+  ],
+  "hsk1-zai": [
+      {
+          "hanzi": "在家",
+          "pinyin": "zài jiā",
+          "german": "zu Hause sein"
+      },
+      {
+          "hanzi": "在北京",
+          "pinyin": "zài Běijīng",
+          "german": "in Peking sein"
+      },
+      {
+          "hanzi": "在看书",
+          "pinyin": "zài kàn shū",
+          "german": "gerade ein Buch lesen"
+      }
+  ],
+  "hsk1-le": [
+      {
+          "hanzi": "太好了",
+          "pinyin": "tài hǎo le",
+          "german": "super! / großartig!"
+      },
+      {
+          "hanzi": "下雨了",
+          "pinyin": "xiàyǔ le",
+          "german": "es hat angefangen zu regnen"
+      },
+      {
+          "hanzi": "走啦 / 走了",
+          "pinyin": "zǒu le",
+          "german": "losgegangen / fertig"
+      }
+  ],
+  "hsk1-wei": [
+      {
+          "hanzi": "喂，你好",
+          "pinyin": "wèi, nǐ hǎo",
+          "german": "Hallo! (am Telefon)"
+      },
+      {
+          "hanzi": "喂，请问",
+          "pinyin": "wèi, qǐngwèn",
+          "german": "Hallo, darf ich fragen..."
+      },
+      {
+          "hanzi": "喂，是谁",
+          "pinyin": "wèi, shì shéi",
+          "german": "Hallo, wer ist am Apparat?"
+      }
+  ],
+  "hsk1-jia": [
+      {
+          "hanzi": "回家里",
+          "pinyin": "huí jiā lǐ",
+          "german": "nach Hause zurückkehren"
+      },
+      {
+          "hanzi": "我们家",
+          "pinyin": "wǒmen jiā",
+          "german": "unsere Familie / unser Haushalt"
+      },
+      {
+          "hanzi": "家里人",
+          "pinyin": "jiā lǐ rén",
+          "german": "Familienangehörige"
+      }
+  ],
+  "hsk1-erzi": [
+      {
+          "hanzi": "他儿子",
+          "pinyin": "tā érzi",
+          "german": "sein Sohn"
+      },
+      {
+          "hanzi": "大儿子",
+          "pinyin": "dà érzi",
+          "german": "der älteste Sohn"
+      },
+      {
+          "hanzi": "小儿子",
+          "pinyin": "xiǎo érzi",
+          "german": "der jüngste Sohn"
+      }
+  ],
+  "hsk1-nver": [
+      {
+          "hanzi": "我女儿",
+          "pinyin": "wǒ nǚ'ér",
+          "german": "meine Tochter"
+      },
+      {
+          "hanzi": "小女儿",
+          "pinyin": "xiǎo nǚ'ér",
+          "german": "jüngste Tochter"
+      },
+      {
+          "hanzi": "漂亮女儿",
+          "pinyin": "piàoliang nǚ'ér",
+          "german": "hübsche Tochter"
+      }
+  ],
+  "hsk1-laoshi": [
+      {
+          "hanzi": "汉语老师",
+          "pinyin": "Hànyǔ lǎoshī",
+          "german": "Chinesischlehrer"
+      },
+      {
+          "hanzi": "王老师",
+          "pinyin": "Wáng lǎoshī",
+          "german": "Lehrer Wang"
+      },
+      {
+          "hanzi": "老老师",
+          "pinyin": "lǎo lǎoshī",
+          "german": "erfahrener Lehrer"
+      }
+  ],
+  "hsk1-yisheng": [
+      {
+          "hanzi": "看医生",
+          "pinyin": "kàn yīshēng",
+          "german": "zum Arzt gehen"
+      },
+      {
+          "hanzi": "好医生",
+          "pinyin": "hǎo yīshēng",
+          "german": "guter Arzt"
+      },
+      {
+          "hanzi": "大医院的医生",
+          "pinyin": "dà yīyuàn de yīshēng",
+          "german": "Arzt des großen Krankenhauses"
+      }
+  ],
+  "hsk1-xiansheng": [
+      {
+          "hanzi": "李先生",
+          "pinyin": "Lǐ xiānsheng",
+          "german": "Herr Li"
+      },
+      {
+          "hanzi": "先生你好",
+          "pinyin": "xiānsheng nǐ hǎo",
+          "german": "Guten Tag, der Herr"
+      },
+      {
+          "hanzi": "我先生",
+          "pinyin": "wǒ xiānsheng",
+          "german": "mein Ehemann"
+      }
+  ],
+  "hsk1-xiaojie": [
+      {
+          "hanzi": "王小姐",
+          "pinyin": "Wáng xiǎojie",
+          "german": "Fräulein Wang"
+      },
+      {
+          "hanzi": "张小姐",
+          "pinyin": "Zhāng xiǎojie",
+          "german": "Frau Zhang"
+      },
+      {
+          "hanzi": "漂亮小姐",
+          "pinyin": "piàoliang xiǎojie",
+          "german": "hübsche junge Dame"
+      }
+  ],
+  "hsk1-yifu": [
+      {
+          "hanzi": "买衣服",
+          "pinyin": "mǎi yīfu",
+          "german": "Kleidung kaufen"
+      },
+      {
+          "hanzi": "穿衣服",
+          "pinyin": "chuān yīfu",
+          "german": "Kleidung anziehen"
+      },
+      {
+          "hanzi": "新衣服",
+          "pinyin": "xīn yīfu",
+          "german": "neue Kleidung"
+      }
+  ],
+  "hsk1-cai": [
+      {
+          "hanzi": "中国菜",
+          "pinyin": "Zhōngguó cài",
+          "german": "chinesisches Essen"
+      },
+      {
+          "hanzi": "做菜",
+          "pinyin": "zuò cài",
+          "german": "Gerichte kochen"
+      },
+      {
+          "hanzi": "点菜",
+          "pinyin": "diǎn cài",
+          "german": "Speisen bestellen"
+      }
+  ],
+  "hsk1-mifan": [
+      {
+          "hanzi": "吃米饭",
+          "pinyin": "chī mǐfàn",
+          "german": "Reis essen"
+      },
+      {
+          "hanzi": "一碗米饭",
+          "pinyin": "yì wǎn mǐfàn",
+          "german": "eine Schüssel Reis"
+      },
+      {
+          "hanzi": "做米饭",
+          "pinyin": "zuò mǐfàn",
+          "german": "Reis kochen"
+      }
+  ],
+  "hsk1-shuiguo": [
+      {
+          "hanzi": "买水果",
+          "pinyin": "mǎi shuǐguǒ",
+          "german": "Obst kaufen"
+      },
+      {
+          "hanzi": "吃水果",
+          "pinyin": "chī shuǐguǒ",
+          "german": "Obst essen"
+      },
+      {
+          "hanzi": "新鲜水果",
+          "pinyin": "xīnxiān shuǐguǒ",
+          "german": "frische Früchte"
+      }
+  ],
+  "hsk1-beizi": [
+      {
+          "hanzi": "茶杯",
+          "pinyin": "chábēi",
+          "german": "Teetasse"
+      },
+      {
+          "hanzi": "一个杯子",
+          "pinyin": "yí ge bēizi",
+          "german": "ein Becher / eine Tasse"
+      },
+      {
+          "hanzi": "水杯",
+          "pinyin": "shuǐbēi",
+          "german": "Wasserglas"
+      }
+  ],
+  "hsk1-qian": [
+      {
+          "hanzi": "多少钱",
+          "pinyin": "duōshao qián",
+          "german": "wie viel kostet das?"
+      },
+      {
+          "hanzi": "付钱",
+          "pinyin": "fù qián",
+          "german": "Geld bezahlen"
+      },
+      {
+          "hanzi": "很有钱",
+          "pinyin": "hěn yǒu qián",
+          "german": "sehr reich sein"
+      }
+  ],
+  "hsk1-feiji": [
+      {
+          "hanzi": "坐飞机",
+          "pinyin": "zuò fēijī",
+          "german": "mit dem Flugzeug fliegen"
+      },
+      {
+          "hanzi": "开飞机",
+          "pinyin": "kāi fēijī",
+          "german": "ein Flugzeug fliegen"
+      },
+      {
+          "hanzi": "飞机票",
+          "pinyin": "fēijī piào",
+          "german": "Flugticket"
+      }
+  ],
+  "hsk1-chuzuche": [
+      {
+          "hanzi": "坐出租车",
+          "pinyin": "zuò chūzūchē",
+          "german": "Taxi fahren"
+      },
+      {
+          "hanzi": "叫出租车",
+          "pinyin": "jiào chūzūchē",
+          "german": "ein Taxi rufen"
+      },
+      {
+          "hanzi": "开出租车",
+          "pinyin": "kāi chūzūchē",
+          "german": "Taxi fahren (als Fahrer)"
+      }
+  ],
+  "hsk1-dianshi": [
+      {
+          "hanzi": "看电视",
+          "pinyin": "kàn diànshì",
+          "german": "fernsehen"
+      },
+      {
+          "hanzi": "买电视",
+          "pinyin": "mǎi diànshì",
+          "german": "einen Fernseher kaufen"
+      },
+      {
+          "hanzi": "开电视",
+          "pinyin": "kāi diànshì",
+          "german": "den Fernseher einschalten"
+      }
+  ],
+  "hsk1-gou": [
+      {
+          "hanzi": "大狗",
+          "pinyin": "dà gǒu",
+          "german": "großer Hund"
+      },
+      {
+          "hanzi": "小狗",
+          "pinyin": "xiǎo gǒu",
+          "german": "Welpe / kleiner Hund"
+      },
+      {
+          "hanzi": "喂狗",
+          "pinyin": "wèi gǒu",
+          "german": "den Hund füttern"
+      }
+  ],
+  "hsk1-dongxi": [
+      {
+          "hanzi": "买东西",
+          "pinyin": "mǎi dōngxi",
+          "german": "einkaufen / Sachen kaufen"
+      },
+      {
+          "hanzi": "吃东西",
+          "pinyin": "chī dōngxi",
+          "german": "etwas essen"
+      },
+      {
+          "hanzi": "好东西",
+          "pinyin": "hǎo dōngxi",
+          "german": "gute Sache / feine Ware"
+      }
+  ],
+  "hsk1-shu": [
+      {
+          "hanzi": "看书",
+          "pinyin": "kàn shū",
+          "german": "ein Buch lesen"
+      },
+      {
+          "hanzi": "买书",
+          "pinyin": "mǎi shū",
+          "german": "Bücher kaufen"
+      },
+      {
+          "hanzi": "汉语书",
+          "pinyin": "Hànyǔ shū",
+          "german": "Chinesischbuch"
+      }
+  ],
+  "hsk1-zi": [
+      {
+          "hanzi": "写字",
+          "pinyin": "xiě zì",
+          "german": "Schriftzeichen schreiben"
+      },
+      {
+          "hanzi": "汉字",
+          "pinyin": "Hànzì",
+          "german": "chinesisches Schriftzeichen"
+      },
+      {
+          "hanzi": "认字",
+          "pinyin": "rèn zì",
+          "german": "Schriftzeichen erkennen"
+      }
+  ],
+  "hsk1-yizi": [
+      {
+          "hanzi": "一把椅子",
+          "pinyin": "yì bǎ yǐzi",
+          "german": "ein Stuhl"
+      },
+      {
+          "hanzi": "坐椅子",
+          "pinyin": "zuò yǐzi",
+          "german": "auf dem Stuhl sitzen"
+      },
+      {
+          "hanzi": "大椅子",
+          "pinyin": "dà yǐzi",
+          "german": "großer Stuhl"
+      }
+  ],
+  "hsk1-bukeqi": [
+      {
+          "hanzi": "太不客气了",
+          "pinyin": "tài bú kèqi le",
+          "german": "zu unhöflich sein"
+      },
+      {
+          "hanzi": "不用客气",
+          "pinyin": "bú yòng kèqi",
+          "german": "keine Umstände machen"
+      },
+      {
+          "hanzi": "别客气",
+          "pinyin": "bié kèqi",
+          "german": "sei nicht so förmlich"
+      }
+  ],
+  "hsk1-qing": [
+      {
+          "hanzi": "请坐",
+          "pinyin": "qǐng zuò",
+          "german": "bitte setzen Sie sich"
+      },
+      {
+          "hanzi": "请喝茶",
+          "pinyin": "qǐng hē chá",
+          "german": "bitte trinken Sie Tee"
+      },
+      {
+          "hanzi": "请进",
+          "pinyin": "qǐng jìn",
+          "german": "bitte herein"
+      }
+  ],
+  "hsk1-duibuqi": [
+      {
+          "hanzi": "对不起大家",
+          "pinyin": "duìbuqǐ dàjiā",
+          "german": "Entschuldigung an alle"
+      },
+      {
+          "hanzi": "真对不起",
+          "pinyin": "zhēn duìbuqǐ",
+          "german": "es tut mir wirklich leid"
+      },
+      {
+          "hanzi": "说对不起",
+          "pinyin": "shuō duìbuqǐ",
+          "german": "sich entschuldigen"
+      }
+  ],
+  "hsk1-meiguanxi": [
+      {
+          "hanzi": "真的没关系",
+          "pinyin": "zhēn de méi guānxi",
+          "german": "wirklich kein Problem"
+      },
+      {
+          "hanzi": "没关系不用谢",
+          "pinyin": "méi guānxi bú yòng xiè",
+          "german": "kein Problem, keine Ursache"
+      },
+      {
+          "hanzi": "一切没关系",
+          "pinyin": "yíqiè méi guānxi",
+          "german": "alles in bester Ordnung"
+      }
+  ],
+  "hsk1-jintian": [
+      {
+          "hanzi": "今天天气",
+          "pinyin": "jīntiān tiānqì",
+          "german": "das heutige Wetter"
+      },
+      {
+          "hanzi": "今天星期几",
+          "pinyin": "jīntiān xīngqī jǐ",
+          "german": "welcher Wochentag ist heute?"
+      },
+      {
+          "hanzi": "今天上午",
+          "pinyin": "jīntiān shàngwǔ",
+          "german": "heute Vormittag"
+      }
+  ],
+  "hsk1-zuotian": [
+      {
+          "hanzi": "昨天下午",
+          "pinyin": "zuótiān xiàwǔ",
+          "german": "gestern Nachmittag"
+      },
+      {
+          "hanzi": "昨天晚上",
+          "pinyin": "zuótiān wǎnshang",
+          "german": "gestern Abend"
+      },
+      {
+          "hanzi": "昨天上午",
+          "pinyin": "zuótiān shàngwǔ",
+          "german": "gestern Vormittag"
+      }
+  ],
+  "hsk1-shangwu": [
+      {
+          "hanzi": "今天上午",
+          "pinyin": "jīntiān shàngwǔ",
+          "german": "heute Vormittag"
+      },
+      {
+          "hanzi": "上午八点",
+          "pinyin": "shàngwǔ bā diǎn",
+          "german": "acht Uhr morgens"
+      },
+      {
+          "hanzi": "星期一上午",
+          "pinyin": "xīngqīyī shàngwǔ",
+          "german": "Montagvormittag"
+      }
+  ],
+  "hsk1-zhongwu": [
+      {
+          "hanzi": "中午十二点",
+          "pinyin": "zhōngwǔ shí'èr diǎn",
+          "german": "zwölf Uhr mittags"
+      },
+      {
+          "hanzi": "今天中午",
+          "pinyin": "jīntiān zhōngwǔ",
+          "german": "heute Mittag"
+      },
+      {
+          "hanzi": "吃中午饭",
+          "pinyin": "chī zhōngwǔfàn",
+          "german": "Mittagessen einnehmen"
+      }
+  ],
+  "hsk1-xiawu": [
+      {
+          "hanzi": "下午三点",
+          "pinyin": "xiàwǔ sān diǎn",
+          "german": "drei Uhr nachmittags"
+      },
+      {
+          "hanzi": "明天下午",
+          "pinyin": "míngtiān xiàwǔ",
+          "german": "morgen Nachmittag"
+      },
+      {
+          "hanzi": "下午好",
+          "pinyin": "xiàwǔ hǎo",
+          "german": "Guten Nachmittag"
+      }
+  ],
+  "hsk1-nian": [
+      {
+          "hanzi": "今年",
+          "pinyin": "jīnnián",
+          "german": "dieses Jahr"
+      },
+      {
+          "hanzi": "去年",
+          "pinyin": "qùnián",
+          "german": "letztes Jahr"
+      },
+      {
+          "hanzi": "明年",
+          "pinyin": "míngnián",
+          "german": "nächstes Jahr"
+      }
+  ],
+  "hsk1-hao-number": [
+      {
+          "hanzi": "五号",
+          "pinyin": "wǔ hào",
+          "german": "der 5. (Tag) / Nummer 5"
+      },
+      {
+          "hanzi": "今天几号",
+          "pinyin": "jīntiān jǐ hào",
+          "german": "der wievielte Tag ist heute?"
+      },
+      {
+          "hanzi": "房间号",
+          "pinyin": "fángjiānhào",
+          "german": "Zimmernummer"
+      }
+  ],
+  "hsk1-dian": [
+      {
+          "hanzi": "八点",
+          "pinyin": "bā diǎn",
+          "german": "acht Uhr"
+      },
+      {
+          "hanzi": "几点",
+          "pinyin": "jǐ diǎn",
+          "german": "wie viel Uhr?"
+      },
+      {
+          "hanzi": "一点点",
+          "pinyin": "yì diǎndiǎn",
+          "german": "ein kleines bisschen"
+      }
+  ],
+  "hsk1-fenzhong": [
+      {
+          "hanzi": "十分钟",
+          "pinyin": "shí fēnzhōng",
+          "german": "zehn Minuten"
+      },
+      {
+          "hanzi": "五分钟",
+          "pinyin": "wǔ fēnzhōng",
+          "german": "fünf Minuten"
+      },
+      {
+          "hanzi": "几分钟",
+          "pinyin": "jǐ fēnzhōng",
+          "german": "ein paar Minuten"
+      }
+  ],
+  "hsk1-xianzai": [
+      {
+          "hanzi": "现在几点",
+          "pinyin": "xiànzài jǐ diǎn",
+          "german": "wie spät ist es jetzt?"
+      },
+      {
+          "hanzi": "现在去",
+          "pinyin": "xiànzài qù",
+          "german": "jetzt gehen"
+      },
+      {
+          "hanzi": "现在开始",
+          "pinyin": "xiànzài kāishǐ",
+          "german": "jetzt beginnen"
+      }
+  ],
+  "hsk1-shihou": [
+      {
+          "hanzi": "什么时候",
+          "pinyin": "shénme shíhou",
+          "german": "wann? / zu welcher Zeit?"
+      },
+      {
+          "hanzi": "这个时候",
+          "pinyin": "zhè ge shíhou",
+          "german": "in diesem Moment"
+      },
+      {
+          "hanzi": "学习的时候",
+          "pinyin": "xuéxí de shíhou",
+          "german": "während des Lernens"
+      }
+  ],
+  "hsk1-beijing": [
+      {
+          "hanzi": "去北京",
+          "pinyin": "qù Běijīng",
+          "german": "nach Peking reisen"
+      },
+      {
+          "hanzi": "北京人",
+          "pinyin": "Běijīng rén",
+          "german": "Pekinger / Bewohner Pekings"
+      },
+      {
+          "hanzi": "在北京",
+          "pinyin": "zài Běijīng",
+          "german": "in Peking sein"
+      }
+  ],
+  "hsk1-shang": [
+      {
+          "hanzi": "上班",
+          "pinyin": "shàng bān",
+          "german": "zur Arbeit gehen"
+      },
+      {
+          "hanzi": "上车",
+          "pinyin": "shàng chē",
+          "german": "einsteigen (ins Auto/den Bus)"
+      },
+      {
+          "hanzi": "上课",
+          "pinyin": "shàng kè",
+          "german": "Unterricht haben"
+      }
+  ],
+  "hsk1-xia": [
+      {
+          "hanzi": "下班",
+          "pinyin": "xià bān",
+          "german": "Feierabend machen"
+      },
+      {
+          "hanzi": "下车",
+          "pinyin": "xià chē",
+          "german": "aussteigen (aus dem Fahrzeug)"
+      },
+      {
+          "hanzi": "下课",
+          "pinyin": "xià kè",
+          "german": "Unterrichtsende"
+      }
+  ],
+  "hsk1-qianmian": [
+      {
+          "hanzi": "在前面",
+          "pinyin": "zài qiánmian",
+          "german": "vorne sein"
+      },
+      {
+          "hanzi": "学校前面",
+          "pinyin": "xuéxiào qiánmian",
+          "german": "vor der Schule"
+      },
+      {
+          "hanzi": "向前走",
+          "pinyin": "xiàng qián zǒu",
+          "german": "nach vorne gehen"
+      }
+  ],
+  "hsk1-houmian": [
+      {
+          "hanzi": "在后面",
+          "pinyin": "zài hòumian",
+          "german": "hinten sein"
+      },
+      {
+          "hanzi": "商店后面",
+          "pinyin": "shāngdiàn hòumian",
+          "german": "hinter dem Geschäft"
+      },
+      {
+          "hanzi": "往后看",
+          "pinyin": "wàng hòu kàn",
+          "german": "nach hinten blicken"
+      }
+  ],
+  "hsk1-li": [
+      {
+          "hanzi": "家里",
+          "pinyin": "jiā lǐ",
+          "german": "zu Hause / daheim"
+      },
+      {
+          "hanzi": "学校里",
+          "pinyin": "xuéxiào lǐ",
+          "german": "in der Schule"
+      },
+      {
+          "hanzi": "心里",
+          "pinyin": "xīn lǐ",
+          "german": "im Herzen / innerlich"
+      }
+  ],
+  "hsk1-ting": [
+      {
+          "hanzi": "听音乐",
+          "pinyin": "tīng yīnyuè",
+          "german": "Musik hören"
+      },
+      {
+          "hanzi": "听我说",
+          "pinyin": "tīng wǒ shuō",
+          "german": "hör mir zu"
+      },
+      {
+          "hanzi": "听懂",
+          "pinyin": "tīng dǒng",
+          "german": "beim Hören verstehen"
+      }
+  ],
+  "hsk1-shuohua": [
+      {
+          "hanzi": "别说话",
+          "pinyin": "bié shuōhuà",
+          "german": "nicht sprechen / still sein"
+      },
+      {
+          "hanzi": "大声说话",
+          "pinyin": "dà shēng shuōhuà",
+          "german": "laut sprechen"
+      },
+      {
+          "hanzi": "跟我说话",
+          "pinyin": "gēn wǒ shuōhuà",
+          "german": "mit mir sprechen"
+      }
+  ],
+  "hsk1-du": [
+      {
+          "hanzi": "读书",
+          "pinyin": "dú shū",
+          "german": "Bücher lesen / studieren"
+      },
+      {
+          "hanzi": "大声读",
+          "pinyin": "dà shēng dú",
+          "german": "laut vorlesen"
+      },
+      {
+          "hanzi": "读汉字",
+          "pinyin": "dú Hànzì",
+          "german": "Schriftzeichen lesen"
+      }
+  ],
+  "hsk1-xie-write": [
+      {
+          "hanzi": "写字",
+          "pinyin": "xiě zì",
+          "german": "Schriftzeichen schreiben"
+      },
+      {
+          "hanzi": "写汉字",
+          "pinyin": "xiě Hànzì",
+          "german": "Hanzi schreiben"
+      },
+      {
+          "hanzi": "写名字",
+          "pinyin": "xiě míngzi",
+          "german": "den Namen aufschreiben"
+      }
+  ],
+  "hsk1-kanjian": [
+      {
+          "hanzi": "看见了",
+          "pinyin": "kànjiàn le",
+          "german": "erblickt / gesehen haben"
+      },
+      {
+          "hanzi": "没看见",
+          "pinyin": "méi kànjiàn",
+          "german": "nicht gesehen haben"
+      },
+      {
+          "hanzi": "能看见",
+          "pinyin": "néng kànjiàn",
+          "german": "sehen können"
+      }
+  ],
+  "hsk1-jiao": [
+      {
+          "hanzi": "叫什么",
+          "pinyin": "jiào shénme",
+          "german": "wie heißen?"
+      },
+      {
+          "hanzi": "大声叫",
+          "pinyin": "dà shēng jiào",
+          "german": "laut rufen"
+      },
+      {
+          "hanzi": "叫他来",
+          "pinyin": "jiào tā lái",
+          "german": "ihn herrufen"
+      }
+  ],
+  "hsk1-mai": [
+      {
+          "hanzi": "买苹果",
+          "pinyin": "mǎi píngguǒ",
+          "german": "Äpfel kaufen"
+      },
+      {
+          "hanzi": "买东西",
+          "pinyin": "mǎi dōngxi",
+          "german": "Sachen einkaufen"
+      },
+      {
+          "hanzi": "去买菜",
+          "pinyin": "qù mǎi cài",
+          "german": "Lebensmittel einkaufen gehen"
+      }
+  ],
+  "hsk1-kai": [
+      {
+          "hanzi": "开车",
+          "pinyin": "kāi chē",
+          "german": "Auto fahren"
+      },
+      {
+          "hanzi": "开会",
+          "pinyin": "kāi huì",
+          "german": "eine Besprechung abhalten"
+      },
+      {
+          "hanzi": "开门",
+          "pinyin": "kāi mén",
+          "german": "die Tür öffnen"
+      }
+  ],
+  "hsk1-zuo": [
+      {
+          "hanzi": "请坐",
+          "pinyin": "qǐng zuò",
+          "german": "bitte nehmen Sie Platz"
+      },
+      {
+          "hanzi": "坐车",
+          "pinyin": "zuò chē",
+          "german": "mit dem Fahrzeug fahren"
+      },
+      {
+          "hanzi": "坐下",
+          "pinyin": "zuò xià",
+          "german": "sich hinsetzen"
+      }
+  ],
+  "hsk1-zhu": [
+      {
+          "hanzi": "住在北京",
+          "pinyin": "zhù zài Běijīng",
+          "german": "in Peking wohnen"
+      },
+      {
+          "hanzi": "住在哪儿",
+          "pinyin": "zhù zài nǎr",
+          "german": "wo wohnst du?"
+      },
+      {
+          "hanzi": "住家里",
+          "pinyin": "zhù jiā lǐ",
+          "german": "zu Hause wohnen"
+      }
+  ],
+  "hsk1-gongzuo": [
+      {
+          "hanzi": "找工作",
+          "pinyin": "zhǎo gōngzuò",
+          "german": "Arbeit suchen"
+      },
+      {
+          "hanzi": "努力工作",
+          "pinyin": "nǔlì gōngzuò",
+          "german": "fleißig arbeiten"
+      },
+      {
+          "hanzi": "在医院工作",
+          "pinyin": "zài yīyuàn gōngzuò",
+          "german": "im Krankenhaus arbeiten"
+      }
+  ],
+  "hsk1-xiayu": [
+      {
+          "hanzi": "下大雨",
+          "pinyin": "xià dà yǔ",
+          "german": "stark regnen"
+      },
+      {
+          "hanzi": "下雨天",
+          "pinyin": "xiàyǔ tiān",
+          "german": "Regentag"
+      },
+      {
+          "hanzi": "开始下雨",
+          "pinyin": "kāishǐ xiàyǔ",
+          "german": "es fängt an zu regnen"
+      }
+  ],
+  "hsk1-xiang": [
+      {
+          "hanzi": "想吃",
+          "pinyin": "xiǎng chī",
+          "german": "essen möchten"
+      },
+      {
+          "hanzi": "想家",
+          "pinyin": "xiǎng jiā",
+          "german": "Heimweh haben"
+      },
+      {
+          "hanzi": "很想你",
+          "pinyin": "hěn xiǎng nǐ",
+          "german": "dich sehr vermissen"
+      }
+  ],
+  "hsk1-renshi": [
+      {
+          "hanzi": "认识你很高兴",
+          "pinyin": "rènshi nǐ hěn gāoxìng",
+          "german": "sehr erfreut, dich kennenzulernen"
+      },
+      {
+          "hanzi": "互相认识",
+          "pinyin": "hùxiāng rènshi",
+          "german": "sich gegenseitig kennen"
+      },
+      {
+          "hanzi": "不认识",
+          "pinyin": "bú rènshi",
+          "german": "nicht kennen"
+      }
+  ],
+  "hsk1-neng": [
+      {
+          "hanzi": "能不能",
+          "pinyin": "néng bu néng",
+          "german": "können oder nicht?"
+      },
+      {
+          "hanzi": "能去",
+          "pinyin": "néng qù",
+          "german": "hingehen können"
+      },
+      {
+          "hanzi": "能来吗",
+          "pinyin": "néng lái ma",
+          "german": "kannst du kommen?"
+      }
+  ],
+  "hsk1-lai": [
+      {
+          "hanzi": "来到",
+          "pinyin": "láidào",
+          "german": "ankommen bei"
+      },
+      {
+          "hanzi": "来我家",
+          "pinyin": "lái wǒ jiā",
+          "german": "zu mir nach Hause kommen"
+      },
+      {
+          "hanzi": "快来",
+          "pinyin": "kuài lái",
+          "german": "komm schnell!"
+      }
+  ],
+  "hsk1-qu": [
+      {
+          "hanzi": "去学校",
+          "pinyin": "qù xuéxiào",
+          "german": "zur Schule gehen"
+      },
+      {
+          "hanzi": "去中国",
+          "pinyin": "qù Zhōngguó",
+          "german": "nach China reisen"
+      },
+      {
+          "hanzi": "去商店",
+          "pinyin": "qù shāngdiàn",
+          "german": "ins Geschäft gehen"
+      }
+  ],
+  "hsk1-hui-return": [
+      {
+          "hanzi": "回家",
+          "pinyin": "huí jiā",
+          "german": "nach Hause gehen"
+      },
+      {
+          "hanzi": "回国",
+          "pinyin": "huí guó",
+          "german": "ins Heimatland zurückkehren"
+      },
+      {
+          "hanzi": "回来",
+          "pinyin": "huí lái",
+          "german": "zurückkommen"
+      }
+  ],
+  "hsk1-zuo-do": [
+      {
+          "hanzi": "做饭",
+          "pinyin": "zuò fàn",
+          "german": "kochen / Essen zubereiten"
+      },
+      {
+          "hanzi": "做菜",
+          "pinyin": "zuò cài",
+          "german": "Gerichte zubereiten"
+      },
+      {
+          "hanzi": "做工作",
+          "pinyin": "zuò gōngzuò",
+          "german": "Arbeit verrichten"
+      }
+  ],
+  "hsk1-duo": [
+      {
+          "hanzi": "很多",
+          "pinyin": "hěn duō",
+          "german": "sehr viel / sehr viele"
+      },
+      {
+          "hanzi": "多少",
+          "pinyin": "duōshao",
+          "german": "wie viel?"
+      },
+      {
+          "hanzi": "多大",
+          "pinyin": "duō dà",
+          "german": "wie alt / wie groß?"
+      }
+  ],
+  "hsk1-shao": [
+      {
+          "hanzi": "很少",
+          "pinyin": "hěn shǎo",
+          "german": "sehr wenig / selten"
+      },
+      {
+          "hanzi": "不少",
+          "pinyin": "bù shǎo",
+          "german": "nicht wenige / ziemlich viele"
+      },
+      {
+          "hanzi": "少吃一点",
+          "pinyin": "shǎo chī yìdiǎn",
+          "german": "etwas weniger essen"
+      }
+  ],
+  "hsk1-leng": [
+      {
+          "hanzi": "很冷",
+          "pinyin": "hěn lěng",
+          "german": "sehr kalt"
+      },
+      {
+          "hanzi": "太冷了",
+          "pinyin": "tài lěng le",
+          "german": "viel zu kalt"
+      },
+      {
+          "hanzi": "不冷",
+          "pinyin": "bù lěng",
+          "german": "nicht kalt"
+      }
+  ],
+  "hsk1-re": [
+      {
+          "hanzi": "很热",
+          "pinyin": "hěn rè",
+          "german": "sehr heiß"
+      },
+      {
+          "hanzi": "热水",
+          "pinyin": "rè shuǐ",
+          "german": "heißes Wasser"
+      },
+      {
+          "hanzi": "太热了",
+          "pinyin": "tài rè le",
+          "german": "viel zu heiß"
+      }
+  ],
+  "hsk1-gaoxing": [
+      {
+          "hanzi": "很高兴",
+          "pinyin": "hěn gāoxìng",
+          "german": "sehr erfreut / sehr glücklich"
+      },
+      {
+          "hanzi": "高兴地笑",
+          "pinyin": "gāoxìng de xiào",
+          "german": "fröhlich lachen"
+      },
+      {
+          "hanzi": "不高兴",
+          "pinyin": "bù gāoxìng",
+          "german": "unglücklich / verstimmt"
+      }
+  ],
+  "hsk1-piaoliang": [
+      {
+          "hanzi": "很漂亮",
+          "pinyin": "hěn piàoliang",
+          "german": "sehr schön / sehr hübsch"
+      },
+      {
+          "hanzi": "漂亮衣服",
+          "pinyin": "piàoliang yīfu",
+          "german": "hübsche Kleidung"
+      },
+      {
+          "hanzi": "真漂亮",
+          "pinyin": "zhēn piàoliang",
+          "german": "wirklich wunderschön"
+      }
+  ],
+  "hsk1-shuo": [
+      {
+          "hanzi": "说话",
+          "pinyin": "shuō huà",
+          "german": "sprechen / sich unterhalten"
+      },
+      {
+          "hanzi": "说汉语",
+          "pinyin": "shuō Hànyǔ",
+          "german": "Chinesisch sprechen"
+      },
+      {
+          "hanzi": "说好",
+          "pinyin": "shuō hǎo",
+          "german": "vereinbaren / zusagen"
+      }
+  ],
+  "hsk1-meiyou": [
+      {
+          "hanzi": "没有钱",
+          "pinyin": "méiyǒu qián",
+          "german": "kein Geld haben"
+      },
+      {
+          "hanzi": "没有人",
+          "pinyin": "méiyǒu rén",
+          "german": "niemand da"
+      },
+      {
+          "hanzi": "没有时间",
+          "pinyin": "méiyǒu shíjiān",
+          "german": "keine Zeit haben"
+      }
+  ],
+  "hsk1-fandian": [
+      {
+          "hanzi": "去饭店",
+          "pinyin": "qù fàndiàn",
+          "german": "ins Restaurant / Hotel gehen"
+      },
+      {
+          "hanzi": "大饭店",
+          "pinyin": "dà fàndiàn",
+          "german": "großes Hotel / Restaurant"
+      },
+      {
+          "hanzi": "在饭店吃",
+          "pinyin": "zài fàndiàn chī",
+          "german": "im Restaurant essen"
+      }
+  ],
+  "hsk1-shuijiao": [
+      {
+          "hanzi": "去睡觉",
+          "pinyin": "qù shuìjiào",
+          "german": "schlafen gehen"
+      },
+      {
+          "hanzi": "想睡觉",
+          "pinyin": "xiǎng shuìjiào",
+          "german": "müde sein / schlafen wollen"
+      },
+      {
+          "hanzi": "好好睡觉",
+          "pinyin": "hǎohǎo shuìjiào",
+          "german": "gut und tief schlafen"
+      }
+  ],
+  "hsk1-dadianhua": [
+      {
+          "hanzi": "打电话给",
+          "pinyin": "dǎ diànhuà gěi",
+          "german": "anrufen bei"
+      },
+      {
+          "hanzi": "接电话",
+          "pinyin": "jiē diànhuà",
+          "german": "den Anruf annehmen"
+      },
+      {
+          "hanzi": "常打电话",
+          "pinyin": "cháng dǎ diànhuà",
+          "german": "oft telefonieren"
+      }
+  ],
+  "hsk1-ba-particle": [
+      {
+          "hanzi": "走吧",
+          "pinyin": "zǒu ba",
+          "german": "lass uns gehen!"
+      },
+      {
+          "hanzi": "吃吧",
+          "pinyin": "chī ba",
+          "german": "lass uns essen! / iss ruhig!"
+      },
+      {
+          "hanzi": "好吧",
+          "pinyin": "hǎo ba",
+          "german": "na gut / in Ordnung"
+      }
+  ],
+  "hsk1-shijian": [
+      {
+          "hanzi": "有时间",
+          "pinyin": "yǒu shíjiān",
+          "german": "Zeit haben"
+      },
+      {
+          "hanzi": "没时间",
+          "pinyin": "méi shíjiān",
+          "german": "keine Zeit haben"
+      },
+      {
+          "hanzi": "什么时间",
+          "pinyin": "shénme shíjiān",
+          "german": "zu welcher Zeit?"
+      }
   ]
 };
 

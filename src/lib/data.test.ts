@@ -70,9 +70,12 @@ describe('Katalog-Integrität', () => {
       }
 
       // Kollokationen dürfen keine Fake-Strings enthalten
+      const legitimateCompounds = new Set(['您好', '很好', '下午好', '说好']);
       for (const c of enriched.collocations) {
         expect(c.german).not.toContain('mit hallo');
-        expect(c.hanzi).not.toBe(`${item.hanzi}好`);
+        if (!legitimateCompounds.has(c.hanzi)) {
+          expect(c.hanzi).not.toBe(`${item.hanzi}好`);
+        }
       }
     }
   });

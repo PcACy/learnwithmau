@@ -208,3 +208,56 @@ describe('Database Reset Safety', () => {
   });
 });
 
+describe('Audio Speech Synthesis & Mandarin Fallback', () => {
+  it('handles environment without speechSynthesis gracefully', async () => {
+    const { speakMandarin, playMandarinWithFallback } = await import('./audio');
+
+    // In node/vitest environment, window.speechSynthesis may be undefined
+    const res = await speakMandarin('你好');
+    expect(typeof res).toBe('boolean');
+
+    const fallbackRes = await playMandarinWithFallback('谢谢');
+    expect(typeof fallbackRes).toBe('boolean');
+  });
+
+  it('triggers speak with correct zh-CN utterance when speechSynthesis is present', async () => {
+    const speakMock = vi.fn();
+    const cancelMock = vi.fn();
+    const origWindow = globalThis.window;
+
+    class MockUtterance {
+      text: string;
+      lang = '';
+      rate = 1;
+      voice: any = null;
+      onend: (() => void) | null = null;
+      onerror: (() => void) | null = null;
+      constructor(text: string) {
+        this.text = text;
+      }
+    }
+
+    (globalThis as any).window = {
+      ...globalThis.window,
+      SpeechSynthesisUtterance: MockUtterance,
+      speechSynthesis: {
+        speak: speakMock,
+        cancel: cancelMock,
+        getVoices: () => [{ lang: 'zh-CN', name: 'Tingting' }],
+      },
+    };
+
+    const { speakMandarin, stopCurrentAudio } = await import('./audio');
+    const started = await speakMandarin('你好，很高兴认识你。');
+
+    expect(started).toBe(true);
+    expect(speakMock).toHaveBeenCalled();
+
+    stopCurrentAudio();
+    expect(cancelMock).toHaveBeenCalled();
+
+    globalThis.window = origWindow;
+  });
+});
+
+

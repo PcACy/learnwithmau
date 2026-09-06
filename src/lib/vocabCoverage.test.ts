@@ -58,4 +58,26 @@ describe('Official HSK-1 100% Coverage Verification', () => {
       });
     });
   });
+
+  it('ensures 100% of all vocabulary items have at least 2 authentic collocations and example sentences', async () => {
+    const { getEnrichedVocab } = await import('../data/vocabDetails');
+
+    vocab.forEach((item) => {
+      const enriched = getEnrichedVocab(item);
+      expect(enriched.collocations.length).toBeGreaterThanOrEqual(2);
+      expect(enriched.exampleSentences.length).toBeGreaterThanOrEqual(1);
+
+      enriched.collocations.forEach((col) => {
+        expect(col.hanzi.trim().length).toBeGreaterThan(0);
+        expect(col.pinyin.trim().length).toBeGreaterThan(0);
+        expect(col.german.trim().length).toBeGreaterThan(0);
+      });
+
+      enriched.exampleSentences.forEach((sent) => {
+        expect(sent.hanzi.trim().length).toBeGreaterThan(0);
+        expect(sent.pinyin.trim().length).toBeGreaterThan(0);
+        expect(sent.german.trim().length).toBeGreaterThan(0);
+      });
+    });
+  });
 });

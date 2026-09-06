@@ -121,6 +121,13 @@ let currentOnEnded: (() => void) | null = null;
  */
 export function stopCurrentAudio(): void {
   currentOnEnded = null;
+  if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+    try {
+      window.speechSynthesis.cancel();
+    } catch {
+      // ignore
+    }
+  }
   if (currentAudio) {
     try {
       currentAudio.pause();
@@ -235,3 +242,76 @@ export function playAsset(url: string, onEnded?: () => void, rate?: number): Pro
   });
 }
 
+/**
+ * Liest chinesischen Text mit der nativen Web Speech API (zh-CN) vor.
+ * Stoppt vorherige Wiedergaben und wählt bevorzugt eine Standard-Mandarin-Stimme.
+ */
+export function speakMandarin(text: string, onEnded?: () => void, rate?: number): Promise<boolean> {
+  stopCurrentAudio();
+  if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
+    return Promise.resolve(false);
+  }
+
+  const UtteranceConstructor =
+    (window as unknown as { SpeechSynthesisUtterance?: typeof SpeechSynthesisUtterance }).SpeechSynthesisUtterance ||
+    (typeof SpeechSynthesisUtterance !== 'undefined' ? SpeechSynthesisUtterance : null);
+
+  if (!UtteranceConstructor) {
+    return Promise.resolve(false);
+  }
+
+  return new Promise((resolve) => {
+    try {
+      const utterance = new UtteranceConstructor(text);
+      utterance.lang = 'zh-CN';
+      const speed = rate ?? useSettingsStore.getState().audioSpeed ?? 1.0;
+      utterance.rate = speed;
+
+      const voices = window.speechSynthesis.getVoices?.() || [];
+      const zhVoice = voices.find(
+        (v) => v.lang === 'zh-CN' || v.lang === 'zh_CN' || v.lang.startsWith('zh') || v.lang.includes('cmn'),
+      );
+      if (zhVoice) {
+        utterance.voice = zhVoice;
+      }
+
+      let settled = false;
+      const finish = (started: boolean) => {
+        if (settled) return;
+        settled = true;
+        resolve(started);
+      };
+
+      utterance.onend = () => {
+        onEnded?.();
+        finish(true);
+      };
+
+      utterance.onerror = () => {
+        finish(false);
+      };
+
+      window.speechSynthesis.speak(utterance);
+      finish(true);
+    } catch {
+      resolve(false);
+    }
+  });
+}
+
+/**
+ * Versucht zuerst, das hinterlegte Audio-Asset abzuspielen.
+ * Schlägt dies fehl (oder ist kein Pfad hinterlegt), erfolgt die nahtlose Sprachausgabe via Web Speech API (zh-CN).
+ */
+export async function playMandarinWithFallback(
+  text: string,
+  audioPath?: string,
+  onEnded?: () => void,
+  rate?: number,
+): Promise<boolean> {
+  if (audioPath) {
+    const started = await playAsset(audioPath, onEnded, rate);
+    if (started) return true;
+  }
+  return speakMandarin(text, onEnded, rate);
+}

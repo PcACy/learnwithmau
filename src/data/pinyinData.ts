@@ -377,7 +377,7 @@ export const FINALS: readonly FinalData[] = [
     ipa: 'ɤ',
     category: 'simple',
     categoryLabel: 'Einfache Vokale (Monophthonge)',
-    germanAnalogy: 'Wie dumpfes deutsches "ö" oder unbetontes "e" in "bitte", mit zurückgezogener Zunge.',
+    germanAnalogy: 'Wie ein tief im Rachen gebildetes "e/ö" (Mundform wie bei "o", aber Lippen flach und ungerundet lassen — wie der Laut beim Zögern "ähm").',
     sampleWords: [{ hanzi: '喝', pinyin: 'hē', meaning: 'trinken', tone: 1 }],
   },
   {
@@ -435,7 +435,7 @@ export const FINALS: readonly FinalData[] = [
     ipa: 'oʊ',
     category: 'compound',
     categoryLabel: 'Zusammengesetzte Vokale (Diphthonge)',
-    germanAnalogy: 'Wie ein langes deutsches "o", das weich in ein kurzes "u" übergeht (wie "o-u", ähnlich engl. "soul" oder "go").',
+    germanAnalogy: 'Ein volles deutsches "o", das fließend in ein kurzes "u" gleitet (wie wenn man staunend "Oh!" ruft und die Lippen zu "u" schließt: "O-u").',
     sampleWords: [{ hanzi: '狗', pinyin: 'gǒu', meaning: 'Hund', tone: 3 }],
   },
   {
@@ -550,7 +550,7 @@ export const FINALS: readonly FinalData[] = [
     ipa: 'jɛn',
     category: 'nasal_front',
     categoryLabel: 'Vordere Nasalauslaute (-n)',
-    germanAnalogy: 'Wie "i" + deutsches "än" (z. B. wie in "Wien" mit offenem Ä-Zwischenlaut: "i-än").',
+    germanAnalogy: 'Wichtige Aussprachefalle: Klingt nicht wie "-ian", sondern wie "i-än" (helles "i" gleitet in offenes deutsches "än" wie in "Hände", Zungenspitze schließt vorn am Zahndamm).',
     sampleWords: [
       { hanzi: '天', pinyin: 'tiān', meaning: 'Himmel / Tag', tone: 1 },
       { hanzi: '见', pinyin: 'jiàn', meaning: 'sehen / treffen', tone: 4 },
@@ -585,7 +585,7 @@ export const FINALS: readonly FinalData[] = [
     ipa: 'yɛn',
     category: 'nasal_front',
     categoryLabel: 'Vordere Nasalauslaute (-n)',
-    germanAnalogy: 'Wie "ü" gefolgt von einem hellen "än" (Lippen zunächst spitz gerundet wie bei "ü").',
+    germanAnalogy: 'Wichtige Aussprachefalle: Klingt wie "ü-än" (spitze Lippen wie bei "ü", die in ein helles deutsches "än" gleiten; Zungenspitze schließt vorn).',
     sampleWords: [{ hanzi: '远', pinyin: 'yuǎn', meaning: 'weit / fern', tone: 3 }],
   },
 
@@ -653,7 +653,7 @@ export const FINALS: readonly FinalData[] = [
     ipa: 'aɚ',
     category: 'special',
     categoryLabel: 'Sonderauslaute (Retroflexes R)',
-    germanAnalogy: 'Die Zunge rollt sich während des Vokals nach hinten oben zum Gaumen (Erhua-Laut).',
+    germanAnalogy: 'Ein kehliger Laut, bei dem sich die Zungenspitze während des Sprechens nach oben und hinten zum harten Gaumen rollt, ohne ihn zu berühren (Erhua-Laut).',
     sampleWords: [
       { hanzi: '儿子', pinyin: 'érzi', meaning: 'Sohn', tone: 2 },
       { hanzi: '二', pinyin: 'èr', meaning: 'zwei', tone: 4 },

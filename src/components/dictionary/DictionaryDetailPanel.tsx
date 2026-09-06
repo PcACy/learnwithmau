@@ -8,7 +8,7 @@ import type { VocabItem } from '../../types/vocab';
 import type { SrsCard } from '../../types/srs';
 import { RADICALS_BY_ID } from '../../data';
 import { POSITION_LABELS } from '../../lib/alchemyEngine';
-import { playAsset, playToneSequence, stopCurrentAudio } from '../../lib/audio';
+import { playAsset, playMandarinWithFallback, playToneSequence, speakMandarin, stopCurrentAudio } from '../../lib/audio';
 import { getMasteryLevel } from '../../lib/mastery';
 import { useSettingsStore } from '../../store/settingsStore';
 import { getEnrichedVocab } from '../../data/vocabDetails';
@@ -24,6 +24,7 @@ interface DictionaryDetailPanelProps {
 export function DictionaryDetailPanel({ item, card, globalIndex }: DictionaryDetailPanelProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [playingSentenceIdx, setPlayingSentenceIdx] = useState<number | null>(null);
+  const [playingCollocationIdx, setPlayingCollocationIdx] = useState<number | null>(null);
   const [selectedChar, setSelectedChar] = useState<string | null>(null);
   const writerSectionRef = useRef<HTMLDivElement>(null);
   const playTimerRef = useRef<number | undefined>(undefined);
@@ -33,6 +34,8 @@ export function DictionaryDetailPanel({ item, card, globalIndex }: DictionaryDet
     return () => {
       stopCurrentAudio();
       setIsPlaying(false);
+      setPlayingSentenceIdx(null);
+      setPlayingCollocationIdx(null);
       if (playTimerRef.current !== undefined) {
         window.clearTimeout(playTimerRef.current);
       }
@@ -66,16 +69,27 @@ export function DictionaryDetailPanel({ item, card, globalIndex }: DictionaryDet
     }
 
     if (!started) {
+      started = await speakMandarin(item.hanzi, done, speed);
+    }
+
+    if (!started) {
       const durationMs = playToneSequence(item.syllables.map((s) => s.tone));
       playTimerRef.current = window.setTimeout(done, Math.max(300, durationMs));
     }
   };
 
-  const playSentenceAudio = async (audioPath: string | undefined, idx: number) => {
-    if (!audioPath) return;
+  const playSentenceAudio = async (sent: { hanzi: string; audioPath?: string }, idx: number) => {
     stopCurrentAudio();
     setPlayingSentenceIdx(idx);
-    await playAsset(audioPath, () => setPlayingSentenceIdx(null));
+    setPlayingCollocationIdx(null);
+    await playMandarinWithFallback(sent.hanzi, sent.audioPath, () => setPlayingSentenceIdx(null));
+  };
+
+  const playCollocationAudio = async (col: { hanzi: string }, idx: number) => {
+    stopCurrentAudio();
+    setPlayingCollocationIdx(idx);
+    setPlayingSentenceIdx(null);
+    await playMandarinWithFallback(col.hanzi, undefined, () => setPlayingCollocationIdx(null));
   };
 
   return (
@@ -440,20 +454,18 @@ export function DictionaryDetailPanel({ item, card, globalIndex }: DictionaryDet
                 <p className="text-xs text-zinc-500 dark:text-zinc-400">{sent.german}</p>
               </div>
 
-              {sent.audioPath && (
-                <button
-                  type="button"
-                  onClick={() => playSentenceAudio(sent.audioPath, sIdx)}
-                  className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border transition-all ${
-                    playingSentenceIdx === sIdx
-                      ? 'border-emerald-600 bg-emerald-600 text-white'
-                      : 'border-zinc-200 bg-white text-zinc-500 hover:border-emerald-500 hover:text-emerald-700 dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-300'
-                  }`}
-                  title="Satz anhören"
-                >
-                  <Volume2 className="h-4 w-4" />
-                </button>
-              )}
+              <button
+                type="button"
+                onClick={() => playSentenceAudio(sent, sIdx)}
+                className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border transition-all cursor-pointer ${
+                  playingSentenceIdx === sIdx
+                    ? 'border-emerald-600 bg-emerald-600 text-white'
+                    : 'border-zinc-200 bg-white text-zinc-500 hover:border-emerald-500 hover:text-emerald-700 dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-300'
+                }`}
+                title="Satz anhören"
+              >
+                <Volume2 className="h-4 w-4" />
+              </button>
             </div>
           ))}
         </div>
@@ -462,24 +474,43 @@ export function DictionaryDetailPanel({ item, card, globalIndex }: DictionaryDet
       {/* 6. HÄUFIGE WORTVERBINDUNGEN (复合词扩展) - Nur anzeigen wenn reale Kollokationen existieren */}
       {enriched.collocations.length > 0 && (
         <div className="space-y-3">
-          <span className="font-mono text-xs font-bold uppercase tracking-wider text-zinc-900 dark:text-zinc-100">
-            Häufige Wortverbindungen (复合词扩展)
-          </span>
+          <div className="flex items-center justify-between">
+            <span className="font-mono text-xs font-bold uppercase tracking-wider text-zinc-900 dark:text-zinc-100">
+              Häufige Wortverbindungen (复合词扩展)
+            </span>
+            <span className="font-mono text-[11px] text-zinc-400">
+              Klick zum Anhören
+            </span>
+          </div>
 
           <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
             {enriched.collocations.map((col, cIdx) => (
-              <div
+              <button
+                type="button"
                 key={cIdx}
-                className="flex items-center gap-2 rounded-xl border border-zinc-200/80 bg-zinc-50/40 p-2.5 dark:border-white/10 dark:bg-zinc-800/20 text-xs"
+                onClick={() => playCollocationAudio(col, cIdx)}
+                className="group flex items-center justify-between gap-2 rounded-xl border border-zinc-200/80 bg-zinc-50/50 p-2.5 text-xs text-left transition-all hover:border-emerald-500/40 hover:bg-emerald-50/30 dark:border-white/10 dark:bg-zinc-800/20 dark:hover:bg-emerald-950/20 cursor-pointer active:scale-[0.99]"
+                title={`"${col.hanzi}" anhören`}
               >
-                <span className="font-cjk text-base font-bold text-zinc-900 dark:text-zinc-100">
-                  {col.hanzi}
+                <div className="flex items-baseline gap-2 min-w-0">
+                  <span className="font-cjk text-base font-bold text-zinc-900 dark:text-zinc-100">
+                    {col.hanzi}
+                  </span>
+                  <span className="font-mono text-[11px] font-bold text-emerald-700 dark:text-emerald-400">
+                    {col.pinyin}
+                  </span>
+                  <span className="truncate text-zinc-400">({col.german})</span>
+                </div>
+                <span
+                  className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full border transition-colors ${
+                    playingCollocationIdx === cIdx
+                      ? 'border-emerald-600 bg-emerald-600 text-white'
+                      : 'border-zinc-200 bg-white text-zinc-400 group-hover:text-emerald-700 dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-300'
+                  }`}
+                >
+                  <Volume2 className="h-3 w-3" />
                 </span>
-                <span className="font-mono text-[11px] font-bold text-emerald-700 dark:text-emerald-400">
-                  {col.pinyin}
-                </span>
-                <span className="truncate text-zinc-400">({col.german})</span>
-              </div>
+              </button>
             ))}
           </div>
         </div>
