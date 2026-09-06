@@ -13,6 +13,7 @@ import {
   Keyboard,
   Layers,
   MessageSquareQuote,
+  MessagesSquare,
   Play,
   Sparkles,
   Target,
@@ -24,7 +25,7 @@ import { useProgressStore } from '../store/progressStore';
 import { useKeyDown } from '../hooks/useKeyDown';
 import { VOCAB } from '../data';
 import { selectDueItemIds, selectMastery } from '../lib/srsQuery';
-import { getCompletedGrammar, getCompletedStories } from '../lib/db';
+import { getCompletedDialogues, getCompletedGrammar, getCompletedStories } from '../lib/db';
 import grammarData from '../data/grammar.json';
 import storiesData from '../data/stories.json';
 import type { GrammarLesson } from '../types/grammar';
@@ -44,13 +45,15 @@ export function DashboardPage() {
 
   const [completedGrammar, setCompletedGrammar] = useState<string[]>([]);
   const [completedStories, setCompletedStories] = useState<string[]>([]);
+  const [completedDialoguesCount, setCompletedDialoguesCount] = useState<number>(0);
 
   useEffect(() => {
     let cancelled = false;
-    void Promise.all([getCompletedGrammar(), getCompletedStories()]).then(([g, s]) => {
+    void Promise.all([getCompletedGrammar(), getCompletedStories(), getCompletedDialogues()]).then(([g, s, d]) => {
       if (cancelled) return;
       setCompletedGrammar(g);
       setCompletedStories(s);
+      setCompletedDialoguesCount(Object.keys(d || {}).length);
     });
     return () => {
       cancelled = true;
@@ -281,7 +284,7 @@ export function DashboardPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {/* Tile: Grammatik */}
           <Link
             to="/grammar"
@@ -340,6 +343,37 @@ export function DashboardPage() {
             </div>
             <div className="flex items-center gap-1.5 font-mono text-xs font-bold text-emerald-700 dark:text-emerald-400 pt-2">
               <span>Geschichten lesen</span>
+              <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+            </div>
+          </Link>
+
+          {/* Tile: Alltagsdialoge */}
+          <Link
+            to="/dialogue"
+            className="group relative overflow-hidden rounded-3xl border border-zinc-200/80 bg-white p-6 shadow-whisper transition-all duration-200 hover:-translate-y-1 hover:border-emerald-500/50 dark:border-white/[0.08] dark:bg-zinc-900 flex flex-col justify-between gap-5"
+          >
+            <span className="watermark-glyph text-[100px]! -bottom-4! -right-2!">话</span>
+            <div className="space-y-3 relative">
+              <div className="flex items-center justify-between">
+                <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-700 dark:text-emerald-400">
+                  <MessagesSquare className="h-5 w-5" />
+                </span>
+                <span className="font-mono text-xs font-semibold text-emerald-700 dark:text-emerald-400">
+                  {completedDialoguesCount} / 6 gelöst
+                </span>
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100">HSK-1 Alltagsdialoge</h3>
+                <p className="font-mono text-xs text-emerald-700 dark:text-emerald-400 uppercase tracking-wider mt-0.5">
+                  Interaktives Rollenspiel
+                </p>
+                <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed">
+                  Verzweigte Alltagsszenarien im Teehaus, Taxi oder Markt mit nativer Sprachausgabe und Feedback.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-1.5 font-mono text-xs font-bold text-emerald-700 dark:text-emerald-400 pt-2">
+              <span>Dialoge führen</span>
               <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
             </div>
           </Link>

@@ -8,6 +8,7 @@ export interface MetaMap {
   dailyGoal: DailyGoal;
   completedGrammar: string[];
   completedStories: string[];
+  completedDialogues: Record<string, { stars: number; bestScore: number; completedAt: string }>;
 }
 
 export type MetaKey = keyof MetaMap;
@@ -85,6 +86,28 @@ export async function putCompletedStories(ids: string[]): Promise<void> {
   try {
     if (typeof window !== 'undefined') {
       localStorage.setItem('hanzi_completed_stories', JSON.stringify(ids));
+    }
+  } catch {
+    // ignore
+  }
+}
+
+export async function getCompletedDialogues(): Promise<Record<string, { stars: number; bestScore: number; completedAt: string }>> {
+  const meta = await getMeta('completedDialogues');
+  if (meta && typeof meta === 'object') return meta;
+  try {
+    const raw = typeof window !== 'undefined' ? localStorage.getItem('hanzi_completed_dialogues') : null;
+    return raw ? JSON.parse(raw) : {};
+  } catch {
+    return {};
+  }
+}
+
+export async function putCompletedDialogues(dialogues: Record<string, { stars: number; bestScore: number; completedAt: string }>): Promise<void> {
+  await putMeta('completedDialogues', dialogues);
+  try {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('hanzi_completed_dialogues', JSON.stringify(dialogues));
     }
   } catch {
     // ignore

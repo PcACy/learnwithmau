@@ -1,0 +1,1092 @@
+[
+  {
+    "id": "teahouse",
+    "order": 1,
+    "title": "茶馆点单",
+    "pinyinTitle": "Cháguǎn diǎndān",
+    "germanTitle": "Im Teehaus bestellen",
+    "hanziTag": "茶",
+    "category": "Essen & Trinken",
+    "role": "Gast im traditionellen Teehaus",
+    "location": "Peking, Altes Teehaus",
+    "partner": "Kellnerin (服务员)",
+    "summary": "Bestelle ein heißes Getränk, frage höflich nach dem Preis und erkundige dich nach der Rechnung.",
+    "objectives": [
+      "Bestelle höflich Tee mit '想喝'",
+      "Frage nach dem Preis mit '多少钱'",
+      "Bedanke dich authentisch"
+    ],
+    "initialNodeId": "tea-01",
+    "maxScore": 200,
+    "nodes": {
+      "tea-01": {
+        "id": "tea-01",
+        "speaker": "npc",
+        "speakerName": "服务员",
+        "speakerAvatar": "茶",
+        "gender": "female",
+        "hanzi": "您好！请问你想喝什么？",
+        "pinyin": "Nǐn hǎo! Qǐngwèn nǐ xiǎng hē shénme?",
+        "german": "Guten Tag! Darf ich fragen, was Sie trinken möchten?",
+        "audioUrl": "/audio/dialogues/tea-01.mp3",
+        "tokens": [
+          { "hanzi": "您好", "pinyin": "nín hǎo", "german": "Guten Tag (höflich)" },
+          { "hanzi": "请问", "pinyin": "qǐngwèn", "german": "darf ich fragen" },
+          { "hanzi": "你", "pinyin": "nǐ", "german": "du / Sie" },
+          { "hanzi": "想", "pinyin": "xiǎng", "german": "möchten" },
+          { "hanzi": "喝", "pinyin": "hē", "german": "trinken" },
+          { "hanzi": "什么", "pinyin": "shénme", "german": "was" }
+        ],
+        "cultureTip": "'请问' (qǐngwèn) leitet Fragen besonders höflich ein. '您好' zeigt Respekt vor dem Gast.",
+        "choices": [
+          {
+            "id": "tea-c1",
+            "hanzi": "我想喝热茶，谢谢。",
+            "pinyin": "Wǒ xiǎng hē rè chá, xièxie.",
+            "german": "Ich möchte heißen Tee trinken, danke.",
+            "audioUrl": "/audio/dialogues/tea-c1.mp3",
+            "points": 100,
+            "feedbackGerman": "Ausgezeichnet! Sehr höflich mit '想喝' (möchte trinken) und '谢谢' (danke).",
+            "nextNodeId": "tea-02a"
+          },
+          {
+            "id": "tea-c2",
+            "hanzi": "我要水。",
+            "pinyin": "Wǒ yào shuǐ.",
+            "german": "Ich will Wasser.",
+            "audioUrl": "/audio/dialogues/tea-c2.mp3",
+            "points": 70,
+            "feedbackGerman": "Verständlich, aber '我要' (ich will) wirkt im chinesischen Service etwas barsch. '我想喝水' wäre weicher.",
+            "nextNodeId": "tea-02b"
+          },
+          {
+            "id": "tea-c3",
+            "hanzi": "我是喝茶。",
+            "pinyin": "Wǒ shì hē chá.",
+            "german": "Ich bin Tee trinken.",
+            "audioUrl": "/audio/dialogues/tea-c3.mp3",
+            "points": 20,
+            "feedbackGerman": "Grammatikfehler: '是' verbindet im Chinesischen Nomen (A = B). Vor Verben verwendet man Hilfsverben wie '想' oder direkt das Verb.",
+            "nextNodeId": "tea-02c"
+          }
+        ]
+      },
+      "tea-02a": {
+        "id": "tea-02a",
+        "speaker": "npc",
+        "speakerName": "服务员",
+        "speakerAvatar": "茶",
+        "gender": "female",
+        "hanzi": "好的，我们的中国茶很好喝。请坐！",
+        "pinyin": "Hǎo de, wǒmen de Zhōngguó chá hěn hǎohē. Qǐng zuò!",
+        "german": "In Ordnung, unser chinesischer Tee schmeckt hervorragend. Bitte nehmen Sie Platz!",
+        "audioUrl": "/audio/dialogues/tea-02a.mp3",
+        "tokens": [
+          { "hanzi": "好的", "pinyin": "hǎo de", "german": "in Ordnung / gut" },
+          { "hanzi": "我们", "pinyin": "wǒmen", "german": "wir / unser" },
+          { "hanzi": "的", "pinyin": "de", "german": "(Attribut-Partikel)" },
+          { "hanzi": "中国", "pinyin": "Zhōngguó", "german": "China" },
+          { "hanzi": "茶", "pinyin": "chá", "german": "Tee" },
+          { "hanzi": "很", "pinyin": "hěn", "german": "sehr" },
+          { "hanzi": "好喝", "pinyin": "hǎohē", "german": "lecker zu trinken" },
+          { "hanzi": "请", "pinyin": "qǐng", "german": "bitte" },
+          { "hanzi": "坐", "pinyin": "zuò", "german": "sitzen / Platz nehmen" }
+        ],
+        "choices": [
+          {
+            "id": "tea-c2a-1",
+            "hanzi": "请问多少钱一杯？",
+            "pinyin": "Qǐngwèn duōshao qián yì bēi?",
+            "german": "Darf ich fragen, wie viel eine Tasse kostet?",
+            "audioUrl": "/audio/dialogues/tea-c2a-1.mp3",
+            "points": 100,
+            "feedbackGerman": "Perfekte Formulierung mit '多少钱' (wie viel Geld) und dem Zählwort '杯' (Tasse/Glas).",
+            "nextNodeId": "tea-03a"
+          },
+          {
+            "id": "tea-c2a-2",
+            "hanzi": "多少钱？",
+            "pinyin": "Duōshao qián?",
+            "german": "Wie viel Geld?",
+            "audioUrl": "/audio/dialogues/tea-c2a-2.mp3",
+            "points": 75,
+            "feedbackGerman": "Funktioniert einwandfrei, ist aber etwas direkt. '请问多少钱' klingt eleganter.",
+            "nextNodeId": "tea-03a"
+          }
+        ]
+      },
+      "tea-02b": {
+        "id": "tea-02b",
+        "speaker": "npc",
+        "speakerName": "服务员",
+        "speakerAvatar": "茶",
+        "gender": "female",
+        "hanzi": "好的，给你一杯水。请问你还想吃点什么吗？",
+        "pinyin": "Hǎo de, gěi nǐ yì bēi shuǐ. Qǐngwèn nǐ hái xiǎng chī diǎnr shénme ma?",
+        "german": "In Ordnung, hier ist ein Glas Wasser. Möchten Sie noch etwas essen?",
+        "audioUrl": "/audio/dialogues/tea-02b.mp3",
+        "tokens": [
+          { "hanzi": "给", "pinyin": "gěi", "german": "geben / für" },
+          { "hanzi": "你", "pinyin": "nǐ", "german": "dir" },
+          { "hanzi": "一", "pinyin": "yì", "german": "ein" },
+          { "hanzi": "杯", "pinyin": "bēi", "german": "Tasse / Glas" },
+          { "hanzi": "水", "pinyin": "shuǐ", "german": "Wasser" },
+          { "hanzi": "吃", "pinyin": "chī", "german": "essen" }
+        ],
+        "choices": [
+          {
+            "id": "tea-c2b-1",
+            "hanzi": "不吃了，谢谢你！",
+            "pinyin": "Bù chī le, xièxie nǐ!",
+            "german": "Ich esse nichts mehr, danke dir!",
+            "audioUrl": "/audio/dialogues/tea-c2b-1.mp3",
+            "points": 90,
+            "feedbackGerman": "Sehr natürlich verneint mit '不...了' (Zustandsänderung).",
+            "nextNodeId": "tea-03a"
+          },
+          {
+            "id": "tea-c2b-2",
+            "hanzi": "不要吃。",
+            "pinyin": "Bú yào chī.",
+            "german": "Will nicht essen.",
+            "audioUrl": "/audio/dialogues/tea-c2b-2.mp3",
+            "points": 50,
+            "feedbackGerman": "'不要吃' klingt wie ein Verbot ('Iss das nicht!'). Im Restaurant lieber '不吃了' oder '不用了' sagen.",
+            "nextNodeId": "tea-03a"
+          }
+        ]
+      },
+      "tea-02c": {
+        "id": "tea-02c",
+        "speaker": "npc",
+        "speakerName": "服务员",
+        "speakerAvatar": "茶",
+        "gender": "female",
+        "hanzi": "你想喝茶吗？好的，请等一下！",
+        "pinyin": "Nǐ xiǎng hē chá ma? Hǎo de, qǐng děng yíxià!",
+        "german": "Sie möchten Tee trinken? In Ordnung, bitte warten Sie einen Moment!",
+        "audioUrl": "/audio/dialogues/tea-02c.mp3",
+        "tokens": [
+          { "hanzi": "等", "pinyin": "děng", "german": "warten" },
+          { "hanzi": "一下", "pinyin": "yíxià", "german": "einen kurzen Moment" }
+        ],
+        "choices": [
+          {
+            "id": "tea-c2c-1",
+            "hanzi": "好的，太谢谢你了！",
+            "pinyin": "Hǎo de, tài xièxie nǐ le!",
+            "german": "In Ordnung, vielen Dank!",
+            "audioUrl": "/audio/dialogues/tea-c2c-1.mp3",
+            "points": 80,
+            "feedbackGerman": "Höflich reagiert und die Situation gerettet.",
+            "nextNodeId": "tea-03a"
+          }
+        ]
+      },
+      "tea-03a": {
+        "id": "tea-03a",
+        "speaker": "npc",
+        "speakerName": "服务员",
+        "speakerAvatar": "茶",
+        "gender": "female",
+        "hanzi": "热茶一杯十五块钱。请慢用！",
+        "pinyin": "Rè chá yì bēi shíwǔ kuài qián. Qǐng mànyòng!",
+        "german": "Ein Becher heißer Tee kostet 15 Yuan. Guten Appetit / Lassen Sie es sich schmecken!",
+        "audioUrl": "/audio/dialogues/tea-03a.mp3",
+        "tokens": [
+          { "hanzi": "热", "pinyin": "rè", "german": "heiß" },
+          { "hanzi": "十五", "pinyin": "shíwǔ", "german": "15" },
+          { "hanzi": "块", "pinyin": "kuài", "german": "Yuan (Geldeinheit)" },
+          { "hanzi": "钱", "pinyin": "qián", "german": "Geld" },
+          { "hanzi": "请慢用", "pinyin": "qǐng mànyòng", "german": "Lassen Sie es sich schmecken" }
+        ],
+        "cultureTip": "'请慢用' (qǐng mànyòng) bedeutet wörtlich 'Bitte langsam verzehren' und ist die traditionelle Höflichkeitsformel im Restaurant.",
+        "choices": [
+          {
+            "id": "tea-c3a-1",
+            "hanzi": "太好了，谢谢你！",
+            "pinyin": "Tài hǎo le, xièxie nǐ!",
+            "german": "Großartig, vielen Dank dir!",
+            "audioUrl": "/audio/dialogues/tea-c3a-1.mp3",
+            "points": 100,
+            "feedbackGerman": "Klassischer, natürlicher Abschluss eines Bestellgesprächs.",
+            "nextNodeId": "tea-end"
+          }
+        ]
+      },
+      "tea-end": {
+        "id": "tea-end",
+        "speaker": "npc",
+        "speakerName": "服务员",
+        "speakerAvatar": "茶",
+        "gender": "female",
+        "hanzi": "不客气，祝你在中国天天开心！",
+        "pinyin": "Bú kèqi, zhù nǐ zài Zhōngguó tiāntiān kāixīn!",
+        "german": "Gern geschehen! Ich wünsche Ihnen jeden Tag Freude in China!",
+        "audioUrl": "/audio/dialogues/tea-end.mp3",
+        "tokens": [
+          { "hanzi": "不客气", "pinyin": "bú kèqi", "german": "Gern geschehen" },
+          { "hanzi": "祝", "pinyin": "zhù", "german": "wünschen" },
+          { "hanzi": "天天", "pinyin": "tiāntiān", "german": "jeden Tag" },
+          { "hanzi": "开心", "pinyin": "kāixīn", "german": "glücklich / erfreut" }
+        ],
+        "isEnding": true
+      }
+    }
+  },
+  {
+    "id": "market",
+    "order": 2,
+    "title": "水果市场",
+    "pinyinTitle": "Shuǐguǒ shìchǎng",
+    "germanTitle": "Auf dem Obstmarkt",
+    "hanziTag": "果",
+    "category": "Einkaufen & Geld",
+    "role": "Kunde am Obststand",
+    "location": "Peking, Gemüsemarkt",
+    "partner": "Obsthändler (老板)",
+    "summary": "Frage nach dem Obstpreis, verhandle geschickt um einen Rabatt und bezahle passend in Yuan.",
+    "objectives": [
+      "Frage nach dem Preis mit '多少钱一斤'",
+      "Nutze '太贵了' zum Verhandeln",
+      "Übergib das Geld mit '给你钱'"
+    ],
+    "initialNodeId": "mkt-01",
+    "maxScore": 200,
+    "nodes": {
+      "mkt-01": {
+        "id": "mkt-01",
+        "speaker": "npc",
+        "speakerName": "老板",
+        "speakerAvatar": "果",
+        "gender": "male",
+        "hanzi": "来买水果吗？今天的苹果很大很好吃！",
+        "pinyin": "Lái mǎi shuǐguǒ ma? Jīntiān de píngguǒ hěn dà hěn hǎochī!",
+        "german": "Kommst du Obst kaufen? Die Äpfel heute sind groß und schmecken super!",
+        "audioUrl": "/audio/dialogues/mkt-01.mp3",
+        "tokens": [
+          { "hanzi": "来", "pinyin": "lái", "german": "kommen" },
+          { "hanzi": "买", "pinyin": "mǎi", "german": "kaufen" },
+          { "hanzi": "水果", "pinyin": "shuǐguǒ", "german": "Obst / Früchte" },
+          { "hanzi": "今天", "pinyin": "jīntiān", "german": "heute" },
+          { "hanzi": "苹果", "pinyin": "píngguǒ", "german": "Apfel" },
+          { "hanzi": "大", "pinyin": "dà", "german": "groß" },
+          { "hanzi": "好吃", "pinyin": "hǎochī", "german": "lecker" }
+        ],
+        "cultureTip": "Auf chinesischen Märkten spricht man Händler meist respektvoll-freundlich mit '老板' (Lǎobǎn = Chef/Inhaber) an.",
+        "choices": [
+          {
+            "id": "mkt-c1",
+            "hanzi": "老板，请问苹果多少钱一斤？",
+            "pinyin": "Lǎobǎn, qǐngwèn píngguǒ duōshao qián yì jīn?",
+            "german": "Chef, wie viel kostet ein Pfund (Jin) Äpfel?",
+            "audioUrl": "/audio/dialogues/mkt-c1.mp3",
+            "points": 100,
+            "feedbackGerman": "Perfekt! '老板' ist die authentische Marktanrede und '一斤' (500g) die Standard-Gewichtseinheit in China.",
+            "nextNodeId": "mkt-02a"
+          },
+          {
+            "id": "mkt-c2",
+            "hanzi": "苹果怎么钱？",
+            "pinyin": "Píngguǒ zěnme qián?",
+            "german": "[Falsch: Wie Geld?]",
+            "audioUrl": "/audio/dialogues/mkt-c2.mp3",
+            "points": 20,
+            "feedbackGerman": "Fehler: Um nach dem Preis zu fragen, heißt es '多少钱' (wie viel Geld), nicht '怎么钱'. '怎么' fragt nach der Art und Weise ('wie').",
+            "nextNodeId": "mkt-02b"
+          },
+          {
+            "id": "mkt-c3",
+            "hanzi": "我买苹果，多少钱？",
+            "pinyin": "Wǒ mǎi píngguǒ, duōshao qián?",
+            "german": "Ich kaufe Äpfel, wie viel Geld?",
+            "audioUrl": "/audio/dialogues/mkt-c3.mp3",
+            "points": 75,
+            "feedbackGerman": "Korrekt und verständlich, aber mit '老板' und '一斤' klingt es noch einheimischer.",
+            "nextNodeId": "mkt-02a"
+          }
+        ]
+      },
+      "mkt-02a": {
+        "id": "mkt-02a",
+        "speaker": "npc",
+        "speakerName": "老板",
+        "speakerAvatar": "果",
+        "gender": "male",
+        "hanzi": "苹果五块钱一斤。你想买几斤？",
+        "pinyin": "Píngguǒ wǔ kuài qián yì jīn. Nǐ xiǎng mǎi jǐ jīn?",
+        "german": "Äpfel kosten fünf Yuan pro Pfund. Wie viele Pfund möchtest du kaufen?",
+        "audioUrl": "/audio/dialogues/mkt-02a.mp3",
+        "tokens": [
+          { "hanzi": "五", "pinyin": "wǔ", "german": "fünf" },
+          { "hanzi": "块", "pinyin": "kuài", "german": "Yuan" },
+          { "hanzi": "斤", "pinyin": "jīn", "german": "Jin (500 Gramm)" },
+          { "hanzi": "几", "pinyin": "jǐ", "german": "wie viele (unter 10)" }
+        ],
+        "cultureTip": "Ein chinesisches '斤' (jīn) entspricht exakt 500 Gramm (1/2 Kilogramm). Preise werden auf Märkten fast immer pro Jin angegeben.",
+        "choices": [
+          {
+            "id": "mkt-c2a-1",
+            "hanzi": "太贵了！四块钱一斤好吗？",
+            "pinyin": "Tài guì le! Sì kuài qián yì jīn hǎo ma?",
+            "german": "Zu teuer! Vier Yuan pro Jin, geht das?",
+            "audioUrl": "/audio/dialogues/mkt-c2a-1.mp3",
+            "points": 100,
+            "feedbackGerman": "Klassisches Marktfeilschen: '太贵了' (tài guì le) mit '...好吗？' ist charmant und effektiv!",
+            "nextNodeId": "mkt-03-bargain"
+          },
+          {
+            "id": "mkt-c2a-2",
+            "hanzi": "我买两斤，给你十块钱。",
+            "pinyin": "Wǒ mǎi liǎng jīn, gěi nǐ shí kuài qián.",
+            "german": "Ich kaufe zwei Pfund, gebe dir zehn Yuan.",
+            "audioUrl": "/audio/dialogues/mkt-c2a-2.mp3",
+            "points": 85,
+            "feedbackGerman": "Grammatikalisch einwandfrei! Du verwendest korrekt '两' (liǎng) vor dem Zählwort '斤'.",
+            "nextNodeId": "mkt-03-pay"
+          }
+        ]
+      },
+      "mkt-02b": {
+        "id": "mkt-02b",
+        "speaker": "npc",
+        "speakerName": "老板",
+        "speakerAvatar": "果",
+        "gender": "male",
+        "hanzi": "哈哈，你是问多少钱吧？五块钱一斤！",
+        "pinyin": "Hāha, nǐ shì wèn duōshao qián ba? Wǔ kuài qián yì jīn!",
+        "german": "Haha, du fragst wie viel es kostet, oder? Fünf Yuan pro Pfund!",
+        "audioUrl": "/audio/dialogues/mkt-02b.mp3",
+        "tokens": [
+          { "hanzi": "问", "pinyin": "wèn", "german": "fragen" },
+          { "hanzi": "吧", "pinyin": "ba", "german": "oder? / nicht wahr?" }
+        ],
+        "choices": [
+          {
+            "id": "mkt-c2b-1",
+            "hanzi": "对，我想买两斤。",
+            "pinyin": "Duì, wǒ xiǎng mǎi liǎng jīn.",
+            "german": "Richtig, ich möchte zwei Pfund kaufen.",
+            "audioUrl": "/audio/dialogues/mkt-c2b-1.mp3",
+            "points": 80,
+            "feedbackGerman": "Gut reagiert und das Missverständnis geklärt.",
+            "nextNodeId": "mkt-03-pay"
+          }
+        ]
+      },
+      "mkt-03-bargain": {
+        "id": "mkt-03-bargain",
+        "speaker": "npc",
+        "speakerName": "老板",
+        "speakerAvatar": "果",
+        "gender": "male",
+        "hanzi": "行！看你汉语说得好，四块就四块。买两斤吧？",
+        "pinyin": "Xíng! Kàn nǐ Hànyǔ shuō de hǎo, sì kuài jiù sì kuài. Mǎi liǎng jīn ba?",
+        "german": "Geht klar! Weil dein Chinesisch so gut ist: vier Yuan! Nimmst du zwei Pfund?",
+        "audioUrl": "/audio/dialogues/mkt-03-bargain.mp3",
+        "tokens": [
+          { "hanzi": "行", "pinyin": "xíng", "german": "in Ordnung / geht klar" },
+          { "hanzi": "汉语", "pinyin": "Hànyǔ", "german": "Chinesisch" },
+          { "hanzi": "好", "pinyin": "hǎo", "german": "gut" }
+        ],
+        "choices": [
+          {
+            "id": "mkt-c3b-1",
+            "hanzi": "好的，买两斤。给你八块钱！",
+            "pinyin": "Hǎo de, mǎi liǎng jīn. Gěi nǐ bā kuài qián!",
+            "german": "In Ordnung, ich nehme zwei Pfund. Hier sind acht Yuan!",
+            "audioUrl": "/audio/dialogues/mkt-c3b-1.mp3",
+            "points": 100,
+            "feedbackGerman": "Erfolgreich gehandelt und die Rechnung (2 x 4 = 8 Yuan) perfekt formuliert!",
+            "nextNodeId": "mkt-end"
+          }
+        ]
+      },
+      "mkt-03-pay": {
+        "id": "mkt-03-pay",
+        "speaker": "npc",
+        "speakerName": "老板",
+        "speakerAvatar": "果",
+        "gender": "male",
+        "hanzi": "好嘞，两斤十块钱。给你苹果！",
+        "pinyin": "Hǎo lei, liǎng jīn shí kuài qián. Gěi nǐ píngguǒ!",
+        "german": "Alles klar, zwei Pfund machen zehn Yuan. Hier sind die Äpfel!",
+        "audioUrl": "/audio/dialogues/mkt-03-pay.mp3",
+        "tokens": [
+          { "hanzi": "十", "pinyin": "shí", "german": "zehn" },
+          { "hanzi": "块", "pinyin": "kuài", "german": "Yuan" }
+        ],
+        "choices": [
+          {
+            "id": "mkt-c3p-1",
+            "hanzi": "谢谢老板，再见！",
+            "pinyin": "Xièxie lǎobǎn, zàijiàn!",
+            "german": "Danke Chef, auf Wiedersehen!",
+            "audioUrl": "/audio/dialogues/mkt-c3p-1.mp3",
+            "points": 100,
+            "feedbackGerman": "Höflich und herzlich verabschiedet.",
+            "nextNodeId": "mkt-end"
+          }
+        ]
+      },
+      "mkt-end": {
+        "id": "mkt-end",
+        "speaker": "npc",
+        "speakerName": "老板",
+        "speakerAvatar": "果",
+        "gender": "male",
+        "hanzi": "慢走啊！下次想吃水果再来！",
+        "pinyin": "Mànzǒu a! Xià cì xiǎng chī shuǐguǒ zài lái!",
+        "german": "Mach's gut! Komm wieder, wenn du das nächste Mal Lust auf Obst hast!",
+        "audioUrl": "/audio/dialogues/mkt-end.mp3",
+        "tokens": [
+          { "hanzi": "慢走", "pinyin": "mànzǒu", "german": "Pass auf dich auf / Mach's gut" },
+          { "hanzi": "下次", "pinyin": "xià cì", "german": "nächstes Mal" },
+          { "hanzi": "再来", "pinyin": "zài lái", "german": "wiederkommen" }
+        ],
+        "isEnding": true
+      }
+    }
+  },
+  {
+    "id": "taxi",
+    "order": 3,
+    "title": "坐出租车",
+    "pinyinTitle": "Zuò chūzūchē",
+    "germanTitle": "Taxi & Wegbeschreibung",
+    "hanziTag": "车",
+    "category": "Unterwegs & Transport",
+    "role": "Fahrgast am Flughafen",
+    "location": "Peking, Hauptstadtflughafen",
+    "partner": "Taxifahrer (司机师傅)",
+    "summary": "Steige in ein Taxi ein, nenne dein Zielhöflich mit '师傅', gib Halteanweisungen und bezahle.",
+    "objectives": [
+      "Sprich den Fahrer mit '师傅' an",
+      "Sage dein Ziel mit '去北京饭店'",
+      "Bitte um Stopp mit '在前面停'"
+    ],
+    "initialNodeId": "taxi-01",
+    "maxScore": 200,
+    "nodes": {
+      "taxi-01": {
+        "id": "taxi-01",
+        "speaker": "npc",
+        "speakerName": "司机",
+        "speakerAvatar": "车",
+        "gender": "male",
+        "hanzi": "你好！请问你去哪儿？",
+        "pinyin": "Nǐ hǎo! Qǐngwèn nǐ qù nǎr?",
+        "german": "Hallo! Wohin möchten Sie fahren?",
+        "audioUrl": "/audio/dialogues/taxi-01.mp3",
+        "tokens": [
+          { "hanzi": "你好", "pinyin": "nǐ hǎo", "german": "hallo" },
+          { "hanzi": "去", "pinyin": "qù", "german": "gehen / fahren nach" },
+          { "hanzi": "哪儿", "pinyin": "nǎr", "german": "wohin / wo" }
+        ],
+        "cultureTip": "In China spricht man Fahrer, Handwerker und Fachkräfte respektvoll als '师傅' (shīfu, Meister) an.",
+        "choices": [
+          {
+            "id": "taxi-c1",
+            "hanzi": "师傅，你好！我想去北京饭店。",
+            "pinyin": "Shīfu, nǐ hǎo! Wǒ xiǎng qù Běijīng Fàndiàn.",
+            "german": "Meister, guten Tag! Ich möchte zum Peking-Hotel fahren.",
+            "audioUrl": "/audio/dialogues/taxi-c1.mp3",
+            "points": 100,
+            "feedbackGerman": "Klasse! '师傅' (Shīfu) zeigt kulturelle Gewandtheit und '我想去...' formuliert das Ziel klar und höflich.",
+            "nextNodeId": "taxi-02"
+          },
+          {
+            "id": "taxi-c2",
+            "hanzi": "去北京饭店。",
+            "pinyin": "Qù Běijīng Fàndiàn.",
+            "german": "Fahre zum Peking-Hotel.",
+            "audioUrl": "/audio/dialogues/taxi-c2.mp3",
+            "points": 70,
+            "feedbackGerman": "Grammatikalisch richtig und zielgenau, aber sehr kurz. Mit Anrede wirkt es sympathischer.",
+            "nextNodeId": "taxi-02"
+          },
+          {
+            "id": "taxi-c3",
+            "hanzi": "我是去北京饭店。",
+            "pinyin": "Wǒ shì qù Běijīng Fàndiàn.",
+            "german": "[Grammatikfehler: shì + Verb]",
+            "audioUrl": "/audio/dialogues/taxi-c3.mp3",
+            "points": 30,
+            "feedbackGerman": "Vorsicht: Vor Verben der Fortbewegung ('去') verwendet man kein '是'. Sag einfach '我去...' oder '我想去...'.",
+            "nextNodeId": "taxi-02"
+          }
+        ]
+      },
+      "taxi-02": {
+        "id": "taxi-02",
+        "speaker": "npc",
+        "speakerName": "司机",
+        "speakerAvatar": "车",
+        "gender": "male",
+        "hanzi": "好嘞，北京饭店不远。今天路上车不多！",
+        "pinyin": "Hǎo lei, Běijīng Fàndiàn bù yuǎn. Jīntiān lù shang chē bù duō!",
+        "german": "Alles klar, das Peking-Hotel ist nicht weit. Heute ist wenig Verkehr auf den Straßen!",
+        "audioUrl": "/audio/dialogues/taxi-02.mp3",
+        "tokens": [
+          { "hanzi": "不远", "pinyin": "bù yuǎn", "german": "nicht weit" },
+          { "hanzi": "路上", "pinyin": "lù shang", "german": "auf der Straße" },
+          { "hanzi": "车", "pinyin": "chē", "german": "Auto / Fahrzeuge" },
+          { "hanzi": "不多", "pinyin": "bù duō", "german": "nicht viele / wenig" }
+        ],
+        "choices": [
+          {
+            "id": "taxi-c2-1",
+            "hanzi": "太好了。请问要多少分钟？",
+            "pinyin": "Tài hǎo le. Qǐngwèn yào duōshao fēnzhōng?",
+            "german": "Sehr gut. Wie viele Minuten wird es ungefähr dauern?",
+            "audioUrl": "/audio/dialogues/taxi-c2-1.mp3",
+            "points": 100,
+            "feedbackGerman": "Hervorragende Alltagsfrage nach der Fahrtzeit mit '多少分钟'.",
+            "nextNodeId": "taxi-03"
+          },
+          {
+            "id": "taxi-c2-2",
+            "hanzi": "快一点儿，谢谢。",
+            "pinyin": "Kuài yìdiǎnr, xièxie.",
+            "german": "Etwas schneller bitte, danke.",
+            "audioUrl": "/audio/dialogues/taxi-c2-2.mp3",
+            "points": 60,
+            "feedbackGerman": "Verständlich, klingt aber schnell ungeduldig.",
+            "nextNodeId": "taxi-03"
+          }
+        ]
+      },
+      "taxi-03": {
+        "id": "taxi-03",
+        "speaker": "npc",
+        "speakerName": "司机",
+        "speakerAvatar": "车",
+        "gender": "male",
+        "hanzi": "大概二十分钟。你看，前面就是北京饭店了！",
+        "pinyin": "Dàgài èrshí fēnzhōng. Nǐ kàn, qiánmiàn jiù shì Běijīng Fàndiàn le!",
+        "german": "Ungefähr zwanzig Minuten. Schau, da vorne ist schon das Peking-Hotel!",
+        "audioUrl": "/audio/dialogues/taxi-03.mp3",
+        "tokens": [
+          { "hanzi": "二十分钟", "pinyin": "èrshí fēnzhōng", "german": "20 Minuten" },
+          { "hanzi": "你看", "pinyin": "nǐ kàn", "german": "schau mal" },
+          { "hanzi": "前面", "pinyin": "qiánmiàn", "german": "vorne / voraus" }
+        ],
+        "cultureTip": "'前面' (qiánmiàn = vorne) und '停' (tíng = anhalten) sind die wichtigsten Navigationswörter im Taxi.",
+        "choices": [
+          {
+            "id": "taxi-c3-1",
+            "hanzi": "好的，请在前面停。多少钱？",
+            "pinyin": "Hǎo de, qǐng zài qiánmiàn tíng. Duōshao qián?",
+            "german": "In Ordnung, bitte halten Sie da vorne an. Wie viel kostet es?",
+            "audioUrl": "/audio/dialogues/taxi-c3-1.mp3",
+            "points": 100,
+            "feedbackGerman": "Exzellente Ortsangabe: '在前面停' (vorne halten) ist die natürliche Formulierung im Taxi!",
+            "nextNodeId": "taxi-04"
+          },
+          {
+            "id": "taxi-c3-2",
+            "hanzi": "停！我不去了。",
+            "pinyin": "Tíng! Wǒ bú qù le.",
+            "german": "Stopp! Ich fahre nicht mehr.",
+            "audioUrl": "/audio/dialogues/taxi-c3-2.mp3",
+            "points": 30,
+            "feedbackGerman": "Viel zu schroff! Der Fahrer hat das Hotel ja schon erreicht.",
+            "nextNodeId": "taxi-04"
+          }
+        ]
+      },
+      "taxi-04": {
+        "id": "taxi-04",
+        "speaker": "npc",
+        "speakerName": "司机",
+        "speakerAvatar": "车",
+        "gender": "male",
+        "hanzi": "一共三十块钱。给你发票！",
+        "pinyin": "Yígòng sānshí kuài qián. Gěi nǐ fāpiào!",
+        "german": "Macht insgesamt dreißig Yuan. Hier ist Ihre Quittung!",
+        "audioUrl": "/audio/dialogues/taxi-04.mp3",
+        "tokens": [
+          { "hanzi": "一共", "pinyin": "yígòng", "german": "insgesamt" },
+          { "hanzi": "三十", "pinyin": "sānshí", "german": "30" },
+          { "hanzi": "块", "pinyin": "kuài", "german": "Yuan" },
+          { "hanzi": "发票", "pinyin": "fāpiào", "german": "Quittung / Rechnung" }
+        ],
+        "choices": [
+          {
+            "id": "taxi-c4-1",
+            "hanzi": "给你三十块钱，谢谢师傅！",
+            "pinyin": "Gěi nǐ sānshí kuài qián, xièxie shīfu!",
+            "german": "Hier sind dreißig Yuan, vielen Dank Meister!",
+            "audioUrl": "/audio/dialogues/taxi-c4-1.mp3",
+            "points": 100,
+            "feedbackGerman": "Perfekte Geldübergabe und respektvolle Verabschiedung.",
+            "nextNodeId": "taxi-end"
+          }
+        ]
+      },
+      "taxi-end": {
+        "id": "taxi-end",
+        "speaker": "npc",
+        "speakerName": "司机",
+        "speakerAvatar": "车",
+        "gender": "male",
+        "hanzi": "不客气！东西拿好，慢走！",
+        "pinyin": "Bú kèqi! Dōngxi ná hǎo, mànzǒu!",
+        "german": "Gern geschehen! Passen Sie auf Ihr Gepäck auf und machen Sie es gut!",
+        "audioUrl": "/audio/dialogues/taxi-end.mp3",
+        "tokens": [
+          { "hanzi": "东西", "pinyin": "dōngxi", "german": "Dinge / Sachen / Gepäck" },
+          { "hanzi": "拿好", "pinyin": "ná hǎo", "german": "gut mitnehmen / festhalten" }
+        ],
+        "isEnding": true
+      }
+    }
+  },
+  {
+    "id": "university",
+    "order": 4,
+    "title": "认识新朋友",
+    "pinyinTitle": "Rènshi xīn péngyou",
+    "germanTitle": "Neue Bekanntschaft",
+    "hanziTag": "友",
+    "category": "Soziales & Kennenlernen",
+    "role": "Neuer Student an der Universität",
+    "location": "Peking, Universitäts-Campus",
+    "partner": "Kommilitonin Li Yue (李月)",
+    "summary": "Stelle dich einer chinesischen Studentin vor, sprich über deine Herkunft und verabrede dich zum Teetrinken.",
+    "objectives": [
+      "Stelle dich mit '我叫...' vor",
+      "Erkläre deine Herkunft mit '我是德国人'",
+      "Drücke Freude aus mit '认识你很高兴'"
+    ],
+    "initialNodeId": "uni-01",
+    "maxScore": 200,
+    "nodes": {
+      "uni-01": {
+        "id": "uni-01",
+        "speaker": "npc",
+        "speakerName": "李月",
+        "speakerAvatar": "友",
+        "gender": "female",
+        "hanzi": "你好！我是北京大学的学生，我叫李月。你叫什么名字？",
+        "pinyin": "Nǐ hǎo! Wǒ shì Běijīng Dàxué de xuésheng, wǒ jiào Lǐ Yuè. Nǐ jiào shénme míngzi?",
+        "german": "Hallo! Ich bin Studentin an der Peking-Universität, ich heiße Li Yue. Wie heißt du?",
+        "audioUrl": "/audio/dialogues/uni-01.mp3",
+        "tokens": [
+          { "hanzi": "学生", "pinyin": "xuésheng", "german": "Student / Schüler" },
+          { "hanzi": "叫", "pinyin": "jiào", "german": "heißen" },
+          { "hanzi": "什么", "pinyin": "shénme", "german": "welcher / was" },
+          { "hanzi": "名字", "pinyin": "míngzi", "german": "Name" }
+        ],
+        "cultureTip": "Die Frage '你叫什么名字？' (Nǐ jiào shénme míngzi?) ist die Standardfrage unter Gleichaltrigen und Studenten.",
+        "choices": [
+          {
+            "id": "uni-c1",
+            "hanzi": "你好李月！我叫大卫，认识你很高兴。",
+            "pinyin": "Nǐ hǎo Lǐ Yuè! Wǒ jiào Dàwèi, rènshi nǐ hěn gāoxìng.",
+            "german": "Hallo Li Yue! Ich heiße David, freut mich sehr dich kennenzulernen.",
+            "audioUrl": "/audio/dialogues/uni-c1.mp3",
+            "points": 100,
+            "feedbackGerman": "Perfekte Begrüßungsformel! '认识你很高兴' (Freut mich dich kennenzulernen) ist das chinesische Pendant zu 'Nice to meet you'.",
+            "nextNodeId": "uni-02"
+          },
+          {
+            "id": "uni-c2",
+            "hanzi": "我是大卫。",
+            "pinyin": "Wǒ shì Dàwèi.",
+            "german": "Ich bin David.",
+            "audioUrl": "/audio/dialogues/uni-c2.mp3",
+            "points": 70,
+            "feedbackGerman": "Richtig, aber auf '你叫什么名字' antwortet man natürlicher mit '我叫...'.",
+            "nextNodeId": "uni-02"
+          },
+          {
+            "id": "uni-c3",
+            "hanzi": "我的名字是大卫。",
+            "pinyin": "Wǒ de míngzi shì Dàwèi.",
+            "german": "Mein Name ist David.",
+            "audioUrl": "/audio/dialogues/uni-c3.mp3",
+            "points": 75,
+            "feedbackGerman": "Grammatikalisch korrekt, klingt aber etwas formell und wörtlich aus dem Deutschen übersetzt.",
+            "nextNodeId": "uni-02"
+          }
+        ]
+      },
+      "uni-02": {
+        "id": "uni-02",
+        "speaker": "npc",
+        "speakerName": "李月",
+        "speakerAvatar": "友",
+        "gender": "female",
+        "hanzi": "认识你也很高兴！你是哪国人？你学习什么？",
+        "pinyin": "Rènshi nǐ yě hěn gāoxìng! Nǐ shì nǎ guó rén? Nǐ xuéxí shénme?",
+        "german": "Freut mich auch sehr! Aus welchem Land kommst du? Was studierst du?",
+        "audioUrl": "/audio/dialogues/uni-02.mp3",
+        "tokens": [
+          { "hanzi": "哪", "pinyin": "nǎ", "german": "welches" },
+          { "hanzi": "国", "pinyin": "guó", "german": "Land" },
+          { "hanzi": "人", "pinyin": "rén", "german": "Mensch / Person" },
+          { "hanzi": "学习", "pinyin": "xuéxí", "german": "lernen / studieren" }
+        ],
+        "cultureTip": "'哪国人' fragt nach der Nationalität. Die Antwort lautet immer: Land + 人 (z.B. 德国人, 中国人).",
+        "choices": [
+          {
+            "id": "uni-c2-1",
+            "hanzi": "我是德国人，我在北京学习汉语。",
+            "pinyin": "Wǒ shì Déguórén, wǒ zài Běijīng xuéxí Hànyǔ.",
+            "german": "Ich bin Deutscher, ich lerne Chinesisch in Peking.",
+            "audioUrl": "/audio/dialogues/uni-c2-1.mp3",
+            "points": 100,
+            "feedbackGerman": "Brillant! Ortsangabe mit '在' (zài Běijīng) vor dem Prädikat 'xuéxí Hànyǔ' ist grammatikalisch perfekt!",
+            "nextNodeId": "uni-03"
+          },
+          {
+            "id": "uni-c2-2",
+            "hanzi": "我是德国。",
+            "pinyin": "Wǒ shì Déguó.",
+            "german": "[Falsch: Ich bin Deutschland]",
+            "audioUrl": "/audio/dialogues/uni-c2-2.mp3",
+            "points": 25,
+            "feedbackGerman": "Achtung: '德国' ist das Land Deutschland. Wenn du deine Nationalität nennst, musst du '人' (Mensch) anhängen: '德国人'!",
+            "nextNodeId": "uni-03"
+          }
+        ]
+      },
+      "uni-03": {
+        "id": "uni-03",
+        "speaker": "npc",
+        "speakerName": "李月",
+        "speakerAvatar": "友",
+        "gender": "female",
+        "hanzi": "太好了！你的汉语很棒。明天下午我们一起去喝茶，好吗？",
+        "pinyin": "Tài hǎo le! Nǐ de Hànyǔ hěn bàng. Míngtiān xiàwǔ wǒmen yìqǐ qù hē chá, hǎo ma?",
+        "german": "Großartig! Dein Chinesisch ist toll. Wollen wir morgen Nachmittag zusammen Tee trinken gehen?",
+        "audioUrl": "/audio/dialogues/uni-03.mp3",
+        "tokens": [
+          { "hanzi": "明天", "pinyin": "míngtiān", "german": "morgen" },
+          { "hanzi": "下午", "pinyin": "xiàwǔ", "german": "Nachmittag" },
+          { "hanzi": "一起", "pinyin": "yìqǐ", "german": "zusammen / gemeinsam" },
+          { "hanzi": "好吗", "pinyin": "hǎo ma", "german": "in Ordnung? / okay?" }
+        ],
+        "choices": [
+          {
+            "id": "uni-c3-1",
+            "hanzi": "太好了！明天下午见，谢谢你！",
+            "pinyin": "Tài hǎo le! Míngtiān xiàwǔ jiàn, xièxie nǐ!",
+            "german": "Super! Bis morgen Nachmittag, vielen Dank dir!",
+            "audioUrl": "/audio/dialogues/uni-c3-1.mp3",
+            "points": 100,
+            "feedbackGerman": "Warmherzig und treffend mit '明天下午见' (Bis morgen Nachmittag) abgeschlossen.",
+            "nextNodeId": "uni-end"
+          },
+          {
+            "id": "uni-c3-2",
+            "hanzi": "我不要去。",
+            "pinyin": "Wǒ bú yào qù.",
+            "german": "Ich will nicht gehen.",
+            "audioUrl": "/audio/dialogues/uni-c3-2.mp3",
+            "points": 35,
+            "feedbackGerman": "Sehr schroff! Im Chinesischen lehnt man Einladungen sanfter ab (z.B. '对不起，明天我有事').",
+            "nextNodeId": "uni-end"
+          }
+        ]
+      },
+      "uni-end": {
+        "id": "uni-end",
+        "speaker": "npc",
+        "speakerName": "李月",
+        "speakerAvatar": "友",
+        "gender": "female",
+        "hanzi": "好的，那明天见！祝你今天过得开心！",
+        "pinyin": "Hǎo de, nà míngtiān jiàn! Zhù nǐ jīntiān guò de kāixīn!",
+        "german": "Alles klar, dann bis morgen! Hab noch einen schönen Tag!",
+        "audioUrl": "/audio/dialogues/uni-end.mp3",
+        "tokens": [
+          { "hanzi": "明天见", "pinyin": "míngtiān jiàn", "german": "bis morgen" },
+          { "hanzi": "开心", "pinyin": "kāixīn", "german": "fröhlich" }
+        ],
+        "isEnding": true
+      }
+    }
+  },
+  {
+    "id": "appointment",
+    "order": 5,
+    "title": "约会时间",
+    "pinyinTitle": "Yuēhuì shíjiān",
+    "germanTitle": "Verabredung treffen",
+    "hanziTag": "时",
+    "category": "Zeit & Termine",
+    "role": "Freund am Telefon",
+    "location": "Peking, Telefonat",
+    "partner": "Sprachpartner Wang Ming (王明)",
+    "summary": "Verhandle telefonisch über einen passenden Treffzeitpunkt, verneine unpassende Tage und einige dich auf eine Uhrzeit.",
+    "objectives": [
+      "Verneine 'haben' richtig mit '没有时间'",
+      "Mache einen Terminvorschlag für morgen",
+      "Bestätige Uhrzeit und Ort präzise"
+    ],
+    "initialNodeId": "app-01",
+    "maxScore": 200,
+    "nodes": {
+      "app-01": {
+        "id": "app-01",
+        "speaker": "npc",
+        "speakerName": "王明",
+        "speakerAvatar": "时",
+        "gender": "male",
+        "hanzi": "喂，你好！请问你今天下午有时间吗？",
+        "pinyin": "Wèi, nǐ hǎo! Qǐngwèn nǐ jīntiān xiàwǔ yǒu shíjiān ma?",
+        "german": "Hallo! Sag mal, hast du heute Nachmittag Zeit?",
+        "audioUrl": "/audio/dialogues/app-01.mp3",
+        "tokens": [
+          { "hanzi": "喂", "pinyin": "wèi", "german": "Hallo (am Telefon)" },
+          { "hanzi": "时间", "pinyin": "shíjiān", "german": "Zeit" },
+          { "hanzi": "有", "pinyin": "yǒu", "german": "haben" }
+        ],
+        "cultureTip": "'喂' (wèi) ist das klassische 'Hallo' bei Telefonaten in China.",
+        "choices": [
+          {
+            "id": "app-c1",
+            "hanzi": "王明你好！我今天没有时间，明天下午好吗？",
+            "pinyin": "Wáng Míng nǐ hǎo! Wǒ jīntiān méiyǒu shíjiān, míngtiān xiàwǔ hǎo ma?",
+            "german": "Hallo Wang Ming! Ich habe heute keine Zeit, geht morgen Nachmittag?",
+            "audioUrl": "/audio/dialogues/app-c1.mp3",
+            "points": 100,
+            "feedbackGerman": "Sehr gut! '有' wird immer mit '没' verneint ('没有时间'). Zudem machst du direkt einen konstruktiven Gegenvorschlag.",
+            "nextNodeId": "app-02"
+          },
+          {
+            "id": "app-c2",
+            "hanzi": "今天我不有时间。",
+            "pinyin": "Jīntiān wǒ bù yǒu shíjiān.",
+            "german": "[Grammatikfehler: bù yǒu]",
+            "audioUrl": "/audio/dialogues/app-c2.mp3",
+            "points": 20,
+            "feedbackGerman": "Häufige Stolperfalle: '有' darf NIEMALS mit '不' verneint werden! Es heißt immer '没有' (méiyǒu).",
+            "nextNodeId": "app-02"
+          },
+          {
+            "id": "app-c3",
+            "hanzi": "今天不行。",
+            "pinyin": "Jīntiān bù xíng.",
+            "german": "Heute geht nicht.",
+            "audioUrl": "/audio/dialogues/app-c3.mp3",
+            "points": 60,
+            "feedbackGerman": "Korrekt und umgangssprachlich gebräuchlich, aber etwas knapp am Telefon.",
+            "nextNodeId": "app-02"
+          }
+        ]
+      },
+      "app-02": {
+        "id": "app-02",
+        "speaker": "npc",
+        "speakerName": "王明",
+        "speakerAvatar": "时",
+        "gender": "male",
+        "hanzi": "明天下午可以！明天是星期六。我们三点见，怎么样？",
+        "pinyin": "Míngtiān xiàwǔ kěyǐ! Míngtiān shì xīngqīliù. Wǒmen sān diǎn jiàn, zěnmeyàng?",
+        "german": "Morgen Nachmittag passt! Morgen ist Samstag. Treffen wir uns um drei Uhr, wie klingt das?",
+        "audioUrl": "/audio/dialogues/app-02.mp3",
+        "tokens": [
+          { "hanzi": "可以", "pinyin": "kěyǐ", "german": "können / möglich / passt" },
+          { "hanzi": "星期六", "pinyin": "xīngqīliù", "german": "Samstag" },
+          { "hanzi": "三点", "pinyin": "sān diǎn", "german": "3 Uhr" },
+          { "hanzi": "怎么样", "pinyin": "zěnmeyàng", "german": "wie wäre das?" }
+        ],
+        "choices": [
+          {
+            "id": "app-c2-1",
+            "hanzi": "没问题！三点在学校图书馆见。",
+            "pinyin": "Méi wèntí! Sān diǎn zài xuéxiào túshūguǎn jiàn.",
+            "german": "Kein Problem! Wir sehen uns um 3 Uhr in der Universitätsbibliothek.",
+            "audioUrl": "/audio/dialogues/app-c2-1.mp3",
+            "points": 100,
+            "feedbackGerman": "'没问题' (Kein Problem) und die Zeit-vor-Ort-Struktur ('三点在图书馆见') sind spitze!",
+            "nextNodeId": "app-end"
+          },
+          {
+            "id": "app-c2-2",
+            "hanzi": "三点太晚了，一点可以吗？",
+            "pinyin": "Sān diǎn tài wǎn le, yì diǎn kěyǐ ma?",
+            "german": "Drei Uhr ist zu spät, geht ein Uhr?",
+            "audioUrl": "/audio/dialogues/app-c2-2.mp3",
+            "points": 90,
+            "feedbackGerman": "Sehr flüssig verhandelt mit '太晚了' (zu spät) und '...可以吗？'.",
+            "nextNodeId": "app-end"
+          }
+        ]
+      },
+      "app-end": {
+        "id": "app-end",
+        "speaker": "npc",
+        "speakerName": "王明",
+        "speakerAvatar": "时",
+        "gender": "male",
+        "hanzi": "太好了，一言为定！明天见！",
+        "pinyin": "Tài hǎo le, yì yán wéi dìng! Míngtiān jiàn!",
+        "german": "Spitze, abgemacht! Bis morgen!",
+        "audioUrl": "/audio/dialogues/app-end.mp3",
+        "tokens": [
+          { "hanzi": "一言为定", "pinyin": "yì yán wéi dìng", "german": "Abgemacht! (Redewendung)" },
+          { "hanzi": "明天见", "pinyin": "míngtiān jiàn", "german": "bis morgen" }
+        ],
+        "isEnding": true
+      }
+    }
+  },
+  {
+    "id": "hotel",
+    "order": 6,
+    "title": "酒店入住",
+    "pinyinTitle": "Jiǔdiàn rùzhù",
+    "germanTitle": "Hotel Check-in",
+    "hanziTag": "宿",
+    "category": "Reisen & Übernachten",
+    "role": "Reisender an der Rezeption",
+    "location": "Peking, Hotel-Lobby",
+    "partner": "Rezeptionistin (前台)",
+    "summary": "Checke an der Hotelrezeption ein, zeige deinen Reisepass vor, erhalte die Zimmerkarte und frage nach dem WLAN.",
+    "objectives": [
+      "Sage deinen Übernachtungswunsch mit '住三天'",
+      "Reiche deinen Pass mit '这是我的护照'",
+      "Frage nach dem Internet mit '有WiFi吗'"
+    ],
+    "initialNodeId": "hot-01",
+    "maxScore": 200,
+    "nodes": {
+      "hot-01": {
+        "id": "hot-01",
+        "speaker": "npc",
+        "speakerName": "前台",
+        "speakerAvatar": "宿",
+        "gender": "female",
+        "hanzi": "您好！欢迎来到北京饭店。请问您有预订吗？",
+        "pinyin": "Nín hǎo! Huānyíng lái dào Běijīng Fàndiàn. Qǐngwèn nín yǒu yùdìng ma?",
+        "german": "Guten Tag! Willkommen im Peking-Hotel. Haben Sie eine Reservierung?",
+        "audioUrl": "/audio/dialogues/hot-01.mp3",
+        "tokens": [
+          { "hanzi": "欢迎", "pinyin": "huānyíng", "german": "willkommen" },
+          { "hanzi": "来到", "pinyin": "lái dào", "german": "kommen nach / eintreffen in" },
+          { "hanzi": "预订", "pinyin": "yùdìng", "german": "Reservierung / Vorbestellung" }
+        ],
+        "cultureTip": "An Hotelrezeptionen wird der Gast immer mit dem formellen '您' (nín) angesprochen.",
+        "choices": [
+          {
+            "id": "hot-c1",
+            "hanzi": "您好！我有预订，我想住三天。",
+            "pinyin": "Nín hǎo! Wǒ yǒu yùdìng, wǒ xiǎng zhù sān tiān.",
+            "german": "Guten Tag! Ich habe eine Reservierung, ich möchte drei Tage bleiben.",
+            "audioUrl": "/audio/dialogues/hot-c1.mp3",
+            "points": 100,
+            "feedbackGerman": "Sehr professionell mit '您好' und klarer Angabe der Aufenthaltsdauer ('住三天').",
+            "nextNodeId": "hot-02"
+          },
+          {
+            "id": "hot-c2",
+            "hanzi": "我要睡觉。",
+            "pinyin": "Wǒ yào shuìjiào.",
+            "german": "Ich will schlafen.",
+            "audioUrl": "/audio/dialogues/hot-c2.mp3",
+            "points": 30,
+            "feedbackGerman": "Zu umgangssprachlich und unpassend für einen Hotel-Check-in. Man sagt '住' (übernachten/wohnen), nicht '睡觉'.",
+            "nextNodeId": "hot-02"
+          }
+        ]
+      },
+      "hot-02": {
+        "id": "hot-02",
+        "speaker": "npc",
+        "speakerName": "前台",
+        "speakerAvatar": "宿",
+        "gender": "female",
+        "hanzi": "好的，找到了您的信息。请看一下您的护照。",
+        "pinyin": "Hǎo de, zhǎodào le nín de xìnxī. Qǐng kàn yíxià nín de hùzhào.",
+        "german": "In Ordnung, ich habe Ihre Daten gefunden. Zeigen Sie mir bitte kurz Ihren Reisepass.",
+        "audioUrl": "/audio/dialogues/hot-02.mp3",
+        "tokens": [
+          { "hanzi": "护照", "pinyin": "hùzhào", "german": "Reisepass" },
+          { "hanzi": "请", "pinyin": "qǐng", "german": "bitte" }
+        ],
+        "cultureTip": "In China muss beim Einchecken im Hotel gesetzlich immer der Original-Reisepass vorgelegt werden.",
+        "choices": [
+          {
+            "id": "hot-c2-1",
+            "hanzi": "好的，这是我的护照。给你！",
+            "pinyin": "Hǎo de, zhè shì wǒ de hùzhào. Gěi nǐ!",
+            "german": "In Ordnung, hier ist mein Pass. Bitte sehr!",
+            "audioUrl": "/audio/dialogues/hot-c2-1.mp3",
+            "points": 100,
+            "feedbackGerman": "Standardformel beim Aushändigen von Dokumenten: '这是我的护照' (Das ist mein Pass).",
+            "nextNodeId": "hot-03"
+          },
+          {
+            "id": "hot-c2-2",
+            "hanzi": "拿去。",
+            "pinyin": "Ná qù.",
+            "german": "Nimm.",
+            "audioUrl": "/audio/dialogues/hot-c2-2.mp3",
+            "points": 40,
+            "feedbackGerman": "'拿去' ist sehr barsch. '给你' oder '请看' ist viel höflicher.",
+            "nextNodeId": "hot-03"
+          }
+        ]
+      },
+      "hot-03": {
+        "id": "hot-03",
+        "speaker": "npc",
+        "speakerName": "前台",
+        "speakerAvatar": "宿",
+        "gender": "female",
+        "hanzi": "谢谢！这是您的房卡，房间在四楼四零二号。请问您还有别的问题吗？",
+        "pinyin": "Xièxie! Zhè shì nín de fángkǎ, fángjiān zài sì lóu sì líng èr hào. Qǐngwèn nín hái yǒu bié de wèntí ma?",
+        "german": "Danke! Das ist Ihre Zimmerkarte, das Zimmer ist im 4. Stock, Zimmer 402. Haben Sie noch weitere Fragen?",
+        "audioUrl": "/audio/dialogues/hot-03.mp3",
+        "tokens": [
+          { "hanzi": "房卡", "pinyin": "fángkǎ", "german": "Zimmerkarte" },
+          { "hanzi": "四楼", "pinyin": "sì lóu", "german": "4. Stockwerk" },
+          { "hanzi": "问题", "pinyin": "wèntí", "german": "Frage / Problem" }
+        ],
+        "choices": [
+          {
+            "id": "hot-c3-1",
+            "hanzi": "请问房间里有免费WiFi吗？",
+            "pinyin": "Qǐngwèn fángjiān lǐ yǒu miǎnfèi WiFi ma?",
+            "german": "Gibt es im Zimmer kostenloses WLAN?",
+            "audioUrl": "/audio/dialogues/hot-c3-1.mp3",
+            "points": 100,
+            "feedbackGerman": "Praktisch und alltagsrelevant! Eingeleitet mit dem höflichen '请问'.",
+            "nextNodeId": "hot-end"
+          },
+          {
+            "id": "hot-c3-2",
+            "hanzi": "明天早上几点吃早饭？",
+            "pinyin": "Míngtiān zǎoshang jǐ diǎn chī zǎofàn?",
+            "german": "Um wie viel Uhr gibt es morgen früh Frühstück?",
+            "audioUrl": "/audio/dialogues/hot-c3-2.mp3",
+            "points": 95,
+            "feedbackGerman": "Sehr nützliche Frage mit '几点' (um wie viel Uhr).",
+            "nextNodeId": "hot-end"
+          }
+        ]
+      },
+      "hot-end": {
+        "id": "hot-end",
+        "speaker": "npc",
+        "speakerName": "前台",
+        "speakerAvatar": "宿",
+        "gender": "female",
+        "hanzi": "有的！WiFi密码和早饭时间都在房卡背面。祝您在北京住得舒心！",
+        "pinyin": "Yǒu de! WiFi mìmǎ hé zǎofàn shíjiān dōu zài fángkǎ bèimiàn. Zhù nín zài Běijīng zhù de shūxīn!",
+        "german": "Gibt es! WLAN-Passwort und Frühstückszeiten stehen auf der Rückseite der Zimmerkarte. Einen angenehmen Aufenthalt in Peking!",
+        "audioUrl": "/audio/dialogues/hot-end.mp3",
+        "tokens": [
+          { "hanzi": "密码", "pinyin": "mìmǎ", "german": "Passwort" },
+          { "hanzi": "早饭", "pinyin": "zǎofàn", "german": "Frühstück" },
+          { "hanzi": "祝", "pinyin": "zhù", "german": "wünschen" }
+        ],
+        "isEnding": true
+      }
+    }
+  }
+]

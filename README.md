@@ -57,6 +57,7 @@
 | **Wörterbuch** | `/dictionary` | 163 Wörter mit Suche, Filter nach HSK-Level, Audio, Strichfolge-Animation und Chao-Tonkurven. |
 | **Grammatik-Kompendium**| `/grammar` | 12 strukturierte Lektionen: SVO, 是, 有/没有, 在, Fragepartikeln, 的, Zählwörter, Zeitlogik, Modalverben, 了/请. |
 | **Graded Reader (Lesen)** | `/stories` | 8 Geschichten im Dual-Modus (Buch-Fließtext vs. Satzkarten) mit synchronisiertem Vorlesen und Wort-Lookup. |
+| **HSK-1 Alltagsdialoge** | `/dialogue` | 6 interaktive Rollenspiele mit Verzweigungen, nativer Multi-Voice-Sprachausgabe, Entscheidungen und Feedback. |
 | **HSK-1 Probeprüfung** | `/exam` | 30-Fragen-Prüfungssimulation (Hören & Lesen) mit 35-Minuten-Countdown und Fehleranalyse. |
 | **Blitz-Session** | `/blitz` | 90-Sekunden-Highspeed-Sprint mit gemischten Vokabel-, Ton- und Zeichenfragen. |
 
@@ -93,7 +94,7 @@ npm install
 # Entwicklungsserver starten
 npm run dev
 
-# Unit-Tests ausführen (84/84 Tests)
+# Unit-Tests ausführen (117/117 Tests)
 npx vitest run
 
 # Codequalität & Linting prüfen

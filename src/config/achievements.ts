@@ -10,6 +10,7 @@ import {
   Keyboard,
   Layers,
   MessageSquareQuote,
+  MessagesSquare,
   ShieldCheck,
   Sparkles,
   Trophy,
@@ -40,6 +41,7 @@ export interface AchievementData {
     numbersCorrect?: number;
     reviewCount?: number;
     examPassed?: number;
+    dialogueCompleted?: number;
   };
 }
 
@@ -234,6 +236,42 @@ export const ACHIEVEMENTS: readonly Achievement[] = [
     calculateProgress: ({ stats }) => {
       const count = stats.reviewCount ?? 0;
       return { current: Math.min(50, count), unlocked: count >= 50 };
+    },
+  },
+  {
+    id: 'dialogue-first',
+    title: 'Erster Dialog',
+    description: 'Schließe deinen ersten interaktiven Alltagsdialog ab.',
+    icon: MessagesSquare,
+    category: 'games',
+    maxProgress: 1,
+    calculateProgress: ({ stats }) => {
+      const count = stats.dialogueCompleted ?? 0;
+      return { current: Math.min(1, count), unlocked: count >= 1 };
+    },
+  },
+  {
+    id: 'dialogue-diplomat',
+    title: 'Diplomat',
+    description: 'Meistere mindestens 3 verschiedene HSK-1-Dialogszenarien.',
+    icon: Award,
+    category: 'mastery',
+    maxProgress: 3,
+    calculateProgress: ({ stats }) => {
+      const count = stats.dialogueCompleted ?? 0;
+      return { current: Math.min(3, count), unlocked: count >= 3 };
+    },
+  },
+  {
+    id: 'dialogue-master',
+    title: 'Konversations-Profi',
+    description: 'Absolviere mindestens 6 Dialog-Sessions im Alltagstraining.',
+    icon: MessageSquareQuote,
+    category: 'games',
+    maxProgress: 6,
+    calculateProgress: ({ stats }) => {
+      const count = stats.dialogueCompleted ?? 0;
+      return { current: Math.min(6, count), unlocked: count >= 6 };
     },
   },
 ];

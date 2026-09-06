@@ -15,9 +15,12 @@ import { TypeRacerPage } from './routes/TypeRacerPage';
 import { MockExamPage } from './routes/MockExamPage';
 import { GrammarPage } from './routes/GrammarPage';
 import { StoriesPage } from './routes/StoriesPage';
+import { DialoguePage } from './routes/DialoguePage';
 
 function renderMode(mode: ModeConfig) {
   switch (mode.id) {
+    case 'dialogue':
+      return <DialoguePage />;
     case 'ear-trainer':
       return <EarTrainerPage />;
     case 'typeracer':

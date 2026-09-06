@@ -1,5 +1,5 @@
 import type { LucideIcon } from 'lucide-react';
-import { CalendarClock, FlaskConical, GraduationCap, Headphones, Keyboard, Layers, MessageSquareQuote } from 'lucide-react';
+import { CalendarClock, FlaskConical, GraduationCap, Headphones, Keyboard, Layers, MessageSquareQuote, MessagesSquare } from 'lucide-react';
 import type { ModeId } from '../types/game';
 
 export interface ModeConfig {
@@ -12,6 +12,14 @@ export interface ModeConfig {
 }
 
 export const MODES: readonly ModeConfig[] = [
+  {
+    id: 'dialogue',
+    path: '/dialogue',
+    title: 'HSK-1 Dialoge',
+    tagline: 'Interaktive Alltagsszenarien',
+    description: 'Führe alltagsnahe Gespräche mit NPC-Sprachausgabe, Entscheidungen und Feedback.',
+    icon: MessagesSquare,
+  },
   {
     id: 'ear-trainer',
     path: '/ear-trainer',

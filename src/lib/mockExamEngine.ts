@@ -77,3 +77,4 @@ export function buildExam(mode: ExamMode): {
     questions: [...selectedListening, ...selectedReading],
   };
 }
+

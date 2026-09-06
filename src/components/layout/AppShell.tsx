@@ -6,6 +6,7 @@ import {
   GraduationCap,
   HardDrive,
   LineChart,
+  MessagesSquare,
   Settings,
   Sparkles,
 } from 'lucide-react';
@@ -89,6 +90,7 @@ export function AppShell() {
     { to: '/dictionary', label: 'Wörterbuch', icon: BookOpen },
     { to: '/grammar', label: 'Grammatik', icon: GraduationCap },
     { to: '/stories', label: 'Lesen', icon: BookOpenText },
+    { to: '/dialogue', label: 'Dialoge', icon: MessagesSquare },
     { to: '/exam', label: 'Prüfung', icon: GraduationCap },
     { to: '/stats', label: 'Fortschritt', icon: LineChart },
     { to: '/settings', label: 'Einstellungen', icon: Settings },

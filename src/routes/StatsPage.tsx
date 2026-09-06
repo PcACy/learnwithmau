@@ -13,6 +13,7 @@ import {
   LineChart,
   Lock,
   MessageSquareQuote,
+  MessagesSquare,
   Play,
   RotateCcw,
   Trophy,
@@ -43,6 +44,7 @@ export function StatsPage() {
     numbersCorrect: number;
     reviewCount: number;
     examPassed: number;
+    dialogueCompleted: number;
   }>({
     alchemySolved: 0,
     tonesCorrect: 0,
@@ -52,6 +54,7 @@ export function StatsPage() {
     numbersCorrect: 0,
     reviewCount: 0,
     examPassed: 0,
+    dialogueCompleted: 0,
   });
 
   useEffect(() => {
@@ -68,6 +71,7 @@ export function StatsPage() {
         let numbersCorrect = 0;
         let reviewCount = 0;
         let examPassed = 0;
+        let dialogueCompleted = 0;
 
         for (const row of rows) {
           if (row.mode === 'alchemy') alchemySolved += row.correct;
@@ -80,6 +84,9 @@ export function StatsPage() {
           else if (row.mode === 'exam') {
             if (row.correct >= 18) examPassed += 1;
           }
+          else if (row.mode === 'dialogue') {
+            dialogueCompleted += 1;
+          }
         }
 
         setSessionStats({
@@ -91,6 +98,7 @@ export function StatsPage() {
           numbersCorrect,
           reviewCount,
           examPassed,
+          dialogueCompleted,
         });
       })
       .catch(() => undefined);
@@ -236,7 +244,15 @@ export function StatsPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6 pt-2">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-7 pt-2">
+          {/* Dialoge */}
+          <div className="flex flex-col items-center rounded-2xl border border-zinc-200/80 bg-zinc-50/60 p-3.5 text-center dark:border-white/[0.06] dark:bg-zinc-950/40">
+            <MessagesSquare className="h-4 w-4 text-emerald-600 dark:text-emerald-400 mb-1" />
+            <span className="font-mono text-2xl font-extrabold text-zinc-900 dark:text-zinc-100">{sessionStats.dialogueCompleted}</span>
+            <span className="mt-1 text-xs font-bold text-zinc-800 dark:text-zinc-200">Dialoge</span>
+            <span className="text-[10px] text-zinc-400">Gespräche geführt</span>
+          </div>
+
           {/* TypeRacer */}
           <div className="flex flex-col items-center rounded-2xl border border-zinc-200/80 bg-zinc-50/60 p-3.5 text-center dark:border-white/[0.06] dark:bg-zinc-950/40">
             <Keyboard className="h-4 w-4 text-emerald-600 dark:text-emerald-400 mb-1" />

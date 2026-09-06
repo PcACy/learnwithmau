@@ -95,11 +95,24 @@ describe('Achievements configuration', () => {
 
     expect(srsAch.calculateProgress({ ...baseData, stats: { reviewCount: 49 } }).unlocked).toBe(false);
     expect(srsAch.calculateProgress({ ...baseData, stats: { reviewCount: 50 } }).unlocked).toBe(true);
+
+    const dialogueFirstAch = ACHIEVEMENTS.find((a) => a.id === 'dialogue-first')!;
+    const dialogueDipAch = ACHIEVEMENTS.find((a) => a.id === 'dialogue-diplomat')!;
+    const dialogueMasterAch = ACHIEVEMENTS.find((a) => a.id === 'dialogue-master')!;
+
+    expect(dialogueFirstAch.calculateProgress({ ...baseData, stats: { dialogueCompleted: 0 } }).unlocked).toBe(false);
+    expect(dialogueFirstAch.calculateProgress({ ...baseData, stats: { dialogueCompleted: 1 } }).unlocked).toBe(true);
+
+    expect(dialogueDipAch.calculateProgress({ ...baseData, stats: { dialogueCompleted: 2 } }).unlocked).toBe(false);
+    expect(dialogueDipAch.calculateProgress({ ...baseData, stats: { dialogueCompleted: 3 } }).unlocked).toBe(true);
+
+    expect(dialogueMasterAch.calculateProgress({ ...baseData, stats: { dialogueCompleted: 5 } }).unlocked).toBe(false);
+    expect(dialogueMasterAch.calculateProgress({ ...baseData, stats: { dialogueCompleted: 6 } }).unlocked).toBe(true);
   });
 
-  it('contains exactly 16 defined achievements across all 4 categories', () => {
-    expect(ACHIEVEMENTS.length).toBe(16);
+  it('contains exactly 19 defined achievements across all 4 categories', () => {
+    expect(ACHIEVEMENTS.length).toBe(19);
     const ids = new Set(ACHIEVEMENTS.map((a) => a.id));
-    expect(ids.size).toBe(16);
+    expect(ids.size).toBe(19);
   });
 });

@@ -9,7 +9,8 @@ export type ModeId =
   | 'review'
   | 'sentences'
   | 'exam'
-  | 'blitz';
+  | 'blitz'
+  | 'dialogue';
 
 export interface StreakData {
   current: number;
