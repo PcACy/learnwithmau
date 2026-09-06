@@ -110,9 +110,6 @@ export function AppShell() {
                 <span className="text-sm font-black tracking-tight text-zinc-900 dark:text-zinc-50 block leading-tight">
                   Hanzi Arcade
                 </span>
-                <span className="font-mono text-[10px] text-zinc-400 block tracking-widest uppercase">
-                  Modern Classic
-                </span>
               </div>
             </Link>
 
