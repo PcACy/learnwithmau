@@ -82,7 +82,7 @@ export function SessionSummary({
 
             <KineticButton
               variant="secondary"
-              onClick={onSecondaryAction ?? (() => navigate('/'))}
+              onClick={onSecondaryAction ?? (() => navigate('/', { viewTransition: true }))}
               shortcut="[Esc]"
             >
               {secondaryLabel}

@@ -486,7 +486,7 @@ export function AlchemyPage() {
 
                 return (
                   <button
-                    key={`${piece.id}-${piece.hanzi}`}
+                    key={`${piece.id}-${piece.hanzi}-${pieceIndex}`}
                     type="button"
                     draggable={!used && !solved}
                     title={piece.meaning ? `${piece.hanzi} (${piece.meaning})` : piece.hanzi}

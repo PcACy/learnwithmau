@@ -126,6 +126,7 @@ export function stopCurrentAudio(): void {
       currentAudio.pause();
       currentAudio.currentTime = 0;
       currentAudio.removeAttribute('src');
+      currentAudio.load();
     } catch {
       // ignore
     }

@@ -59,6 +59,18 @@ export function StoriesPage() {
   const [playingSentenceId, setPlayingSentenceId] = useState<string | null>(null);
   const [isPlayingFull, setIsPlayingFull] = useState(false);
   const fullAudioCancelledRef = useRef(false);
+  const audioEndResolverRef = useRef<(() => void) | null>(null);
+
+  const cancelFullAudio = useCallback(() => {
+    fullAudioCancelledRef.current = true;
+    if (audioEndResolverRef.current) {
+      audioEndResolverRef.current();
+      audioEndResolverRef.current = null;
+    }
+    stopCurrentAudio();
+    setIsPlayingFull(false);
+    setPlayingSentenceId(null);
+  }, []);
 
   useEffect(() => {
     if (!playingSentenceId) return;
@@ -68,17 +80,20 @@ export function StoriesPage() {
     }
   }, [playingSentenceId]);
 
-  const playTokenAudio = useCallback((token: StoryWordToken) => {
-    stopCurrentAudio();
-    const vocab = VOCAB.find((v) => v.hanzi === token.hanzi);
-    if (vocab?.audioPath) {
-      void playAsset(vocab.audioPath);
-      return;
-    }
-    if (vocab) {
-      playToneSequence(vocab.syllables.map((s) => s.tone));
-    }
-  }, []);
+  const playTokenAudio = useCallback(
+    (token: StoryWordToken) => {
+      cancelFullAudio();
+      const vocab = VOCAB.find((v) => v.hanzi === token.hanzi);
+      if (vocab?.audioPath) {
+        void playAsset(vocab.audioPath);
+        return;
+      }
+      if (vocab) {
+        playToneSequence(vocab.syllables.map((s) => s.tone));
+      }
+    },
+    [cancelFullAudio],
+  );
 
   // Active word token for Lookup Popover
   const [activeToken, setActiveToken] = useState<StoryWordToken | null>(null);
@@ -116,16 +131,14 @@ export function StoriesPage() {
   // Stop audio on unmount or story change
   useEffect(() => {
     return () => {
-      fullAudioCancelledRef.current = true;
-      stopCurrentAudio();
+      cancelFullAudio();
     };
-  }, [selectedStoryId]);
+  }, [selectedStoryId, cancelFullAudio]);
 
   // Einzelsatz abspielen
   const playSentenceAudio = async (sentence: StorySentence) => {
     if (isPlayingFull) {
-      fullAudioCancelledRef.current = true;
-      setIsPlayingFull(false);
+      cancelFullAudio();
     }
 
     if (playingSentenceId === sentence.id) {
@@ -144,10 +157,7 @@ export function StoriesPage() {
   // Gesamte Geschichte satzweise mit Highlighting abspielen
   const playFullStory = async () => {
     if (isPlayingFull) {
-      fullAudioCancelledRef.current = true;
-      stopCurrentAudio();
-      setIsPlayingFull(false);
-      setPlayingSentenceId(null);
+      cancelFullAudio();
       return;
     }
 
@@ -160,10 +170,19 @@ export function StoriesPage() {
 
       setPlayingSentenceId(sentence.id);
       await new Promise<void>((resolve) => {
+        audioEndResolverRef.current = resolve;
         void playAsset(sentence.audioUrl!, () => {
+          if (audioEndResolverRef.current === resolve) {
+            audioEndResolverRef.current = null;
+          }
           resolve();
         }).then((started) => {
-          if (!started) resolve();
+          if (!started) {
+            if (audioEndResolverRef.current === resolve) {
+              audioEndResolverRef.current = null;
+            }
+            resolve();
+          }
         });
       });
       // Kurze Pause zwischen Sätzen für angenehmes Zuhören
@@ -181,11 +200,7 @@ export function StoriesPage() {
   // Wort-Klick Handler
   const handleWordClick = (token: StoryWordToken, e: React.MouseEvent) => {
     e.stopPropagation();
-    if (isPlayingFull) {
-      fullAudioCancelledRef.current = true;
-      setIsPlayingFull(false);
-      setPlayingSentenceId(null);
-    }
+    cancelFullAudio();
     setActiveToken(token);
     playTokenAudio(token);
     fireMicroBurst();
@@ -265,10 +280,7 @@ export function StoriesPage() {
               key={story.id}
               type="button"
               onClick={() => {
-                fullAudioCancelledRef.current = true;
-                stopCurrentAudio();
-                setIsPlayingFull(false);
-                setPlayingSentenceId(null);
+                cancelFullAudio();
                 setActiveStoryId(story.id);
                 setActiveToken(null);
               }}
@@ -654,8 +666,9 @@ export function StoriesPage() {
                           <button
                             type="button"
                             onClick={() => {
+                              cancelFullAudio();
                               setActiveToken(null);
-                              navigate(`/dictionary?q=${encodeURIComponent(activeToken.hanzi)}`);
+                              navigate(`/dictionary?q=${encodeURIComponent(activeToken.hanzi)}`, { viewTransition: true });
                             }}
                             className="ml-auto inline-flex items-center gap-1.5 text-xs font-bold text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 cursor-pointer"
                           >
@@ -691,7 +704,10 @@ export function StoriesPage() {
                   <button
                     key={rg.lessonId}
                     type="button"
-                    onClick={() => navigate(`/grammar?lesson=${encodeURIComponent(rg.lessonId)}`)}
+                    onClick={() => {
+                      cancelFullAudio();
+                      navigate(`/grammar?lesson=${encodeURIComponent(rg.lessonId)}`, { viewTransition: true });
+                    }}
                     className="inline-flex items-center gap-1.5 rounded-xl border border-emerald-500/30 bg-white px-3 py-1.5 text-xs font-bold text-emerald-800 hover:bg-emerald-50 dark:border-emerald-500/20 dark:bg-zinc-900 dark:text-emerald-300 dark:hover:bg-zinc-800 cursor-pointer"
                   >
                     <span>{rg.lessonTitle}</span>
@@ -785,10 +801,7 @@ export function StoriesPage() {
               type="button"
               disabled={currentIndex === 0}
               onClick={() => {
-                fullAudioCancelledRef.current = true;
-                stopCurrentAudio();
-                setIsPlayingFull(false);
-                setPlayingSentenceId(null);
+                cancelFullAudio();
                 setActiveStoryId(STORIES[currentIndex - 1].id);
                 setActiveToken(null);
               }}
@@ -813,10 +826,7 @@ export function StoriesPage() {
                 <KineticButton
                   variant="secondary"
                   onClick={() => {
-                    fullAudioCancelledRef.current = true;
-                    stopCurrentAudio();
-                    setIsPlayingFull(false);
-                    setPlayingSentenceId(null);
+                    cancelFullAudio();
                     setActiveStoryId(STORIES[currentIndex + 1].id);
                     setActiveToken(null);
                   }}

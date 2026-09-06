@@ -69,10 +69,10 @@ export function GrammarPage() {
     };
   }, []);
 
-  // Audio stoppen beim Verlassen der Seite
+  // Audio stoppen beim Verlassen der Seite oder Wechsel der Lektion
   useEffect(() => {
     return () => stopCurrentAudio();
-  }, []);
+  }, [selectedLessonId]);
 
   const [quizAnswers, setQuizAnswers] = useState<Record<string, number>>({});
   const [quizSubmitted, setQuizSubmitted] = useState<Record<string, boolean>>({});
@@ -384,7 +384,7 @@ export function GrammarPage() {
 
                   <button
                     type="button"
-                    onClick={() => navigate(`/stories?id=${chapterLink.recommendedStoryId}`)}
+                    onClick={() => navigate(`/stories?id=${chapterLink.recommendedStoryId}`, { viewTransition: true })}
                     className="inline-flex items-center gap-2 text-xs font-bold text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300 cursor-pointer pt-1"
                   >
                     <span>Geschichte öffnen & mitlesen</span>
@@ -407,7 +407,7 @@ export function GrammarPage() {
                         <button
                           key={v.hanzi}
                           type="button"
-                          onClick={() => navigate(`/dictionary?q=${encodeURIComponent(v.hanzi)}`)}
+                          onClick={() => navigate(`/dictionary?q=${encodeURIComponent(v.hanzi)}`, { viewTransition: true })}
                           className="group inline-flex items-center gap-1.5 rounded-xl border border-zinc-200/80 bg-zinc-50 px-2.5 py-1 text-xs transition-all hover:border-emerald-500/50 hover:bg-emerald-50/50 dark:border-white/10 dark:bg-zinc-800 dark:hover:bg-zinc-700 cursor-pointer"
                           title={`${v.pinyin} · ${v.meaning}`}
                         >
@@ -424,7 +424,7 @@ export function GrammarPage() {
 
                   <button
                     type="button"
-                    onClick={() => navigate('/dictionary')}
+                    onClick={() => navigate('/dictionary', { viewTransition: true })}
                     className="inline-flex items-center gap-2 text-xs font-bold text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200 cursor-pointer pt-1"
                   >
                     <span>Zum Wörterbuch</span>

@@ -133,7 +133,7 @@ export function SentenceBuilderPage() {
       const durationMs = Math.max(1000, Date.now() - sessionStartedAt);
       void logSession({
         mode: 'sentences',
-        answered: ROUNDS_PER_SESSION,
+        answered: sessionSentences.length,
         correct: score,
         durationMs,
       });
@@ -196,14 +196,15 @@ export function SentenceBuilderPage() {
   if (!currentSentence) return null;
 
   if (status === 'summary') {
-    const accuracy = Math.round((score / ROUNDS_PER_SESSION) * 100);
+    const totalRounds = sessionSentences.length || 1;
+    const accuracy = Math.round((score / totalRounds) * 100);
     return (
       <SessionSummary
-        headline={score === ROUNDS_PER_SESSION ? 'Makelloser Satzbau!' : 'Runde abgeschlossen'}
+        headline={score === sessionSentences.length ? 'Makelloser Satzbau!' : 'Runde abgeschlossen'}
         stats={[
-          { label: 'Richtig', value: `${score} / ${ROUNDS_PER_SESSION}` },
+          { label: 'Richtig', value: `${score} / ${sessionSentences.length}` },
           { label: 'Trefferquote', value: `${accuracy}%` },
-          { label: 'Sätze', value: String(ROUNDS_PER_SESSION) },
+          { label: 'Sätze', value: String(sessionSentences.length) },
         ]}
         onRestart={startSession}
         restartLabel="Neue Sätze bauen"

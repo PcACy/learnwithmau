@@ -71,16 +71,20 @@ function buildNumberSpec(): DrillSpec {
   return { prompt: numberToChinese(n), answer: String(n) };
 }
 
-function nearNumbers(n: number): number[] {
+export function nearNumbers(n: number): number[] {
   const candidates = new Set<number>();
   for (const delta of [-11, -10, -2, -1, 1, 2, 10, 11]) {
     const candidate = n + delta;
     if (candidate >= 1 && candidate <= 999 && candidate !== n) candidates.add(candidate);
   }
+  while (candidates.size < 3) {
+    const rnd = randomInt(1, 999);
+    if (rnd !== n) candidates.add(rnd);
+  }
   return [...candidates];
 }
 
-function nearTimes(hour: number, minute: number): string[] {
+export function nearTimes(hour: number, minute: number): string[] {
   const results = new Set<string>();
   const label = (h: number, m: number): string => `${h}:${String(m).padStart(2, '0')}`;
   for (const [dh, dm] of [[0, -15], [0, 15], [0, 30], [-1, 0], [1, 0], [-1, 45], [1, -45], [0, 5]] as const) {
@@ -89,18 +93,34 @@ function nearTimes(hour: number, minute: number): string[] {
     if (m >= 0 && m <= 59) results.add(label(h, m));
   }
   results.delete(label(hour, minute));
+  while (results.size < 3) {
+    const rh = randomInt(1, 12);
+    const rm = pick([0, 15, 30, 45]);
+    const l = label(rh, rm);
+    if (l !== label(hour, minute)) {
+      results.add(l);
+    }
+  }
   return [...results];
 }
 
-function nearDates(month: number, day: number): string[] {
+export function nearDates(month: number, day: number): string[] {
   const results = new Set<string>();
   const label = (m: number, d: number): string => `${d}.${m}.`;
-  for (const [dm, dd] of [[1, 0], [-1, 0], [0, 1], [0, -1], [0, 7], [7, 3]] as const) {
+  for (const [dm, dd] of [[1, 0], [-1, 0], [0, 1], [0, -1], [0, 7], [0, -7], [-1, 1], [1, -1]] as const) {
     const m = month + dm;
     const d = day + dd;
     if (m >= 1 && m <= 12 && d >= 1 && d <= 28) results.add(label(m, d));
   }
   results.delete(label(month, day));
+  while (results.size < 3) {
+    const rm = randomInt(1, 12);
+    const rd = randomInt(1, 28);
+    const l = label(rm, rd);
+    if (l !== label(month, day)) {
+      results.add(l);
+    }
+  }
   return [...results];
 }
 
@@ -136,7 +156,6 @@ export function buildDrillQuestion(kind: DrillKind): DrillQuestion {
   }
 
   const options = shuffled([spec.answer, ...distractors.slice(0, 3)]);
-  while (options.length < 4) options.push(spec.answer + '?');
   return {
     kind,
     prompt: spec.prompt,

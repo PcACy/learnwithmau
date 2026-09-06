@@ -43,6 +43,7 @@ export function DictionaryPage() {
 
   // Global Keyboard Shortcut: '/' fokussiert die Suche
   useKeyDown((e) => {
+    if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
     if (e.key === '/' && document.activeElement !== searchInputRef.current) {
       e.preventDefault();
       searchInputRef.current?.focus();

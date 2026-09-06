@@ -62,8 +62,10 @@ export function MockExamPage() {
       }
     });
 
-    const listeningScore = Math.round((listeningCorrect / 15) * 150);
-    const readingScore = Math.round((readingCorrect / 15) * 150);
+    const totalListening = questions.filter((q) => q.section === 'listening').length || 1;
+    const totalReading = questions.filter((q) => q.section === 'reading').length || 1;
+    const listeningScore = Math.round((listeningCorrect / totalListening) * 150);
+    const readingScore = Math.round((readingCorrect / totalReading) * 150);
     const score = listeningScore + readingScore;
     const passed = score >= 180;
 
@@ -162,9 +164,11 @@ export function MockExamPage() {
     if (event.metaKey || event.ctrlKey || event.altKey) return;
     if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) return;
 
-    if (showSubmitModal && event.key === 'Escape') {
-      event.preventDefault();
-      setShowSubmitModal(false);
+    if (showSubmitModal) {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        setShowSubmitModal(false);
+      }
       return;
     }
 
@@ -182,8 +186,8 @@ export function MockExamPage() {
     }
 
     if (event.code === 'Space') {
+      event.preventDefault();
       if (currentQ.audioUrl) {
-        event.preventDefault();
         void playAsset(currentQ.audioUrl);
       }
       return;
