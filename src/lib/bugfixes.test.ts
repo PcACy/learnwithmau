@@ -260,4 +260,48 @@ describe('Audio Speech Synthesis & Mandarin Fallback', () => {
   });
 });
 
+describe('Game Modes Streak & Daily Goal Activity Credit', () => {
+  it('credits completed questions and updates streak when logging sessions from any mode', async () => {
+    const { useProgressStore } = await import('../store/progressStore');
+
+    useProgressStore.setState({
+      dailyGoal: { date: '2026-09-07', targetReviews: 20, completedReviews: 0 },
+      streak: { current: 0, longest: 0, lastActiveDate: null },
+    });
+
+    await useProgressStore.getState().logSession({
+      mode: 'dialogue',
+      answered: 5,
+      correct: 4,
+      durationMs: 30000,
+    });
+
+    const state = useProgressStore.getState();
+    expect(state.dailyGoal.completedReviews).toBe(4);
+    expect(state.streak.current).toBe(1);
+    expect(state.streak.lastActiveDate).toBe('2026-09-07');
+  });
+
+  it('awards at least 1 credit for completed sessions even if correct count is 0', async () => {
+    const { useProgressStore } = await import('../store/progressStore');
+
+    useProgressStore.setState({
+      dailyGoal: { date: '2026-09-07', targetReviews: 20, completedReviews: 2 },
+      streak: { current: 1, longest: 1, lastActiveDate: '2026-09-07' },
+    });
+
+    await useProgressStore.getState().logSession({
+      mode: 'ear-trainer',
+      answered: 10,
+      correct: 0,
+      durationMs: 15000,
+    });
+
+    const state = useProgressStore.getState();
+    expect(state.dailyGoal.completedReviews).toBe(3);
+    expect(state.streak.current).toBe(1);
+  });
+});
+
+
 

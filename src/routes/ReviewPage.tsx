@@ -91,7 +91,22 @@ export function ReviewPage() {
     [selectedDeck, allItemIds],
   );
 
-  const now = useMemo(() => new Date(), []);
+  const [now, setNow] = useState(() => new Date());
+
+  const goToIntro = useCallback(() => {
+    setNow(new Date());
+    setPhase('intro');
+  }, []);
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        setNow(new Date());
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+  }, []);
 
   // Während aktiver Drills (Drill/Summary) wird die Neuberechnung aller 8 Decks übersprungen
   const masterSummary = useMemo(
@@ -135,6 +150,7 @@ export function ReviewPage() {
 
   const startSession = useCallback(() => {
     const nowDate = new Date();
+    setNow(nowDate);
     const built = buildReviewQueue(cards, activeItemIds, nowDate, effectiveMaxFresh);
     const queue = [...built.overdueStudied, ...built.fresh];
     if (queue.length === 0) {
@@ -299,7 +315,7 @@ export function ReviewPage() {
         <div className="mt-8 flex items-center justify-center gap-4">
           <button
             type="button"
-            onClick={() => setPhase('intro')}
+            onClick={goToIntro}
             className="inline-flex h-12 items-center rounded-xl bg-emerald-600 px-7 text-sm font-semibold text-white transition-all duration-200 ease-[var(--ease-spring)] hover:bg-emerald-500 active:translate-y-px cursor-pointer"
           >
             Zur Deck-Auswahl
@@ -522,7 +538,7 @@ export function ReviewPage() {
         ]}
         onRestart={startSession}
         restartLabel="Nächste Runde in diesem Deck"
-        onSecondaryAction={() => setPhase('intro')}
+        onSecondaryAction={goToIntro}
         secondaryLabel="Zurück zur Deck-Auswahl"
       />
     );
@@ -720,7 +736,7 @@ export function ReviewPage() {
         />
         <button
           type="button"
-          onClick={() => setPhase('intro')}
+          onClick={goToIntro}
           className="text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 transition-colors cursor-pointer"
         >
           Runde abbrechen

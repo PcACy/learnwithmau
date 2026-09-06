@@ -236,7 +236,7 @@ export function TypeRacerPage() {
       event.preventDefault();
       commitChar(candidates[digit - 1].char);
     }
-  });
+  }, { allowInInputs: true });
 
   if (phase === 'summary') {
     const minutes = ((round.finishedAt ?? round.roundStartedAt) - round.roundStartedAt) / 60000;

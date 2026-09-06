@@ -201,9 +201,31 @@ export const useProgressStore = create<ProgressState>()((set, get) => ({
   },
 
   async logSession(stat) {
+    const at = new Date();
+    const record: SessionStat = { ...stat, finishedAt: at.toISOString() };
+    const credit = stat.correct > 0 ? stat.correct : (stat.answered > 0 ? 1 : 0);
+
+    let updatedGoal: DailyGoal = get().dailyGoal;
+    let updatedStreak: StreakData = get().streak;
+
+    set((state) => {
+      const freshGoal = ensureFresh(state.dailyGoal, at);
+      updatedGoal = { ...freshGoal, completedReviews: freshGoal.completedReviews + credit };
+      updatedStreak = touchStreak(state.streak, toDateKey(at));
+      return {
+        dailyGoal: updatedGoal,
+        streak: updatedStreak,
+      };
+    });
+
     try {
-      const record: SessionStat = { ...stat, finishedAt: new Date().toISOString() };
-      await db.stats.add(record);
+      await db.transaction('rw', db.stats, db.meta, async () => {
+        await db.stats.add(record);
+        await db.meta.bulkPut([
+          { key: 'dailyGoal', value: updatedGoal },
+          { key: 'streak', value: updatedStreak },
+        ]);
+      });
     } catch {
       // IndexedDB write error handled gracefully
     }
