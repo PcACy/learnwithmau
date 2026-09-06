@@ -157,7 +157,7 @@ export const INITIALS: readonly InitialData[] = [
     germanAnalogy: 'Wie deutsches stimmloses "g" (z. B. in "Gut"), völlig unbehaucht.',
     articulationTip: 'Hinterer Zungenrücken berührt das Gaumensegel ohne Hauch.',
     sampleWords: [
-      { hanzi: '个', pinyin: 'ge', meaning: 'Zählwort (Stück)', tone: 4 },
+      { hanzi: '个', pinyin: 'gè', meaning: 'Zählwort (Stück)', tone: 4 },
       { hanzi: '高兴', pinyin: 'gāoxìng', meaning: 'glücklich / erfreut', tone: 1 },
       { hanzi: '狗', pinyin: 'gǒu', meaning: 'Hund', tone: 3 },
     ],
@@ -275,7 +275,7 @@ export const INITIALS: readonly InitialData[] = [
     ipa: 'ʐ / ɻ',
     category: 'retroflex',
     categoryLabel: 'Retroflexe (Zurückgebogene Zunge)',
-    germanAnalogy: 'Wie ein weiches, stimmhaftes "sch" (wie das "j" in "Journalist"), Zunge hochgerollt.',
+    germanAnalogy: 'Ähnlich wie ein stimmhaftes "sch" (wie das "j" in "Journalist"), aber die Zungenspitze wird weit nach oben/hinten an den Gaumen gerollt.',
     articulationTip: 'Stimmbänder schwingen mit, Zungenspitze vibriert nicht.',
     sampleWords: [
       { hanzi: '人', pinyin: 'rén', meaning: 'Mensch / Person', tone: 2 },
@@ -344,7 +344,7 @@ export const INITIALS: readonly InitialData[] = [
     ipa: 'w',
     category: 'semi_vowel',
     categoryLabel: 'Halbvokale / Null-Anlaute',
-    germanAnalogy: 'Wie englisches "w" in "water". Steht vor Silben, die mit "u" beginnen.',
+    germanAnalogy: 'Wie ein weicher Gleitlaut "u" (wie engl. "water"), Lippen spitz runden ohne Zahnkontakt. Steht vor Silben, die mit "u" beginnen.',
     articulationTip: 'Lippen rund geformt ohne Zahnkontakt.',
     sampleWords: [
       { hanzi: '我', pinyin: 'wǒ', meaning: 'ich', tone: 3 },
@@ -419,7 +419,7 @@ export const FINALS: readonly FinalData[] = [
     ipa: 'eɪ',
     category: 'compound',
     categoryLabel: 'Zusammengesetzte Vokale (Diphthonge)',
-    germanAnalogy: 'Wie deutsches "ey" / englisches "ay" in "say".',
+    germanAnalogy: 'Wie das deutsche "ey" (z. B. in "Hey!"), offenes "e" gleitet weich in ein kurzes "i".',
     sampleWords: [{ hanzi: '杯子', pinyin: 'bēizi', meaning: 'Becher', tone: 1 }],
   },
   {
@@ -475,8 +475,46 @@ export const FINALS: readonly FinalData[] = [
     ipa: 'yɛ',
     category: 'compound',
     categoryLabel: 'Zusammengesetzte Vokale (Diphthonge)',
-    germanAnalogy: 'Wie "ü" gefolgt von einem offenen "e".',
+    germanAnalogy: 'Wie "ü" gefolgt von einem offenen "e" (Lippen spitz, gleitend in kurzes "e").',
     sampleWords: [{ hanzi: '月', pinyin: 'yuè', meaning: 'Monat / Mond', tone: 4 }],
+  },
+  {
+    pinyin: 'iao',
+    ipa: 'jaʊ',
+    category: 'compound',
+    categoryLabel: 'Zusammengesetzte Vokale (Diphthonge)',
+    germanAnalogy: 'Wie "i-a-u" schnell aneinandergereiht (fließender Übergang von "i" über "a" zu "u", wie "Miau").',
+    sampleWords: [{ hanzi: '小', pinyin: 'xiǎo', meaning: 'klein', tone: 3 }],
+  },
+  {
+    pinyin: 'iu',
+    ipa: 'joʊ',
+    category: 'compound',
+    categoryLabel: 'Zusammengesetzte Vokale (Diphthonge)',
+    germanAnalogy: 'Wie "i-o-u" (Abkürzung von iou: beginnt mit kurzem "i" und gleitet weich in "ou").',
+    sampleWords: [
+      { hanzi: '九', pinyin: 'jiǔ', meaning: 'neun', tone: 3 },
+      { hanzi: '六', pinyin: 'liù', meaning: 'sechs', tone: 4 },
+    ],
+  },
+  {
+    pinyin: 'uai',
+    ipa: 'waɪ',
+    category: 'compound',
+    categoryLabel: 'Zusammengesetzte Vokale (Diphthonge)',
+    germanAnalogy: 'Wie ein schnelles "u-ai" (weiches "u" gleitet in helles deutsches "ei").',
+    sampleWords: [{ hanzi: '快', pinyin: 'kuài', meaning: 'schnell', tone: 4 }],
+  },
+  {
+    pinyin: 'ui',
+    ipa: 'weɪ',
+    category: 'compound',
+    categoryLabel: 'Zusammengesetzte Vokale (Diphthonge)',
+    germanAnalogy: 'Wie "u-e-i" (Abkürzung von uei: kurzes "u" gleitet in weiches "ei").',
+    sampleWords: [
+      { hanzi: '水', pinyin: 'shuǐ', meaning: 'Wasser', tone: 3 },
+      { hanzi: '对', pinyin: 'duì', meaning: 'richtig / korrekt', tone: 4 },
+    ],
   },
 
   // Nasale Auslaute (-n)
@@ -485,7 +523,7 @@ export const FINALS: readonly FinalData[] = [
     ipa: 'an',
     category: 'nasal_front',
     categoryLabel: 'Vordere Nasalauslaute (-n)',
-    germanAnalogy: 'Wie "an" in "Mann" (Zungenspitze tippt vorn an Zähne).',
+    germanAnalogy: 'Wie "an" in "Mann" (Zungenspitze tippt vorn an die oberen Schneidezähne).',
     sampleWords: [{ hanzi: '三', pinyin: 'sān', meaning: 'drei', tone: 1 }],
   },
   {
@@ -493,7 +531,7 @@ export const FINALS: readonly FinalData[] = [
     ipa: 'ən',
     category: 'nasal_front',
     categoryLabel: 'Vordere Nasalauslaute (-n)',
-    germanAnalogy: 'Wie deutsches "-en" in "laufen".',
+    germanAnalogy: 'Wie deutsches "-en" in "laufen" (dumpfer Vokal, Zungenspitze am Zahndamm).',
     sampleWords: [{ hanzi: '人', pinyin: 'rén', meaning: 'Mensch', tone: 2 }],
   },
   {
@@ -501,8 +539,54 @@ export const FINALS: readonly FinalData[] = [
     ipa: 'in',
     category: 'nasal_front',
     categoryLabel: 'Vordere Nasalauslaute (-n)',
-    germanAnalogy: 'Wie deutsches "in" in "Kinn".',
-    sampleWords: [{ hanzi: '九', pinyin: 'jiǔ', meaning: 'neun', tone: 3 }],
+    germanAnalogy: 'Wie deutsches "in" in "Kinn" (helles "i" mit sauberem Zungenschluss am Zahndamm).',
+    sampleWords: [
+      { hanzi: '您', pinyin: 'nín', meaning: 'Sie (höfliche Anrede)', tone: 2 },
+      { hanzi: '今天', pinyin: 'jīntiān', meaning: 'heute', tone: 1 },
+    ],
+  },
+  {
+    pinyin: 'ian',
+    ipa: 'jɛn',
+    category: 'nasal_front',
+    categoryLabel: 'Vordere Nasalauslaute (-n)',
+    germanAnalogy: 'Wie "i" + deutsches "än" (z. B. wie in "Wien" mit offenem Ä-Zwischenlaut: "i-än").',
+    sampleWords: [
+      { hanzi: '天', pinyin: 'tiān', meaning: 'Himmel / Tag', tone: 1 },
+      { hanzi: '见', pinyin: 'jiàn', meaning: 'sehen / treffen', tone: 4 },
+    ],
+  },
+  {
+    pinyin: 'uan',
+    ipa: 'wan',
+    category: 'nasal_front',
+    categoryLabel: 'Vordere Nasalauslaute (-n)',
+    germanAnalogy: 'Wie fließendes "u-an" (Lippen rund bei "u", Zungenspitze schließt bei "-n").',
+    sampleWords: [{ hanzi: '关', pinyin: 'guān', meaning: 'schließen', tone: 1 }],
+  },
+  {
+    pinyin: 'un',
+    ipa: 'wən',
+    category: 'nasal_front',
+    categoryLabel: 'Vordere Nasalauslaute (-n)',
+    germanAnalogy: 'Wie "u-e-n" (Abkürzung von uen: kurzes "u" gleitet über ein dumpfes "e" in "-n").',
+    sampleWords: [{ hanzi: '春', pinyin: 'chūn', meaning: 'Frühling', tone: 1 }],
+  },
+  {
+    pinyin: 'ün',
+    ipa: 'yn',
+    category: 'nasal_front',
+    categoryLabel: 'Vordere Nasalauslaute (-n)',
+    germanAnalogy: 'Wie deutsches "ün" in "dünn" oder "kühn" (spitze Lippen, Zungenspitze tippt vorn an).',
+    sampleWords: [{ hanzi: '裙子', pinyin: 'qúnzi', meaning: 'Rock / Kleid', tone: 2 }],
+  },
+  {
+    pinyin: 'üan',
+    ipa: 'yɛn',
+    category: 'nasal_front',
+    categoryLabel: 'Vordere Nasalauslaute (-n)',
+    germanAnalogy: 'Wie "ü" gefolgt von einem hellen "än" (Lippen zunächst spitz gerundet wie bei "ü").',
+    sampleWords: [{ hanzi: '远', pinyin: 'yuǎn', meaning: 'weit / fern', tone: 3 }],
   },
 
   // Nasale Auslaute (-ng)
@@ -511,7 +595,7 @@ export const FINALS: readonly FinalData[] = [
     ipa: 'ɑŋ',
     category: 'nasal_back',
     categoryLabel: 'Hintere Nasalauslaute (-ng)',
-    germanAnalogy: 'Wie "ang" in "Gesang" (Zungenwurzel schließt Gaumen, kein "g" sprechen!).',
+    germanAnalogy: 'Wie "ang" in "Gesang" (Zungenwurzel schließt Gaumen, kein deutsches "g" aussprechen!).',
     sampleWords: [{ hanzi: '上', pinyin: 'shàng', meaning: 'oben / aufsteigen', tone: 4 }],
   },
   {
@@ -519,7 +603,7 @@ export const FINALS: readonly FinalData[] = [
     ipa: 'əŋ',
     category: 'nasal_back',
     categoryLabel: 'Hintere Nasalauslaute (-ng)',
-    germanAnalogy: 'Wie "eng" in "enger" (Gaumenschluss).',
+    germanAnalogy: 'Wie "eng" in "enger" (Gaumenschluss im Rachen, tiefer Resonanzraum).',
     sampleWords: [{ hanzi: '朋', pinyin: 'péng', meaning: 'Freund', tone: 2 }],
   },
   {
@@ -527,7 +611,7 @@ export const FINALS: readonly FinalData[] = [
     ipa: 'iŋ',
     category: 'nasal_back',
     categoryLabel: 'Hintere Nasalauslaute (-ng)',
-    germanAnalogy: 'Wie deutsches "ing" in "Ring".',
+    germanAnalogy: 'Wie deutsches "ing" in "Ring" (Zungenwurzel blockiert Gaumensegel).',
     sampleWords: [{ hanzi: '听', pinyin: 'tīng', meaning: 'hören', tone: 1 }],
   },
   {
@@ -537,6 +621,43 @@ export const FINALS: readonly FinalData[] = [
     categoryLabel: 'Hintere Nasalauslaute (-ng)',
     germanAnalogy: 'Wie deutsches "ung" in "Sprung" oder "ong" in "Gong".',
     sampleWords: [{ hanzi: '中', pinyin: 'zhōng', meaning: 'Mitte / China', tone: 1 }],
+  },
+  {
+    pinyin: 'iang',
+    ipa: 'jɑŋ',
+    category: 'nasal_back',
+    categoryLabel: 'Hintere Nasalauslaute (-ng)',
+    germanAnalogy: 'Wie "i" + hinteres "ang" (wie "i" + "Gesang", weicher Gaumenschluss).',
+    sampleWords: [{ hanzi: '想', pinyin: 'xiǎng', meaning: 'denken / möchten', tone: 3 }],
+  },
+  {
+    pinyin: 'uang',
+    ipa: 'wɑŋ',
+    category: 'nasal_back',
+    categoryLabel: 'Hintere Nasalauslaute (-ng)',
+    germanAnalogy: 'Wie "u" + hinteres "ang" (weiches "u" gleitet in tiefes "ang").',
+    sampleWords: [{ hanzi: '黄', pinyin: 'huáng', meaning: 'gelb', tone: 2 }],
+  },
+  {
+    pinyin: 'iong',
+    ipa: 'jʊŋ',
+    category: 'nasal_back',
+    categoryLabel: 'Hintere Nasalauslaute (-ng)',
+    germanAnalogy: 'Wie "i" + dumpfes "ung/ong" mit Gaumenschluss im Rachen.',
+    sampleWords: [{ hanzi: '穷', pinyin: 'qióng', meaning: 'arm', tone: 2 }],
+  },
+
+  // Sonderauslaute (Retroflex)
+  {
+    pinyin: 'er',
+    ipa: 'aɚ',
+    category: 'special',
+    categoryLabel: 'Sonderauslaute (Retroflexes R)',
+    germanAnalogy: 'Die Zunge rollt sich während des Vokals nach hinten oben zum Gaumen (Erhua-Laut).',
+    sampleWords: [
+      { hanzi: '儿子', pinyin: 'érzi', meaning: 'Sohn', tone: 2 },
+      { hanzi: '二', pinyin: 'èr', meaning: 'zwei', tone: 4 },
+    ],
   },
 ];
 

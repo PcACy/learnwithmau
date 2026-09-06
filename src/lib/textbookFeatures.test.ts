@@ -18,10 +18,29 @@ describe('Textbook Parity Content & Data Tests', () => {
       expect(pinyins).toContain('w');
     });
 
-    it('contains simple, compound and nasal finals', () => {
-      expect(FINALS.length).toBeGreaterThanOrEqual(20);
-      const simpleVowels = FINALS.filter((f) => f.category === 'simple').map((f) => f.pinyin);
-      expect(simpleVowels).toEqual(expect.arrayContaining(['a', 'o', 'e', 'i', 'u', 'ü']));
+    it('contains simple, compound and nasal finals including all standard Mandarin categories', () => {
+      expect(FINALS.length).toBeGreaterThanOrEqual(30);
+      const pinyins = FINALS.map((f) => f.pinyin);
+      expect(pinyins).toEqual(
+        expect.arrayContaining([
+          'a', 'o', 'e', 'i', 'u', 'ü',
+          'ai', 'ei', 'ao', 'ou', 'ia', 'ie', 'ua', 'uo', 'üe / ue', 'iao', 'iu', 'uai', 'ui',
+          'an', 'en', 'in', 'ian', 'uan', 'un', 'ün', 'üan',
+          'ang', 'eng', 'ing', 'ong', 'iang', 'uang', 'iong',
+          'er',
+        ]),
+      );
+
+      // Verify 'in' does not erroneously have 'jiǔ'
+      const inFinal = FINALS.find((f) => f.pinyin === 'in');
+      expect(inFinal).toBeDefined();
+      expect(inFinal?.sampleWords.some((w) => w.hanzi === '您')).toBe(true);
+      expect(inFinal?.sampleWords.some((w) => w.pinyin.includes('jiǔ'))).toBe(false);
+
+      // Verify 'iu' has 'jiǔ'
+      const iuFinal = FINALS.find((f) => f.pinyin === 'iu');
+      expect(iuFinal).toBeDefined();
+      expect(iuFinal?.sampleWords.some((w) => w.pinyin.includes('jiǔ'))).toBe(true);
     });
 
     it('provides all 4 core tone sandhi rules with examples', () => {
@@ -48,10 +67,12 @@ describe('Textbook Parity Content & Data Tests', () => {
   });
 
   describe('Stroke Theory & Writing Rules', () => {
-    it('contains the 8 fundamental strokes (永字八法)', () => {
+    it('contains the 8 fundamental strokes (永字八法) with authentic stroke glyphs', () => {
       expect(BASIC_STROKES.length).toBe(8);
       const names = BASIC_STROKES.map((s) => s.name);
       expect(names).toEqual(expect.arrayContaining(['点', '横', '竖', '撇', '捺', '提', '折', '钩']));
+      const tiStroke = BASIC_STROKES.find((s) => s.id === 'ti');
+      expect(tiStroke?.glyph).toBe('㇀');
     });
 
     it('contains the 7 fundamental stroke order rules', () => {

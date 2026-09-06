@@ -91,7 +91,7 @@ export const BASIC_STROKES: readonly BasicStroke[] = [
     id: 'ti',
     name: '提',
     pinyin: 'tí',
-    glyph: '冫',
+    glyph: '㇀',
     direction: 'Von links-unten nach rechts-oben',
     description: 'Ein dynamischer Aufstrich. Beginnt fest und schnellt nach rechts oben spitz weg.',
     sampleCharacters: [
