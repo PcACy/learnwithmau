@@ -14,7 +14,7 @@ export interface StorySentence {
   tokens: StoryWordToken[];
 }
 
-export interface StoryQuiz {
+interface StoryQuiz {
   question: string;
   options: string[];
   correctIndex: number;

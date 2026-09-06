@@ -1,4 +1,4 @@
-export type ExamSection = 'listening' | 'reading';
+type ExamSection = 'listening' | 'reading';
 
 export interface ExamQuestion {
   id: string;

@@ -1,5 +1,3 @@
-import type { SrsGrade } from './srs';
-
 /** Die Lernmodi der Plattform. */
 export type ModeId =
   | 'ear-trainer'
@@ -34,8 +32,3 @@ export interface SessionStat {
   durationMs: number;
 }
 
-/** Ergebnis einer einzelnen Antwort innerhalb eines Modus. */
-export interface AnswerResult {
-  itemId: string;
-  grade: SrsGrade;
-}

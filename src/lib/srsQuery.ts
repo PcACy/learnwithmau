@@ -1,5 +1,5 @@
 import type { SrsCard } from '../types/srs';
-import { isDue, MASTERY_INTERVAL_DAYS } from './srs';
+import { computeMastery, isDue } from './srs';
 
 /** Item-IDs fällig heute (nie Gelerntes gilt als sofort fällig). */
 export function selectDueItemIds(
@@ -15,11 +15,6 @@ export function selectDueItemIds(
 
 /** Mastery-Score 0..1 über alle Items des Katalogs. */
 export function selectMastery(cards: Record<string, SrsCard>, totalItems: number): number {
-  if (totalItems <= 0) return 0;
-  const sum = Object.values(cards).reduce(
-    (acc, card) => acc + Math.min(card.intervalDays / MASTERY_INTERVAL_DAYS, 1),
-    0,
-  );
-  return sum / totalItems;
+  return computeMastery(Object.values(cards), totalItems);
 }
 

@@ -13,7 +13,7 @@ export interface MetaMap {
 
 export type MetaKey = keyof MetaMap;
 
-export interface MetaRow {
+interface MetaRow {
   key: MetaKey;
   value: MetaMap[MetaKey];
 }
@@ -114,7 +114,7 @@ export async function putCompletedDialogues(dialogues: Record<string, { stars: n
   }
 }
 
-export interface BackupData {
+interface BackupData {
   version: 1;
   exportedAt: string;
   app: 'hanzi-arcade';

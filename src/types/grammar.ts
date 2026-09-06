@@ -1,4 +1,4 @@
-export interface GrammarExample {
+interface GrammarExample {
   hanzi: string;
   pinyin: string;
   german: string;
@@ -6,13 +6,13 @@ export interface GrammarExample {
   breakdown?: { part: string; meaning: string }[];
 }
 
-export interface GrammarPitfall {
+interface GrammarPitfall {
   wrong: string;
   right: string;
   explanation: string;
 }
 
-export interface GrammarQuiz {
+interface GrammarQuiz {
   question: string;
   options: string[];
   correctIndex: number;

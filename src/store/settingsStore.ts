@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 export type Theme = 'system' | 'light' | 'dark';
-export type AudioSpeed = 0.75 | 1.0 | 1.25;
+type AudioSpeed = 0.75 | 1.0 | 1.25;
 
 interface SettingsState {
   theme: Theme;

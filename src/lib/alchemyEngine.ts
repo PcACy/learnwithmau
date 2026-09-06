@@ -28,7 +28,7 @@ const PUZZLE_POOL: readonly PuzzleSource[] = VOCAB.flatMap((item) =>
   ),
 );
 
-export interface AlchemyPiece {
+interface AlchemyPiece {
   /** Radikal-ID – eindeutig innerhalb eines Puzzles. */
   id: string;
   hanzi: string;

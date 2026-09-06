@@ -2,7 +2,7 @@ import { VOCAB } from '../data';
 import { shuffled } from './shuffle';
 import type { VocabItem } from '../types/vocab';
 
-export type BlitzQuestionType = 'meaning' | 'pinyin' | 'tone';
+type BlitzQuestionType = 'meaning' | 'pinyin' | 'tone';
 
 export interface BlitzQuestion {
   id: string;

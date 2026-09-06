@@ -21,7 +21,7 @@ export const RADICAL_POSITIONS = [
 /** Layout-Hinweis für den Alchemy-Baukasten. */
 export type RadicalPosition = (typeof RADICAL_POSITIONS)[number];
 
-export interface PinyinSyllable {
+interface PinyinSyllable {
   /** Pinyin ohne Diakritikum, z.B. "ni" – Input-Form für TypeRacer/Ear-Trainer. */
   plain: string;
   /** Pinyin mit Ton-Diakritikum, z.B. "nǐ" – Anzeige-Form. */
@@ -39,12 +39,12 @@ export interface CharacterPart {
   position: RadicalPosition;
 }
 
-export interface CharacterDecomposition {
+interface CharacterDecomposition {
   char: string;
   parts: CharacterPart[];
 }
 
-export type HskLevel = 1;
+type HskLevel = 1;
 
 export type PartOfSpeech =
   | 'nomen'

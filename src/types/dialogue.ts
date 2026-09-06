@@ -62,9 +62,3 @@ export interface DialogueScenario {
   maxScore: number;
 }
 
-export interface DialogueProgress {
-  scenarioId: string;
-  stars: number;
-  bestScore: number;
-  completedAt: string;
-}

@@ -29,7 +29,7 @@ export interface Achievement {
   calculateProgress: (data: AchievementData) => { current: number; unlocked: boolean };
 }
 
-export interface AchievementData {
+interface AchievementData {
   cards: Record<string, SrsCard>;
   streak: { current: number; longest: number };
   stats: {
