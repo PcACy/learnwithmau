@@ -49,6 +49,28 @@ function ShellSkeleton() {
   );
 }
 
+interface NavLinkItem {
+  to: string;
+  label: string;
+  icon: typeof Sparkles;
+}
+
+const NAV_LINKS: readonly NavLinkItem[] = [
+  { to: '/', label: 'Zentrale', icon: Sparkles },
+  { to: '/dictionary', label: 'Wörterbuch', icon: BookOpen },
+  { to: '/grammar', label: 'Grammatik', icon: GraduationCap },
+  { to: '/stories', label: 'Lesen', icon: BookOpenText },
+  { to: '/dialogue', label: 'Dialoge', icon: MessagesSquare },
+  { to: '/exam', label: 'Prüfung', icon: Award },
+  { to: '/stats', label: 'Fortschritt', icon: LineChart },
+  { to: '/settings', label: 'Einstellungen', icon: Settings },
+];
+
+function isLinkActive(to: string, currentPath: string): boolean {
+  if (to === '/') return currentPath === '/';
+  return currentPath.startsWith(to);
+}
+
 export function AppShell() {
   const hydrated = useProgressStore((s) => s.hydrated);
   const streak = useProgressStore((s) => s.streak.current);
@@ -116,23 +138,7 @@ export function AppShell() {
     }
   });
 
-  const NAV_LINKS = [
-    { to: '/', label: 'Zentrale', icon: Sparkles },
-    { to: '/dictionary', label: 'Wörterbuch', icon: BookOpen },
-    { to: '/grammar', label: 'Grammatik', icon: GraduationCap },
-    { to: '/stories', label: 'Lesen', icon: BookOpenText },
-    { to: '/dialogue', label: 'Dialoge', icon: MessagesSquare },
-    { to: '/exam', label: 'Prüfung', icon: Award },
-    { to: '/stats', label: 'Fortschritt', icon: LineChart },
-    { to: '/settings', label: 'Einstellungen', icon: Settings },
-  ];
-
-  const isLinkActive = (to: string) => {
-    if (to === '/') return location.pathname === '/';
-    return location.pathname.startsWith(to);
-  };
-
-  const activeLink = NAV_LINKS.find((l) => isLinkActive(l.to));
+  const activeLink = NAV_LINKS.find((l) => isLinkActive(l.to, location.pathname));
 
   // Compute position of active link pill
   useIsomorphicLayoutEffect(() => {
@@ -146,12 +152,23 @@ export function AppShell() {
         setPillRect((prev) => (prev.opacity === 0 ? prev : { ...prev, opacity: 0 }));
         return;
       }
-      setPillRect({
-        left: el.offsetLeft,
-        top: el.offsetTop,
-        width: el.offsetWidth,
-        height: el.offsetHeight,
-        opacity: 1,
+      setPillRect((prev) => {
+        if (
+          prev.left === el.offsetLeft &&
+          prev.top === el.offsetTop &&
+          prev.width === el.offsetWidth &&
+          prev.height === el.offsetHeight &&
+          prev.opacity === 1
+        ) {
+          return prev;
+        }
+        return {
+          left: el.offsetLeft,
+          top: el.offsetTop,
+          width: el.offsetWidth,
+          height: el.offsetHeight,
+          opacity: 1,
+        };
       });
     };
 
@@ -163,7 +180,7 @@ export function AppShell() {
       }
       return () => window.removeEventListener('resize', updatePill);
     }
-  }, [location.pathname, activeLink]);
+  }, [location.pathname, activeLink?.to]);
 
   useEffect(() => {
     const timer = window.setTimeout(() => setIsMounted(true), 60);
@@ -213,7 +230,7 @@ export function AppShell() {
               />
 
               {NAV_LINKS.map((link) => {
-                const isActive = isLinkActive(link.to);
+                const isActive = isLinkActive(link.to, location.pathname);
                 const Icon = link.icon;
                 return (
                   <Link
@@ -289,7 +306,7 @@ export function AppShell() {
       >
         <div className="flex items-center justify-around">
           {NAV_LINKS.map((link) => {
-            const isActive = isLinkActive(link.to);
+            const isActive = isLinkActive(link.to, location.pathname);
             const Icon = link.icon;
             return (
               <Link
