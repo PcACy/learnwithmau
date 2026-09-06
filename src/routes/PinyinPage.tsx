@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo, useEffect, useRef, type CSSProperties } from 'react';
+import { useState, useCallback, useMemo, useEffect, useRef } from 'react';
 import {
   Volume2,
   BookOpen,
@@ -98,7 +98,7 @@ export function PinyinPage() {
   return (
     <div className="mx-auto max-w-5xl space-y-8 pb-16">
       {/* Page Header */}
-      <div className="reveal space-y-2" style={{ '--index': 0 } as CSSProperties}>
+      <div className="space-y-2">
         <div className="flex items-center gap-2.5">
           <SealBadge sealChar="拼" label="PHONETIK & PINYIN" variant="cinnabar" />
           <span className="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">

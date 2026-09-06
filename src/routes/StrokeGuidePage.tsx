@@ -1,4 +1,4 @@
-import { useState, type CSSProperties } from 'react';
+import { useState } from 'react';
 import { Compass, CheckCircle2, Sparkles } from 'lucide-react';
 import { SealBadge } from '../components/ui/SealBadge';
 import { BASIC_STROKES, STROKE_ORDER_RULES, type BasicStroke, type StrokeOrderRule } from '../data/strokeGuideData';
@@ -17,7 +17,7 @@ export function StrokeGuidePage() {
   return (
     <div className="mx-auto max-w-5xl space-y-8 pb-16">
       {/* Header */}
-      <div className="reveal space-y-2" style={{ '--index': 0 } as CSSProperties}>
+      <div className="space-y-2">
         <div className="flex items-center gap-2.5">
           <SealBadge sealChar="笔" label="SCHRIFTZEICHEN-THEORIE" variant="jade" />
           <span className="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">

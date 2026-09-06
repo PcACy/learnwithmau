@@ -222,10 +222,7 @@ export function MistakesPage() {
   return (
     <div className="space-y-8 pb-24 max-w-5xl mx-auto">
       {/* 1. Header & Navigation Pills */}
-      <div
-        className="reveal flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-zinc-200/80 dark:border-white/[0.08] pb-6"
-        style={{ '--index': 0 } as CSSProperties}
-      >
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-zinc-200/80 dark:border-white/[0.08] pb-6">
         <div className="space-y-1.5">
           <div className="flex items-center gap-2.5">
             <SealBadge sealChar="错" label="SCHWACHSTELLEN · 错题本" variant="cinnabar" />

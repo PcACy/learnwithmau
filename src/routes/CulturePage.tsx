@@ -1,4 +1,4 @@
-import { useState, type CSSProperties } from 'react';
+import { useState } from 'react';
 import { Sparkles, HeartHandshake } from 'lucide-react';
 import { SealBadge } from '../components/ui/SealBadge';
 import { CULTURE_TOPICS, type CultureTopic } from '../data/cultureNotes';
@@ -9,7 +9,7 @@ export function CulturePage() {
   return (
     <div className="mx-auto max-w-5xl space-y-8 pb-16">
       {/* Header */}
-      <div className="reveal space-y-2" style={{ '--index': 0 } as CSSProperties}>
+      <div className="space-y-2">
         <div className="flex items-center gap-2.5">
           <SealBadge sealChar="文" label="KULTUR & LANDESKUNDE" variant="cinnabar" />
           <span className="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">

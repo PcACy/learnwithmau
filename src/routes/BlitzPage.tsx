@@ -251,7 +251,7 @@ export function BlitzPage() {
   return (
     <div className="mx-auto max-w-2xl space-y-6 pb-16">
       {/* Top Header Bar (Timer, Streak, Score) */}
-      <div className="reveal flex items-center justify-between rounded-2xl border border-zinc-200/80 bg-white p-4 shadow-whisper dark:border-white/10 dark:bg-zinc-900" style={{ '--index': 0 } as CSSProperties}>
+      <div className="flex items-center justify-between rounded-2xl border border-zinc-200/80 bg-white p-4 shadow-whisper dark:border-white/10 dark:bg-zinc-900">
         {/* Timer */}
         <div className="flex items-center gap-2">
           <Timer className={`h-5 w-5 ${timeLeft <= 15 ? 'text-rose-500 animate-pulse' : 'text-emerald-600 dark:text-emerald-400'}`} />

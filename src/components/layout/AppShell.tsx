@@ -20,6 +20,7 @@ import { filterActiveMistakes } from '../../lib/mistakeBank';
 import { ThemeToggle } from './ThemeToggle';
 import { BackupModal } from '../dashboard/BackupModal';
 import { SealBadge } from '../ui/SealBadge';
+import { preloadAllRoutes } from '../../routes/lazyRoutes';
 
 const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
@@ -106,7 +107,7 @@ export function AppShell() {
   const [isNavigating, setIsNavigating] = useState(false);
   const prevPathname = useRef(location.pathname);
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (prevPathname.current !== location.pathname) {
       prevPathname.current = location.pathname;
       stopCurrentAudio();
@@ -190,6 +191,17 @@ export function AppShell() {
 
   useEffect(() => {
     const timer = window.setTimeout(() => setIsMounted(true), 60);
+    if (typeof window !== 'undefined') {
+      const preload = () => {
+        void preloadAllRoutes();
+      };
+      const win = window as Window & { requestIdleCallback?: (cb: () => void) => void };
+      if (typeof win.requestIdleCallback === 'function') {
+        win.requestIdleCallback(preload);
+      } else {
+        window.setTimeout(preload, 120);
+      }
+    }
     return () => window.clearTimeout(timer);
   }, []);
 
@@ -313,11 +325,9 @@ export function AppShell() {
       </header>
 
       <main className="mx-auto max-w-6xl px-4 pt-6 pb-28 sm:py-10 sm:px-8">
-        <div key={location.pathname} className="route-transition-container">
-          <Suspense fallback={<div className="min-h-[60vh]" />}>
-            <Outlet />
-          </Suspense>
-        </div>
+        <Suspense fallback={null}>
+          <Outlet />
+        </Suspense>
       </main>
 
       {/* Mobile Ergonomic Bottom Navigation Bar */}

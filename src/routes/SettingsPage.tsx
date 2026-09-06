@@ -83,7 +83,7 @@ export function SettingsPage() {
 
   return (
     <div className="mx-auto max-w-2xl space-y-6">
-      <div className="reveal space-y-1.5" style={{ '--index': 0 } as CSSProperties}>
+      <div className="space-y-1.5">
         <div className="flex items-center gap-2.5">
           <SealBadge sealChar="设" label="KONFIGURATION" variant="jade" />
           <span className="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">

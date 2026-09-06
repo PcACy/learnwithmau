@@ -255,7 +255,7 @@ export function MockExamPage() {
   // ================= 1. INTRO PHASE =================
   if (phase === 'intro') {
     return (
-      <div className="reveal mx-auto max-w-2xl space-y-8 py-8" style={{ '--index': 0 } as CSSProperties}>
+      <div className="mx-auto max-w-2xl space-y-8 py-8">
         <div className="flex items-center gap-2.5">
           <SealBadge sealChar="考" label="OFFIZIELLE SIMULATION" variant="jade" />
           <span className="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
@@ -407,7 +407,7 @@ export function MockExamPage() {
     return (
       <div className="mx-auto max-w-3xl space-y-6 pb-20">
         {/* Fixed / Sticky Top Bar */}
-        <div className="reveal sticky top-16 z-20 flex flex-wrap items-center justify-between gap-3 rounded-3xl border border-zinc-200/80 bg-white/95 p-4 shadow-whisper backdrop-blur-md dark:border-white/10 dark:bg-zinc-900/95" style={{ '--index': 0 } as CSSProperties}>
+        <div className="sticky top-16 z-20 flex flex-wrap items-center justify-between gap-3 rounded-3xl border border-zinc-200/80 bg-white/95 p-4 shadow-whisper backdrop-blur-md dark:border-white/10 dark:bg-zinc-900/95">
           {/* Section Indicator */}
           <div className="flex items-center gap-2">
             <span className="rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 font-mono text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
@@ -690,7 +690,7 @@ export function MockExamPage() {
     });
 
     return (
-      <div className="reveal mx-auto max-w-3xl space-y-8 py-8" style={{ '--index': 0 } as CSSProperties}>
+      <div className="mx-auto max-w-3xl space-y-8 py-8">
         {/* Hero Score Card (Double Bezel) */}
         <div className="rounded-[2.5rem] p-1.5 bg-gradient-to-b from-white/10 to-white/5 border border-zinc-200/80 dark:border-white/10 shadow-whisper">
           <div className="rounded-[calc(2.5rem-0.375rem)] bg-white p-8 sm:p-10 text-center dark:bg-zinc-900 shadow-[inset_0_1px_1px_rgba(255,255,255,0.08)] space-y-4">

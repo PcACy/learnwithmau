@@ -111,10 +111,7 @@ export function DashboardPage() {
   return (
     <div className="space-y-12 pb-24">
       {/* 1. Header & Quick Stat Badges */}
-      <div
-        className="reveal flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
-        style={{ '--index': 0 } as CSSProperties}
-      >
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="space-y-1.5">
           <div className="flex items-center gap-2.5">
             <SealBadge sealChar="汉" label="ZENTRALE · HSK 1" variant="cinnabar" />
@@ -318,7 +315,7 @@ export function DashboardPage() {
       </div>
 
       {/* 2.5 LEHRBUCH-FUNDAMENT · PHONETIK, STRICHE & KULTUR */}
-      <section className="space-y-5 cv-auto-section">
+      <section className="space-y-5">
         <div className="flex items-baseline justify-between border-b border-zinc-200/80 dark:border-white/[0.08] pb-3">
           <div className="flex items-center gap-3">
             <SealBadge sealChar="基" label="FUNDAMENT" variant="cinnabar" size="sm" />
@@ -435,7 +432,7 @@ export function DashboardPage() {
       {/* 3. 3-SÄULEN CURRICULUM ARCHITEKTUR */}
 
       {/* SÄULE 1: LEHRBUCH & SPRACHVERSTÄNDNIS */}
-      <section className="space-y-5 cv-auto-section">
+      <section className="space-y-5">
         <div className="flex items-baseline justify-between border-b border-zinc-200/80 dark:border-white/[0.08] pb-3">
           <div className="flex items-center gap-3">
             <SealBadge sealChar="书" label="SÄULE 1" variant="jade" size="sm" />
@@ -582,7 +579,7 @@ export function DashboardPage() {
       </section>
 
       {/* SÄULE 2: SCHRIFT & MOTORIK */}
-      <section className="space-y-5 cv-auto-section">
+      <section className="space-y-5">
         <div className="flex items-baseline justify-between border-b border-zinc-200/80 dark:border-white/[0.08] pb-3">
           <div className="flex items-center gap-3">
             <SealBadge sealChar="技" label="SÄULE 2" variant="stone" size="sm" />
@@ -712,7 +709,7 @@ export function DashboardPage() {
       </section>
 
       {/* SÄULE 3: PRÜFUNG & GEDÄCHTNIS */}
-      <section className="space-y-5 cv-auto-section">
+      <section className="space-y-5">
         <div className="flex items-baseline justify-between border-b border-zinc-200/80 dark:border-white/[0.08] pb-3">
           <div className="flex items-center gap-3">
             <SealBadge sealChar="考" label="SÄULE 3" variant="cinnabar" size="sm" />

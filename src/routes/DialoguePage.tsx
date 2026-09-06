@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import type { CSSProperties } from 'react';
 import {
   ChevronLeft,
   Eye,
@@ -350,10 +349,7 @@ export function DialoguePage() {
   return (
     <div className="mx-auto max-w-5xl space-y-8 pb-16">
       {/* 1. Modus-Header */}
-      <div
-        className="reveal flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between"
-        style={{ '--index': 0 } as CSSProperties}
-      >
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <div className="flex items-center gap-2">
             <SealBadge sealChar="话" label="HSK 1" variant="cinnabar" size="sm" />

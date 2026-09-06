@@ -257,7 +257,7 @@ export function NumberDrillPage() {
 
   return (
     <div className="mx-auto max-w-3xl space-y-6" aria-live="polite">
-      <div className="reveal flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4" style={{ '--index': 0 } as CSSProperties}>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div className="space-y-1">
           <div className="flex items-center gap-2.5">
             <SealBadge sealChar="数" label="ZAHLEN & ZEIT" variant="jade" />

@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import type { CSSProperties } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { ArrowLeft, Printer } from 'lucide-react';
 import { VOCAB } from '../data';
@@ -115,7 +114,7 @@ export function DictionaryPage() {
   return (
     <div className="space-y-6 pb-16">
       {/* 1. Header */}
-      <div className="reveal flex flex-wrap items-end justify-between gap-4" style={{ '--index': 0 } as CSSProperties}>
+      <div className="flex flex-wrap items-end justify-between gap-4">
         <div className="space-y-1.5">
           <div className="flex items-center gap-2.5">
             <SealBadge sealChar="典" label="HSK 1 WÖRTERBUCH" variant="jade" />
