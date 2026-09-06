@@ -10,7 +10,6 @@ import {
   GraduationCap,
   Headphones,
   Keyboard,
-  LineChart,
   Lock,
   MessageSquareQuote,
   MessagesSquare,
@@ -28,6 +27,7 @@ import { db } from '../lib/db';
 import { selectDueItemIds } from '../lib/srsQuery';
 import { ACHIEVEMENTS } from '../config/achievements';
 import { MASTERY_LEVELS, getMasteryLevel } from '../lib/mastery';
+import { SealBadge } from '../components/ui/SealBadge';
 
 const ALL_ITEM_IDS: readonly string[] = VOCAB.map((item) => item.id);
 
@@ -151,12 +151,16 @@ export function StatsPage() {
     <div className="space-y-10 pb-16">
       {/* Header */}
       <div className="reveal flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between" style={{ '--index': 0 } as CSSProperties}>
-        <div>
-          <p className="flex items-center gap-1.5 font-mono text-xs font-medium uppercase tracking-[0.1em] text-emerald-700 dark:text-emerald-400">
-            <LineChart className="h-3.5 w-3.5" aria-hidden />
-            Analytics & Gedächtnis
-          </p>
-          <h1 className="mt-1 text-3xl font-bold tracking-tight sm:text-4xl">Fortschritt & Statistiken</h1>
+        <div className="space-y-1.5">
+          <div className="flex items-center gap-2.5">
+            <SealBadge sealChar="绩" label="ANALYTICS & MEISTERUNG" variant="jade" />
+            <span className="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+              Langzeit-Fortschritt
+            </span>
+          </div>
+          <h1 className="mt-1 text-3xl font-extrabold tracking-tight sm:text-4xl text-zinc-900 dark:text-zinc-50">
+            Fortschritt &amp; Statistiken
+          </h1>
           <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
             Detaillierte Auswertung deines Langzeit-Lernfortschritts für alle {VOCAB.length} HSK-1-Vokabeln.
           </p>

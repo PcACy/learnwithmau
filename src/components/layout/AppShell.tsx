@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import {
+  Award,
   BookOpen,
   BookOpenText,
   Flame,
@@ -121,7 +122,7 @@ export function AppShell() {
     { to: '/grammar', label: 'Grammatik', icon: GraduationCap },
     { to: '/stories', label: 'Lesen', icon: BookOpenText },
     { to: '/dialogue', label: 'Dialoge', icon: MessagesSquare },
-    { to: '/exam', label: 'Prüfung', icon: GraduationCap },
+    { to: '/exam', label: 'Prüfung', icon: Award },
     { to: '/stats', label: 'Fortschritt', icon: LineChart },
     { to: '/settings', label: 'Einstellungen', icon: Settings },
   ];
@@ -275,11 +276,47 @@ export function AppShell() {
         )}
       </header>
 
-      <main className="mx-auto max-w-6xl px-4 py-10 sm:px-8">
+      <main className="mx-auto max-w-6xl px-4 pt-6 pb-28 sm:py-10 sm:px-8">
         <div key={location.pathname} className="route-transition-container">
           <Outlet />
         </div>
       </main>
+
+      {/* Mobile Ergonomic Bottom Navigation Bar */}
+      <nav
+        aria-label="Mobile Navigation"
+        className="sm:hidden fixed bottom-0 left-0 right-0 z-40 border-t border-zinc-200/80 bg-[#fbfbf9]/95 backdrop-blur-lg px-1 pt-1.5 safe-area-pb dark:border-white/[0.08] dark:bg-[#09090b]/95 shadow-whisper"
+      >
+        <div className="flex items-center justify-around">
+          {NAV_LINKS.map((link) => {
+            const isActive = isLinkActive(link.to);
+            const Icon = link.icon;
+            return (
+              <Link
+                key={link.to}
+                to={link.to}
+                viewTransition
+                className={`flex flex-col items-center justify-center gap-0.5 px-1 py-1 text-[9px] font-semibold transition-all duration-150 active:scale-95 touch-manipulation ${
+                  isActive
+                    ? 'text-emerald-700 font-bold dark:text-emerald-400'
+                    : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200'
+                }`}
+              >
+                <div
+                  className={`flex h-7 w-7 items-center justify-center rounded-full transition-all duration-200 ${
+                    isActive
+                      ? 'bg-emerald-600/15 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300'
+                      : ''
+                  }`}
+                >
+                  <Icon className="h-3.5 w-3.5" />
+                </div>
+                <span className="truncate max-w-[44px]">{link.label}</span>
+              </Link>
+            );
+          })}
+        </div>
+      </nav>
 
       <BackupModal open={backupOpen} onClose={() => setBackupOpen(false)} />
     </div>

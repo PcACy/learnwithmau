@@ -97,6 +97,10 @@ html.dark body {
   animation-delay: calc(var(--index, 0) * 90ms);
 }
 
+@utility safe-area-pb {
+  padding-bottom: calc(0.5rem + env(safe-area-inset-bottom, 0px));
+}
+
 @utility double-bezel-casing {
   border-radius: 2.5rem;
   padding: 0.375rem;

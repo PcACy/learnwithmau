@@ -223,7 +223,7 @@ export function SentenceBuilderPage() {
           <div className="flex items-center gap-2.5">
             <SealBadge sealChar="句" label="SATZBAU-MEISTER" variant="jade" />
             <span className="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
-              Satz {currentIndex + 1} / {ROUNDS_PER_SESSION}
+              Satz {currentIndex + 1} / {sessionSentences.length}
             </span>
           </div>
           <h1 className="text-2xl font-black tracking-tight sm:text-3xl text-zinc-900 dark:text-zinc-50">

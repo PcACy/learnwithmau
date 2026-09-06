@@ -29,6 +29,7 @@ import { DialogueChoicePanel } from '../components/dialogue/DialogueChoicePanel'
 import { DialogueDebriefModal } from '../components/dialogue/DialogueDebriefModal';
 import { DialogueTokenPopover } from '../components/dialogue/DialogueTokenPopover';
 import { SealBadge } from '../components/ui/SealBadge';
+import { useSettingsStore } from '../store/settingsStore';
 
 const SCENARIOS = dialoguesData as unknown as DialogueScenario[];
 
@@ -49,6 +50,7 @@ interface HistoryEntry {
 
 export function DialoguePage() {
   const navigate = useNavigate();
+  const globalAudioSpeed = useSettingsStore((s) => s.audioSpeed);
 
   // Dialog-Auswahl & Laufzeitstatus
   const [activeScenario, setActiveScenario] = useState<DialogueScenario | null>(null);
@@ -63,7 +65,7 @@ export function DialoguePage() {
   // Lernhilfen Toggles
   const [showPinyin, setShowPinyin] = useState(true);
   const [showGerman, setShowGerman] = useState(true);
-  const [playbackSpeed, setPlaybackSpeed] = useState<1.0 | 0.8>(1.0);
+  const [playbackSpeed, setPlaybackSpeed] = useState<number>(() => globalAudioSpeed);
 
   // Glossar Popover & Audio State
   const [activeToken, setActiveToken] = useState<DialogueWordToken | null>(null);
@@ -313,10 +315,10 @@ export function DialoguePage() {
       return;
     }
 
-    // 's': Geschwindigkeit umschalten
+    // 's': Geschwindigkeit umschalten (1.0x -> 0.75x -> 1.25x)
     if (event.key === 's' || event.key === 'S') {
       event.preventDefault();
-      setPlaybackSpeed((prev) => (prev === 1.0 ? 0.8 : 1.0));
+      setPlaybackSpeed((prev) => (prev === 1.0 ? 0.75 : prev === 0.75 ? 1.25 : 1.0));
       return;
     }
 
@@ -447,7 +449,7 @@ export function DialoguePage() {
 
               <button
                 type="button"
-                onClick={() => setPlaybackSpeed((prev) => (prev === 1.0 ? 0.8 : 1.0))}
+                onClick={() => setPlaybackSpeed((prev) => (prev === 1.0 ? 0.75 : prev === 0.75 ? 1.25 : 1.0))}
                 className="inline-flex items-center gap-1 rounded-xl border border-zinc-200/80 bg-zinc-50 px-2.5 py-1 text-xs font-bold text-zinc-700 hover:bg-zinc-100 dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-300 cursor-pointer"
                 title="Tempo umschalten (Taste: S)"
               >

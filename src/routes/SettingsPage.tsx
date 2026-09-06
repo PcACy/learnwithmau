@@ -2,7 +2,6 @@ import { useCallback, useEffect, useState } from 'react';
 import type { CSSProperties } from 'react';
 import {
   AlertTriangle,
-  Database,
   HardDrive,
   Minus,
   Monitor,
@@ -10,13 +9,21 @@ import {
   Plus,
   Sun,
   Target,
+  Volume2,
 } from 'lucide-react';
 import { useProgressStore, DEFAULT_DAILY_TARGET } from '../store/progressStore';
 import { applyTheme, useSettingsStore, type Theme } from '../store/settingsStore';
 import { BackupModal } from '../components/dashboard/BackupModal';
 import { resetAllLocalData } from '../lib/resetApp';
+import { SealBadge } from '../components/ui/SealBadge';
 
 const APP_VERSION = '1.0.0-dev';
+
+const AUDIO_SPEED_OPTIONS = [
+  { value: 0.75 as const, label: '0.75×', sublabel: 'Langsam (Einsteiger)' },
+  { value: 1.0 as const, label: '1.0×', sublabel: 'Standard' },
+  { value: 1.25 as const, label: '1.25×', sublabel: 'Schnell' },
+];
 
 const THEME_OPTIONS: readonly { value: Theme; label: string; Icon: typeof Sun }[] = [
   { value: 'system', label: 'System', Icon: Monitor },
@@ -41,6 +48,8 @@ export function SettingsPage() {
   const setDailyTarget = useProgressStore((s) => s.setDailyTarget);
   const theme = useSettingsStore((s) => s.theme);
   const setTheme = useSettingsStore((s) => s.setTheme);
+  const audioSpeed = useSettingsStore((s) => s.audioSpeed);
+  const setAudioSpeed = useSettingsStore((s) => s.setAudioSpeed);
 
   const [backupOpen, setBackupOpen] = useState(false);
   const [storageText, setStorageText] = useState<string>('–');
@@ -74,12 +83,19 @@ export function SettingsPage() {
 
   return (
     <div className="mx-auto max-w-2xl space-y-6">
-      <div className="reveal" style={{ '--index': 0 } as CSSProperties}>
-        <p className="flex items-center gap-1.5 font-mono text-xs font-medium uppercase tracking-[0.1em] text-emerald-700 dark:text-emerald-400">
-          <Database className="h-3.5 w-3.5" aria-hidden />
-          Nachschlagen & Konfiguration
+      <div className="reveal space-y-1.5" style={{ '--index': 0 } as CSSProperties}>
+        <div className="flex items-center gap-2.5">
+          <SealBadge sealChar="设" label="KONFIGURATION" variant="jade" />
+          <span className="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+            System &amp; Audio
+          </span>
+        </div>
+        <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl text-zinc-900 dark:text-zinc-50">
+          Einstellungen
+        </h1>
+        <p className="text-xs text-zinc-500 dark:text-zinc-400">
+          Passe dein persönliches Lerntempo, Farbdesign und akustisches Feedback an.
         </p>
-        <h1 className="mt-1 text-2xl font-bold tracking-tight sm:text-3xl">Einstellungen</h1>
       </div>
 
       <Section title="Tagesziel">
@@ -121,6 +137,40 @@ export function SettingsPage() {
         <p className="mt-3 text-right font-mono text-[11px] text-zinc-400 dark:text-zinc-500">
           Bereich 5–100 · Standard {DEFAULT_DAILY_TARGET}
         </p>
+      </Section>
+
+      <Section title="Audio-Wiedergabegeschwindigkeit">
+        <div className="space-y-3">
+          <p className="text-xs text-zinc-500 dark:text-zinc-400">
+            Passe das Sprechtempo für Vokabeln, Beispielsätze, Geschichten und Dialoge an.
+          </p>
+          <div
+            role="radiogroup"
+            aria-label="Audio-Geschwindigkeit wählen"
+            className="grid grid-cols-3 gap-3"
+          >
+            {AUDIO_SPEED_OPTIONS.map(({ value, label, sublabel }) => (
+              <button
+                key={value}
+                type="button"
+                role="radio"
+                aria-checked={audioSpeed === value}
+                onClick={() => setAudioSpeed(value)}
+                className={`flex h-20 flex-col items-center justify-center gap-1 rounded-2xl border transition-all duration-150 ease-[cubic-bezier(0.16,1,0.3,1)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 ${
+                  audioSpeed === value
+                    ? 'border-emerald-600 bg-emerald-500/10 text-emerald-800 ring-2 ring-emerald-500/30 dark:border-emerald-400/50 dark:text-emerald-300'
+                    : 'border-zinc-200/80 bg-zinc-50 text-zinc-600 hover:border-emerald-600/30 dark:border-white/[0.08] dark:bg-zinc-950/40 dark:text-zinc-300'
+                }`}
+              >
+                <div className="flex items-center gap-1.5">
+                  <Volume2 className="h-3.5 w-3.5 opacity-70" aria-hidden />
+                  <span className="font-mono text-sm font-bold">{label}</span>
+                </div>
+                <span className="text-[10px] text-zinc-400 dark:text-zinc-500">{sublabel}</span>
+              </button>
+            ))}
+          </div>
+        </div>
       </Section>
 
       <Section title="Design">
