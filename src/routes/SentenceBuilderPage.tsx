@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from 'react';
-import type { CSSProperties } from 'react';
 import {
   ArrowRight,
   CheckCircle2,
@@ -254,8 +253,7 @@ export function SentenceBuilderPage() {
 
       {/* 2. Deutsche Satzvorgabe (Double-Bezel Casing) */}
       <section
-        className="reveal double-bezel-casing shadow-whisper"
-        style={{ '--index': 1 } as CSSProperties}
+        className="double-bezel-casing shadow-whisper"
       >
         <div className="double-bezel-core p-7 sm:p-10 space-y-7 relative">
           {/* Authentic Calligraphy Watermark */}

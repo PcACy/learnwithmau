@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import type { CSSProperties } from 'react';
 import { ArrowRight } from 'lucide-react';
 import {
   buildDrillQuestion,
@@ -181,7 +180,7 @@ export function NumberDrillPage() {
   if (phase === 'intro') {
     return (
       <div className="mx-auto max-w-2xl space-y-6">
-        <div className="reveal flex items-center gap-2.5" style={{ '--index': 0 } as CSSProperties}>
+        <div className="flex items-center gap-2.5">
           <SealBadge sealChar="数" label="ZAHLEN & ZEIT" variant="jade" />
           <span className="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
             Tempo-Drill
@@ -189,8 +188,7 @@ export function NumberDrillPage() {
         </div>
 
         <section
-          className="reveal double-bezel-casing shadow-whisper"
-          style={{ '--index': 1 } as CSSProperties}
+          className="double-bezel-casing shadow-whisper"
         >
           <div className="double-bezel-core p-7 sm:p-10 space-y-6 relative">
             <span className="watermark-glyph">数</span>
@@ -278,8 +276,7 @@ export function NumberDrillPage() {
         <div
           role="timer"
           aria-label="Countdown für diese Frage"
-          className="reveal h-2 overflow-hidden rounded-full bg-zinc-200/80 dark:bg-zinc-800"
-          style={{ '--index': 1 } as CSSProperties}
+          className="h-2 overflow-hidden rounded-full bg-zinc-200/80 dark:bg-zinc-800"
         >
           <div
             className={`h-full w-full origin-left rounded-full transition-transform duration-100 ease-linear ${
@@ -291,8 +288,7 @@ export function NumberDrillPage() {
       )}
 
       <section
-        className="reveal double-bezel-casing shadow-whisper"
-        style={{ '--index': 2 } as CSSProperties}
+        className="double-bezel-casing shadow-whisper"
       >
         <div className="double-bezel-core p-7 sm:p-10 space-y-8 relative">
           <span className="watermark-glyph">数</span>

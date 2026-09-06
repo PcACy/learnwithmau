@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import type { CSSProperties } from 'react';
 import {
   ArrowLeft,
   Bookmark,
@@ -449,7 +448,7 @@ export function MockExamPage() {
         </div>
 
         {/* 30-Fragen Schnellwahl-Gitter */}
-        <div className="reveal rounded-3xl border border-zinc-200/80 bg-white p-4 shadow-whisper dark:border-white/10 dark:bg-zinc-900" style={{ '--index': 1 } as CSSProperties}>
+        <div className="rounded-3xl border border-zinc-200/80 bg-white p-4 shadow-whisper dark:border-white/10 dark:bg-zinc-900">
           <div className="flex items-center justify-between text-xs text-zinc-400 mb-2.5">
             <span className="font-semibold uppercase tracking-wider">Fragenübersicht</span>
             <span>{answeredCount} von 30 beantwortet</span>
@@ -482,8 +481,7 @@ export function MockExamPage() {
 
         {/* Haupt-Fragekarte (Double-Bezel) */}
         <div
-          className="reveal rounded-[2.5rem] p-1.5 bg-gradient-to-b from-white/10 to-white/5 border border-zinc-200/80 dark:border-white/10 dark:bg-white/[0.02] shadow-whisper"
-          style={{ '--index': 2 } as CSSProperties}
+          className="rounded-[2.5rem] p-1.5 bg-gradient-to-b from-white/10 to-white/5 border border-zinc-200/80 dark:border-white/10 dark:bg-white/[0.02] shadow-whisper"
         >
           <div className="rounded-[calc(2.5rem-0.375rem)] bg-white p-7 sm:p-9 dark:bg-zinc-900 shadow-[inset_0_1px_1px_rgba(255,255,255,0.08)] space-y-6 relative">
             <span className="watermark-glyph">考</span>
@@ -781,7 +779,6 @@ export function MockExamPage() {
               </button>
               <Link
                 to="/"
-                viewTransition
                 className="flex items-center gap-2 rounded-2xl border border-zinc-200/80 bg-white px-5 py-3 text-sm font-bold text-zinc-700 shadow-xs hover:bg-zinc-50 dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-200"
               >
                 <ArrowLeft className="h-4 w-4" />

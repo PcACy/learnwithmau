@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import type { CSSProperties, DragEvent } from 'react';
+import type { DragEvent } from 'react';
 import { ArrowRight, Check, HelpCircle, RotateCcw, Volume2 } from 'lucide-react';
 import { buildAlchemyPuzzles, type AlchemyPuzzle } from '../lib/alchemyEngine';
 import { useKeyDown } from '../hooks/useKeyDown';
@@ -301,8 +301,7 @@ export function AlchemyPage() {
 
       {/* 2. Double-Bezel Alchemie-Werkbank */}
       <section
-        className="reveal double-bezel-casing shadow-whisper"
-        style={{ '--index': 1 } as CSSProperties}
+        className="double-bezel-casing shadow-whisper"
       >
         <div className="double-bezel-core p-7 sm:p-10 space-y-8 relative">
           {/* Authentic Calligraphy Watermark */}

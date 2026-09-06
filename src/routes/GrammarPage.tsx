@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from 'react';
-import type { CSSProperties } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   AlertTriangle,
@@ -184,8 +183,7 @@ export function GrammarPage() {
       {viewMode === 'lessons' ? (
         <>
       <div
-        className="reveal flex gap-2.5 overflow-x-auto pb-2 scrollbar-none"
-        style={{ '--index': 1 } as CSSProperties}
+        className="flex gap-2.5 overflow-x-auto pb-2 scrollbar-none"
       >
         {LESSONS.map((lesson, idx) => {
           const isSel = lesson.id === currentLesson.id;
@@ -221,8 +219,7 @@ export function GrammarPage() {
 
       {/* 3. Haupt-Lektionsansicht (Double-Bezel Architecture) */}
       <div
-        className="reveal double-bezel-casing shadow-whisper"
-        style={{ '--index': 2 } as CSSProperties}
+        className="double-bezel-casing shadow-whisper"
       >
         <div className="double-bezel-core p-7 sm:p-11 space-y-9">
           {/* Authentic Calligraphy Watermark (2.5% light / 4% dark) */}
@@ -425,7 +422,7 @@ export function GrammarPage() {
 
                   <button
                     type="button"
-                    onClick={() => navigate(`/stories?id=${chapterLink.recommendedStoryId}`, { viewTransition: true })}
+                    onClick={() => navigate(`/stories?id=${chapterLink.recommendedStoryId}`)}
                     className="inline-flex items-center gap-2 text-xs font-bold text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300 cursor-pointer pt-1"
                   >
                     <span>Geschichte öffnen & mitlesen</span>
@@ -448,7 +445,7 @@ export function GrammarPage() {
                         <button
                           key={v.hanzi}
                           type="button"
-                          onClick={() => navigate(`/dictionary?q=${encodeURIComponent(v.hanzi)}`, { viewTransition: true })}
+                          onClick={() => navigate(`/dictionary?q=${encodeURIComponent(v.hanzi)}`)}
                           className="group inline-flex items-center gap-1.5 rounded-xl border border-zinc-200/80 bg-zinc-50 px-2.5 py-1 text-xs transition-all hover:border-emerald-500/50 hover:bg-emerald-50/50 dark:border-white/10 dark:bg-zinc-800 dark:hover:bg-zinc-700 cursor-pointer"
                           title={`${v.pinyin} · ${v.meaning}`}
                         >
@@ -465,7 +462,7 @@ export function GrammarPage() {
 
                   <button
                     type="button"
-                    onClick={() => navigate('/dictionary', { viewTransition: true })}
+                    onClick={() => navigate('/dictionary')}
                     className="inline-flex items-center gap-2 text-xs font-bold text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200 cursor-pointer pt-1"
                   >
                     <span>Zum Wörterbuch</span>

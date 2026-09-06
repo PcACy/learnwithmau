@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import type { CSSProperties } from 'react';
 import { ArrowRight, Volume2 } from 'lucide-react';
 import type { Tone, VocabItem } from '../types/vocab';
 import { VOCAB } from '../data';
@@ -230,7 +229,7 @@ export function EarTrainerPage() {
   if (phase === 'intro') {
     return (
       <div className="mx-auto max-w-2xl space-y-6">
-        <div className="reveal flex items-center gap-2.5" style={{ '--index': 0 } as CSSProperties}>
+        <div className="flex items-center gap-2.5">
           <SealBadge sealChar="听" label="HÖRTRAINING" variant="jade" />
           <span className="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
             Pinyin &amp; Töne
@@ -238,8 +237,7 @@ export function EarTrainerPage() {
         </div>
 
         <section
-          className="reveal double-bezel-casing shadow-whisper"
-          style={{ '--index': 1 } as CSSProperties}
+          className="double-bezel-casing shadow-whisper"
         >
           <div className="double-bezel-core p-7 sm:p-10 space-y-6 relative">
             <span className="watermark-glyph">听</span>
@@ -353,8 +351,7 @@ export function EarTrainerPage() {
         aria-valuemin={0}
         aria-valuemax={drill.questions.length}
         aria-label="Session-Fortschritt"
-        className="reveal h-1.5 overflow-hidden rounded-full bg-zinc-200/80 dark:bg-zinc-800"
-        style={{ '--index': 1 } as CSSProperties}
+        className="h-1.5 overflow-hidden rounded-full bg-zinc-200/80 dark:bg-zinc-800"
       >
         <div
           className="h-full w-full origin-left rounded-full bg-emerald-600/80 transition-transform duration-500 ease-[var(--ease-spring)]"
@@ -363,8 +360,7 @@ export function EarTrainerPage() {
       </div>
 
       <section
-        className="reveal double-bezel-casing shadow-whisper"
-        style={{ '--index': 2 } as CSSProperties}
+        className="double-bezel-casing shadow-whisper"
       >
         <div className="double-bezel-core p-7 sm:p-10 space-y-8 relative">
           <span className="watermark-glyph">听</span>
@@ -431,7 +427,7 @@ export function EarTrainerPage() {
           </div>
 
           {answered && (
-            <div className="reveal rounded-2xl border border-zinc-200/80 bg-zinc-50/80 p-6 dark:border-white/[0.08] dark:bg-zinc-950/60 relative animate-pop-in">
+            <div className="rounded-2xl border border-zinc-200/80 bg-zinc-50/80 p-6 dark:border-white/[0.08] dark:bg-zinc-950/60 relative animate-pop-in">
               {(() => {
                 const revealed = question.kind === 'tone' ? question.item : question.target;
                 const highlightIndex = question.kind === 'tone' ? question.data.syllableIndex : -1;

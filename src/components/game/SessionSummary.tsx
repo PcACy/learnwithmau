@@ -28,7 +28,7 @@ export function SessionSummary({
   });
 
   return (
-    <div className="reveal mx-auto max-w-2xl py-8">
+    <div className="mx-auto max-w-2xl py-8">
       <div className="double-bezel-casing shadow-whisper">
         <div className="double-bezel-core p-8 sm:p-12 space-y-8 relative">
           {/* Authentic Calligraphy Watermark */}
@@ -82,7 +82,7 @@ export function SessionSummary({
 
             <KineticButton
               variant="secondary"
-              onClick={onSecondaryAction ?? (() => navigate('/', { viewTransition: true }))}
+              onClick={onSecondaryAction ?? (() => navigate('/'))}
               shortcut="[Esc]"
             >
               {secondaryLabel}

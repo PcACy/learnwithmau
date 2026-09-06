@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from 'react';
-import type { CSSProperties } from 'react';
 import {
   AlertTriangle,
   HardDrive,
@@ -34,8 +33,7 @@ const THEME_OPTIONS: readonly { value: Theme; label: string; Icon: typeof Sun }[
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section
-      className="reveal rounded-[2rem] border border-zinc-200/70 bg-white p-6 shadow-whisper sm:p-7 dark:border-white/[0.06] dark:bg-zinc-900"
-      style={{ '--index': 1 } as CSSProperties}
+      className="rounded-[2rem] border border-zinc-200/70 bg-white p-6 shadow-whisper sm:p-7 dark:border-white/[0.06] dark:bg-zinc-900"
     >
       <h2 className="text-base font-bold tracking-tight">{title}</h2>
       <div className="mt-5">{children}</div>
@@ -258,7 +256,7 @@ export function SettingsPage() {
         </div>
       </Section>
 
-      <p className="reveal pb-8 text-center font-mono text-[11px] text-zinc-400 dark:text-zinc-600" style={{ '--index': 2 } as CSSProperties}>
+      <p className="pb-8 text-center font-mono text-[11px] text-zinc-400 dark:text-zinc-600">
         Hanzi Arcade {APP_VERSION} · React · Dexie · Offline-first PWA
       </p>
 

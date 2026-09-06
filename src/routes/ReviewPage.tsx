@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import type { CSSProperties } from 'react';
 import { ArrowRight, CheckCircle2, Layers, PenTool, Volume2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import type { SrsGrade } from '../types/srs';
@@ -289,7 +288,7 @@ export function ReviewPage() {
 
   if (phase === 'empty') {
     return (
-      <div className="reveal mx-auto max-w-xl py-16 text-center">
+      <div className="mx-auto max-w-xl py-16 text-center">
         <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-3xl bg-emerald-500/10 text-emerald-700 dark:text-emerald-400">
           <CheckCircle2 className="h-8 w-8" aria-hidden />
         </span>
@@ -307,7 +306,6 @@ export function ReviewPage() {
           </button>
           <Link
             to="/"
-            viewTransition
             className="inline-flex h-12 items-center rounded-xl border border-zinc-300 dark:border-white/10 px-6 text-sm font-semibold text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800"
           >
             Zu den Trainingsmodi
@@ -319,7 +317,7 @@ export function ReviewPage() {
 
   if (phase === 'intro') {
     return (
-      <div className="reveal mx-auto max-w-4xl space-y-6 py-6">
+      <div className="mx-auto max-w-4xl space-y-6 py-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div className="flex items-center gap-2.5">
             <SealBadge sealChar="复" label="SPACED REPETITION" variant="jade" />
@@ -561,8 +559,7 @@ export function ReviewPage() {
         aria-valuemin={0}
         aria-valuemax={session.initialTotal}
         aria-label="Warteschlangen-Fortschritt"
-        className="reveal h-1.5 overflow-hidden rounded-full bg-zinc-200/80 dark:bg-zinc-800"
-        style={{ '--index': 1 } as CSSProperties}
+        className="h-1.5 overflow-hidden rounded-full bg-zinc-200/80 dark:bg-zinc-800"
       >
         <div
           className="h-full w-full origin-left rounded-full bg-emerald-600/80 transition-transform duration-500 ease-[var(--ease-spring)]"
@@ -570,7 +567,7 @@ export function ReviewPage() {
         />
       </div>
 
-      <div className="reveal double-bezel-casing shadow-whisper" style={{ '--index': 2 } as CSSProperties}>
+      <div className="double-bezel-casing shadow-whisper">
         <div className="double-bezel-core p-8 sm:p-14 text-center space-y-8 relative">
           <span className="watermark-glyph">{session.deckTag}</span>
 
@@ -641,7 +638,7 @@ export function ReviewPage() {
 
           <div className="relative min-h-[5.5rem] flex flex-col items-center justify-center">
             {revealed ? (
-              <div className="reveal space-y-2">
+              <div className="space-y-2">
                 <div className="flex items-center justify-center gap-2">
                   <p className="font-mono text-2xl sm:text-3xl font-bold tracking-tight text-emerald-700 dark:text-emerald-400">
                     {currentItem.pinyin}
@@ -705,7 +702,7 @@ export function ReviewPage() {
         </div>
       </div>
 
-      <div className="reveal flex items-center justify-between text-xs text-zinc-500 dark:text-zinc-400" style={{ '--index': 3 } as CSSProperties}>
+      <div className="flex items-center justify-between text-xs text-zinc-500 dark:text-zinc-400">
         <KeyHints
           hints={
             revealed

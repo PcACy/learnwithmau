@@ -1,4 +1,4 @@
-import type { CSSProperties, ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import type { LucideIcon } from 'lucide-react';
 import { Flame, ListChecks, Target, TrendingUp } from 'lucide-react';
 import { useMemo } from 'react';
@@ -15,14 +15,13 @@ const CARD =
 interface TileProps {
   icon: LucideIcon;
   label: string;
-  index: number;
   className?: string;
   /** Setzt die gesamte Kachel als Link (z.B. Fällig-heute → Drill). */
   href?: string;
   children: ReactNode;
 }
 
-function Tile({ icon: Icon, label, index, className = '', href, children }: TileProps) {
+function Tile({ icon: Icon, label, className = '', href, children }: TileProps) {
   const inner = (
     <>
       <div className="flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.08em] text-zinc-500 dark:text-zinc-400">
@@ -35,7 +34,7 @@ function Tile({ icon: Icon, label, index, className = '', href, children }: Tile
     </>
   );
 
-  const base = `reveal ${CARD} ${className}`;
+  const base = `${CARD} ${className}`;
 
   if (href) {
     return (
@@ -43,7 +42,6 @@ function Tile({ icon: Icon, label, index, className = '', href, children }: Tile
         to={href}
         title="Jetzt fällige Karten wiederholen"
         className={`${base} block transition-colors duration-200 hover:border-emerald-600/45 dark:hover:border-emerald-400/35`}
-        style={{ '--index': index } as CSSProperties}
       >
         {inner}
       </Link>
@@ -51,7 +49,7 @@ function Tile({ icon: Icon, label, index, className = '', href, children }: Tile
   }
 
   return (
-    <section className={base} style={{ '--index': index } as CSSProperties}>
+    <section className={base}>
       {inner}
     </section>
   );
@@ -73,12 +71,12 @@ export function StatsGrid() {
 
   return (
     <div className="grid grid-cols-1 gap-5 lg:grid-cols-6">
-      <Tile icon={Flame} label="Streak" index={0} className="lg:col-span-2">
+      <Tile icon={Flame} label="Streak" className="lg:col-span-2">
         <p className="font-mono text-3xl font-bold tracking-tight tabular-nums">{streak.current}</p>
         <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">Tage Serie · Rekord {streak.longest}</p>
       </Tile>
 
-      <Tile icon={Target} label="Tagesziel" index={1} className="lg:col-span-4">
+      <Tile icon={Target} label="Tagesziel" className="lg:col-span-4">
         <div className="flex items-end justify-between gap-4">
           <p className="font-mono text-3xl font-bold tracking-tight tabular-nums">
             {dailyGoal.completedReviews}
@@ -107,14 +105,14 @@ export function StatsGrid() {
         </div>
       </Tile>
 
-      <Tile icon={ListChecks} label="Fällig heute" index={2} className="lg:col-span-4" href="/review">
+      <Tile icon={ListChecks} label="Fällig heute" className="lg:col-span-4" href="/review">
         <p className="font-mono text-3xl font-bold tracking-tight tabular-nums">{dueToday}</p>
         <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
           Wiederholungen offen von {VOCAB.length} HSK-1-Einträgen
         </p>
       </Tile>
 
-      <Tile icon={TrendingUp} label="Mastery" index={3} className="lg:col-span-2">
+      <Tile icon={TrendingUp} label="Mastery" className="lg:col-span-2">
         <p className="font-mono text-3xl font-bold tracking-tight tabular-nums">{masteryPercent}%</p>
         <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">Langzeit-Gedächtnis</p>
         <div

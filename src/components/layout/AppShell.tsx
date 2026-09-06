@@ -103,20 +103,16 @@ export function AppShell() {
   });
   const [isMounted, setIsMounted] = useState(false);
 
-  // Top Horizon Shimmer Progress Beam & Scroll Reset on Route Change
-  const [isNavigating, setIsNavigating] = useState(false);
+  // Scroll Reset on Route Change
   const prevPathname = useRef(location.pathname);
 
   useIsomorphicLayoutEffect(() => {
     if (prevPathname.current !== location.pathname) {
       prevPathname.current = location.pathname;
       stopCurrentAudio();
-      setIsNavigating(true);
       if (typeof window !== 'undefined') {
         window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
       }
-      const timer = window.setTimeout(() => setIsNavigating(false), 340);
-      return () => window.clearTimeout(timer);
     }
   }, [location.pathname]);
 
@@ -141,7 +137,7 @@ export function AppShell() {
 
     if (location.pathname !== '/' && location.pathname !== '/typeracer') {
       event.preventDefault();
-      navigate('/', { viewTransition: true });
+      navigate('/');
     }
   });
 
@@ -216,7 +212,6 @@ export function AppShell() {
           <div className="flex items-center gap-6">
             <Link
               to="/"
-              viewTransition
               className="group flex items-center gap-3 transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] active:scale-[0.98]"
             >
               <SealBadge sealChar="汉" label="HSK 1" variant="cinnabar" size="sm" />
@@ -254,7 +249,6 @@ export function AppShell() {
                   <Link
                     key={link.to}
                     to={link.to}
-                    viewTransition
                     onMouseEnter={() => void ROUTE_PRELOAD_MAP[link.to]?.()}
                     onFocus={() => void ROUTE_PRELOAD_MAP[link.to]?.()}
                     onTouchStart={() => void ROUTE_PRELOAD_MAP[link.to]?.()}
@@ -281,7 +275,6 @@ export function AppShell() {
             {streak > 0 && (
               <Link
                 to="/stats"
-                viewTransition
                 className="flex h-9 items-center gap-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 px-3 font-mono text-xs font-bold text-amber-700 dark:border-amber-500/20 dark:text-amber-400 hover:bg-amber-500/15 transition-all"
                 title={`${streak} Tage Lernserie`}
               >
@@ -294,7 +287,6 @@ export function AppShell() {
             {activeMistakesCount > 0 && (
               <Link
                 to="/mistakes"
-                viewTransition
                 className="flex h-9 items-center gap-1.5 rounded-full border border-rose-500/30 bg-rose-500/10 px-3 font-mono text-xs font-bold text-rose-700 dark:border-rose-500/20 dark:text-rose-400 hover:bg-rose-500/15 transition-all"
                 title={`${activeMistakesCount} offene Schwachstellen im Fehlerheft`}
               >
@@ -315,16 +307,6 @@ export function AppShell() {
             <ThemeToggle />
           </div>
         </div>
-
-        {/* Tactical Horizon Shimmer Progress Beam on Route Transition */}
-        {isNavigating && (
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute bottom-0 left-0 right-0 h-[2px] overflow-hidden"
-          >
-            <div className="h-full w-full bg-gradient-to-r from-transparent via-emerald-600 dark:via-emerald-400 to-transparent animate-horizon-glide" />
-          </div>
-        )}
       </header>
 
       <main className="mx-auto max-w-6xl px-4 pt-6 pb-28 sm:py-10 sm:px-8">
@@ -346,7 +328,6 @@ export function AppShell() {
               <Link
                 key={link.to}
                 to={link.to}
-                viewTransition
                 onTouchStart={() => void ROUTE_PRELOAD_MAP[link.to]?.()}
                 onMouseEnter={() => void ROUTE_PRELOAD_MAP[link.to]?.()}
                 onFocus={() => void ROUTE_PRELOAD_MAP[link.to]?.()}

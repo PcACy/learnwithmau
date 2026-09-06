@@ -129,7 +129,7 @@ export function DialogueTokenPopover({ token, onClose }: DialogueTokenPopoverPro
             type="button"
             onClick={() => {
               onClose();
-              navigate(`/dictionary?q=${encodeURIComponent(token.hanzi)}`, { viewTransition: true });
+              navigate(`/dictionary?q=${encodeURIComponent(token.hanzi)}`);
             }}
             className="inline-flex items-center gap-1 text-xs font-semibold text-zinc-500 hover:text-emerald-600 dark:text-zinc-400 dark:hover:text-emerald-400 cursor-pointer ml-auto"
           >

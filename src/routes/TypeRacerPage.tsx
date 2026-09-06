@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import type { CSSProperties } from 'react';
 import { HelpCircle, Lightbulb, Volume2 } from 'lucide-react';
 import { VOCAB } from '../data';
 import { candidatesFor, type ImeCandidate } from '../lib/ime';
@@ -333,10 +332,9 @@ export function TypeRacerPage() {
 
       {/* 2. Haupt-Eingabe-Container (Double-Bezel Architecture) */}
       <section
-        className={`reveal double-bezel-casing shadow-whisper transition-all duration-300 ${
+        className={`double-bezel-casing shadow-whisper transition-all duration-300 ${
           round.flashWrong ? 'animate-shake' : ''
         }`}
-        style={{ '--index': 1 } as CSSProperties}
       >
         <div
           onClick={() => mobileInputRef.current?.focus()}

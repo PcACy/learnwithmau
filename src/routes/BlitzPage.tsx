@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import type { CSSProperties } from 'react';
 import {
   Check,
   Flame,
@@ -184,13 +183,12 @@ export function BlitzPage() {
   if (gameState === 'intro') {
     return (
       <div className="mx-auto max-w-lg space-y-6 py-6 text-center">
-        <div className="reveal flex justify-center" style={{ '--index': 0 } as CSSProperties}>
+        <div className="flex justify-center">
           <SealBadge sealChar="电" label="BLITZ-DRILL" variant="cinnabar" />
         </div>
 
         <section
-          className="reveal double-bezel-casing shadow-whisper"
-          style={{ '--index': 1 } as CSSProperties}
+          className="double-bezel-casing shadow-whisper"
         >
           <div className="double-bezel-core p-7 sm:p-10 space-y-6 relative">
             <span className="watermark-glyph">电</span>
@@ -216,7 +214,6 @@ export function BlitzPage() {
               </KineticButton>
               <Link
                 to="/"
-                viewTransition
                 className="text-xs font-semibold text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
               >
                 Zurück zur Zentrale
@@ -275,8 +272,7 @@ export function BlitzPage() {
 
       {/* Frage-Karte */}
       <section
-        className="reveal double-bezel-casing shadow-whisper"
-        style={{ '--index': 1 } as CSSProperties}
+        className="double-bezel-casing shadow-whisper"
       >
         <div className="double-bezel-core p-8 text-center relative space-y-4">
           <span className="watermark-glyph">电</span>
@@ -305,7 +301,7 @@ export function BlitzPage() {
       </section>
 
       {/* Antwort-Optionen */}
-      <div className="reveal grid grid-cols-1 gap-3 sm:grid-cols-2" style={{ '--index': 2 } as CSSProperties}>
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         {currentQ.options.map((option, idx) => {
           const isSelected = selectedOption === option;
           const isCorrect = isAnswerCorrect && isSelected;

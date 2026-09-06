@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import type { CSSProperties } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   AlignLeft,
@@ -265,8 +264,7 @@ export function StoriesPage() {
 
       {/* 2. Story Selector Chips (Horizontal scrollbare Milled-Pills) */}
       <div
-        className="reveal flex gap-2.5 overflow-x-auto pb-2 scrollbar-none"
-        style={{ '--index': 1 } as CSSProperties}
+        className="flex gap-2.5 overflow-x-auto pb-2 scrollbar-none"
       >
         {STORIES.map((story, idx) => {
           const isSel = story.id === currentStory.id;
@@ -306,8 +304,7 @@ export function StoriesPage() {
 
       {/* 3. Steuerungs-Leiste (Toggles & Vorleser) */}
       <div
-        className="reveal flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-zinc-200/80 bg-white/90 p-3 shadow-xs dark:border-white/10 dark:bg-zinc-900/90"
-        style={{ '--index': 2 } as CSSProperties}
+        className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-zinc-200/80 bg-white/90 p-3 shadow-xs dark:border-white/10 dark:bg-zinc-900/90"
       >
         {/* Ansichtsmodus (Dual-Mode: Buch vs. Satzkarten) */}
         <div className="flex items-center gap-1 rounded-xl bg-zinc-100 p-1 dark:bg-zinc-800">
@@ -394,8 +391,7 @@ export function StoriesPage() {
 
       {/* 4. Haupt-Lese-Container (Double-Bezel Architecture) */}
       <div
-        className="reveal double-bezel-casing shadow-whisper relative"
-        style={{ '--index': 3 } as CSSProperties}
+        className="double-bezel-casing shadow-whisper relative"
       >
         <div className="double-bezel-core p-7 sm:p-11 space-y-9">
           {/* Authentic Calligraphy Watermark */}
@@ -665,7 +661,7 @@ export function StoriesPage() {
                             onClick={() => {
                               cancelFullAudio();
                               setActiveToken(null);
-                              navigate(`/dictionary?q=${encodeURIComponent(activeToken.hanzi)}`, { viewTransition: true });
+                              navigate(`/dictionary?q=${encodeURIComponent(activeToken.hanzi)}`);
                             }}
                             className="ml-auto inline-flex items-center gap-1.5 text-xs font-bold text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 cursor-pointer"
                           >
@@ -703,7 +699,7 @@ export function StoriesPage() {
                     type="button"
                     onClick={() => {
                       cancelFullAudio();
-                      navigate(`/grammar?lesson=${encodeURIComponent(rg.lessonId)}`, { viewTransition: true });
+                      navigate(`/grammar?lesson=${encodeURIComponent(rg.lessonId)}`);
                     }}
                     className="inline-flex items-center gap-1.5 rounded-xl border border-emerald-500/30 bg-white px-3 py-1.5 text-xs font-bold text-emerald-800 hover:bg-emerald-50 dark:border-emerald-500/20 dark:bg-zinc-900 dark:text-emerald-300 dark:hover:bg-zinc-800 cursor-pointer"
                   >

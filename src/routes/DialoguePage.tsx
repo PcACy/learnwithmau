@@ -293,7 +293,7 @@ export function DialoguePage() {
         setActiveScenario(null);
         return;
       }
-      navigate('/', { viewTransition: true });
+      navigate('/');
       return;
     }
 

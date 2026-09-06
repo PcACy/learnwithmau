@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import type { CSSProperties } from 'react';
 import {
   AlertTriangle,
   ArrowRight,
@@ -276,8 +275,7 @@ export function MistakesPage() {
       {/* 2. Zustand: Fehlerbank leer (Trophäen-Zustand 全胜) */}
       {activeMistakes.length === 0 && (
         <div
-          className="reveal double-bezel-casing shadow-whisper"
-          style={{ '--index': 1 } as CSSProperties}
+          className="double-bezel-casing shadow-whisper"
         >
           <div className="double-bezel-core p-8 sm:p-12 text-center space-y-6 relative overflow-hidden">
             <span className="watermark-glyph text-[160px]! opacity-[0.03] dark:opacity-[0.05]">胜</span>
@@ -297,14 +295,14 @@ export function MistakesPage() {
             <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
               <KineticButton
                 variant="primary"
-                onClick={() => navigate('/blitz', { viewTransition: true })}
+                onClick={() => navigate('/blitz')}
                 icon={<Zap className="h-4 w-4" />}
               >
                 2-Min-Blitz starten
               </KineticButton>
               <KineticButton
                 variant="secondary"
-                onClick={() => navigate('/exam', { viewTransition: true })}
+                onClick={() => navigate('/exam')}
                 icon={<GraduationCap className="h-4 w-4" />}
               >
                 HSK-1 Probeprüfung
@@ -364,7 +362,7 @@ export function MistakesPage() {
                 ) : (
                   <KineticButton
                     variant="primary"
-                    onClick={() => navigate('/', { viewTransition: true })}
+                    onClick={() => navigate('/')}
                     icon={<CheckCircle2 className="h-4 w-4" />}
                   >
                     Zurück zur Zentrale
