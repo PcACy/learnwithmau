@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import {
   BookOpen,
   BookOpenText,
@@ -16,6 +16,8 @@ import { useKeyDown } from '../../hooks/useKeyDown';
 import { ThemeToggle } from './ThemeToggle';
 import { BackupModal } from '../dashboard/BackupModal';
 import { SealBadge } from '../ui/SealBadge';
+
+const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
 function ShellSkeleton() {
   return (
@@ -54,9 +56,41 @@ export function AppShell() {
   const location = useLocation();
   const navigate = useNavigate();
 
+  // Sliding Nav Pill State
+  const navRef = useRef<HTMLElement | null>(null);
+  const linkRefs = useRef<Map<string, HTMLAnchorElement>>(new Map());
+  const [pillRect, setPillRect] = useState<{
+    left: number;
+    top: number;
+    width: number;
+    height: number;
+    opacity: number;
+  }>({
+    left: 0,
+    top: 0,
+    width: 0,
+    height: 0,
+    opacity: 0,
+  });
+  const [isMounted, setIsMounted] = useState(false);
+
+  // Top Horizon Shimmer Progress Beam & Scroll Reset on Route Change
+  const [isNavigating, setIsNavigating] = useState(false);
+  const prevPathname = useRef(location.pathname);
+
+  useEffect(() => {
+    if (prevPathname.current !== location.pathname) {
+      prevPathname.current = location.pathname;
+      setIsNavigating(true);
+      if (typeof window !== 'undefined') {
+        window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      }
+      const timer = window.setTimeout(() => setIsNavigating(false), 340);
+      return () => window.clearTimeout(timer);
+    }
+  }, [location.pathname]);
+
   // Globale Navigation: Escape kehrt von jeder Sub-Page zum Dashboard zurück.
-  // Intelligente Entfokussierung: Wenn ein Input/Suchfeld aktiv ist, entfokussiert Escape dieses zuerst.
-  // Zudem werden bereits abgefangene Events (defaultPrevented) und TypeRacer respektiert.
   useKeyDown((event) => {
     if (event.metaKey || event.ctrlKey || event.altKey || event.repeat) return;
     if (backupOpen || event.defaultPrevented) return;
@@ -77,13 +111,9 @@ export function AppShell() {
 
     if (location.pathname !== '/' && location.pathname !== '/typeracer') {
       event.preventDefault();
-      navigate('/');
+      navigate('/', { viewTransition: true });
     }
   });
-
-  if (!hydrated) {
-    return <ShellSkeleton />;
-  }
 
   const NAV_LINKS = [
     { to: '/', label: 'Zentrale', icon: Sparkles },
@@ -96,13 +126,61 @@ export function AppShell() {
     { to: '/settings', label: 'Einstellungen', icon: Settings },
   ];
 
+  const isLinkActive = (to: string) => {
+    if (to === '/') return location.pathname === '/';
+    return location.pathname.startsWith(to);
+  };
+
+  const activeLink = NAV_LINKS.find((l) => isLinkActive(l.to));
+
+  // Compute position of active link pill
+  useIsomorphicLayoutEffect(() => {
+    const updatePill = () => {
+      if (!activeLink) {
+        setPillRect((prev) => (prev.opacity === 0 ? prev : { ...prev, opacity: 0 }));
+        return;
+      }
+      const el = linkRefs.current.get(activeLink.to);
+      if (!el || !navRef.current) {
+        setPillRect((prev) => (prev.opacity === 0 ? prev : { ...prev, opacity: 0 }));
+        return;
+      }
+      setPillRect({
+        left: el.offsetLeft,
+        top: el.offsetTop,
+        width: el.offsetWidth,
+        height: el.offsetHeight,
+        opacity: 1,
+      });
+    };
+
+    updatePill();
+    if (typeof window !== 'undefined') {
+      window.addEventListener('resize', updatePill);
+      if ('fonts' in document) {
+        void document.fonts.ready.then(updatePill).catch(() => {});
+      }
+      return () => window.removeEventListener('resize', updatePill);
+    }
+  }, [location.pathname, activeLink]);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => setIsMounted(true), 60);
+    return () => window.clearTimeout(timer);
+  }, []);
+
+  if (!hydrated) {
+    return <ShellSkeleton />;
+  }
+
   return (
     <div className="min-h-dvh bg-[#fbfbf9] text-zinc-900 dark:bg-[#09090b] dark:text-zinc-100">
-      <header className="sticky top-0 z-30 border-b border-zinc-200/80 bg-[#fbfbf9]/90 backdrop-blur-md dark:border-white/[0.08] dark:bg-[#09090b]/90">
+      <header className="app-shell-header sticky top-0 z-30 border-b border-zinc-200/80 bg-[#fbfbf9]/90 backdrop-blur-md dark:border-white/[0.08] dark:bg-[#09090b]/90 relative">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-8">
           <div className="flex items-center gap-6">
             <Link
               to="/"
+              viewTransition
               className="group flex items-center gap-3 transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] active:scale-[0.98]"
             >
               <SealBadge sealChar="汉" label="HSK 1" variant="cinnabar" size="sm" />
@@ -113,23 +191,45 @@ export function AppShell() {
               </div>
             </Link>
 
-            {/* Desktop Navigation Links (Milled Pills) */}
-            <nav className="hidden items-center gap-1 sm:flex" aria-label="Hauptnavigation">
+            {/* Desktop Navigation Links with Kinetic Sliding Indicator Pill */}
+            <nav
+              ref={navRef}
+              className="relative hidden items-center gap-1 sm:flex"
+              aria-label="Hauptnavigation"
+            >
+              {/* Sliding Milled Indicator Pill */}
+              <span
+                aria-hidden="true"
+                className={`pointer-events-none absolute rounded-full border border-emerald-600/30 bg-emerald-600/10 dark:border-emerald-500/30 dark:bg-emerald-500/15 motion-reduce:transition-none ${
+                  isMounted ? 'transition-all duration-260 ease-[cubic-bezier(0.16,1,0.3,1)]' : ''
+                }`}
+                style={{
+                  transform: `translate3d(${pillRect.left}px, ${pillRect.top}px, 0)`,
+                  width: `${pillRect.width}px`,
+                  height: `${pillRect.height}px`,
+                  opacity: pillRect.opacity,
+                }}
+              />
+
               {NAV_LINKS.map((link) => {
-                const isActive =
-                  link.to === '/' ? location.pathname === '/' : location.pathname.startsWith(link.to);
+                const isActive = isLinkActive(link.to);
                 const Icon = link.icon;
                 return (
                   <Link
                     key={link.to}
                     to={link.to}
-                    className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition-all duration-150 ${
+                    viewTransition
+                    ref={(el) => {
+                      if (el) linkRefs.current.set(link.to, el);
+                      else linkRefs.current.delete(link.to);
+                    }}
+                    className={`relative z-10 flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold whitespace-nowrap transition-colors duration-150 ${
                       isActive
-                        ? 'border border-emerald-600/30 bg-emerald-600/10 text-emerald-800 font-bold dark:border-emerald-500/30 dark:bg-emerald-500/15 dark:text-emerald-300'
-                        : 'text-zinc-600 hover:bg-zinc-100/80 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800/60 dark:hover:text-zinc-100'
+                        ? 'text-emerald-900 font-bold dark:text-emerald-300'
+                        : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/70 dark:text-zinc-400 dark:hover:text-zinc-100 dark:hover:bg-zinc-800/50'
                     }`}
                   >
-                    <Icon className="h-3.5 w-3.5" />
+                    <Icon className={`h-3.5 w-3.5 transition-transform duration-150 ${isActive ? 'scale-105' : ''}`} />
                     <span>{link.label}</span>
                   </Link>
                 );
@@ -142,6 +242,7 @@ export function AppShell() {
             {streak > 0 && (
               <Link
                 to="/stats"
+                viewTransition
                 className="flex h-9 items-center gap-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 px-3 font-mono text-xs font-bold text-amber-700 dark:border-amber-500/20 dark:text-amber-400 hover:bg-amber-500/15 transition-all"
                 title={`${streak} Tage Lernserie`}
               >
@@ -162,13 +263,26 @@ export function AppShell() {
             <ThemeToggle />
           </div>
         </div>
+
+        {/* Tactical Horizon Shimmer Progress Beam on Route Transition */}
+        {isNavigating && (
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute bottom-0 left-0 right-0 h-[2px] overflow-hidden"
+          >
+            <div className="h-full w-full bg-gradient-to-r from-transparent via-emerald-600 dark:via-emerald-400 to-transparent animate-horizon-glide" />
+          </div>
+        )}
       </header>
 
       <main className="mx-auto max-w-6xl px-4 py-10 sm:px-8">
-        <Outlet />
+        <div key={location.pathname} className="route-transition-container">
+          <Outlet />
+        </div>
       </main>
 
       <BackupModal open={backupOpen} onClose={() => setBackupOpen(false)} />
     </div>
   );
 }
+

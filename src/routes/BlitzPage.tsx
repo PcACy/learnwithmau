@@ -212,6 +212,7 @@ export function BlitzPage() {
               </KineticButton>
               <Link
                 to="/"
+                viewTransition
                 className="text-xs font-semibold text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
               >
                 Zurück zur Zentrale

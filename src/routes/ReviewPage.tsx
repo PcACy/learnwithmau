@@ -303,6 +303,7 @@ export function ReviewPage() {
           </button>
           <Link
             to="/"
+            viewTransition
             className="inline-flex h-12 items-center rounded-xl border border-zinc-300 dark:border-white/10 px-6 text-sm font-semibold text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800"
           >
             Zu den Trainingsmodi

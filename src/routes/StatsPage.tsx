@@ -165,6 +165,7 @@ export function StatsPage() {
         {dueToday > 0 && (
           <Link
             to="/review"
+            viewTransition
             className="inline-flex h-11 items-center gap-2 rounded-2xl bg-emerald-600 px-5 text-sm font-bold text-white shadow-whisper transition-all hover:bg-emerald-500 active:translate-y-px"
           >
             <Play className="h-4 w-4 fill-white" />
@@ -400,6 +401,7 @@ export function StatsPage() {
       <div className="reveal grid grid-cols-1 gap-5 sm:grid-cols-2" style={{ '--index': 5 } as CSSProperties}>
         <Link
           to="/"
+          viewTransition
           className="group flex items-center justify-between rounded-3xl border border-zinc-200/80 bg-white p-6 shadow-whisper transition-all duration-200 hover:-translate-y-0.5 hover:border-emerald-600/40 dark:border-white/10 dark:bg-zinc-900"
         >
           <div className="flex items-center gap-4">
@@ -416,6 +418,7 @@ export function StatsPage() {
 
         <Link
           to="/dictionary"
+          viewTransition
           className="group flex items-center justify-between rounded-3xl border border-zinc-200/80 bg-white p-6 shadow-whisper transition-all duration-200 hover:-translate-y-0.5 hover:border-emerald-600/40 dark:border-white/10 dark:bg-zinc-900"
         >
           <div className="flex items-center gap-4">

@@ -94,7 +94,7 @@ export function DashboardPage() {
 
     const num = Number.parseInt(event.key, 10);
     if (num >= 1 && num <= SHORTCUT_ROUTES.length) {
-      navigate(SHORTCUT_ROUTES[num - 1]);
+      navigate(SHORTCUT_ROUTES[num - 1], { viewTransition: true });
     }
   });
 
@@ -118,6 +118,7 @@ export function DashboardPage() {
         <div className="flex flex-wrap items-center gap-2">
           <Link
             to="/stats"
+            viewTransition
             title="Zu den detaillierten Statistiken"
             className="group flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-4 py-2 text-xs font-bold text-amber-800 dark:text-amber-300 shadow-xs transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-amber-500/15"
           >
@@ -131,6 +132,7 @@ export function DashboardPage() {
 
           <Link
             to="/stats"
+            viewTransition
             title="Zu den detaillierten Statistiken"
             className="group flex items-center gap-2 rounded-full border border-zinc-200/80 bg-white/90 px-4 py-2 text-xs font-semibold text-zinc-700 shadow-xs transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-emerald-500/40 dark:border-white/10 dark:bg-zinc-900/90 dark:text-zinc-200"
           >
@@ -142,6 +144,7 @@ export function DashboardPage() {
 
           <Link
             to="/stats"
+            viewTransition
             title="Zu den detaillierten Statistiken"
             className="group flex items-center gap-2 rounded-full border border-zinc-200/80 bg-white/90 px-4 py-2 text-xs font-semibold text-zinc-700 shadow-xs transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-emerald-500/40 dark:border-white/10 dark:bg-zinc-900/90 dark:text-zinc-200"
           >
@@ -224,7 +227,7 @@ export function DashboardPage() {
               {dueToday > 0 ? (
                 <KineticButton
                   variant="primary"
-                  onClick={() => navigate('/review')}
+                  onClick={() => navigate('/review', { viewTransition: true })}
                   icon={<Play className="h-4 w-4 fill-white" />}
                 >
                   Jetzt wiederholen ({dueToday})
@@ -232,21 +235,21 @@ export function DashboardPage() {
               ) : nextGrammarLesson ? (
                 <KineticButton
                   variant="primary"
-                  onClick={() => navigate(`/grammar?lesson=${encodeURIComponent(nextGrammarLesson.id)}`)}
+                  onClick={() => navigate(`/grammar?lesson=${encodeURIComponent(nextGrammarLesson.id)}`, { viewTransition: true })}
                 >
                   Lektion starten
                 </KineticButton>
               ) : nextStory ? (
                 <KineticButton
                   variant="primary"
-                  onClick={() => navigate(`/stories?id=${nextStory.id}`)}
+                  onClick={() => navigate(`/stories?id=${nextStory.id}`, { viewTransition: true })}
                 >
                   Geschichte lesen
                 </KineticButton>
               ) : (
                 <KineticButton
                   variant="primary"
-                  onClick={() => navigate('/exam')}
+                  onClick={() => navigate('/exam', { viewTransition: true })}
                 >
                   Prüfungssimulator
                 </KineticButton>
@@ -254,6 +257,7 @@ export function DashboardPage() {
 
               <Link
                 to="/blitz"
+                viewTransition
                 className="group inline-flex items-center gap-2.5 rounded-full border border-amber-500/30 bg-amber-500/10 py-2 pl-4 pr-2 text-xs font-bold text-amber-800 transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-amber-500/20 active:scale-[0.98] dark:text-amber-300"
               >
                 <span>2-Min-Blitz</span>
@@ -288,6 +292,7 @@ export function DashboardPage() {
           {/* Tile: Grammatik */}
           <Link
             to="/grammar"
+            viewTransition
             className="group relative overflow-hidden rounded-3xl border border-zinc-200/80 bg-white p-6 shadow-whisper transition-all duration-200 hover:-translate-y-1 hover:border-emerald-500/50 dark:border-white/[0.08] dark:bg-zinc-900 flex flex-col justify-between gap-5"
           >
             <span className="watermark-glyph text-[100px]! -bottom-4! -right-2!">文</span>
@@ -319,6 +324,7 @@ export function DashboardPage() {
           {/* Tile: Lesegeschichten */}
           <Link
             to="/stories"
+            viewTransition
             className="group relative overflow-hidden rounded-3xl border border-zinc-200/80 bg-white p-6 shadow-whisper transition-all duration-200 hover:-translate-y-1 hover:border-emerald-500/50 dark:border-white/[0.08] dark:bg-zinc-900 flex flex-col justify-between gap-5"
           >
             <span className="watermark-glyph text-[100px]! -bottom-4! -right-2!">读</span>
@@ -350,6 +356,7 @@ export function DashboardPage() {
           {/* Tile: Alltagsdialoge */}
           <Link
             to="/dialogue"
+            viewTransition
             className="group relative overflow-hidden rounded-3xl border border-zinc-200/80 bg-white p-6 shadow-whisper transition-all duration-200 hover:-translate-y-1 hover:border-emerald-500/50 dark:border-white/[0.08] dark:bg-zinc-900 flex flex-col justify-between gap-5"
           >
             <span className="watermark-glyph text-[100px]! -bottom-4! -right-2!">话</span>
@@ -381,6 +388,7 @@ export function DashboardPage() {
           {/* Tile: Wörterbuch */}
           <Link
             to="/dictionary"
+            viewTransition
             className="group relative overflow-hidden rounded-3xl border border-zinc-200/80 bg-white p-6 shadow-whisper transition-all duration-200 hover:-translate-y-1 hover:border-emerald-500/50 dark:border-white/[0.08] dark:bg-zinc-900 flex flex-col justify-between gap-5"
           >
             <span className="watermark-glyph text-[100px]! -bottom-4! -right-2!">典</span>
@@ -434,6 +442,7 @@ export function DashboardPage() {
           {/* 1: Pinyin TypeRacer */}
           <Link
             to="/typeracer"
+            viewTransition
             className="group relative overflow-hidden rounded-3xl border border-zinc-200/80 bg-white p-5 shadow-whisper transition-all duration-200 hover:-translate-y-1 hover:border-emerald-500/50 dark:border-white/[0.08] dark:bg-zinc-900 flex flex-col justify-between gap-4"
           >
             <span className="watermark-glyph text-[80px]! -bottom-3! -right-2!">打</span>
@@ -460,6 +469,7 @@ export function DashboardPage() {
           {/* 2: Hanzi Alchemy */}
           <Link
             to="/alchemy"
+            viewTransition
             className="group relative overflow-hidden rounded-3xl border border-zinc-200/80 bg-white p-5 shadow-whisper transition-all duration-200 hover:-translate-y-1 hover:border-emerald-500/50 dark:border-white/[0.08] dark:bg-zinc-900 flex flex-col justify-between gap-4"
           >
             <span className="watermark-glyph text-[80px]! -bottom-3! -right-2!">合</span>
@@ -486,6 +496,7 @@ export function DashboardPage() {
           {/* 3: Satzbau-Meister */}
           <Link
             to="/sentences"
+            viewTransition
             className="group relative overflow-hidden rounded-3xl border border-zinc-200/80 bg-white p-5 shadow-whisper transition-all duration-200 hover:-translate-y-1 hover:border-emerald-500/50 dark:border-white/[0.08] dark:bg-zinc-900 flex flex-col justify-between gap-4"
           >
             <span className="watermark-glyph text-[80px]! -bottom-3! -right-2!">句</span>
@@ -512,6 +523,7 @@ export function DashboardPage() {
           {/* 4: Zahlen-Drill */}
           <Link
             to="/number-drill"
+            viewTransition
             className="group relative overflow-hidden rounded-3xl border border-zinc-200/80 bg-white p-5 shadow-whisper transition-all duration-200 hover:-translate-y-1 hover:border-emerald-500/50 dark:border-white/[0.08] dark:bg-zinc-900 flex flex-col justify-between gap-4"
           >
             <span className="watermark-glyph text-[80px]! -bottom-3! -right-2!">数</span>
@@ -560,6 +572,7 @@ export function DashboardPage() {
           {/* 5: Gehörtraining */}
           <Link
             to="/ear-trainer"
+            viewTransition
             className="group relative overflow-hidden rounded-3xl border border-zinc-200/80 bg-white p-5 shadow-whisper transition-all duration-200 hover:-translate-y-1 hover:border-emerald-500/50 dark:border-white/[0.08] dark:bg-zinc-900 flex flex-col justify-between gap-4"
           >
             <span className="watermark-glyph text-[80px]! -bottom-3! -right-2!">听</span>
@@ -586,6 +599,7 @@ export function DashboardPage() {
           {/* 6: 2-Minuten-Blitz */}
           <Link
             to="/blitz"
+            viewTransition
             className="group relative overflow-hidden rounded-3xl border border-zinc-200/80 bg-white p-5 shadow-whisper transition-all duration-200 hover:-translate-y-1 hover:border-amber-500/50 dark:border-white/[0.08] dark:bg-zinc-900 flex flex-col justify-between gap-4"
           >
             <span className="watermark-glyph text-[80px]! -bottom-3! -right-2!">快</span>
@@ -612,6 +626,7 @@ export function DashboardPage() {
           {/* 7: HSK 1 Prüfungssimulator */}
           <Link
             to="/exam"
+            viewTransition
             className="group relative overflow-hidden rounded-3xl border border-rose-500/30 bg-rose-500/[0.03] p-5 shadow-whisper transition-all duration-200 hover:-translate-y-1 hover:border-rose-500/60 dark:border-rose-500/20 dark:bg-rose-500/[0.02] flex flex-col justify-between gap-4"
           >
             <span className="watermark-glyph text-[80px]! -bottom-3! -right-2!">考</span>
@@ -638,6 +653,7 @@ export function DashboardPage() {
           {/* 8: SRS-Wiederholungsstapel */}
           <Link
             to="/review"
+            viewTransition
             className="group relative overflow-hidden rounded-3xl border border-zinc-200/80 bg-white p-5 shadow-whisper transition-all duration-200 hover:-translate-y-1 hover:border-emerald-500/50 dark:border-white/[0.08] dark:bg-zinc-900 flex flex-col justify-between gap-4"
           >
             <span className="watermark-glyph text-[80px]! -bottom-3! -right-2!">忆</span>

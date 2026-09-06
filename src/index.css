@@ -160,6 +160,77 @@ html.dark body {
   );
 }
 
+/* ==========================================================================
+   View Transitions & Page Motion System
+   ========================================================================== */
+
+.app-shell-header {
+  view-transition-name: app-header;
+}
+
+::view-transition-group(app-header) {
+  animation: none;
+  z-index: 40;
+}
+
+::view-transition-old(root) {
+  animation: 120ms cubic-bezier(0.16, 1, 0.3, 1) both page-fade-out;
+}
+
+::view-transition-new(root) {
+  animation: 220ms cubic-bezier(0.16, 1, 0.3, 1) both page-glide-in;
+}
+
+@keyframes page-fade-out {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.998);
+  }
+}
+
+@keyframes page-glide-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes horizon-glide {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+.animate-horizon-glide {
+  animation: horizon-glide 340ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Progressive enhancement: CSS fallback for browsers without View Transitions API */
+@supports not (view-transition-name: none) {
+  .route-transition-container {
+    animation: page-glide-in 200ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -168,4 +239,15 @@ html.dark body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+
+  .route-transition-container {
+    animation: none !important;
+  }
 }
+

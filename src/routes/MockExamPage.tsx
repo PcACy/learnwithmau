@@ -707,6 +707,7 @@ export function MockExamPage() {
               </button>
               <Link
                 to="/"
+                viewTransition
                 className="flex items-center gap-2 rounded-2xl border border-zinc-200/80 bg-white px-5 py-3 text-sm font-bold text-zinc-700 shadow-xs hover:bg-zinc-50 dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-200"
               >
                 <ArrowLeft className="h-4 w-4" />
