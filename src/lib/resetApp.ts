@@ -1,15 +1,25 @@
+import { db } from './db';
+
 /**
  * Löscht sämtliche lokalen Nutzerdaten (IndexedDB + Settings im LocalStorage)
  * und lädt die App frisch. Wird von der Einstellungs-Danger-Zone und dem
  * ErrorBoundary genutzt.
  */
 export async function resetAllLocalData(): Promise<void> {
-  const request = indexedDB.deleteDatabase('hanzi-arcade');
-  await new Promise<void>((resolve) => {
-    request.onsuccess = () => resolve();
-    request.onerror = () => resolve();
-    request.onblocked = () => resolve();
-  });
+  try {
+    db.close();
+  } catch {
+    // ignore
+  }
+
+  if (typeof indexedDB !== 'undefined') {
+    const request = indexedDB.deleteDatabase('hanzi-arcade');
+    await new Promise<void>((resolve) => {
+      request.onsuccess = () => resolve();
+      request.onerror = () => resolve();
+      request.onblocked = () => resolve();
+    });
+  }
 
   try {
     localStorage.removeItem('hanzi-arcade-settings');
@@ -21,5 +31,7 @@ export async function resetAllLocalData(): Promise<void> {
     // Private-Mode-Fälle ignorieren
   }
 
-  window.location.href = '/';
+  if (typeof window !== 'undefined' && window.location) {
+    window.location.href = '/';
+  }
 }

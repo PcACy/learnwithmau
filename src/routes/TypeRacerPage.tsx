@@ -179,7 +179,7 @@ export function TypeRacerPage() {
       commitChar(candidates[digit - 1].char);
       return;
     }
-    const val = raw.toLowerCase().replace(/[^a-z]/g, '').slice(0, 7);
+    const val = raw.toLowerCase().replaceAll('ü', 'v').replace(/[^a-z]/g, '').slice(0, 7);
     setRound((r) => ({ ...r, typed: val }));
   };
 
@@ -204,9 +204,11 @@ export function TypeRacerPage() {
       }
     }
 
-    if (/^[a-zA-Z]$/.test(event.key)) {
+    const lowerKey = event.key.toLowerCase();
+    if (/^[a-z]$/.test(lowerKey) || lowerKey === 'ü') {
       event.preventDefault();
-      setRound((r) => ({ ...r, typed: (r.typed + event.key.toLowerCase()).slice(0, 7) }));
+      const mapped = lowerKey === 'ü' ? 'v' : lowerKey;
+      setRound((r) => ({ ...r, typed: (r.typed + mapped).slice(0, 7) }));
       return;
     }
     if (event.key === 'Backspace') {

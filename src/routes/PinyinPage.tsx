@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo, type CSSProperties } from 'react';
+import { useState, useCallback, useMemo, useEffect, useRef, type CSSProperties } from 'react';
 import {
   Volume2,
   BookOpen,
@@ -29,9 +29,22 @@ export function PinyinPage() {
   const [selectedInitial, setSelectedInitial] = useState<InitialData | null>(INITIALS[0]);
   const [selectedFinal, setSelectedFinal] = useState<FinalData | null>(FINALS[0]);
   const [playingWord, setPlayingWord] = useState<string | null>(null);
+  const playTimeoutRef = useRef<number | undefined>(undefined);
+
+  useEffect(() => {
+    return () => {
+      stopCurrentAudio();
+      if (playTimeoutRef.current !== undefined) {
+        window.clearTimeout(playTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const playWordAudio = useCallback((hanzi: string, toneFallback?: number) => {
     stopCurrentAudio();
+    if (playTimeoutRef.current !== undefined) {
+      window.clearTimeout(playTimeoutRef.current);
+    }
     setPlayingWord(hanzi);
 
     const vocab = VOCAB_MAP_BY_HANZI.get(hanzi);
@@ -42,7 +55,7 @@ export function PinyinPage() {
 
     if (toneFallback && toneFallback >= 1 && toneFallback <= 5) {
       playToneSequence([toneFallback as Tone]);
-      setTimeout(() => setPlayingWord(null), 600);
+      playTimeoutRef.current = window.setTimeout(() => setPlayingWord(null), 600);
       return;
     }
 

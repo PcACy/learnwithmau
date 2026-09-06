@@ -14,6 +14,7 @@ import {
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useProgressStore } from '../../store/progressStore';
 import { useKeyDown } from '../../hooks/useKeyDown';
+import { stopCurrentAudio } from '../../lib/audio';
 import { ThemeToggle } from './ThemeToggle';
 import { BackupModal } from '../dashboard/BackupModal';
 import { SealBadge } from '../ui/SealBadge';
@@ -104,6 +105,7 @@ export function AppShell() {
   useEffect(() => {
     if (prevPathname.current !== location.pathname) {
       prevPathname.current = location.pathname;
+      stopCurrentAudio();
       setIsNavigating(true);
       if (typeof window !== 'undefined') {
         window.scrollTo({ top: 0, left: 0, behavior: 'instant' });

@@ -729,7 +729,7 @@ export function DashboardPage() {
                   [6]
                 </span>
               </div>
-              <h3 className="font-bold text-base text-zinc-900 dark:text-zinc-100">2-Minuten-Blitz</h3>
+              <h3 className="font-bold text-base text-zinc-900 dark:text-zinc-100">90-Sekunden-Blitz</h3>
               <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
                 High-Speed Vokabel-Review: Wie viele Begriffe erkennst du in 90 Sekunden?
               </p>

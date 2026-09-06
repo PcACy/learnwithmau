@@ -88,6 +88,7 @@ export function StrokeOrderViewer({ character, pinyin, meaning, size = 190 }: St
   // Initialisiere HanziWriter mit lokalem Data-Loader (100% Offline)
   useEffect(() => {
     if (!containerRef.current) return;
+    let cancelled = false;
     containerRef.current.innerHTML = '';
     setLoading(true);
     setQuizStatus('idle');
@@ -113,27 +114,35 @@ export function StrokeOrderViewer({ character, pinyin, meaning, size = 190 }: St
             return res.json();
           })
           .then((data) => {
+            if (cancelled) return;
             if (data && Array.isArray(data.strokes)) {
               setTotalStrokes(data.strokes.length);
             }
             onComplete(data);
           })
           .catch(() => {
+            if (cancelled) return;
             // Fallback auf CDN falls lokale Datei fehlt
             fetch(`https://cdn.jsdelivr.net/npm/hanzi-writer-data@2.0/${encodeURIComponent(char)}.json`)
               .then((r) => r.json())
               .then((data) => {
+                if (cancelled) return;
                 if (data && Array.isArray(data.strokes)) setTotalStrokes(data.strokes.length);
                 onComplete(data);
               })
-              .catch(onErr);
+              .catch((err) => {
+                if (!cancelled) onErr(err);
+              });
           });
       },
       onLoadCharDataSuccess: () => {
+        if (cancelled) return;
         setLoading(false);
         setIsPlaying(true);
         void writer.animateCharacter({
-          onComplete: () => setIsPlaying(false),
+          onComplete: () => {
+            if (!cancelled) setIsPlaying(false);
+          },
         });
       },
     });
@@ -141,6 +150,7 @@ export function StrokeOrderViewer({ character, pinyin, meaning, size = 190 }: St
     writerRef.current = writer;
 
     return () => {
+      cancelled = true;
       writer.cancelQuiz();
       writerRef.current = null;
     };

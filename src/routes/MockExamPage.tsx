@@ -8,6 +8,7 @@ import {
   ChevronRight,
   GraduationCap,
   Headphones,
+  Pause,
   Play,
   RotateCcw,
   Timer,
@@ -172,12 +173,27 @@ export function MockExamPage() {
       return;
     }
 
+    if (isPaused) {
+      if (event.key === 'p' || event.key === 'P' || event.key === ' ' || event.key === 'Escape') {
+        event.preventDefault();
+        setIsPaused(false);
+      }
+      return;
+    }
+
     if (phase === 'intro' && event.key === 'Enter') {
       startExam();
       return;
     }
 
     if (phase !== 'exam' || !currentQ) return;
+
+    if (event.key === 'p' || event.key === 'P') {
+      event.preventDefault();
+      stopCurrentAudio();
+      setIsPaused(true);
+      return;
+    }
 
     if (event.key === 'Escape') {
       event.preventDefault();
@@ -393,12 +409,27 @@ export function MockExamPage() {
             </span>
           </div>
 
-          {/* Timer */}
-          <div className="flex items-center gap-2">
-            <Timer className={`h-4 w-4 ${timeLeft <= 300 ? 'text-red-500 animate-pulse' : 'text-zinc-400'}`} />
-            <span className={`font-mono text-sm font-bold tabular-nums ${timeLeft <= 300 ? 'text-red-500' : ''}`}>
-              {Math.floor(timeLeft / 60)}:{(timeLeft % 60).toString().padStart(2, '0')}
-            </span>
+          {/* Timer & Pause */}
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
+              <Timer className={`h-4 w-4 ${timeLeft <= 300 ? 'text-red-500 animate-pulse' : 'text-zinc-400'}`} />
+              <span className={`font-mono text-sm font-bold tabular-nums ${timeLeft <= 300 ? 'text-red-500' : ''}`}>
+                {Math.floor(timeLeft / 60)}:{(timeLeft % 60).toString().padStart(2, '0')}
+              </span>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => {
+                stopCurrentAudio();
+                setIsPaused(true);
+              }}
+              className="flex items-center gap-1.5 rounded-xl border border-zinc-200/80 bg-zinc-50 px-2.5 py-1 text-xs font-semibold text-zinc-700 transition-all hover:bg-zinc-100 dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700 cursor-pointer"
+              title="Prüfung pausieren [P]"
+            >
+              <Pause className="h-3 w-3" />
+              <span>Pause</span>
+            </button>
           </div>
 
           {/* Submit Action */}
@@ -603,6 +634,39 @@ export function MockExamPage() {
                   Endgültig abgeben
                 </button>
               </div>
+            </div>
+          </div>
+        )}
+
+        {/* Pause Modal Overlay */}
+        {isPaused && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-zinc-950/70 p-4 backdrop-blur-md">
+            <div className="w-full max-w-md rounded-3xl border border-zinc-200/80 bg-white p-8 text-center shadow-2xl dark:border-white/10 dark:bg-zinc-900 space-y-6">
+              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-amber-500/10 text-amber-600 dark:text-amber-400">
+                <Pause className="h-7 w-7" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">
+                  Prüfung pausiert
+                </h3>
+                <p className="mt-2 text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
+                  Die Zeitmessung steht still und die Prüfungsfragen sind ausgeblendet. Klicke auf „Fortsetzen“, wenn du bereit bist.
+                </p>
+              </div>
+              <div className="rounded-2xl border border-zinc-200/70 bg-zinc-50/70 p-4 font-mono text-sm dark:border-white/5 dark:bg-zinc-950/40">
+                <span className="text-zinc-400 text-xs block">Verbleibende Zeit:</span>
+                <span className="text-lg font-bold text-zinc-900 dark:text-zinc-100">
+                  {Math.floor(timeLeft / 60)}:{(timeLeft % 60).toString().padStart(2, '0')} Min.
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsPaused(false)}
+                className="w-full inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-emerald-600 px-6 text-sm font-bold text-white transition-all hover:bg-emerald-500 active:scale-95 cursor-pointer shadow-sm"
+              >
+                <Play className="h-4 w-4" />
+                <span>Prüfung fortsetzen</span>
+              </button>
             </div>
           </div>
         )}

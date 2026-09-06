@@ -166,3 +166,45 @@ describe('State Hydration & Streak Normalization Fixes', () => {
   });
 });
 
+describe('TypeRacer German Umlaut & IME Mapping', () => {
+  it('maps ü and Ü directly to v for German keyboard layout support', async () => {
+    const { candidatesFor } = await import('./ime');
+
+    // Both 'nv' and 'nü' should yield candidates for 女 in HSK 1
+    const candidatesNv = candidatesFor('nv');
+    const candidatesNu = candidatesFor('nü');
+    expect(candidatesNv.length).toBeGreaterThan(0);
+    expect(candidatesNu.length).toBeGreaterThan(0);
+    expect(candidatesNv.map((c) => c.char)).toEqual(candidatesNu.map((c) => c.char));
+    expect(candidatesNu[0].char).toBe('女');
+  });
+});
+
+describe('Database Reset Safety', () => {
+  it('closes active database connection cleanly during reset', async () => {
+    const { db } = await import('./db');
+    const closeSpy = vi.spyOn(db, 'close');
+
+    const originalIndexedDB = globalThis.indexedDB;
+    const deleteSpy = vi.fn().mockReturnValue({
+      onsuccess: null,
+      onerror: null,
+      onblocked: null,
+    });
+    (globalThis as any).indexedDB = {
+      deleteDatabase: deleteSpy,
+    };
+
+    const { resetAllLocalData } = await import('./resetApp');
+
+    const resetPromise = resetAllLocalData();
+    const req = deleteSpy.mock.results[0]?.value;
+    if (req?.onsuccess) req.onsuccess();
+    await resetPromise;
+
+    expect(closeSpy).toHaveBeenCalled();
+    expect(deleteSpy).toHaveBeenCalledWith('hanzi-arcade');
+    (globalThis as any).indexedDB = originalIndexedDB;
+  });
+});
+
