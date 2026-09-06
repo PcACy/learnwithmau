@@ -21,6 +21,7 @@ import { getCompletedGrammar, putCompletedGrammar } from '../lib/db';
 import { CHAPTER_LINKS } from '../data/chapterLinks';
 import { KineticButton } from '../components/ui/KineticButton';
 import { SealBadge } from '../components/ui/SealBadge';
+import { HorizontalScrollRow } from '../components/ui/HorizontalScrollRow';
 
 const LESSONS = grammarData as GrammarLesson[];
 
@@ -182,8 +183,11 @@ export function GrammarPage() {
 
       {viewMode === 'lessons' ? (
         <>
-      <div
-        className="flex gap-2.5 overflow-x-auto pb-2 scrollbar-none"
+      {/* 2. Lektionsauswahl (Horizontal scrollbare Milled-Pills mit Scroll-Pfeilen) */}
+      <HorizontalScrollRow
+        className="gap-2.5 pb-2"
+        buttonSize="md"
+        ariaLabel="Grammatik-Lektionen"
       >
         {LESSONS.map((lesson, idx) => {
           const isSel = lesson.id === currentLesson.id;
@@ -194,7 +198,7 @@ export function GrammarPage() {
               key={lesson.id}
               type="button"
               onClick={() => handleSelectLesson(lesson.id)}
-              className={`group flex shrink-0 items-center gap-2.5 rounded-2xl border px-4 py-2.5 text-xs font-semibold transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+              className={`group flex shrink-0 items-center gap-2.5 rounded-2xl border px-4 py-2.5 text-xs font-semibold transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer ${
                 isSel
                   ? 'border-emerald-600 bg-emerald-600 text-white shadow-whisper dark:border-emerald-500 dark:bg-emerald-600'
                   : 'border-zinc-200/80 bg-white text-zinc-700 hover:border-emerald-500/40 hover:bg-zinc-50 dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800'
@@ -215,7 +219,7 @@ export function GrammarPage() {
             </button>
           );
         })}
-      </div>
+      </HorizontalScrollRow>
 
       {/* 3. Haupt-Lektionsansicht (Double-Bezel Architecture) */}
       <div
@@ -586,7 +590,11 @@ export function GrammarPage() {
         /* KONTRASTIVE GRAMMATIK & VERWECHSLUNGSFALLEN */
         <div className="space-y-8">
           {/* Selector for Pitfall Pairs */}
-          <div className="flex gap-2.5 overflow-x-auto pb-2 scrollbar-none">
+          <HorizontalScrollRow
+            className="gap-2.5 pb-2"
+            buttonSize="md"
+            ariaLabel="Verwechslungsfallen"
+          >
             {GRAMMAR_PITFALLS.map((pair) => {
               const isSel = pair.id === selectedPitfall.id;
               return (
@@ -606,7 +614,7 @@ export function GrammarPage() {
                 </button>
               );
             })}
-          </div>
+          </HorizontalScrollRow>
 
           {/* Double-Bezel Inspector Card */}
           <div className="double-bezel-casing shadow-whisper">

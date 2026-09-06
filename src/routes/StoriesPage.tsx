@@ -27,6 +27,7 @@ import { getCompletedStories, putCompletedStories } from '../lib/db';
 import { STORY_TO_GRAMMAR_MAP } from '../data/chapterLinks';
 import { KineticButton } from '../components/ui/KineticButton';
 import { SealBadge } from '../components/ui/SealBadge';
+import { HorizontalScrollRow } from '../components/ui/HorizontalScrollRow';
 import { VOCAB } from '../data';
 import { useProgressStore } from '../store/progressStore';
 import { useKeyDown } from '../hooks/useKeyDown';
@@ -262,9 +263,11 @@ export function StoriesPage() {
         </div>
       </div>
 
-      {/* 2. Story Selector Chips (Horizontal scrollbare Milled-Pills) */}
-      <div
-        className="flex gap-2.5 overflow-x-auto pb-2 scrollbar-none"
+      {/* 2. Story Selector Chips (Horizontal scrollbare Milled-Pills mit Scroll-Pfeilen) */}
+      <HorizontalScrollRow
+        className="gap-2.5 pb-2"
+        buttonSize="md"
+        ariaLabel="Geschichten-Auswahl"
       >
         {STORIES.map((story, idx) => {
           const isSel = story.id === currentStory.id;
@@ -279,7 +282,7 @@ export function StoriesPage() {
                 setActiveStoryId(story.id);
                 setActiveToken(null);
               }}
-              className={`group flex shrink-0 items-center gap-2.5 rounded-2xl border px-4 py-2.5 text-xs font-semibold transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+              className={`group flex shrink-0 items-center gap-2.5 rounded-2xl border px-4 py-2.5 text-xs font-semibold transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer ${
                 isSel
                   ? 'border-emerald-600 bg-emerald-600 text-white shadow-whisper dark:border-emerald-500 dark:bg-emerald-600'
                   : 'border-zinc-200/80 bg-white text-zinc-700 hover:border-emerald-500/40 hover:bg-zinc-50 dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800'
@@ -300,7 +303,7 @@ export function StoriesPage() {
             </button>
           );
         })}
-      </div>
+      </HorizontalScrollRow>
 
       {/* 3. Steuerungs-Leiste (Toggles & Vorleser) */}
       <div

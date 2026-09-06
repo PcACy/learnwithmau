@@ -2,6 +2,7 @@ import { memo, useEffect, useRef } from 'react';
 import { Search, X } from 'lucide-react';
 import type { VocabItem } from '../../types/vocab';
 import { PART_OF_SPEECH_LABELS, PART_OF_SPEECH_MAP } from '../../data/vocabDetails';
+import { HorizontalScrollRow } from '../ui/HorizontalScrollRow';
 
 interface DictionaryMasterListProps {
   items: VocabItem[];
@@ -163,28 +164,29 @@ export const DictionaryMasterList = memo(function DictionaryMasterList({
         )}
       </div>
 
-      {/* 2. Kategorie-Filter-Pills mit weichem Gradient-Fade */}
-      <div className="relative">
-        <div className="flex gap-1.5 overflow-x-auto pb-1 scrollbar-none [mask-image:linear-gradient(to_right,black_88%,transparent_100%)]">
-          {categories.map((cat) => {
-            const isSel = selectedCategory === cat.id;
-            return (
-              <button
-                key={cat.id}
-                type="button"
-                onClick={() => onCategoryChange(cat.id)}
-                className={`shrink-0 rounded-full px-3 py-1 font-mono text-[11px] font-bold uppercase tracking-wider transition-all duration-150 ${
-                  isSel
-                    ? 'bg-zinc-900 text-white shadow-xs dark:bg-white dark:text-zinc-950'
-                    : 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200/80 hover:text-zinc-900 dark:bg-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-700 dark:hover:text-zinc-200'
-                }`}
-              >
-                {cat.label}
-              </button>
-            );
-          })}
-        </div>
-      </div>
+      {/* 2. Kategorie-Filter-Pills mit taktilen Scroll-Pfeilen & weichem Gradient-Fade */}
+      <HorizontalScrollRow
+        className="gap-1.5 pb-1"
+        ariaLabel="Wortart-Filter"
+      >
+        {categories.map((cat) => {
+          const isSel = selectedCategory === cat.id;
+          return (
+            <button
+              key={cat.id}
+              type="button"
+              onClick={() => onCategoryChange(cat.id)}
+              className={`shrink-0 rounded-full px-3 py-1 font-mono text-[11px] font-bold uppercase tracking-wider transition-all duration-150 cursor-pointer ${
+                isSel
+                  ? 'bg-zinc-900 text-white shadow-xs dark:bg-white dark:text-zinc-950'
+                  : 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200/80 hover:text-zinc-900 dark:bg-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-700 dark:hover:text-zinc-200'
+              }`}
+            >
+              {cat.label}
+            </button>
+          );
+        })}
+      </HorizontalScrollRow>
 
       {/* Trefferzähler & Schnellauswahl */}
       <div className="flex items-center justify-between px-1 text-[11px] font-mono text-zinc-400 dark:text-zinc-500">
