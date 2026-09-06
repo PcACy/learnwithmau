@@ -195,6 +195,7 @@ export function StoriesPage() {
     if (!activeToken) return;
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
+        e.preventDefault();
         setActiveToken(null);
       }
     };

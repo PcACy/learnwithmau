@@ -5,7 +5,7 @@
 * **Commit-Format:** `<type>(<scope>): <kurze beschreibung in kleinschreibung>` (z.B. `feat(dialogue): add interactive HSK-1 dialogue mode`).
 
 ## 2. Design System & Frontend-Standards
-* **Anti-Slop & Redaktionelle Ästhetik:** Striktes Befolgen der Richtlinien aus `DESIGN.md` und `.agents/skills/stitch-design-taste`.
+* **Anti-Slop & Redaktionelle Ästhetik:** Striktes Befolgen der Richtlinien aus `DESIGN.md`.
 * **Zero-Emoji-Policy:** Im UI dürfen keine Emojis verwendet werden; ausschließlich Lucide-Vektor-Icons und CJK-Schriftzeichen.
 * **Farben & Flächen:** Double-Bezel-Architektur, `#09090b` Canvas-Hintergrund in Dark-Mode, Emerald Signal (`#10B981` / `#059669`) für Fortschritt/Erfolge, Cinnabar Red (`#E11D48`) für Stempel-Badges.
 * **Typografie:** `font-sans` (`Outfit`) für Überschriften, `font-cjk` (`Noto Sans SC`) für chinesische Zeichen, `font-mono` (`JetBrains Mono`) für Pinyin, Hotkeys und Zahlen.

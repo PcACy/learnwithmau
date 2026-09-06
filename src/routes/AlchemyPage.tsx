@@ -208,6 +208,12 @@ export function AlchemyPage() {
   );
 
   useKeyDown((event) => {
+    if (showHelp && event.key === 'Escape') {
+      event.preventDefault();
+      setShowHelp(false);
+      return;
+    }
+
     if (phase !== 'running' || !puzzle || event.metaKey || event.ctrlKey) return;
     if (event.repeat) return;
 

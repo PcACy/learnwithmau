@@ -24,9 +24,9 @@
 * **[`src/data/grammar.json`](src/data/grammar.json) (`GrammarLesson`):**  
   12 vollständige HSK-1-Grammatiklektionen mit visuellen Syntaxformeln, Kernregeln, zweisprachigen Beispielsätzen mit Audio, typischen Anfänger-Stolperfallen (*Falsch vs. Richtig*) und Verständnisfragen.
 * **[`src/data/stories.json`](src/data/stories.json) (`Story`):**  
-  8 alltagsnahe Lesegeschichten mit satzweiser Tokenisierung (`StoryWordToken`), deutscher Übersetzung, Einzel- und Gesamtaudio sowie Leseverständnis-Quizzen.
+  12 alltagsnahe Lesegeschichten mit satzweiser Tokenisierung (`StoryWordToken`), deutscher Übersetzung, Einzel- und Gesamtaudio sowie Leseverständnis-Quizzen (100 % Wortschatzabdeckung).
 * **[`src/data/mockExam.json`](src/data/mockExam.json) (`ExamQuestion`):**  
-  30 offizielle HSK-1-Prüfungsfragen (15 Hörverstehen + 15 Leseverstehen) mit 35-Minuten-Timer und didaktischen Erklärungen.
+  60 offizielle HSK-1-Prüfungsfragen (30 Hörverstehen + 30 Leseverstehen in Set 1, Set 2 und Shuffle-Modus) mit 35-Minuten-Timer und didaktischen Erklärungen.
 * **[`src/data/radicals.json`](src/data/radicals.json) (`Radical`):**  
   Radikal-Datenbank für den Hanzi-Alchemy-Baukasten (Positionen: `left`, `right`, `top`, `bottom`, `enclosure`, `inside`).
 
@@ -56,9 +56,9 @@
 | **Fälligkeits-Drill (SRS)** | `/review` | SM-2 Karteikarten-Wiederholung für fällige Vokabeln mit Selbstbewertung. |
 | **Wörterbuch** | `/dictionary` | 163 Wörter mit Suche, Filter nach HSK-Level, Audio, Strichfolge-Animation und Chao-Tonkurven. |
 | **Grammatik-Kompendium**| `/grammar` | 12 strukturierte Lektionen: SVO, 是, 有/没有, 在, Fragepartikeln, 的, Zählwörter, Zeitlogik, Modalverben, 了/请. |
-| **Graded Reader (Lesen)** | `/stories` | 8 Geschichten im Dual-Modus (Buch-Fließtext vs. Satzkarten) mit synchronisiertem Vorlesen und Wort-Lookup. |
+| **Graded Reader (Lesen)** | `/stories` | 12 Geschichten im Dual-Modus (Buch-Fließtext vs. Satzkarten) mit synchronisiertem Vorlesen und Wort-Lookup. |
 | **HSK-1 Alltagsdialoge** | `/dialogue` | 6 interaktive Rollenspiele mit Verzweigungen, nativer Multi-Voice-Sprachausgabe, Entscheidungen und Feedback. |
-| **HSK-1 Probeprüfung** | `/exam` | 30-Fragen-Prüfungssimulation (Hören & Lesen) mit 35-Minuten-Countdown und Fehleranalyse. |
+| **HSK-1 Probeprüfung** | `/exam` | 30-Fragen-Prüfungssimulation aus 60 Fragen (Set 1 / Set 2 / Shuffle, Hören & Lesen) mit 35-Minuten-Countdown und Fehleranalyse. |
 | **Blitz-Session** | `/blitz` | 90-Sekunden-Highspeed-Sprint mit gemischten Vokabel-, Ton- und Zeichenfragen. |
 
 ---

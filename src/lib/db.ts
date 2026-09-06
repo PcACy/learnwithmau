@@ -192,6 +192,12 @@ export async function importBackup(
             } catch {
               // ignore
             }
+          } else if (row.key === 'completedDialogues' && typeof row.value === 'object' && row.value !== null) {
+            try {
+              localStorage.setItem('hanzi_completed_dialogues', JSON.stringify(row.value));
+            } catch {
+              // ignore
+            }
           }
         }
       }

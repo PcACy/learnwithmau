@@ -10,7 +10,7 @@ import {
   Zap,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { playAsset, playToneSequence } from '../lib/audio';
+import { playAsset, playToneSequence, stopCurrentAudio } from '../lib/audio';
 import { fireCelebration, fireMicroBurst } from '../lib/confetti';
 import { useProgressStore } from '../store/progressStore';
 import { generateBlitzQuestions, type BlitzQuestion } from '../lib/blitzGenerator';
@@ -92,6 +92,7 @@ export function BlitzPage() {
     if (gameState === 'playing' && currentQ?.audioUrl) {
       void playAsset(currentQ.audioUrl);
     }
+    return () => stopCurrentAudio();
   }, [gameState, currentQ]);
 
   // Antwort auswählen

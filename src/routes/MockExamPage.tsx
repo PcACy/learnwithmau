@@ -162,12 +162,24 @@ export function MockExamPage() {
     if (event.metaKey || event.ctrlKey || event.altKey) return;
     if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) return;
 
+    if (showSubmitModal && event.key === 'Escape') {
+      event.preventDefault();
+      setShowSubmitModal(false);
+      return;
+    }
+
     if (phase === 'intro' && event.key === 'Enter') {
       startExam();
       return;
     }
 
     if (phase !== 'exam' || !currentQ) return;
+
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      setShowSubmitModal(true);
+      return;
+    }
 
     if (event.code === 'Space') {
       if (currentQ.audioUrl) {

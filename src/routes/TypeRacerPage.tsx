@@ -215,6 +215,11 @@ export function TypeRacerPage() {
       return;
     }
     if (event.key === 'Escape') {
+      if (showHelp) {
+        event.preventDefault();
+        setShowHelp(false);
+        return;
+      }
       if (round.typed.length > 0) {
         event.preventDefault();
         setRound((r) => ({ ...r, typed: '' }));

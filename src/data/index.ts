@@ -121,6 +121,6 @@ export const VOCAB_BY_ID: ReadonlyMap<string, VocabItem> = new Map(
   VOCAB.map((item) => [item.id, item]),
 );
 
-export { THEMATIC_DECKS, THEMATIC_DECKS_BY_ID, getThematicDeck } from './thematicDecks';
+export { THEMATIC_DECKS, getThematicDeck } from './thematicDecks';
 export type { ThematicDeck } from './thematicDecks';
 

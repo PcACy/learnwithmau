@@ -260,19 +260,23 @@ export function DialoguePage() {
     // Popover / Briefing / Debrief mit Escape schließen
     if (event.key === 'Escape') {
       if (activeToken) {
+        event.preventDefault();
         setActiveToken(null);
         return;
       }
       if (briefingScenario) {
+        event.preventDefault();
         setBriefingScenario(null);
         return;
       }
       if (showDebrief) {
+        event.preventDefault();
         setShowDebrief(false);
         setActiveScenario(null);
         return;
       }
       if (activeScenario) {
+        event.preventDefault();
         stopCurrentAudio();
         setActiveScenario(null);
         return;
