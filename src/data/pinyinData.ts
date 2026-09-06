@@ -435,7 +435,7 @@ export const FINALS: readonly FinalData[] = [
     ipa: 'oʊ',
     category: 'compound',
     categoryLabel: 'Zusammengesetzte Vokale (Diphthonge)',
-    germanAnalogy: 'Wie britisches "o" in "go" oder "oh".',
+    germanAnalogy: 'Wie ein langes deutsches "o", das weich in ein kurzes "u" übergeht (wie "o-u", ähnlich engl. "soul" oder "go").',
     sampleWords: [{ hanzi: '狗', pinyin: 'gǒu', meaning: 'Hund', tone: 3 }],
   },
   {
@@ -467,7 +467,7 @@ export const FINALS: readonly FinalData[] = [
     ipa: 'wɔ',
     category: 'compound',
     categoryLabel: 'Zusammengesetzte Vokale (Diphthonge)',
-    germanAnalogy: 'Wie "wo" in italienischem "buono".',
+    germanAnalogy: 'Wie ein schnelles, fließendes "u-o" (wie das "uo" in "Status quo" oder wenn man "du oft" flüssig verbindet: kurzes "u" gleitet in ein offenes "o").',
     sampleWords: [{ hanzi: '桌子', pinyin: 'zhuōzi', meaning: 'Tisch', tone: 1 }],
   },
   {
