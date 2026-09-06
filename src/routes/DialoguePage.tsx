@@ -19,7 +19,7 @@ import type {
   DialogueScenario,
   DialogueWordToken,
 } from '../types/dialogue';
-import { playAsset, stopCurrentAudio } from '../lib/audio';
+import { playMandarinWithFallback, stopCurrentAudio } from '../lib/audio';
 import { db, getCompletedDialogues, putCompletedDialogues } from '../lib/db';
 import { useKeyDown } from '../hooks/useKeyDown';
 import { DialogueBriefingModal } from '../components/dialogue/DialogueBriefingModal';
@@ -105,11 +105,11 @@ export function DialoguePage() {
 
   // Audio-Wiedergabe-Helfer
   const playAudio = useCallback(
-    (url?: string) => {
-      if (!url) return;
+    (text: string, url?: string) => {
       stopCurrentAudio();
-      setPlayingAudioUrl(url);
-      void playAsset(
+      setPlayingAudioUrl(url || text);
+      void playMandarinWithFallback(
+        text,
         url,
         () => {
           setPlayingAudioUrl(null);
@@ -148,9 +148,7 @@ export function DialoguePage() {
       setHistory([firstHistoryItem]);
 
       // Starte NPC-Audio automatisch
-      if (initialNode.audioUrl) {
-        playAudio(initialNode.audioUrl);
-      }
+      playAudio(initialNode.hanzi, initialNode.audioUrl);
     },
     [playAudio],
   );
@@ -199,28 +197,22 @@ export function DialoguePage() {
       setCurrentNode(nextNode);
 
       // Spiele Audio der Benutzer-Antwort und anschließend des NPCs
-      if (choice.audioUrl) {
-        stopCurrentAudio();
-        setPlayingAudioUrl(choice.audioUrl);
-        void playAsset(
-          choice.audioUrl,
-          () => {
-            if (nextNode.audioUrl) {
-              setPlayingAudioUrl(nextNode.audioUrl);
-              void playAsset(
-                nextNode.audioUrl,
-                () => setPlayingAudioUrl(null),
-                playbackSpeed,
-              );
-            } else {
-              setPlayingAudioUrl(null);
-            }
-          },
-          playbackSpeed,
-        );
-      } else if (nextNode.audioUrl) {
-        playAudio(nextNode.audioUrl);
-      }
+      stopCurrentAudio();
+      setPlayingAudioUrl(choice.audioUrl || choice.hanzi);
+      void playMandarinWithFallback(
+        choice.hanzi,
+        choice.audioUrl,
+        () => {
+          setPlayingAudioUrl(nextNode.audioUrl || nextNode.hanzi);
+          void playMandarinWithFallback(
+            nextNode.hanzi,
+            nextNode.audioUrl,
+            () => setPlayingAudioUrl(null),
+            playbackSpeed,
+          );
+        },
+        playbackSpeed,
+      );
 
       // Dialog-Abschluss prüfen
       if (nextNode.isEnding) {
@@ -258,7 +250,7 @@ export function DialoguePage() {
         }, 1200);
       }
     },
-    [activeScenario, currentNode, score, playbackSpeed, playAudio, completedDialogues],
+    [activeScenario, currentNode, score, playbackSpeed, completedDialogues],
   );
 
   // Global Keydown Handler
@@ -324,8 +316,8 @@ export function DialoguePage() {
     // Space oder 'r': Letzte NPC-Audio wiederholen
     if (event.key === ' ' || event.key === 'r' || event.key === 'R') {
       event.preventDefault();
-      if (currentNode?.audioUrl) {
-        playAudio(currentNode.audioUrl);
+      if (currentNode) {
+        playAudio(currentNode.hanzi, currentNode.audioUrl);
       }
       return;
     }
@@ -453,18 +445,16 @@ export function DialoguePage() {
                 <span>{playbackSpeed}x</span>
               </button>
 
-              {currentNode.audioUrl && (
-                <button
-                  type="button"
-                  onClick={() => playAudio(currentNode.audioUrl)}
-                  className="inline-flex items-center gap-1 rounded-xl bg-zinc-100 px-2.5 py-1 text-xs font-bold text-zinc-700 hover:bg-emerald-500/15 hover:text-emerald-700 dark:bg-zinc-800 dark:text-zinc-300 transition-colors cursor-pointer"
-                  title="Audio wiederholen (Leertaste oder R)"
-                >
-                  <Volume2 className="h-3 w-3" />
-                  <span className="hidden sm:inline">Wiederholen</span>
-                  <kbd className="hidden sm:inline font-mono text-[9px] opacity-60">Space</kbd>
-                </button>
-              )}
+              <button
+                type="button"
+                onClick={() => playAudio(currentNode.hanzi, currentNode.audioUrl)}
+                className="inline-flex items-center gap-1 rounded-xl bg-zinc-100 px-2.5 py-1 text-xs font-bold text-zinc-700 hover:bg-emerald-500/15 hover:text-emerald-700 dark:bg-zinc-800 dark:text-zinc-300 transition-colors cursor-pointer"
+                title="Audio wiederholen (Leertaste oder R)"
+              >
+                <Volume2 className="h-3 w-3" />
+                <span className="hidden sm:inline">Wiederholen</span>
+                <kbd className="hidden sm:inline font-mono text-[9px] opacity-60">Space</kbd>
+              </button>
             </div>
           </div>
 
@@ -485,10 +475,10 @@ export function DialoguePage() {
                 audioUrl={item.audioUrl}
                 showPinyin={showPinyin}
                 showGerman={showGerman}
-                isPlaying={playingAudioUrl === item.audioUrl}
+                isPlaying={playingAudioUrl === item.audioUrl || playingAudioUrl === item.hanzi}
                 pointsAwarded={item.pointsAwarded}
                 feedbackGerman={item.feedbackGerman}
-                onPlayAudio={item.audioUrl ? () => playAudio(item.audioUrl) : undefined}
+                onPlayAudio={() => playAudio(item.hanzi, item.audioUrl)}
                 onTokenClick={(token) => setActiveToken(token)}
               />
             ))}
@@ -501,7 +491,7 @@ export function DialoguePage() {
             <DialogueChoicePanel
               choices={currentNode.choices}
               onSelectChoice={handleSelectChoice}
-              onPreviewAudio={(url) => playAudio(url)}
+              onPreviewAudio={(hanzi, url) => playAudio(hanzi, url)}
               showPinyin={showPinyin}
               showGerman={showGerman}
             />

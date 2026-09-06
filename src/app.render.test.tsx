@@ -29,7 +29,7 @@ const ROUTES: readonly [path: string, marker: string][] = [
   ['/ear-trainer', 'Pinyin Ear-Trainer'],
   ['/typeracer', 'TYPERACER'],
   ['/alchemy', 'ALCHEMIE'],
-  ['/number-drill', 'Session starten'],
+  ['/number-drill', 'Number &amp; Time Drill'],
   ['/review', 'Thematische Wiederholung'],
   ['/stories', 'Buch-Fließtext'],
   ['/dictionary', 'Suchen'],

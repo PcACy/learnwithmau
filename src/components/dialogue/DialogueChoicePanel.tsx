@@ -4,7 +4,7 @@ import type { DialogueChoice } from '../../types/dialogue';
 interface DialogueChoicePanelProps {
   choices: DialogueChoice[];
   onSelectChoice: (choice: DialogueChoice) => void;
-  onPreviewAudio?: (audioUrl: string) => void;
+  onPreviewAudio?: (hanzi: string, audioUrl?: string) => void;
   showPinyin: boolean;
   showGerman: boolean;
   disabled?: boolean;
@@ -44,12 +44,12 @@ export function DialogueChoicePanel({
                     {hotkeyNumber}
                   </span>
 
-                  {onPreviewAudio && choice.audioUrl && (
+                  {onPreviewAudio && (
                     <button
                       type="button"
                       onClick={(e) => {
                         e.stopPropagation();
-                        onPreviewAudio(choice.audioUrl);
+                        onPreviewAudio(choice.hanzi, choice.audioUrl);
                       }}
                       className="inline-flex h-6 w-6 items-center justify-center rounded-md text-zinc-400 hover:bg-zinc-100 hover:text-emerald-600 dark:hover:bg-zinc-800 dark:hover:text-emerald-400 transition-colors"
                       title="Vorab anhören"

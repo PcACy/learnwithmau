@@ -15,7 +15,7 @@ import {
 import grammarData from '../data/grammar.json';
 import type { GrammarLesson } from '../types/grammar';
 import { GRAMMAR_PITFALLS, type PitfallPair } from '../data/grammarPitfalls';
-import { playAsset, stopCurrentAudio } from '../lib/audio';
+import { playMandarinWithFallback, stopCurrentAudio } from '../lib/audio';
 import { fireCelebration, fireMicroBurst } from '../lib/confetti';
 import { getCompletedGrammar, putCompletedGrammar } from '../lib/db';
 import { CHAPTER_LINKS } from '../data/chapterLinks';
@@ -96,10 +96,16 @@ export function GrammarPage() {
   const currentIndex = LESSONS.findIndex((l) => l.id === selectedLessonId);
   const chapterLink = CHAPTER_LINKS[currentLesson.id];
 
-  // Audio abspielen
-  const handlePlayAudio = (url?: string) => {
-    if (!url) return;
-    void playAsset(url);
+  const [playingAudioKey, setPlayingAudioKey] = useState<string | null>(null);
+
+  // Audio abspielen mit nahtlosem Mandarin-TTS-Fallback
+  const handlePlayAudio = (text: string, url?: string, key?: string) => {
+    stopCurrentAudio();
+    const playKey = key || text;
+    setPlayingAudioKey(playKey);
+    void playMandarinWithFallback(text, url, () => {
+      setPlayingAudioKey((cur) => (cur === playKey ? null : cur));
+    });
   };
 
   // Quiz-Antwort wählen
@@ -322,17 +328,15 @@ export function GrammarPage() {
                       </p>
                     </div>
 
-                    {ex.audioUrl && (
-                      <button
-                        type="button"
-                        onClick={() => handlePlayAudio(ex.audioUrl)}
-                        className="inline-flex shrink-0 items-center gap-1.5 rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-1.5 text-xs font-semibold text-zinc-700 hover:border-emerald-500/40 hover:bg-emerald-50 hover:text-emerald-800 dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:text-emerald-400 cursor-pointer"
-                        title="Beispielsatz anhören"
-                      >
-                        <Volume2 className="h-3.5 w-3.5" />
-                        <span>Audio</span>
-                      </button>
-                    )}
+                    <button
+                      type="button"
+                      onClick={() => handlePlayAudio(ex.hanzi, ex.audioUrl, `ex-${exIdx}`)}
+                      className="inline-flex shrink-0 items-center gap-1.5 rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-1.5 text-xs font-semibold text-zinc-700 hover:border-emerald-500/40 hover:bg-emerald-50 hover:text-emerald-800 dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:text-emerald-400 cursor-pointer shadow-2xs transition-colors active:scale-95"
+                      title="Beispielsatz anhören"
+                    >
+                      <Volume2 className={`h-3.5 w-3.5 ${playingAudioKey === `ex-${exIdx}` ? 'animate-pulse text-emerald-600 dark:text-emerald-400' : ''}`} />
+                      <span>Audio</span>
+                    </button>
                   </div>
 
                   {/* Wort-für-Wort Zerlegung */}
@@ -719,16 +723,27 @@ export function GrammarPage() {
                       <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
                         {pt.explanation}
                       </p>
-                      <div className="rounded-xl bg-zinc-50 p-2.5 border border-zinc-200/60 dark:bg-zinc-950/40 dark:border-white/[0.05] flex items-baseline justify-between text-xs">
-                        <span className="font-cjk font-bold text-zinc-900 dark:text-zinc-100">
-                          {pt.example}
-                        </span>
-                        <span className="font-mono text-emerald-700 dark:text-emerald-400 text-[11px]">
-                          {pt.pinyin}
-                        </span>
-                        <span className="text-zinc-500 dark:text-zinc-400 text-[11px] truncate max-w-[180px]">
-                          „{pt.german}“
-                        </span>
+                      <div className="rounded-xl bg-zinc-50 p-2.5 border border-zinc-200/60 dark:bg-zinc-950/40 dark:border-white/[0.05] flex items-center justify-between text-xs gap-3">
+                        <div className="flex items-baseline gap-2 truncate">
+                          <span className="font-cjk font-bold text-zinc-900 dark:text-zinc-100">
+                            {pt.example}
+                          </span>
+                          <span className="font-mono text-emerald-700 dark:text-emerald-400 text-[11px]">
+                            {pt.pinyin}
+                          </span>
+                          <span className="text-zinc-500 dark:text-zinc-400 text-[11px] truncate max-w-[180px]">
+                            „{pt.german}“
+                          </span>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => handlePlayAudio(pt.example, undefined, `pt-${pIdx}`)}
+                          className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-zinc-200 bg-white text-zinc-600 hover:border-emerald-500/40 hover:bg-emerald-50 hover:text-emerald-800 dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:text-emerald-400 cursor-pointer shadow-2xs transition-colors active:scale-95"
+                          title="Beispielsatz anhören"
+                          aria-label="Beispielsatz anhören"
+                        >
+                          <Volume2 className={`h-3.5 w-3.5 ${playingAudioKey === `pt-${pIdx}` ? 'animate-pulse text-emerald-600 dark:text-emerald-400' : ''}`} />
+                        </button>
                       </div>
                     </div>
                   ))}

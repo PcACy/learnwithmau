@@ -124,9 +124,47 @@ export function nearDates(month: number, day: number): string[] {
   return [...results];
 }
 
+const PINYIN_MAP: Readonly<Record<string, string>> = {
+  '零': 'líng',
+  '一': 'yī',
+  '二': 'èr',
+  '两': 'liǎng',
+  '三': 'sān',
+  '四': 'sì',
+  '五': 'wǔ',
+  '六': 'liù',
+  '七': 'qī',
+  '八': 'bā',
+  '九': 'jiǔ',
+  '十': 'shí',
+  '百': 'bǎi',
+  '点': 'diǎn',
+  '分': 'fēn',
+  '半': 'bàn',
+  '整': 'zhěng',
+  '月': 'yuè',
+  '号': 'hào',
+  '日': 'rì',
+  '星': 'xīng',
+  '期': 'qī',
+};
+
+/** Wandelt chinesische Ziffern-/Zeit-/Datumsfolgen in sauberes Pinyin mit Tonmarkierungen um. */
+export function promptToPinyin(prompt: string): string {
+  const syllables: string[] = [];
+  for (const char of prompt) {
+    const p = PINYIN_MAP[char];
+    if (p) {
+      syllables.push(p);
+    }
+  }
+  return syllables.join(' ');
+}
+
 export interface DrillQuestion {
   kind: DrillKind;
   prompt: string;
+  pinyin: string;
   options: string[];
   correctIndex: number;
 }
@@ -159,6 +197,7 @@ export function buildDrillQuestion(kind: DrillKind): DrillQuestion {
   return {
     kind,
     prompt: spec.prompt,
+    pinyin: promptToPinyin(spec.prompt),
     options,
     correctIndex: options.indexOf(spec.answer),
   };

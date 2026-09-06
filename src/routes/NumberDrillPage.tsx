@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Eye, Volume2 } from 'lucide-react';
 import {
   buildDrillQuestion,
   promptItemIds,
@@ -12,12 +12,13 @@ import { SessionSummary } from '../components/game/SessionSummary';
 import { useProgressStore } from '../store/progressStore';
 import { SealBadge } from '../components/ui/SealBadge';
 import { KineticButton } from '../components/ui/KineticButton';
-import { playToneSequence } from '../lib/audio';
+import { playToneSequence, speakMandarin, stopCurrentAudio } from '../lib/audio';
 import { fireMicroBurst } from '../lib/confetti';
 
 const QUESTIONS_PER_SESSION = 12;
-const QUESTION_TIME_MS = 6000;
-const FAST_ANSWER_MS = 3000;
+const QUESTION_TIME_CLASSIC_MS = 6000;
+const QUESTION_TIME_LISTENING_MS = 8500;
+const FAST_ANSWER_MS = 3500;
 
 const KINDS: readonly DrillKind[] = ['number', 'time', 'date'];
 
@@ -28,6 +29,7 @@ const KIND_LABELS: Record<DrillKind, string> = {
 };
 
 type Phase = 'intro' | 'drill' | 'summary';
+type DrillMode = 'classic' | 'listening';
 
 interface DrillState {
   questions: DrillQuestion[];
@@ -62,8 +64,11 @@ export function NumberDrillPage() {
   const logSession = useProgressStore((s) => s.logSession);
 
   const [phase, setPhase] = useState<Phase>('intro');
+  const [mode, setMode] = useState<DrillMode>('classic');
   const [drill, setDrill] = useState<DrillState | null>(null);
   const [nowTick, setNowTick] = useState(() => Date.now());
+  const [revealedIndex, setRevealedIndex] = useState<number | null>(null);
+  const [isPlayingAudio, setIsPlayingAudio] = useState(false);
 
   const drillRef = useRef<DrillState | null>(null);
 
@@ -71,8 +76,15 @@ export function NumberDrillPage() {
     drillRef.current = drill;
   });
 
+  // Audio auf unmount stoppen
+  useEffect(() => {
+    return () => stopCurrentAudio();
+  }, []);
+
   const question = drill ? drill.questions[drill.index] : null;
   const answered = drill?.answeredIndex != null || drill?.timedOut === true;
+  const isPromptRevealed = drill ? revealedIndex === drill.index : false;
+  const questionTimeMs = mode === 'listening' ? QUESTION_TIME_LISTENING_MS : QUESTION_TIME_CLASSIC_MS;
 
   useEffect(() => {
     if (phase !== 'drill' || !drill || answered) return;
@@ -80,10 +92,29 @@ export function NumberDrillPage() {
     return () => window.clearInterval(intervalId);
   }, [phase, drill, answered]);
 
+  const playPromptAudio = useCallback((text: string) => {
+    stopCurrentAudio();
+    void speakMandarin(text, () => setIsPlayingAudio(false)).then((started) => {
+      if (started) {
+        setIsPlayingAudio(true);
+      }
+    });
+  }, []);
+
   const startSession = useCallback(() => {
+    stopCurrentAudio();
+    setIsPlayingAudio(false);
+    setRevealedIndex(null);
     setDrill(newSession());
     setPhase('drill');
   }, []);
+
+  // Audio-First Hördiktat: Beim Start einer neuen Frage automatisch vorlesen
+  useEffect(() => {
+    if (phase === 'drill' && question && mode === 'listening') {
+      playPromptAudio(question.prompt);
+    }
+  }, [phase, drill?.index, mode, question, playPromptAudio]);
 
   const answer = useCallback(
     async (optionIndex: number) => {
@@ -94,6 +125,8 @@ export function NumberDrillPage() {
 
       const correct = optionIndex >= 0 && optionIndex === currentQuestion.correctIndex;
       const reactionMs = Date.now() - current.questionStartedAt;
+
+      setRevealedIndex(current.index);
 
       // Zuerst synchron locken (verhindert Doppel-Answers bei schnellen Tasten),
       // danach die SRS-Reviews sequentiell durchschreiben.
@@ -153,10 +186,10 @@ export function NumberDrillPage() {
     if (phase !== 'drill' || !drill || answered) return;
 
     const elapsed = Date.now() - drill.questionStartedAt;
-    const remaining = Math.max(0, QUESTION_TIME_MS - elapsed);
+    const remaining = Math.max(0, questionTimeMs - elapsed);
     const timeoutId = window.setTimeout(() => answer(-1), remaining);
     return () => window.clearTimeout(timeoutId);
-  }, [phase, drill, answered, answer]);
+  }, [phase, drill, answered, answer, questionTimeMs]);
 
   useKeyDown((event) => {
     if (event.metaKey || event.ctrlKey) return;
@@ -167,14 +200,30 @@ export function NumberDrillPage() {
       return;
     }
 
-    if (phase !== 'drill') return;
+    if (phase !== 'drill' || !question) return;
 
-    if (event.key === 'Enter') {
-      next();
+    if (event.key === ' ' || event.code === 'Space') {
+      event.preventDefault();
+      if (answered) {
+        next();
+      } else {
+        playPromptAudio(question.prompt);
+      }
       return;
     }
-    const digit = Number.parseInt(event.key, 10);
-    if (digit >= 1 && digit <= 4) answer(digit - 1);
+
+    if (event.key === 'Enter') {
+      if (answered) {
+        event.preventDefault();
+        next();
+      }
+      return;
+    }
+
+    if (!answered) {
+      const digit = Number.parseInt(event.key, 10);
+      if (digit >= 1 && digit <= 4) answer(digit - 1);
+    }
   });
 
   if (phase === 'intro') {
@@ -183,14 +232,12 @@ export function NumberDrillPage() {
         <div className="flex items-center gap-2.5">
           <SealBadge sealChar="数" label="ZAHLEN & ZEIT" variant="jade" />
           <span className="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
-            Tempo-Drill
+            Tempo-Drill &amp; Hördiktat
           </span>
         </div>
 
-        <section
-          className="double-bezel-casing shadow-whisper"
-        >
-          <div className="double-bezel-core p-7 sm:p-10 space-y-6 relative">
+        <section className="double-bezel-casing shadow-whisper">
+          <div className="double-bezel-core p-7 sm:p-10 space-y-7 relative">
             <span className="watermark-glyph">数</span>
 
             <div>
@@ -198,15 +245,65 @@ export function NumberDrillPage() {
                 Number &amp; Time Drill
               </h1>
               <p className="mt-3 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-                Schnellerkennung: Zahlen, Uhrzeiten und Daten erscheinen als Schriftzeichen – du wählst
-                die passende Bedeutung unter Zeitdruck.
+                Schnellerkennung von Zahlen, Uhrzeiten und Daten. Trainiere entweder das visuelle
+                Erfassen der Hanzi-Zeichen oder schule dein Gehör im auditiven HSK-1 Hördiktat.
               </p>
             </div>
 
-            <ul className="space-y-3 text-xs leading-relaxed text-zinc-600 dark:text-zinc-300">
+            {/* Modus-Auswahl */}
+            <div className="space-y-2 relative">
+              <span className="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 block">
+                Trainings-Modus
+              </span>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <button
+                  type="button"
+                  onClick={() => setMode('classic')}
+                  className={`rounded-2xl border p-4 text-left transition-all cursor-pointer ${
+                    mode === 'classic'
+                      ? 'border-emerald-600 bg-emerald-500/10 shadow-xs dark:border-emerald-400 dark:bg-emerald-950/30'
+                      : 'border-zinc-200/80 bg-white hover:border-zinc-300 dark:border-white/10 dark:bg-zinc-900'
+                  }`}
+                >
+                  <div className="font-bold text-sm text-zinc-900 dark:text-zinc-100 flex items-center justify-between">
+                    <span>Klassisch (Lesen)</span>
+                    <span className="font-cjk text-base font-semibold text-emerald-600 dark:text-emerald-400">
+                      读
+                    </span>
+                  </div>
+                  <p className="mt-1 text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
+                    Schriftzeichen und Pinyin sehen, passende Bedeutung unter Zeitdruck auswählen.
+                  </p>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setMode('listening')}
+                  className={`rounded-2xl border p-4 text-left transition-all cursor-pointer ${
+                    mode === 'listening'
+                      ? 'border-emerald-600 bg-emerald-500/10 shadow-xs dark:border-emerald-400 dark:bg-emerald-950/30'
+                      : 'border-zinc-200/80 bg-white hover:border-zinc-300 dark:border-white/10 dark:bg-zinc-900'
+                  }`}
+                >
+                  <div className="font-bold text-sm text-zinc-900 dark:text-zinc-100 flex items-center justify-between">
+                    <span>Hördiktat (Audio-First)</span>
+                    <span className="font-cjk text-base font-semibold text-emerald-600 dark:text-emerald-400">
+                      听
+                    </span>
+                  </div>
+                  <p className="mt-1 text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
+                    Aussprache auf Mandarin hören, Zahl rein auditiv erkennen wie in HSK-1-Hörprüfungen.
+                  </p>
+                </button>
+              </div>
+            </div>
+
+            <ul className="space-y-3 text-xs leading-relaxed text-zinc-600 dark:text-zinc-300 relative">
               <li className="flex gap-3">
                 <span className="font-mono font-bold text-emerald-700 dark:text-emerald-400">01</span>
-                <span>{QUESTIONS_PER_SESSION} Fragen, je {QUESTION_TIME_MS / 1000} Sekunden – danach zählt die Frage als falsch.</span>
+                <span>
+                  {QUESTIONS_PER_SESSION} Fragen, je {questionTimeMs / 1000} Sekunden – danach zählt die Frage als Zeitüberschreitung.
+                </span>
               </li>
               <li className="flex gap-3">
                 <span className="font-mono font-bold text-emerald-700 dark:text-emerald-400">02</span>
@@ -214,18 +311,18 @@ export function NumberDrillPage() {
               </li>
               <li className="flex gap-3">
                 <span className="font-mono font-bold text-emerald-700 dark:text-emerald-400">03</span>
-                <span>Zahlen füttern direkt die SRS-Karten ihrer Schriftzeichen (一 bis 百).</span>
+                <span>Taste [Leertaste] wiederholt jederzeit die Audio-Aussprache.</span>
               </li>
             </ul>
 
-            <div className="pt-2">
+            <div className="pt-2 relative">
               <KineticButton
                 variant="primary"
                 onClick={startSession}
                 shortcut="[Enter]"
                 icon={<ArrowRight className="h-4 w-4" />}
               >
-                Session starten
+                {mode === 'listening' ? 'Hördiktat starten' : 'Tempo-Drill starten'}
               </KineticButton>
             </div>
           </div>
@@ -251,7 +348,9 @@ export function NumberDrillPage() {
   if (!drill || !question) return null;
 
   const elapsedMs = Math.max(0, nowTick - drill.questionStartedAt);
-  const secondsLeft = Math.max(0, (QUESTION_TIME_MS - elapsedMs) / QUESTION_TIME_MS);
+  const secondsLeft = Math.max(0, (questionTimeMs - elapsedMs) / questionTimeMs);
+
+  const isListeningHidden = mode === 'listening' && !answered && !isPromptRevealed;
 
   return (
     <div className="mx-auto max-w-3xl space-y-6" aria-live="polite">
@@ -260,11 +359,11 @@ export function NumberDrillPage() {
           <div className="flex items-center gap-2.5">
             <SealBadge sealChar="数" label="ZAHLEN & ZEIT" variant="jade" />
             <span className="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
-              Frage {drill.index + 1} / {drill.questions.length} · {KIND_LABELS[question.kind]}
+              Frage {drill.index + 1} / {drill.questions.length} · {KIND_LABELS[question.kind]} {mode === 'listening' && '· Hördiktat'}
             </span>
           </div>
           <h1 className="text-2xl font-black tracking-tight sm:text-3xl text-zinc-900 dark:text-zinc-50">
-            Was bedeutet das?
+            {mode === 'listening' ? 'Welche Zahl hörst du?' : 'Was bedeutet das?'}
           </h1>
         </div>
         <span className="rounded-full border border-zinc-200/80 bg-white/90 px-3.5 py-1.5 font-mono text-xs font-bold tabular-nums text-zinc-600 dark:border-white/10 dark:bg-zinc-900/90 dark:text-zinc-300">
@@ -287,15 +386,67 @@ export function NumberDrillPage() {
         </div>
       )}
 
-      <section
-        className="double-bezel-casing shadow-whisper"
-      >
+      <section className="double-bezel-casing shadow-whisper">
         <div className="double-bezel-core p-7 sm:p-10 space-y-8 relative">
           <span className="watermark-glyph">数</span>
 
-          <p className="text-center font-cjk text-6xl font-black tracking-wide text-zinc-900 dark:text-zinc-50 relative">
-            {question.prompt}
-          </p>
+          {/* Prompt Area: Listening Mode (Audio-First) vs Classic */}
+          {isListeningHidden ? (
+            <div className="flex flex-col items-center justify-center space-y-4 py-3 relative">
+              <button
+                type="button"
+                onClick={() => playPromptAudio(question.prompt)}
+                className="group relative flex h-24 w-24 items-center justify-center rounded-3xl border-2 border-emerald-500/40 bg-emerald-500/10 text-emerald-700 shadow-whisper transition-all hover:scale-105 active:scale-95 dark:border-emerald-400/40 dark:bg-emerald-500/15 dark:text-emerald-300 cursor-pointer"
+                title="Audio nochmal abspielen (Taste [Leertaste])"
+                aria-label="Audio abspielen"
+              >
+                <Volume2
+                  className={`h-10 w-10 transition-transform ${
+                    isPlayingAudio ? 'animate-pulse scale-110 text-emerald-600 dark:text-emerald-400' : 'group-hover:scale-110'
+                  }`}
+                />
+              </button>
+
+              <div className="flex items-center gap-3 text-xs text-zinc-500 dark:text-zinc-400">
+                <span className="font-mono">
+                  [Leertaste] drücken zum Wiederholen
+                </span>
+                <span className="text-zinc-300 dark:text-zinc-700">·</span>
+                <button
+                  type="button"
+                  onClick={() => drill && setRevealedIndex(drill.index)}
+                  className="inline-flex items-center gap-1 font-semibold text-zinc-600 hover:text-emerald-600 dark:text-zinc-400 dark:hover:text-emerald-400 cursor-pointer"
+                >
+                  <Eye className="h-3.5 w-3.5" />
+                  <span>Zeichen aufdecken</span>
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="text-center space-y-2 relative">
+              <div className="flex items-center justify-center gap-4">
+                <p className="font-cjk text-5xl sm:text-6xl font-black tracking-wide text-zinc-900 dark:text-zinc-50">
+                  {question.prompt}
+                </p>
+                <button
+                  type="button"
+                  onClick={() => playPromptAudio(question.prompt)}
+                  className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-zinc-200 bg-zinc-50 text-zinc-700 hover:border-emerald-500/40 hover:bg-emerald-50 hover:text-emerald-800 dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:text-emerald-400 cursor-pointer shadow-xs transition-transform active:scale-95"
+                  title="Aussprache anhören (Taste [Leertaste])"
+                  aria-label="Aussprache anhören"
+                >
+                  <Volume2
+                    className={`h-5 w-5 ${
+                      isPlayingAudio ? 'animate-pulse text-emerald-600 dark:text-emerald-400' : ''
+                    }`}
+                  />
+                </button>
+              </div>
+              <p className="font-mono text-base font-bold text-emerald-700 dark:text-emerald-400">
+                {question.pinyin}
+              </p>
+            </div>
+          )}
 
           <div className="grid grid-cols-2 gap-4 relative">
             {question.options.map((option, i) => {
@@ -351,9 +502,18 @@ export function NumberDrillPage() {
                     ? 'Richtig gelöst!'
                     : 'Leider daneben.'}
               </p>
-              <p className="mt-1 font-mono text-xs text-zinc-600 dark:text-zinc-300 font-normal">
-                {question.prompt} = {question.options[question.correctIndex]}
-              </p>
+              <div className="mt-1 flex items-center justify-center gap-2 font-mono text-xs text-zinc-600 dark:text-zinc-300 font-normal">
+                <span className="font-cjk font-bold text-sm text-zinc-900 dark:text-zinc-100">
+                  {question.prompt}
+                </span>
+                <span className="font-semibold text-emerald-700 dark:text-emerald-400">
+                  ({question.pinyin})
+                </span>
+                <span>=</span>
+                <span className="font-bold text-zinc-900 dark:text-zinc-100">
+                  {question.options[question.correctIndex]}
+                </span>
+              </div>
             </div>
           )}
 
@@ -373,7 +533,8 @@ export function NumberDrillPage() {
             <KeyHints
               hints={[
                 ['1–4', 'Antwort wählen'],
-                ...(answered ? ([['↵ Enter', 'Nächste Frage']] as [string, string][]) : []),
+                ['␣ Space', answered ? 'Weiter' : 'Audio anhören'],
+                ...(answered ? ([['↵ Enter', 'Weiter']] as [string, string][]) : []),
               ]}
             />
           </div>

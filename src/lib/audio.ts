@@ -305,7 +305,7 @@ export function speakMandarin(text: string, onEnded?: () => void, rate?: number)
  */
 export async function playMandarinWithFallback(
   text: string,
-  audioPath?: string,
+  audioPath?: string | null,
   onEnded?: () => void,
   rate?: number,
 ): Promise<boolean> {

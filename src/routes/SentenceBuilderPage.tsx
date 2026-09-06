@@ -8,7 +8,7 @@ import {
   XCircle,
 } from 'lucide-react';
 import sentencesData from '../data/sentences.json';
-import { playAsset, playToneSequence, stopCurrentAudio } from '../lib/audio';
+import { playMandarinWithFallback, playToneSequence, stopCurrentAudio } from '../lib/audio';
 import { fireCelebration, fireMicroBurst } from '../lib/confetti';
 import { shuffled } from '../lib/shuffle';
 import { SealBadge } from '../components/ui/SealBadge';
@@ -58,11 +58,10 @@ export function SentenceBuilderPage() {
     return () => stopCurrentAudio();
   }, []);
 
-  const playSentenceAudio = useCallback((audioUrl?: string) => {
-    if (!audioUrl) return;
+  const playSentenceAudio = useCallback((text: string, audioUrl?: string) => {
     stopCurrentAudio();
     setIsPlayingAudio(true);
-    void playAsset(audioUrl, () => setIsPlayingAudio(false));
+    void playMandarinWithFallback(text, audioUrl, () => setIsPlayingAudio(false));
   }, []);
 
   const startSession = useCallback(() => {
@@ -106,11 +105,7 @@ export function SentenceBuilderPage() {
       setStatus('correct');
       setScore((s) => s + 1);
       fireMicroBurst();
-      if (currentSentence.audioUrl) {
-        playSentenceAudio(currentSentence.audioUrl);
-      } else {
-        playToneSequence([1, 4]);
-      }
+      playSentenceAudio(currentSentence.tokens.join(''), currentSentence.audioUrl);
     } else {
       setStatus('wrong');
       playToneSequence([3, 3]);
@@ -177,7 +172,7 @@ export function SentenceBuilderPage() {
     } else if (status === 'correct') {
       if (event.key === 'r' || event.key === 'R') {
         event.preventDefault();
-        playSentenceAudio(currentSentence.audioUrl);
+        playSentenceAudio(currentSentence.tokens.join(''), currentSentence.audioUrl);
         return;
       }
       if (event.key === 'Enter' || event.key === ' ') {
@@ -375,17 +370,15 @@ export function SentenceBuilderPage() {
                   <span className="font-cjk text-2xl sm:text-3xl font-bold text-emerald-950 dark:text-emerald-100">
                     {currentSentence.tokens.join('')}
                   </span>
-                  {currentSentence.audioUrl && (
-                    <button
-                      type="button"
-                      onClick={() => playSentenceAudio(currentSentence.audioUrl)}
-                      className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-emerald-500/30 bg-white/95 text-emerald-800 shadow-xs transition-all hover:bg-emerald-50 hover:scale-105 active:scale-95 dark:border-emerald-400/30 dark:bg-zinc-900 dark:text-emerald-300 cursor-pointer"
-                      title="Satz anhören (Taste 'r')"
-                      aria-label="Satz anhören"
-                    >
-                      <Volume2 className={`h-4.5 w-4.5 ${isPlayingAudio ? 'animate-pulse text-emerald-600 dark:text-emerald-400' : ''}`} />
-                    </button>
-                  )}
+                  <button
+                    type="button"
+                    onClick={() => playSentenceAudio(currentSentence.tokens.join(''), currentSentence.audioUrl)}
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-emerald-500/30 bg-white/95 text-emerald-800 shadow-xs transition-all hover:bg-emerald-50 hover:scale-105 active:scale-95 dark:border-emerald-400/30 dark:bg-zinc-900 dark:text-emerald-300 cursor-pointer"
+                    title="Satz anhören (Taste 'r')"
+                    aria-label="Satz anhören"
+                  >
+                    <Volume2 className={`h-4.5 w-4.5 ${isPlayingAudio ? 'animate-pulse text-emerald-600 dark:text-emerald-400' : ''}`} />
+                  </button>
                 </div>
 
                 <p className="font-mono text-sm font-semibold text-emerald-700 dark:text-emerald-400">

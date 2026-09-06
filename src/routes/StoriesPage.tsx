@@ -21,7 +21,7 @@ import {
 } from 'lucide-react';
 import storiesData from '../data/stories.json';
 import type { Story, StorySentence, StoryWordToken } from '../types/story';
-import { playAsset, playToneSequence, stopCurrentAudio } from '../lib/audio';
+import { playMandarinWithFallback, stopCurrentAudio } from '../lib/audio';
 import { fireCelebration, fireMicroBurst } from '../lib/confetti';
 import { getCompletedStories, putCompletedStories } from '../lib/db';
 import { STORY_TO_GRAMMAR_MAP } from '../data/chapterLinks';
@@ -84,13 +84,7 @@ export function StoriesPage() {
     (token: StoryWordToken) => {
       cancelFullAudio();
       const vocab = VOCAB.find((v) => v.hanzi === token.hanzi);
-      if (vocab?.audioPath) {
-        void playAsset(vocab.audioPath);
-        return;
-      }
-      if (vocab) {
-        playToneSequence(vocab.syllables.map((s) => s.tone));
-      }
+      void playMandarinWithFallback(token.hanzi, vocab?.audioPath);
     },
     [cancelFullAudio],
   );
@@ -147,9 +141,8 @@ export function StoriesPage() {
       return;
     }
 
-    if (!sentence.audioUrl) return;
     setPlayingSentenceId(sentence.id);
-    await playAsset(sentence.audioUrl, () => {
+    await playMandarinWithFallback(sentence.hanzi, sentence.audioUrl, () => {
       setPlayingSentenceId((cur) => (cur === sentence.id ? null : cur));
     });
   };
@@ -166,12 +159,11 @@ export function StoriesPage() {
 
     for (const sentence of currentStory.sentences) {
       if (fullAudioCancelledRef.current) break;
-      if (!sentence.audioUrl) continue;
 
       setPlayingSentenceId(sentence.id);
       await new Promise<void>((resolve) => {
         audioEndResolverRef.current = resolve;
-        void playAsset(sentence.audioUrl!, () => {
+        void playMandarinWithFallback(sentence.hanzi, sentence.audioUrl, () => {
           if (audioEndResolverRef.current === resolve) {
             audioEndResolverRef.current = null;
           }

@@ -4,6 +4,7 @@ import {
   nearDates,
   nearNumbers,
   nearTimes,
+  promptToPinyin,
   type DrillKind,
 } from './numberDrill';
 
@@ -64,17 +65,29 @@ describe('numberDrill generator', () => {
     });
   });
 
+  describe('promptToPinyin', () => {
+    it('converts numbers, times, weekdays and dates correctly to marked pinyin', () => {
+      expect(promptToPinyin('三百二十五')).toBe('sān bǎi èr shí wǔ');
+      expect(promptToPinyin('两点半')).toBe('liǎng diǎn bàn');
+      expect(promptToPinyin('星期三')).toBe('xīng qī sān');
+      expect(promptToPinyin('五月十二号')).toBe('wǔ yuè shí èr hào');
+      expect(promptToPinyin('零')).toBe('líng');
+    });
+  });
+
   describe('buildDrillQuestion', () => {
     const kinds: DrillKind[] = ['number', 'time', 'date'];
 
     kinds.forEach((kind) => {
-      it(`always builds 4 unique options without ? fallback for kind "${kind}"`, () => {
+      it(`always builds 4 unique options with valid pinyin for kind "${kind}"`, () => {
         for (let i = 0; i < 20; i++) {
           const q = buildDrillQuestion(kind);
           expect(q.options.length).toBe(4);
           expect(new Set(q.options).size).toBe(4);
           expect(q.correctIndex).toBeGreaterThanOrEqual(0);
           expect(q.correctIndex).toBeLessThan(4);
+          expect(q.pinyin).toBeTruthy();
+          expect(q.pinyin.length).toBeGreaterThan(0);
           for (const opt of q.options) {
             expect(opt).not.toContain('?');
           }
