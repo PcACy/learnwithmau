@@ -17,6 +17,7 @@ import {
   MessagesSquare,
   PenTool,
   Play,
+  RotateCcw,
   Sparkles,
   Target,
   TrendingUp,
@@ -28,6 +29,7 @@ import { useKeyDown } from '../hooks/useKeyDown';
 import { VOCAB } from '../data';
 import { selectDueItemIds, selectMastery } from '../lib/srsQuery';
 import { getCompletedDialogues, getCompletedGrammar, getCompletedStories } from '../lib/db';
+import { filterActiveMistakes } from '../lib/mistakeBank';
 import grammarData from '../data/grammar.json';
 import storiesData from '../data/stories.json';
 import type { GrammarLesson } from '../types/grammar';
@@ -43,6 +45,7 @@ export function DashboardPage() {
   const cards = useProgressStore((s) => s.cards);
   const streak = useProgressStore((s) => s.streak);
   const dailyGoal = useProgressStore((s) => s.dailyGoal);
+  const mistakes = useProgressStore((s) => s.mistakes);
   const navigate = useNavigate();
 
   const [completedGrammar, setCompletedGrammar] = useState<string[]>([]);
@@ -66,6 +69,10 @@ export function DashboardPage() {
     () => selectDueItemIds(cards, ALL_ITEM_IDS, new Date()).length,
     [cards],
   );
+  const activeMistakesCount = useMemo(
+    () => filterActiveMistakes(mistakes).length,
+    [mistakes],
+  );
   const mastery = selectMastery(cards, VOCAB.length);
   const masteryPercent = Math.round(mastery * 100);
   const goalReached = dailyGoal.completedReviews >= dailyGoal.targetReviews;
@@ -87,9 +94,10 @@ export function DashboardPage() {
     '/blitz',         // 6
     '/exam',          // 7
     '/review',        // 8
+    '/mistakes',      // 9
   ];
 
-  // Globale Shortcuts 1-8 im Dashboard
+  // Globale Shortcuts 1-9 im Dashboard
   useKeyDown((event) => {
     if (event.metaKey || event.ctrlKey || event.altKey || event.repeat) return;
     if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) return;
@@ -153,6 +161,26 @@ export function DashboardPage() {
             <TrendingUp className="h-3.5 w-3.5 text-sky-600 dark:text-sky-400 transition-transform group-hover:scale-110" />
             <span className="font-mono">{masteryPercent}% Meisterschaft</span>
           </Link>
+
+          <Link
+            to="/mistakes"
+            viewTransition
+            title="Zum Schwachstellen-Trainer & Fehler-Bank"
+            className={`group flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-semibold shadow-xs transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+              activeMistakesCount > 0
+                ? 'border-rose-500/30 bg-rose-500/10 text-rose-800 dark:text-rose-300 hover:bg-rose-500/15'
+                : 'border-zinc-200/80 bg-white/90 text-zinc-700 hover:border-emerald-500/40 dark:border-white/10 dark:bg-zinc-900/90 dark:text-zinc-200'
+            }`}
+          >
+            <RotateCcw
+              className={`h-3.5 w-3.5 transition-transform group-hover:-rotate-45 ${
+                activeMistakesCount > 0 ? 'text-rose-600 dark:text-rose-400' : 'text-zinc-400'
+              }`}
+            />
+            <span className="font-mono">
+              {activeMistakesCount > 0 ? `${activeMistakesCount} Fehler` : '0 Fehler'}
+            </span>
+          </Link>
         </div>
       </div>
 
@@ -194,6 +222,15 @@ export function DashboardPage() {
                     Festige dein Langzeit-Gedächtnis mit der intelligenten SM-2-Wiederholung für den vollständigen HSK-1-Katalog.
                   </p>
                 </>
+              ) : activeMistakesCount > 0 ? (
+                <>
+                  <h2 className="text-2xl font-bold tracking-tight sm:text-3xl text-zinc-900 dark:text-zinc-100">
+                    {activeMistakesCount} Schwachstellen im Fehlerheft bereit
+                  </h2>
+                  <p className="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+                    Schließe Wissenslücken aus deinen bisherigen Übungen und bereinige die Fehlerbank in fokussierten 5er-Runden.
+                  </p>
+                </>
               ) : nextGrammarLesson ? (
                 <>
                   <h2 className="text-2xl font-bold tracking-tight sm:text-3xl text-zinc-900 dark:text-zinc-100">
@@ -233,6 +270,14 @@ export function DashboardPage() {
                   icon={<Play className="h-4 w-4 fill-white" />}
                 >
                   Jetzt wiederholen ({dueToday})
+                </KineticButton>
+              ) : activeMistakesCount > 0 ? (
+                <KineticButton
+                  variant="primary"
+                  onClick={() => navigate('/mistakes', { viewTransition: true })}
+                  icon={<RotateCcw className="h-4 w-4" />}
+                >
+                  Schwachstellen beheben ({activeMistakesCount})
                 </KineticButton>
               ) : nextGrammarLesson ? (
                 <KineticButton
@@ -681,11 +726,11 @@ export function DashboardPage() {
             </div>
           </div>
           <span className="hidden font-mono text-xs text-zinc-400 sm:block">
-            Tastatur: <kbd className="rounded border px-1.5 py-0.5 text-[11px] font-mono">5</kbd>–<kbd className="rounded border px-1.5 py-0.5 text-[11px] font-mono">8</kbd>
+            Tastatur: <kbd className="rounded border px-1.5 py-0.5 text-[11px] font-mono">5</kbd>–<kbd className="rounded border px-1.5 py-0.5 text-[11px] font-mono">9</kbd>
           </span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
           {/* 5: Gehörtraining */}
           <Link
             to="/ear-trainer"
@@ -790,6 +835,35 @@ export function DashboardPage() {
             </div>
             <div className="flex items-center gap-1 font-mono text-xs font-semibold text-emerald-700 dark:text-emerald-400">
               <span>Stapel öffnen</span>
+              <ChevronRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+            </div>
+          </Link>
+
+          {/* 9: Schwachstellen-Trainer · 错题本 */}
+          <Link
+            to="/mistakes"
+            viewTransition
+            className="group relative overflow-hidden rounded-3xl border border-rose-500/30 bg-rose-500/[0.04] p-5 shadow-whisper transition-all duration-200 hover:-translate-y-1 hover:border-rose-500/60 dark:border-rose-500/20 dark:bg-rose-500/[0.02] flex flex-col justify-between gap-4"
+          >
+            <span className="watermark-glyph text-[80px]! -bottom-3! -right-2!">错</span>
+            <div className="space-y-2.5 relative">
+              <div className="flex items-center justify-between">
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-rose-500/10 text-rose-700 dark:text-rose-400 transition-colors">
+                  <RotateCcw className="h-5 w-5" />
+                </span>
+                <span className="rounded-md border border-rose-500/30 bg-white px-2 py-0.5 font-mono text-[11px] font-bold text-rose-700 dark:bg-zinc-900 dark:text-rose-400">
+                  [9]
+                </span>
+              </div>
+              <h3 className="font-bold text-base text-zinc-900 dark:text-zinc-100">Schwachstellen</h3>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
+                {activeMistakesCount > 0
+                  ? `${activeMistakesCount} offene Fehler im Fehlerheft (2 Treffer zum Löschen).`
+                  : 'Fehlerbank leer — alle Schwachstellen gemeistert!'}
+              </p>
+            </div>
+            <div className="flex items-center gap-1 font-mono text-xs font-semibold text-rose-700 dark:text-rose-400">
+              <span>Trainer starten</span>
               <ChevronRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
             </div>
           </Link>

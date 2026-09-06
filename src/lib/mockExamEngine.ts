@@ -1,6 +1,8 @@
 import mockExamData from '../data/mockExam.json';
 import type { ExamQuestion } from '../types/exam';
 import { shuffled } from './shuffle';
+import { VOCAB } from '../data';
+import type { VocabItem } from '../types/vocab';
 
 export type ExamMode = 'set1' | 'set2' | 'shuffle';
 
@@ -68,5 +70,29 @@ export function buildExam(mode: ExamMode): {
     config,
     questions: [...selectedListening, ...selectedReading],
   };
+}
+
+/**
+ * Ordnet einer Prüfungsfrage die passende HSK-1-Vokabel für die Fehlerbank zu.
+ */
+export function findVocabForExamQuestion(q: ExamQuestion): VocabItem | undefined {
+  if (q.audioUrl) {
+    const match = q.audioUrl.match(/\/audio\/hsk1\/([^.]+)\.mp3/);
+    if (match) {
+      const found = VOCAB.find((v) => v.id === match[1] || v.audioPath === q.audioUrl);
+      if (found) return found;
+    }
+  }
+
+  if (q.chineseText) {
+    const sorted = [...VOCAB].sort((a, b) => b.hanzi.length - a.hanzi.length);
+    for (const v of sorted) {
+      if (q.chineseText.includes(v.hanzi)) {
+        return v;
+      }
+    }
+  }
+
+  return undefined;
 }
 

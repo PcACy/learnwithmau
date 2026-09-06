@@ -19,6 +19,7 @@ import { DialoguePage } from './routes/DialoguePage';
 import { PinyinPage } from './routes/PinyinPage';
 import { StrokeGuidePage } from './routes/StrokeGuidePage';
 import { CulturePage } from './routes/CulturePage';
+import { MistakesPage } from './routes/MistakesPage';
 
 function renderMode(mode: ModeConfig) {
   switch (mode.id) {
@@ -55,6 +56,7 @@ export function AppRoutes() {
         <Route path="/stats" element={<StatsPage />} />
         <Route path="/settings" element={<SettingsPage />} />
         <Route path="/blitz" element={<BlitzPage />} />
+        <Route path="/mistakes" element={<MistakesPage />} />
         {MODES.map((mode) => (
           <Route key={mode.id} path={mode.path} element={renderMode(mode)} />
         ))}

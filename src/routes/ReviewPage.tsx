@@ -73,6 +73,7 @@ export function ReviewPage() {
   const cards = useProgressStore((s) => s.cards);
   const review = useProgressStore((s) => s.review);
   const logSession = useProgressStore((s) => s.logSession);
+  const recordMistake = useProgressStore((s) => s.recordMistake);
 
   const [selectedDeckId, setSelectedDeckId] = useState<string>('all');
   const [freshLimit, setFreshLimit] = useState<number | 'all'>(10);
@@ -197,6 +198,7 @@ export function ReviewPage() {
         playToneSequence([1]);
       } else {
         playToneSequence([4]);
+        void recordMistake(currentId, 'review');
       }
 
       let nextQueue: string[];
@@ -226,7 +228,7 @@ export function ReviewPage() {
         revealed: false,
       });
     },
-    [session, currentId, revealed, review, finish],
+    [session, currentId, revealed, review, finish, recordMistake],
   );
 
   useKeyDown((event) => {

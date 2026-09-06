@@ -2,7 +2,9 @@ import { create } from 'zustand';
 import type { SrsCard, SrsGrade } from '../types/srs';
 import { applyReview, createCard, toDateKey } from '../lib/srs';
 import type { DailyGoal, SessionStat, StreakData } from '../types/game';
-import { db, getMeta, putMeta } from '../lib/db';
+import { db, getMeta, getMistakeBank, putMeta, putMistakeBank } from '../lib/db';
+import type { MistakeRecord, MistakeSourceMode } from '../types/mistake';
+import { applyDrillResult, createOrUpdateMistakeRecord } from '../lib/mistakeBank';
 
 export const DEFAULT_DAILY_TARGET = 20;
 
@@ -70,6 +72,7 @@ export interface ProgressState {
   cards: Record<string, SrsCard>;
   streak: StreakData;
   dailyGoal: DailyGoal;
+  mistakes: Record<string, MistakeRecord>;
 
   hydrate(): Promise<void>;
   /** SM-2-Review mit Write-Through nach IndexedDB (atomar in einer Transaktion). */
@@ -78,6 +81,12 @@ export interface ProgressState {
   logSession(stat: Omit<SessionStat, 'id' | 'finishedAt'>): Promise<void>;
   /** Setzt das Tagesziel (heutige completedReviews bleiben erhalten). */
   setDailyTarget(target: number): Promise<void>;
+  /** Erfasst einen Fehler aus einem beliebigen Spiel-/Lernmodus in der Fehlerbank. */
+  recordMistake(itemId: string, mode: MistakeSourceMode): Promise<void>;
+  /** Verarbeitet das Ergebnis einer Schwachstellen-Übung (2 Treffer in Folge = gemeistert). */
+  answerMistakeDrill(itemId: string, correct: boolean): Promise<{ resolved: boolean; streak: number }>;
+  /** Löscht alle als gemeistert (isResolved: true) markierten Fehler aus der Bank. */
+  clearResolvedMistakes(): Promise<void>;
 }
 
 export const useProgressStore = create<ProgressState>()((set, get) => ({
@@ -87,6 +96,7 @@ export const useProgressStore = create<ProgressState>()((set, get) => ({
   cards: {},
   streak: DEFAULT_STREAK,
   dailyGoal: todayGoal(new Date()),
+  mistakes: {},
 
   async hydrate() {
     const HYDRATION_TIMEOUT_MS = 3000;
@@ -108,10 +118,11 @@ export const useProgressStore = create<ProgressState>()((set, get) => ({
         db.cards.toArray().catch(() => [] as SrsCard[]),
         getMeta('streak').catch(() => undefined),
         getMeta('dailyGoal').catch(() => undefined),
+        getMistakeBank().catch(() => ({})),
       ] as const);
 
-    let [cardRows, streak, dailyGoal] = await withTimeout(load()).then(
-      (result) => result ?? [undefined, undefined, undefined],
+    let [cardRows, streak, dailyGoal, loadedMistakes] = await withTimeout(load()).then(
+      (result) => result ?? [undefined, undefined, undefined, undefined],
     );
 
     const timedOut = cardRows === undefined;
@@ -129,6 +140,7 @@ export const useProgressStore = create<ProgressState>()((set, get) => ({
       cards,
       streak: effectiveStreak,
       dailyGoal: effectiveGoal,
+      mistakes: loadedMistakes ?? get().mistakes ?? {},
     });
 
     if (timedOut) {
@@ -136,7 +148,7 @@ export const useProgressStore = create<ProgressState>()((set, get) => ({
       // Schließen eines blockierenden Tabs), Daten leise übernehmen.
       window.setTimeout(() => {
         void load()
-          .then(([lateRows, lateStreak, lateGoal]) => {
+          .then(([lateRows, lateStreak, lateGoal, lateMistakes]) => {
             if (!lateRows) return;
             const lateCards: Record<string, SrsCard> = { ...get().cards };
             for (const card of lateRows) {
@@ -147,6 +159,7 @@ export const useProgressStore = create<ProgressState>()((set, get) => ({
               cards: lateCards,
               streak: lateStreak ? normalizeStreak(lateStreak, lateNow) : state.streak,
               dailyGoal: lateGoal ? ensureFresh(lateGoal, lateNow) : state.dailyGoal,
+              mistakes: lateMistakes ? { ...state.mistakes, ...lateMistakes } : state.mistakes,
             }));
           })
           .catch(() => undefined);
@@ -208,6 +221,50 @@ export const useProgressStore = create<ProgressState>()((set, get) => ({
       // Write-Through-Fehler: In-Memory-State bleibt führend
     }
     set({ dailyGoal: goal });
+  },
+
+  async recordMistake(itemId, mode) {
+    const existing = get().mistakes[itemId];
+    const updated = createOrUpdateMistakeRecord(existing, itemId, mode, new Date());
+    const nextMistakes = { ...get().mistakes, [itemId]: updated };
+    set({ mistakes: nextMistakes });
+    try {
+      await putMistakeBank(nextMistakes);
+    } catch {
+      // Write-Through-Fehler: In-Memory-State bleibt führend
+    }
+  },
+
+  async answerMistakeDrill(itemId, correct) {
+    const existing = get().mistakes[itemId];
+    if (!existing) {
+      return { resolved: false, streak: 0 };
+    }
+    const updated = applyDrillResult(existing, correct, new Date());
+    const nextMistakes = { ...get().mistakes, [itemId]: updated };
+    set({ mistakes: nextMistakes });
+    try {
+      await putMistakeBank(nextMistakes);
+    } catch {
+      // Write-Through-Fehler: In-Memory-State bleibt führend
+    }
+    return { resolved: updated.isResolved, streak: updated.consecutiveCorrect };
+  },
+
+  async clearResolvedMistakes() {
+    const current = get().mistakes;
+    const remaining: Record<string, MistakeRecord> = {};
+    for (const [id, record] of Object.entries(current)) {
+      if (!record.isResolved) {
+        remaining[id] = record;
+      }
+    }
+    set({ mistakes: remaining });
+    try {
+      await putMistakeBank(remaining);
+    } catch {
+      // Write-Through-Fehler: In-Memory-State bleibt führend
+    }
   },
 }));
 

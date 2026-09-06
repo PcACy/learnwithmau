@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import {
   Award,
   BookOpen,
@@ -8,6 +8,7 @@ import {
   HardDrive,
   LineChart,
   MessagesSquare,
+  RotateCcw,
   Settings,
   Sparkles,
 } from 'lucide-react';
@@ -15,6 +16,7 @@ import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useProgressStore } from '../../store/progressStore';
 import { useKeyDown } from '../../hooks/useKeyDown';
 import { stopCurrentAudio } from '../../lib/audio';
+import { filterActiveMistakes } from '../../lib/mistakeBank';
 import { ThemeToggle } from './ThemeToggle';
 import { BackupModal } from '../dashboard/BackupModal';
 import { SealBadge } from '../ui/SealBadge';
@@ -75,6 +77,8 @@ function isLinkActive(to: string, currentPath: string): boolean {
 export function AppShell() {
   const hydrated = useProgressStore((s) => s.hydrated);
   const streak = useProgressStore((s) => s.streak.current);
+  const mistakes = useProgressStore((s) => s.mistakes);
+  const activeMistakesCount = useMemo(() => filterActiveMistakes(mistakes).length, [mistakes]);
   const [backupOpen, setBackupOpen] = useState(false);
 
   const location = useLocation();
@@ -268,6 +272,19 @@ export function AppShell() {
               >
                 <Flame className="h-3.5 w-3.5 fill-current animate-pulse-soft" aria-hidden />
                 <span>{streak}d</span>
+              </Link>
+            )}
+
+            {/* Mistake Bank Counter with Rose/Cinnabar Accent */}
+            {activeMistakesCount > 0 && (
+              <Link
+                to="/mistakes"
+                viewTransition
+                className="flex h-9 items-center gap-1.5 rounded-full border border-rose-500/30 bg-rose-500/10 px-3 font-mono text-xs font-bold text-rose-700 dark:border-rose-500/20 dark:text-rose-400 hover:bg-rose-500/15 transition-all"
+                title={`${activeMistakesCount} offene Schwachstellen im Fehlerheft`}
+              >
+                <RotateCcw className="h-3.5 w-3.5" aria-hidden />
+                <span>{activeMistakesCount}</span>
               </Link>
             )}
 

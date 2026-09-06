@@ -58,6 +58,7 @@ export function TypeRacerPage() {
   const cards = useProgressStore((s) => s.cards);
   const review = useProgressStore((s) => s.review);
   const logSession = useProgressStore((s) => s.logSession);
+  const recordMistake = useProgressStore((s) => s.recordMistake);
 
   const [phase, setPhase] = useState<Phase>('running');
   const [round, setRound] = useState<RoundState>(() => newRound(cards, new Date()));
@@ -148,12 +149,15 @@ export function TypeRacerPage() {
           totalErrors: r.totalErrors + 1,
           flashWrong: true,
         }));
+        if (currentItem?.id) {
+          void recordMistake(currentItem.id, 'typeracer');
+        }
         flashTimer.current = window.setTimeout(() => {
           setRound((r) => ({ ...r, flashWrong: false }));
         }, 320);
       }
     },
-    [currentItem, targetChar, phase, round, slotIndex, review, logSession],
+    [currentItem, targetChar, phase, round, slotIndex, review, logSession, recordMistake],
   );
 
   useEffect(() => {

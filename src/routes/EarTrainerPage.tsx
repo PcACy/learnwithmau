@@ -88,6 +88,7 @@ export function EarTrainerPage() {
   const cards = useProgressStore((s) => s.cards);
   const review = useProgressStore((s) => s.review);
   const logSession = useProgressStore((s) => s.logSession);
+  const recordMistake = useProgressStore((s) => s.recordMistake);
 
   const [phase, setPhase] = useState<Phase>('intro');
   const [drill, setDrill] = useState<DrillState | null>(null);
@@ -157,10 +158,13 @@ export function EarTrainerPage() {
 
       const reactionMs = Date.now() - drill.questionStartedAt;
       const grade = !correct ? 1 : reactionMs < FAST_ANSWER_MS ? 5 : 4;
-      void review(questionItemId(question), grade);
+      const targetItemId = questionItemId(question);
+      void review(targetItemId, grade);
 
       if (correct) {
         fireMicroBurst();
+      } else {
+        void recordMistake(targetItemId, 'ear-trainer');
       }
 
       setDrill({
@@ -170,7 +174,7 @@ export function EarTrainerPage() {
         reactionSumMs: drill.reactionSumMs + reactionMs,
       });
     },
-    [drill, question, answered, review],
+    [drill, question, answered, review, recordMistake],
   );
 
   const next = useCallback(() => {

@@ -42,6 +42,7 @@ const ROUTES: readonly [path: string, marker: string][] = [
   ['/pinyin', 'Pinyin- &amp; Phonetik-Schule'],
   ['/strokes', 'Stricharten- &amp; Radikal-Fibel'],
   ['/culture', 'Kultur, Etikette'],
+  ['/mistakes', 'Schwachstellen-Trainer'],
 ];
 
 describe('Alle Routen rendern ohne Crash', () => {

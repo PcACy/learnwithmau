@@ -24,6 +24,7 @@ const TOTAL_TIME_SEC = 90;
 
 export function BlitzPage() {
   const logSession = useProgressStore((s) => s.logSession);
+  const recordMistake = useProgressStore((s) => s.recordMistake);
   const [questions, setQuestions] = useState<BlitzQuestion[]>([]);
   const [currentIdx, setCurrentIdx] = useState(0);
   const [timeLeft, setTimeLeft] = useState(TOTAL_TIME_SEC);
@@ -134,6 +135,9 @@ export function BlitzPage() {
     } else {
       setStreak(0);
       playToneSequence([4]);
+      if (currentQ?.item?.id) {
+        void recordMistake(currentQ.item.id, 'blitz');
+      }
     }
 
     if (advanceTimerRef.current !== undefined) {

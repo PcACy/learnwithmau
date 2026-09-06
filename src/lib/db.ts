@@ -1,6 +1,7 @@
 import Dexie, { type Table } from 'dexie';
 import type { SrsCard } from '../types/srs';
 import type { DailyGoal, SessionStat, StreakData } from '../types/game';
+import type { MistakeRecord } from '../types/mistake';
 
 /** Typisierte Meta-Einträge (key-value in Tabelle `meta`). */
 export interface MetaMap {
@@ -9,6 +10,7 @@ export interface MetaMap {
   completedGrammar: string[];
   completedStories: string[];
   completedDialogues: Record<string, { stars: number; bestScore: number; completedAt: string }>;
+  mistakeBank: Record<string, MistakeRecord>;
 }
 
 export type MetaKey = keyof MetaMap;
@@ -114,6 +116,28 @@ export async function putCompletedDialogues(dialogues: Record<string, { stars: n
   }
 }
 
+export async function getMistakeBank(): Promise<Record<string, MistakeRecord>> {
+  const meta = await getMeta('mistakeBank');
+  if (meta && typeof meta === 'object') return meta;
+  try {
+    const raw = typeof window !== 'undefined' ? localStorage.getItem('hanzi_mistake_bank') : null;
+    return raw ? JSON.parse(raw) : {};
+  } catch {
+    return {};
+  }
+}
+
+export async function putMistakeBank(mistakes: Record<string, MistakeRecord>): Promise<void> {
+  await putMeta('mistakeBank', mistakes);
+  try {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('hanzi_mistake_bank', JSON.stringify(mistakes));
+    }
+  } catch {
+    // ignore
+  }
+}
+
 interface BackupData {
   version: 1;
   exportedAt: string;
@@ -195,6 +219,12 @@ export async function importBackup(
           } else if (row.key === 'completedDialogues' && typeof row.value === 'object' && row.value !== null) {
             try {
               localStorage.setItem('hanzi_completed_dialogues', JSON.stringify(row.value));
+            } catch {
+              // ignore
+            }
+          } else if (row.key === 'mistakeBank' && typeof row.value === 'object' && row.value !== null) {
+            try {
+              localStorage.setItem('hanzi_mistake_bank', JSON.stringify(row.value));
             } catch {
               // ignore
             }

@@ -17,7 +17,7 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import type { ExamSubmission } from '../types/exam';
-import { buildExam, EXAM_MODES, type ExamMode } from '../lib/mockExamEngine';
+import { buildExam, EXAM_MODES, findVocabForExamQuestion, type ExamMode } from '../lib/mockExamEngine';
 import { playAsset, stopCurrentAudio } from '../lib/audio';
 import { fireCelebration } from '../lib/confetti';
 import { useKeyDown } from '../hooks/useKeyDown';
@@ -30,6 +30,7 @@ const DEFAULT_TIME_SEC = 35 * 60; // 35 Minuten
 
 export function MockExamPage() {
   const logSession = useProgressStore((s) => s.logSession);
+  const recordMistake = useProgressStore((s) => s.recordMistake);
   const [phase, setPhase] = useState<'intro' | 'exam' | 'result'>('intro');
   const [selectedMode, setSelectedMode] = useState<ExamMode>('set1');
   const [activeExam, setActiveExam] = useState(() => buildExam('set1'));
@@ -60,6 +61,11 @@ export function MockExamPage() {
       if (given === q.correctIndex) {
         if (q.section === 'listening') listeningCorrect += 1;
         else readingCorrect += 1;
+      } else {
+        const item = findVocabForExamQuestion(q);
+        if (item) {
+          void recordMistake(item.id, 'exam');
+        }
       }
     });
 
@@ -97,7 +103,7 @@ export function MockExamPage() {
     if (passed) {
       fireCelebration();
     }
-  }, [answers, marked, logSession, questions]);
+  }, [answers, marked, logSession, questions, recordMistake]);
 
   const submitExamRef = useRef(handleSubmitExam);
   useEffect(() => {
