@@ -6,6 +6,7 @@ import {
   BookOpenText,
   CheckCircle2,
   ChevronRight,
+  Compass,
   Flame,
   FlaskConical,
   GraduationCap,
@@ -14,6 +15,7 @@ import {
   Layers,
   MessageSquareQuote,
   MessagesSquare,
+  PenTool,
   Play,
   Sparkles,
   Target,
@@ -269,6 +271,121 @@ export function DashboardPage() {
           </div>
         </div>
       </div>
+
+      {/* 2.5 LEHRBUCH-FUNDAMENT · PHONETIK, STRICHE & KULTUR */}
+      <section className="space-y-5">
+        <div className="flex items-baseline justify-between border-b border-zinc-200/80 dark:border-white/[0.08] pb-3">
+          <div className="flex items-center gap-3">
+            <SealBadge sealChar="基" label="FUNDAMENT" variant="cinnabar" size="sm" />
+            <div>
+              <h2 className="text-xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
+                Lehrbuch-Fundament: Phonetik, Striche &amp; Kultur
+              </h2>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400">
+                Die unerlässlichen theoretischen Grundlagen der chinesischen Sprache
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+          {/* Tile: Pinyin-Schule */}
+          <Link
+            to="/pinyin"
+            viewTransition
+            className="group relative overflow-hidden rounded-3xl border border-zinc-200/80 bg-white p-6 shadow-whisper transition-all duration-200 hover:-translate-y-1 hover:border-emerald-500/50 dark:border-white/[0.08] dark:bg-zinc-900 flex flex-col justify-between gap-5"
+          >
+            <span className="watermark-glyph text-[100px]! -bottom-4! -right-2!">拼</span>
+            <div className="space-y-3 relative">
+              <div className="flex items-center justify-between">
+                <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-700 dark:text-emerald-400">
+                  <Sparkles className="h-5 w-5" />
+                </span>
+                <span className="font-mono text-xs font-semibold text-emerald-700 dark:text-emerald-400">
+                  21 Anlaute · 36 Auslaute
+                </span>
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100">Pinyin- &amp; Phonetik-Schule</h3>
+                <p className="font-mono text-xs text-emerald-700 dark:text-emerald-400 uppercase tracking-wider mt-0.5">
+                  Lautlehre &amp; Tone Sandhi
+                </p>
+                <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed">
+                  Systematischer Ausspracheführer mit IPA, 4 Tönen, neutralem Ton und Tonveränderungsregeln (3+3, 一, 不).
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-1.5 font-mono text-xs font-bold text-emerald-700 dark:text-emerald-400 pt-2">
+              <span>Pinyin-Schule öffnen</span>
+              <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+            </div>
+          </Link>
+
+          {/* Tile: Stricharten- & Radikalfibel */}
+          <Link
+            to="/strokes"
+            viewTransition
+            className="group relative overflow-hidden rounded-3xl border border-zinc-200/80 bg-white p-6 shadow-whisper transition-all duration-200 hover:-translate-y-1 hover:border-emerald-500/50 dark:border-white/[0.08] dark:bg-zinc-900 flex flex-col justify-between gap-5"
+          >
+            <span className="watermark-glyph text-[100px]! -bottom-4! -right-2!">笔</span>
+            <div className="space-y-3 relative">
+              <div className="flex items-center justify-between">
+                <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-700 dark:text-emerald-400">
+                  <PenTool className="h-5 w-5" />
+                </span>
+                <span className="font-mono text-xs font-semibold text-emerald-700 dark:text-emerald-400">
+                  8 Striche · 7 Regeln
+                </span>
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100">Stricharten &amp; Schreibregeln</h3>
+                <p className="font-mono text-xs text-emerald-700 dark:text-emerald-400 uppercase tracking-wider mt-0.5">
+                  永字八法 Anatomie
+                </p>
+                <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed">
+                  Die 8 Grundstriche, die 7 fundamentalen Strichfolge-Axiome und die sinntragenden Radikale.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-1.5 font-mono text-xs font-bold text-emerald-700 dark:text-emerald-400 pt-2">
+              <span>Strichlehre öffnen</span>
+              <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+            </div>
+          </Link>
+
+          {/* Tile: Kultur & Landeskunde */}
+          <Link
+            to="/culture"
+            viewTransition
+            className="group relative overflow-hidden rounded-3xl border border-zinc-200/80 bg-white p-6 shadow-whisper transition-all duration-200 hover:-translate-y-1 hover:border-emerald-500/50 dark:border-white/[0.08] dark:bg-zinc-900 flex flex-col justify-between gap-5"
+          >
+            <span className="watermark-glyph text-[100px]! -bottom-4! -right-2!">文</span>
+            <div className="space-y-3 relative">
+              <div className="flex items-center justify-between">
+                <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-rose-500/10 text-rose-700 dark:text-rose-400">
+                  <Compass className="h-5 w-5" />
+                </span>
+                <span className="font-mono text-xs font-semibold text-rose-700 dark:text-rose-400">
+                  文化小知识
+                </span>
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100">Kultur &amp; Etikette</h3>
+                <p className="font-mono text-xs text-rose-700 dark:text-rose-400 uppercase tracking-wider mt-0.5">
+                  Gepflogenheiten &amp; Tabus
+                </p>
+                <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed">
+                  Namenskonventionen, 1-Hand-Zahlengesten (1–10), Zahlensymbolik (8 vs 4) und Tischsitten.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-1.5 font-mono text-xs font-bold text-rose-700 dark:text-rose-400 pt-2">
+              <span>Kultur-Fibel öffnen</span>
+              <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+            </div>
+          </Link>
+        </div>
+      </section>
 
       {/* 3. 3-SÄULEN CURRICULUM ARCHITEKTUR */}
 

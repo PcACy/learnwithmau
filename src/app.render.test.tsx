@@ -39,6 +39,9 @@ const ROUTES: readonly [path: string, marker: string][] = [
   ['/sentences', 'SVO-Syntax-Baukasten'],
   ['/blitz', '90 Sekunden'],
   ['/stats', 'Lernfortschritt'],
+  ['/pinyin', 'Pinyin- &amp; Phonetik-Schule'],
+  ['/strokes', 'Stricharten- &amp; Radikal-Fibel'],
+  ['/culture', 'Kultur, Etikette'],
 ];
 
 describe('Alle Routen rendern ohne Crash', () => {

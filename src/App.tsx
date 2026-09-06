@@ -16,6 +16,9 @@ import { MockExamPage } from './routes/MockExamPage';
 import { GrammarPage } from './routes/GrammarPage';
 import { StoriesPage } from './routes/StoriesPage';
 import { DialoguePage } from './routes/DialoguePage';
+import { PinyinPage } from './routes/PinyinPage';
+import { StrokeGuidePage } from './routes/StrokeGuidePage';
+import { CulturePage } from './routes/CulturePage';
 
 function renderMode(mode: ModeConfig) {
   switch (mode.id) {
@@ -44,8 +47,11 @@ export function AppRoutes() {
       <Route element={<AppShell />}>
         <Route path="/" element={<DashboardPage />} />
         <Route path="/dictionary" element={<DictionaryPage />} />
+        <Route path="/pinyin" element={<PinyinPage />} />
+        <Route path="/strokes" element={<StrokeGuidePage />} />
         <Route path="/grammar" element={<GrammarPage />} />
         <Route path="/stories" element={<StoriesPage />} />
+        <Route path="/culture" element={<CulturePage />} />
         <Route path="/stats" element={<StatsPage />} />
         <Route path="/settings" element={<SettingsPage />} />
         <Route path="/blitz" element={<BlitzPage />} />

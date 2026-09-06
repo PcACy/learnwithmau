@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Printer } from 'lucide-react';
 import { VOCAB } from '../data';
 import { stripToneMarks } from '../lib/pinyinUtils';
 import { stopCurrentAudio } from '../lib/audio';
@@ -10,6 +10,7 @@ import { DictionaryMasterList } from '../components/dictionary/DictionaryMasterL
 import { DictionaryDetailPanel } from '../components/dictionary/DictionaryDetailPanel';
 import { PART_OF_SPEECH_MAP } from '../data/vocabDetails';
 import { SealBadge } from '../components/ui/SealBadge';
+import { TianzigePrintModal } from '../components/dictionary/TianzigePrintModal';
 
 import { useKeyDown } from '../hooks/useKeyDown';
 
@@ -17,6 +18,7 @@ export function DictionaryPage() {
   const [searchParams] = useSearchParams();
   const cards = useProgressStore((s) => s.cards);
   const searchInputRef = useRef<HTMLInputElement | null>(null);
+  const [printModalOpen, setPrintModalOpen] = useState(false);
 
   const paramQ = searchParams.get('q');
   const [internalQuery, setInternalQuery] = useState<string | null>(null);
@@ -120,6 +122,15 @@ export function DictionaryPage() {
         </div>
 
         <div className="flex items-center gap-2 font-mono text-xs text-zinc-500 dark:text-zinc-400">
+          <button
+            type="button"
+            onClick={() => setPrintModalOpen(true)}
+            className="flex items-center gap-1.5 rounded-full border border-emerald-600/30 bg-emerald-500/10 px-3.5 py-1.5 font-bold text-emerald-800 hover:bg-emerald-500/20 shadow-xs dark:border-emerald-500/30 dark:bg-emerald-500/15 dark:text-emerald-300 transition-all active:scale-95 cursor-pointer"
+            title="田字格 Tiánzìgé Schreibübungsblatt für dieses Wort drucken"
+          >
+            <Printer className="h-3.5 w-3.5" />
+            <span>田字格 Drucken</span>
+          </button>
           <span className="rounded-full border border-zinc-200/80 bg-white px-3.5 py-1.5 font-bold shadow-xs dark:border-white/10 dark:bg-zinc-900">
             {filteredItems.length} von {VOCAB.length} Wörtern
           </span>
@@ -203,6 +214,12 @@ export function DictionaryPage() {
           </div>
         )}
       </div>
+
+      <TianzigePrintModal
+        open={printModalOpen}
+        onClose={() => setPrintModalOpen(false)}
+        item={selectedItem}
+      />
     </div>
   );
 }

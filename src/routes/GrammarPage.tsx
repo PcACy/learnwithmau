@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import grammarData from '../data/grammar.json';
 import type { GrammarLesson } from '../types/grammar';
+import { GRAMMAR_PITFALLS, type PitfallPair } from '../data/grammarPitfalls';
 import { playAsset, stopCurrentAudio } from '../lib/audio';
 import { fireCelebration, fireMicroBurst } from '../lib/confetti';
 import { getCompletedGrammar, putCompletedGrammar } from '../lib/db';
@@ -28,6 +29,20 @@ export function GrammarPage() {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const paramLesson = searchParams.get('lesson');
+
+  const [viewMode, setViewMode] = useState<'lessons' | 'pitfalls'>('lessons');
+  const [selectedPitfall, setSelectedPitfall] = useState<PitfallPair>(GRAMMAR_PITFALLS[0]);
+  const [pitfallAnswers, setPitfallAnswers] = useState<Record<string, number>>({});
+  const [pitfallSubmitted, setPitfallSubmitted] = useState<Record<string, boolean>>({});
+
+  const handleSelectPitfallQuiz = (pairId: string, qIdx: number, optIdx: number, correctIdx: number) => {
+    const key = `${pairId}-${qIdx}`;
+    setPitfallAnswers((prev) => ({ ...prev, [key]: optIdx }));
+    setPitfallSubmitted((prev) => ({ ...prev, [key]: true }));
+    if (optIdx === correctIdx) {
+      fireMicroBurst();
+    }
+  };
 
   const [internalSelectedId, setInternalSelectedId] = useState<string>(() => {
     if (paramLesson && LESSONS.some((l) => l.id === paramLesson)) {
@@ -141,7 +156,36 @@ export function GrammarPage() {
         </div>
       </div>
 
-      {/* 2. Lektions-Navigator (Horizontal scrollbare Milled-Pills) */}
+      {/* Mode Switcher: 12 Lessons vs Pitfalls */}
+      <div className="flex flex-wrap gap-2 border-b border-zinc-200/80 pb-3 dark:border-white/[0.08]">
+        <button
+          type="button"
+          onClick={() => setViewMode('lessons')}
+          className={`flex items-center gap-2 rounded-2xl border px-4 py-2 text-xs font-bold transition-all duration-150 cursor-pointer ${
+            viewMode === 'lessons'
+              ? 'border-emerald-600 bg-emerald-500/10 text-emerald-900 shadow-sm ring-1 ring-emerald-500/30 dark:border-emerald-400 dark:text-emerald-300 dark:bg-emerald-500/15'
+              : 'border-zinc-200/80 bg-zinc-50 text-zinc-600 hover:bg-zinc-100 dark:border-white/10 dark:bg-zinc-900/40 dark:text-zinc-400'
+          }`}
+        >
+          <BookOpen className="h-3.5 w-3.5" />
+          <span>12 Kern-Lektionen</span>
+        </button>
+        <button
+          type="button"
+          onClick={() => setViewMode('pitfalls')}
+          className={`flex items-center gap-2 rounded-2xl border px-4 py-2 text-xs font-bold transition-all duration-150 cursor-pointer ${
+            viewMode === 'pitfalls'
+              ? 'border-emerald-600 bg-emerald-500/10 text-emerald-900 shadow-sm ring-1 ring-emerald-500/30 dark:border-emerald-400 dark:text-emerald-300 dark:bg-emerald-500/15'
+              : 'border-zinc-200/80 bg-zinc-50 text-zinc-600 hover:bg-zinc-100 dark:border-white/10 dark:bg-zinc-900/40 dark:text-zinc-400'
+          }`}
+        >
+          <AlertTriangle className="h-3.5 w-3.5 text-amber-600 dark:text-amber-400" />
+          <span>Verwechslungsfallen (二/两, 不/没...)</span>
+        </button>
+      </div>
+
+      {viewMode === 'lessons' ? (
+        <>
       <div
         className="reveal flex gap-2.5 overflow-x-auto pb-2 scrollbar-none"
         style={{ '--index': 1 } as CSSProperties}
@@ -543,6 +587,225 @@ export function GrammarPage() {
           </div>
         </div>
       </div>
+        </>
+      ) : (
+        /* KONTRASTIVE GRAMMATIK & VERWECHSLUNGSFALLEN */
+        <div className="space-y-8">
+          {/* Selector for Pitfall Pairs */}
+          <div className="flex gap-2.5 overflow-x-auto pb-2 scrollbar-none">
+            {GRAMMAR_PITFALLS.map((pair) => {
+              const isSel = pair.id === selectedPitfall.id;
+              return (
+                <button
+                  key={pair.id}
+                  type="button"
+                  onClick={() => setSelectedPitfall(pair)}
+                  className={`group flex shrink-0 items-center gap-2 rounded-2xl border px-4 py-2.5 text-xs font-semibold transition-all duration-150 cursor-pointer ${
+                    isSel
+                      ? 'border-emerald-600 bg-emerald-600 text-white shadow-whisper dark:border-emerald-500 dark:bg-emerald-600'
+                      : 'border-zinc-200/80 bg-white text-zinc-700 hover:border-emerald-500/40 hover:bg-zinc-50 dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800'
+                  }`}
+                >
+                  <span className="font-cjk font-bold text-sm">
+                    {pair.itemA.word} vs. {pair.itemB.word}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Double-Bezel Inspector Card */}
+          <div className="double-bezel-casing shadow-whisper">
+            <div className="double-bezel-core p-7 sm:p-10 space-y-8">
+              {/* Header */}
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <span className="rounded-full bg-amber-500/10 px-2.5 py-0.5 font-mono text-[10px] font-bold text-amber-800 dark:bg-amber-500/20 dark:text-amber-300">
+                    Kontrastive Grammatik
+                  </span>
+                  <span className="font-mono text-xs text-zinc-400">Verwechslungsfalle</span>
+                </div>
+                <h2 className="text-2xl font-black text-zinc-900 dark:text-zinc-50">
+                  {selectedPitfall.title}
+                </h2>
+                <p className="text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">
+                  {selectedPitfall.summary}
+                </p>
+              </div>
+
+              {/* Quick Rule Box */}
+              <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-4 dark:bg-emerald-500/10 space-y-1.5">
+                <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-800 dark:text-emerald-300">
+                  <Sparkles className="h-4 w-4" />
+                  <span>Goldene Lehrbuch-Faustregel:</span>
+                </div>
+                <p className="text-xs text-emerald-950/90 dark:text-emerald-200/90 leading-relaxed font-semibold">
+                  {selectedPitfall.quickRule}
+                </p>
+              </div>
+
+              {/* Side-by-Side Word Cards */}
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div className="rounded-2xl border border-zinc-200/80 bg-zinc-50/80 p-5 space-y-2 dark:border-white/[0.06] dark:bg-zinc-950/40">
+                  <div className="flex items-baseline gap-2">
+                    <span className="font-cjk text-3xl font-black text-zinc-900 dark:text-zinc-50">
+                      {selectedPitfall.itemA.word}
+                    </span>
+                    <span className="font-mono text-xs font-bold text-emerald-700 dark:text-emerald-400">
+                      {selectedPitfall.itemA.pinyin}
+                    </span>
+                    <span className="text-xs text-zinc-500">({selectedPitfall.itemA.translation})</span>
+                  </div>
+                  <p className="text-xs text-zinc-700 dark:text-zinc-300 leading-relaxed">
+                    <strong>Hauptverwendung:</strong> {selectedPitfall.itemA.coreUsage}
+                  </p>
+                </div>
+
+                <div className="rounded-2xl border border-zinc-200/80 bg-zinc-50/80 p-5 space-y-2 dark:border-white/[0.06] dark:bg-zinc-950/40">
+                  <div className="flex items-baseline gap-2">
+                    <span className="font-cjk text-3xl font-black text-zinc-900 dark:text-zinc-50">
+                      {selectedPitfall.itemB.word}
+                    </span>
+                    <span className="font-mono text-xs font-bold text-emerald-700 dark:text-emerald-400">
+                      {selectedPitfall.itemB.pinyin}
+                    </span>
+                    <span className="text-xs text-zinc-500">({selectedPitfall.itemB.translation})</span>
+                  </div>
+                  <p className="text-xs text-zinc-700 dark:text-zinc-300 leading-relaxed">
+                    <strong>Hauptverwendung:</strong> {selectedPitfall.itemB.coreUsage}
+                  </p>
+                </div>
+              </div>
+
+              {/* Comparison Scenarios Table */}
+              <div className="space-y-3">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                  Direkter Szenarien-Vergleich:
+                </h4>
+                <div className="space-y-2.5">
+                  {selectedPitfall.comparisonPoints.map((pt, pIdx) => (
+                    <div
+                      key={pIdx}
+                      className="rounded-2xl border border-zinc-200/70 bg-white p-4 shadow-2xs space-y-2 dark:border-white/[0.05] dark:bg-zinc-900/80"
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-zinc-900 dark:text-zinc-100">
+                          {pt.situation}
+                        </span>
+                        <div className="flex items-center gap-2 font-mono text-xs font-bold">
+                          <span
+                            className={
+                              pt.itemACorrect
+                                ? 'text-emerald-600 dark:text-emerald-400'
+                                : 'text-zinc-400 line-through opacity-60'
+                            }
+                          >
+                            {selectedPitfall.itemA.word} {pt.itemACorrect ? '✓' : '✗'}
+                          </span>
+                          <span className="text-zinc-300">|</span>
+                          <span
+                            className={
+                              pt.itemBCorrect
+                                ? 'text-emerald-600 dark:text-emerald-400'
+                                : 'text-zinc-400 line-through opacity-60'
+                            }
+                          >
+                            {selectedPitfall.itemB.word} {pt.itemBCorrect ? '✓' : '✗'}
+                          </span>
+                        </div>
+                      </div>
+                      <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                        {pt.explanation}
+                      </p>
+                      <div className="rounded-xl bg-zinc-50 p-2.5 border border-zinc-200/60 dark:bg-zinc-950/40 dark:border-white/[0.05] flex items-baseline justify-between text-xs">
+                        <span className="font-cjk font-bold text-zinc-900 dark:text-zinc-100">
+                          {pt.example}
+                        </span>
+                        <span className="font-mono text-emerald-700 dark:text-emerald-400 text-[11px]">
+                          {pt.pinyin}
+                        </span>
+                        <span className="text-zinc-500 dark:text-zinc-400 text-[11px] truncate max-w-[180px]">
+                          „{pt.german}“
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Interactive Mini-Quiz */}
+              <div className="space-y-3 pt-4 border-t border-zinc-100 dark:border-white/[0.05]">
+                <h4 className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                  <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                  Prüfe dein Verständnis (Mini-Quiz):
+                </h4>
+                <div className="space-y-4">
+                  {selectedPitfall.quiz.map((q, qIdx) => {
+                    const qKey = `${selectedPitfall.id}-${qIdx}`;
+                    const isSubmitted = pitfallSubmitted[qKey] ?? false;
+                    const selectedOpt = pitfallAnswers[qKey];
+                    const isCorrect = selectedOpt === q.correctIndex;
+
+                    return (
+                      <div
+                        key={qIdx}
+                        className="rounded-2xl border border-zinc-200/80 bg-zinc-50/70 p-4 space-y-3 dark:border-white/[0.06] dark:bg-zinc-950/40"
+                      >
+                        <p className="text-xs font-bold text-zinc-800 dark:text-zinc-200">
+                          {qIdx + 1}. {q.question}
+                        </p>
+                        <div className="grid grid-cols-2 gap-2">
+                          {q.options.map((opt, optIdx) => {
+                            let btnStyle =
+                              'border-zinc-200 bg-white text-zinc-700 hover:border-emerald-600/40 dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-300';
+                            if (isSubmitted) {
+                              if (optIdx === q.correctIndex) {
+                                btnStyle =
+                                  'border-emerald-600 bg-emerald-500/15 text-emerald-900 font-bold ring-1 ring-emerald-500/40 dark:text-emerald-200';
+                              } else if (optIdx === selectedOpt) {
+                                btnStyle =
+                                  'border-rose-500 bg-rose-500/15 text-rose-900 font-bold dark:text-rose-200';
+                              }
+                            }
+
+                            return (
+                              <button
+                                key={optIdx}
+                                type="button"
+                                disabled={isSubmitted}
+                                onClick={() =>
+                                  handleSelectPitfallQuiz(selectedPitfall.id, qIdx, optIdx, q.correctIndex)
+                                }
+                                className={`rounded-xl border p-2.5 text-xs font-semibold text-center transition-all cursor-pointer ${btnStyle}`}
+                              >
+                                {opt}
+                              </button>
+                            );
+                          })}
+                        </div>
+                        {isSubmitted && (
+                          <div
+                            className={`rounded-xl p-2.5 text-xs leading-relaxed ${
+                              isCorrect
+                                ? 'bg-emerald-500/10 text-emerald-800 dark:text-emerald-300 border border-emerald-500/20'
+                                : 'bg-rose-500/10 text-rose-800 dark:text-rose-300 border border-rose-500/20'
+                            }`}
+                          >
+                            <span className="font-bold mr-1">
+                              {isCorrect ? 'Richtig!' : 'Erklärung:'}
+                            </span>
+                            {q.explanation}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
