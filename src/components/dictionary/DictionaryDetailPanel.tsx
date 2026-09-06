@@ -78,18 +78,34 @@ export function DictionaryDetailPanel({ item, card, globalIndex }: DictionaryDet
     }
   };
 
-  const playSentenceAudio = async (sent: { hanzi: string; audioPath?: string }, idx: number) => {
+  const playSentenceAudio = async (sent: { hanzi: string; audioPath?: string; pinyin?: string }, idx: number) => {
     stopCurrentAudio();
+    if (playTimerRef.current !== undefined) {
+      window.clearTimeout(playTimerRef.current);
+    }
     setPlayingSentenceIdx(idx);
     setPlayingCollocationIdx(null);
-    await playMandarinWithFallback(sent.hanzi, sent.audioPath, () => setPlayingSentenceIdx(null));
+    const speed = audioSpeed;
+    const done = () => setPlayingSentenceIdx((cur) => (cur === idx ? null : cur));
+    const started = await playMandarinWithFallback(sent.hanzi, sent.audioPath, done, speed, sent.pinyin);
+    if (!started) {
+      done();
+    }
   };
 
-  const playCollocationAudio = async (col: { hanzi: string }, idx: number) => {
+  const playCollocationAudio = async (col: { hanzi: string; audioPath?: string; pinyin?: string }, idx: number) => {
     stopCurrentAudio();
+    if (playTimerRef.current !== undefined) {
+      window.clearTimeout(playTimerRef.current);
+    }
     setPlayingCollocationIdx(idx);
     setPlayingSentenceIdx(null);
-    await playMandarinWithFallback(col.hanzi, undefined, () => setPlayingCollocationIdx(null));
+    const speed = audioSpeed;
+    const done = () => setPlayingCollocationIdx((cur) => (cur === idx ? null : cur));
+    const started = await playMandarinWithFallback(col.hanzi, col.audioPath, done, speed, col.pinyin);
+    if (!started) {
+      done();
+    }
   };
 
   return (

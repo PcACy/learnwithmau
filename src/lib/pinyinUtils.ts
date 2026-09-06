@@ -71,3 +71,40 @@ export function stripToneMarks(marked: string): string {
   }
   return result.normalize('NFC').toLowerCase();
 }
+
+/**
+ * Extrahiert Tonhöhen-Werte (1–5) aus einem Pinyin-String für Web-Audio-Synthese.
+ */
+export function extractTonesFromPinyin(pinyin: string): Tone[] {
+  const tones: Tone[] = [];
+  const tone1 = /[āēīōūǖ]/i;
+  const tone2 = /[áéíóúǘ]/i;
+  const tone3 = /[ǎěǐǒǔǚ]/i;
+  const tone4 = /[àèìòùǜ]/i;
+
+  const words = pinyin.trim().split(/[\s,，.。!！?？:："“”—\-_]+/);
+  for (const word of words) {
+    if (!word) continue;
+    let foundTone = false;
+    for (const char of word) {
+      if (tone1.test(char)) {
+        tones.push(1);
+        foundTone = true;
+      } else if (tone2.test(char)) {
+        tones.push(2);
+        foundTone = true;
+      } else if (tone3.test(char)) {
+        tones.push(3);
+        foundTone = true;
+      } else if (tone4.test(char)) {
+        tones.push(4);
+        foundTone = true;
+      }
+    }
+    if (!foundTone && /[a-z]/i.test(word)) {
+      tones.push(5);
+    }
+  }
+  return tones;
+}
+

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { applyTone, stripToneMarks } from './pinyinUtils';
+import { applyTone, extractTonesFromPinyin, stripToneMarks } from './pinyinUtils';
 import { VOCAB } from '../data';
 import type { Tone } from '../types/vocab';
 
@@ -68,5 +68,13 @@ describe('Katalog-Roundtrip: jede marked-Silbe ergibt ihr plain', () => {
       }
     }
     expect(checked).toBeGreaterThan(200);
+  });
+});
+
+describe('extractTonesFromPinyin', () => {
+  it('extrahiert Tonkonturen korrekt aus einzelnen Silben und Sätzen', () => {
+    expect(extractTonesFromPinyin('Nǐ hǎo!')).toEqual([3, 3]);
+    expect(extractTonesFromPinyin('Míngtiān shì xīngqīrì.')).toEqual([2, 1, 4, 1, 1, 4]);
+    expect(extractTonesFromPinyin('Wǒ hěn hǎo ma?')).toEqual([3, 3, 3, 5]);
   });
 });

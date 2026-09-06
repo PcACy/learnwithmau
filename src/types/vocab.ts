@@ -61,6 +61,7 @@ export interface Collocation {
   hanzi: string;
   pinyin: string;
   german: string;
+  audioPath?: string;
 }
 
 export interface ExampleSentence {

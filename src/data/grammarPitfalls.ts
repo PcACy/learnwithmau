@@ -12,6 +12,7 @@ export interface PitfallPair {
     example: string;
     pinyin: string;
     german: string;
+    audioUrl?: string;
   }[];
   quickRule: string;
   quiz: {
@@ -51,6 +52,7 @@ export const GRAMMAR_PITFALLS: readonly PitfallPair[] = [
         example: '我有两个朋友。',
         pinyin: 'Wǒ yǒu liǎng gè péngyou.',
         german: 'Ich habe zwei Freunde.',
+        audioUrl: '/audio/grammar/pitfall-01.mp3',
       },
       {
         situation: 'Uhrzeit: "2 Uhr"',
@@ -60,6 +62,7 @@ export const GRAMMAR_PITFALLS: readonly PitfallPair[] = [
         example: '现在两点。',
         pinyin: 'Xiànzài liǎng diǎn.',
         german: 'Jetzt ist es zwei Uhr.',
+        audioUrl: '/audio/grammar/pitfall-02.mp3',
       },
       {
         situation: 'Ordnungszahlen ("der Zweite")',
@@ -69,6 +72,7 @@ export const GRAMMAR_PITFALLS: readonly PitfallPair[] = [
         example: '第二课',
         pinyin: 'dì-èr kè',
         german: 'die zweite Lektion',
+        audioUrl: '/audio/grammar/pitfall-03.mp3',
       },
       {
         situation: 'Monatsname ("Februar")',
@@ -78,6 +82,7 @@ export const GRAMMAR_PITFALLS: readonly PitfallPair[] = [
         example: '二月十二号',
         pinyin: 'èryuè shí’èr hào',
         german: '12. Februar',
+        audioUrl: '/audio/grammar/pitfall-04.mp3',
       },
     ],
     quiz: [
@@ -123,6 +128,7 @@ export const GRAMMAR_PITFALLS: readonly PitfallPair[] = [
         example: '我没有猫。',
         pinyin: 'Wǒ méiyǒu māo.',
         german: 'Ich habe keine Katze.',
+        audioUrl: '/audio/grammar/pitfall-05.mp3',
       },
       {
         situation: 'Eigenschaften & Adjektive ("nicht groß / nicht gut")',
@@ -132,6 +138,7 @@ export const GRAMMAR_PITFALLS: readonly PitfallPair[] = [
         example: '今天天气不冷。',
         pinyin: 'Jīntiān tiānqì bù lěng.',
         german: 'Das Wetter heute ist nicht kalt.',
+        audioUrl: '/audio/grammar/pitfall-06.mp3',
       },
       {
         situation: 'Gewohnheit vs. Vergangenheit',
@@ -141,6 +148,7 @@ export const GRAMMAR_PITFALLS: readonly PitfallPair[] = [
         example: '我不吃苹果 / 我没吃苹果',
         pinyin: 'Wǒ bù chī píngguǒ / Wǒ méi chī píngguǒ',
         german: 'Ich esse keine Äpfel (Gewohnheit) / Ich habe den Apfel nicht gegessen (Vergangenheit)',
+        audioUrl: '/audio/grammar/pitfall-07.mp3',
       },
     ],
     quiz: [
@@ -186,6 +194,7 @@ export const GRAMMAR_PITFALLS: readonly PitfallPair[] = [
         example: '我想喝茶。',
         pinyin: 'Wǒ xiǎng hē chá.',
         german: 'Ich möchte gerne Tee trinken.',
+        audioUrl: '/audio/grammar/pitfall-08.mp3',
       },
       {
         situation: 'Im Restaurant bestellen',
@@ -195,6 +204,7 @@ export const GRAMMAR_PITFALLS: readonly PitfallPair[] = [
         example: '我要米饭。',
         pinyin: 'Wǒ yào mǐfàn.',
         german: 'Ich nehme Reis.',
+        audioUrl: '/audio/grammar/pitfall-09.mp3',
       },
       {
         situation: 'Jemanden vermissen',
@@ -204,6 +214,7 @@ export const GRAMMAR_PITFALLS: readonly PitfallPair[] = [
         example: '我想我妈妈。',
         pinyin: 'Wǒ xiǎng wǒ māma.',
         german: 'Ich vermisse meine Mutter.',
+        audioUrl: '/audio/grammar/pitfall-10.mp3',
       },
     ],
     quiz: [
@@ -243,6 +254,7 @@ export const GRAMMAR_PITFALLS: readonly PitfallPair[] = [
         example: '你怎么去学校？',
         pinyin: 'Nǐ zěnme qù xuéxiào?',
         german: 'Wie kommst du zur Schule?',
+        audioUrl: '/audio/grammar/pitfall-11.mp3',
       },
       {
         situation: 'Nach dem Zustand oder der Meinung fragen',
@@ -252,6 +264,7 @@ export const GRAMMAR_PITFALLS: readonly PitfallPair[] = [
         example: '这本中国书怎么样？',
         pinyin: 'Zhè běn Zhōngguó shū zěnmeyàng?',
         german: 'Wie ist dieses chinesische Buch?',
+        audioUrl: '/audio/grammar/pitfall-12.mp3',
       },
     ],
     quiz: [
@@ -297,6 +310,7 @@ export const GRAMMAR_PITFALLS: readonly PitfallPair[] = [
         example: '你在哪儿？',
         pinyin: 'Nǐ zài nǎr?',
         german: 'Wo bist du?',
+        audioUrl: '/audio/grammar/pitfall-13.mp3',
       },
       {
         situation: 'Zeigen auf einen Gegenstand in der Ferne',
@@ -306,6 +320,7 @@ export const GRAMMAR_PITFALLS: readonly PitfallPair[] = [
         example: '那是我的书。',
         pinyin: 'Nà shì wǒ de shū.',
         german: 'Das dort ist mein Buch.',
+        audioUrl: '/audio/grammar/pitfall-14.mp3',
       },
     ],
     quiz: [

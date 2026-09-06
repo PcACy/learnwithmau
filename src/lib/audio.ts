@@ -1,5 +1,6 @@
 import type { Tone } from '../types/vocab';
 import { useSettingsStore } from '../store/settingsStore';
+import { extractTonesFromPinyin } from './pinyinUtils';
 
 /**
  * Lokale Web-Audio-Engine. Ohne vorhandene Audio-Assets synthetisiert sie
@@ -115,6 +116,7 @@ export function syllableAssetUrl(plain: string, tone: Tone): string {
 
 let currentAudio: HTMLAudioElement | null = null;
 let currentOnEnded: (() => void) | null = null;
+let currentUtterance: SpeechSynthesisUtterance | null = null;
 
 /**
  * Stoppt die aktuell laufende Audio-Wiedergabe sofort und setzt das Audio-Element zurück.
@@ -128,6 +130,7 @@ export function stopCurrentAudio(): void {
       // ignore
     }
   }
+  currentUtterance = null;
   if (currentAudio) {
     try {
       currentAudio.pause();
@@ -260,9 +263,23 @@ export function speakMandarin(text: string, onEnded?: () => void, rate?: number)
     return Promise.resolve(false);
   }
 
+  const cleanText = text.replace(/[“”"„‟——…]+/g, ' ').replace(/\s+/g, ' ').trim();
+  if (!cleanText) {
+    return Promise.resolve(false);
+  }
+
   return new Promise((resolve) => {
     try {
-      const utterance = new UtteranceConstructor(text);
+      if (window.speechSynthesis.paused) {
+        try {
+          window.speechSynthesis.resume();
+        } catch {
+          // ignore
+        }
+      }
+
+      const utterance = new UtteranceConstructor(cleanText);
+      currentUtterance = utterance;
       utterance.lang = 'zh-CN';
       const speed = rate ?? useSettingsStore.getState().audioSpeed ?? 1.0;
       utterance.rate = speed;
@@ -273,27 +290,46 @@ export function speakMandarin(text: string, onEnded?: () => void, rate?: number)
       );
       if (zhVoice) {
         utterance.voice = zhVoice;
+      } else if (voices.length > 0 && !voices.some((v) => v.lang.startsWith('zh') || v.lang.includes('cmn'))) {
+        // Stimmen vorhanden, aber keine chinesische Stimme installiert (z.B. Linux default).
+        currentUtterance = null;
+        resolve(false);
+        return;
       }
 
       let settled = false;
       const finish = (started: boolean) => {
         if (settled) return;
         settled = true;
+        if (currentUtterance === utterance && !started) {
+          currentUtterance = null;
+        }
         resolve(started);
       };
 
+      utterance.onstart = () => {
+        finish(true);
+      };
+
       utterance.onend = () => {
+        if (currentUtterance === utterance) {
+          currentUtterance = null;
+        }
         onEnded?.();
         finish(true);
       };
 
       utterance.onerror = () => {
+        if (currentUtterance === utterance) {
+          currentUtterance = null;
+        }
         finish(false);
       };
 
       window.speechSynthesis.speak(utterance);
       finish(true);
     } catch {
+      currentUtterance = null;
       resolve(false);
     }
   });
@@ -302,16 +338,34 @@ export function speakMandarin(text: string, onEnded?: () => void, rate?: number)
 /**
  * Versucht zuerst, das hinterlegte Audio-Asset abzuspielen.
  * Schlägt dies fehl (oder ist kein Pfad hinterlegt), erfolgt die nahtlose Sprachausgabe via Web Speech API (zh-CN).
+ * Falls auch diese nicht verfügbar ist, synthetisiert die Web-Audio-Engine die Tonkonturen (Fallback).
  */
 export async function playMandarinWithFallback(
   text: string,
   audioPath?: string | null,
   onEnded?: () => void,
   rate?: number,
+  pinyinFallback?: string,
 ): Promise<boolean> {
   if (audioPath) {
     const started = await playAsset(audioPath, onEnded, rate);
     if (started) return true;
   }
-  return speakMandarin(text, onEnded, rate);
+
+  const spoken = await speakMandarin(text, onEnded, rate);
+  if (spoken) return true;
+
+  if (pinyinFallback) {
+    const tones = extractTonesFromPinyin(pinyinFallback);
+    if (tones.length > 0) {
+      const durationMs = playToneSequence(tones);
+      setTimeout(() => {
+        onEnded?.();
+      }, Math.max(300, durationMs));
+      return true;
+    }
+  }
+
+  onEnded?.();
+  return false;
 }

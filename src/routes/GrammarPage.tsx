@@ -99,13 +99,19 @@ export function GrammarPage() {
   const [playingAudioKey, setPlayingAudioKey] = useState<string | null>(null);
 
   // Audio abspielen mit nahtlosem Mandarin-TTS-Fallback
-  const handlePlayAudio = (text: string, url?: string, key?: string) => {
+  const handlePlayAudio = (text: string, url?: string, key?: string, pinyin?: string) => {
     stopCurrentAudio();
     const playKey = key || text;
     setPlayingAudioKey(playKey);
-    void playMandarinWithFallback(text, url, () => {
-      setPlayingAudioKey((cur) => (cur === playKey ? null : cur));
-    });
+    void playMandarinWithFallback(
+      text,
+      url,
+      () => {
+        setPlayingAudioKey((cur) => (cur === playKey ? null : cur));
+      },
+      undefined,
+      pinyin,
+    );
   };
 
   // Quiz-Antwort wählen
@@ -330,7 +336,7 @@ export function GrammarPage() {
 
                     <button
                       type="button"
-                      onClick={() => handlePlayAudio(ex.hanzi, ex.audioUrl, `ex-${exIdx}`)}
+                      onClick={() => handlePlayAudio(ex.hanzi, ex.audioUrl, `ex-${exIdx}`, ex.pinyin)}
                       className="inline-flex shrink-0 items-center gap-1.5 rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-1.5 text-xs font-semibold text-zinc-700 hover:border-emerald-500/40 hover:bg-emerald-50 hover:text-emerald-800 dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:text-emerald-400 cursor-pointer shadow-2xs transition-colors active:scale-95"
                       title="Beispielsatz anhören"
                     >
@@ -737,7 +743,7 @@ export function GrammarPage() {
                         </div>
                         <button
                           type="button"
-                          onClick={() => handlePlayAudio(pt.example, undefined, `pt-${pIdx}`)}
+                          onClick={() => handlePlayAudio(pt.example, pt.audioUrl, `pt-${pIdx}`, pt.pinyin)}
                           className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-zinc-200 bg-white text-zinc-600 hover:border-emerald-500/40 hover:bg-emerald-50 hover:text-emerald-800 dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:text-emerald-400 cursor-pointer shadow-2xs transition-colors active:scale-95"
                           title="Beispielsatz anhören"
                           aria-label="Beispielsatz anhören"
