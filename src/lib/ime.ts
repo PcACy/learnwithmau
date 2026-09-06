@@ -62,7 +62,3 @@ export function candidatesFor(prefix: string, limit = 9): ImeCandidate[] {
   }
   return result;
 }
-
-export function isKnownSyllable(syllable: string): boolean {
-  return DICT.has(syllable.toLowerCase().replaceAll('ü', 'v'));
-}

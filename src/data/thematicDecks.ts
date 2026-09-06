@@ -252,7 +252,7 @@ export const THEMATIC_DECKS: readonly ThematicDeck[] = [
   },
 ] as const;
 
-export const THEMATIC_DECKS_BY_ID = new Map<string, ThematicDeck>(
+const THEMATIC_DECKS_BY_ID = new Map<string, ThematicDeck>(
   THEMATIC_DECKS.map((deck) => [deck.id, deck]),
 );
 

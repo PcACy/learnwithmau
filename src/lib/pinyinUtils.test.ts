@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { applyTone, splitMarkedSyllables, stripToneMarks } from './pinyinUtils';
+import { applyTone, stripToneMarks } from './pinyinUtils';
 import { VOCAB } from '../data';
 import type { Tone } from '../types/vocab';
 
@@ -52,13 +52,6 @@ describe('stripToneMarks', () => {
 
   it('ist die Umkehrfunktion von applyTone', () => {
     expect(stripToneMarks(applyTone('xue', 2))).toBe('xue');
-  });
-});
-
-describe('splitMarkedSyllables', () => {
-  it('teilt an Leerzeichen und trimmt', () => {
-    expect(splitMarkedSyllables('  nǐ hǎo ')).toEqual(['nǐ', 'hǎo']);
-    expect(splitMarkedSyllables('')).toEqual([]);
   });
 });
 

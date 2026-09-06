@@ -1,5 +1,6 @@
 import mockExamData from '../data/mockExam.json';
 import type { ExamQuestion } from '../types/exam';
+import { shuffled } from './shuffle';
 
 export type ExamMode = 'set1' | 'set2' | 'shuffle';
 
@@ -57,19 +58,10 @@ export function buildExam(mode: ExamMode): {
   const listeningPool = ALL_QUESTIONS.filter((q) => q.section === 'listening');
   const readingPool = ALL_QUESTIONS.filter((q) => q.section === 'reading');
 
-  const shuffleArray = <T>(arr: T[]): T[] => {
-    const copy = [...arr];
-    for (let i = copy.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [copy[i], copy[j]] = [copy[j], copy[i]];
-    }
-    return copy;
-  };
-
-  const selectedListening = shuffleArray(listeningPool).slice(0, 15);
+  const selectedListening = shuffled(listeningPool).slice(0, 15);
   selectedListening.sort((a, b) => a.part - b.part);
 
-  const selectedReading = shuffleArray(readingPool).slice(0, 15);
+  const selectedReading = shuffled(readingPool).slice(0, 15);
   selectedReading.sort((a, b) => a.part - b.part);
 
   return {

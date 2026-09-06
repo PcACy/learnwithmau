@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { candidatesFor, isKnownSyllable } from './ime';
+import { candidatesFor } from './ime';
 
 describe('candidatesFor', () => {
   it('liefert exakte Silben-Treffer vor längeren Präfix-Matches', () => {
@@ -44,13 +44,5 @@ describe('candidatesFor', () => {
   it('leere Eingabe → keine Kandidaten; Unsinn → keine Kandidaten', () => {
     expect(candidatesFor('')).toEqual([]);
     expect(candidatesFor('qqqq')).toEqual([]);
-  });
-});
-
-describe('isKnownSyllable', () => {
-  it('erkennt Katalog-Silben case-insensitive', () => {
-    expect(isKnownSyllable('shui')).toBe(true);
-    expect(isKnownSyllable('SHUI')).toBe(true);
-    expect(isKnownSyllable('abc')).toBe(false);
   });
 });

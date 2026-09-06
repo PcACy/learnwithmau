@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { THEMATIC_DECKS, THEMATIC_DECKS_BY_ID, getThematicDeck } from './thematicDecks';
+import { THEMATIC_DECKS, getThematicDeck } from './thematicDecks';
 import { VOCAB } from './index';
 
 describe('ThematicDecks – Struktur und HSK-1-Abdeckung', () => {
@@ -36,10 +36,10 @@ describe('ThematicDecks – Struktur und HSK-1-Abdeckung', () => {
     }
   });
 
-  it('liefert Decks über getThematicDeck und THEMATIC_DECKS_BY_ID', () => {
+  it('liefert Decks über getThematicDeck', () => {
     const deck = getThematicDeck('food-drinks');
     expect(deck).toBeDefined();
     expect(deck?.title).toBe('Essen & Trinken');
-    expect(THEMATIC_DECKS_BY_ID.get('food-drinks')).toBe(deck);
+    expect(deck?.hanziTag).toBe('食');
   });
 });

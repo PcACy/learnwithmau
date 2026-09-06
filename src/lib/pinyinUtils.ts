@@ -71,8 +71,3 @@ export function stripToneMarks(marked: string): string {
   }
   return result.normalize('NFC').toLowerCase();
 }
-
-/** Zerlegt ein vollständiges Pinyin ("nǐ hǎo") in seine Silben-Markierungen. */
-export function splitMarkedSyllables(pinyin: string): string[] {
-  return pinyin.trim().split(/\s+/).filter((part) => part.length > 0);
-}
