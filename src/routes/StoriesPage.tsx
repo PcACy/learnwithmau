@@ -30,6 +30,7 @@ import { KineticButton } from '../components/ui/KineticButton';
 import { SealBadge } from '../components/ui/SealBadge';
 import { VOCAB } from '../data';
 import { useProgressStore } from '../store/progressStore';
+import { useKeyDown } from '../hooks/useKeyDown';
 
 const STORIES = storiesData as Story[];
 
@@ -191,17 +192,12 @@ export function StoriesPage() {
   };
 
   // Escape-Taste schließt Wort-Glossar
-  useEffect(() => {
-    if (!activeToken) return;
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        e.preventDefault();
-        setActiveToken(null);
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [activeToken]);
+  useKeyDown((e) => {
+    if (activeToken && e.key === 'Escape') {
+      e.preventDefault();
+      setActiveToken(null);
+    }
+  });
 
   // Quiz-Antwort wählen
   const handleSelectQuiz = (quizIdx: number, optIdx: number) => {

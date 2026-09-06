@@ -76,6 +76,7 @@ export function DialoguePage() {
 
   const sessionStartTimeRef = useRef<number>(0);
   const scrollAnchorRef = useRef<HTMLDivElement>(null);
+  const debriefTimeoutRef = useRef<number | undefined>(undefined);
 
   // Lade gespeicherte Dialog-Fortschritte aus IndexedDB
   useEffect(() => {
@@ -87,6 +88,9 @@ export function DialoguePage() {
     });
     return () => {
       cancelled = true;
+      if (debriefTimeoutRef.current !== undefined) {
+        window.clearTimeout(debriefTimeoutRef.current);
+      }
       stopCurrentAudio();
     };
   }, []);
@@ -245,7 +249,10 @@ export function DialoguePage() {
         });
 
         // Debrief-Modal nach kurzer Verzögerung einblenden
-        setTimeout(() => {
+        if (debriefTimeoutRef.current !== undefined) {
+          window.clearTimeout(debriefTimeoutRef.current);
+        }
+        debriefTimeoutRef.current = window.setTimeout(() => {
           setShowDebrief(true);
         }, 1200);
       }
@@ -271,12 +278,16 @@ export function DialoguePage() {
       }
       if (showDebrief) {
         event.preventDefault();
+        stopCurrentAudio();
         setShowDebrief(false);
         setActiveScenario(null);
         return;
       }
       if (activeScenario) {
         event.preventDefault();
+        if (debriefTimeoutRef.current !== undefined) {
+          window.clearTimeout(debriefTimeoutRef.current);
+        }
         stopCurrentAudio();
         setActiveScenario(null);
         return;
@@ -363,6 +374,9 @@ export function DialoguePage() {
             <button
               type="button"
               onClick={() => {
+                if (debriefTimeoutRef.current !== undefined) {
+                  window.clearTimeout(debriefTimeoutRef.current);
+                }
                 stopCurrentAudio();
                 setActiveScenario(null);
               }}
@@ -614,10 +628,12 @@ export function DialoguePage() {
           score={score}
           maxScore={activeScenario.maxScore}
           onRetry={() => {
+            stopCurrentAudio();
             setShowDebrief(false);
             startScenario(activeScenario);
           }}
           onNext={() => {
+            stopCurrentAudio();
             const nextIdx = SCENARIOS.findIndex((s) => s.id === activeScenario.id) + 1;
             if (nextIdx < SCENARIOS.length) {
               startScenario(SCENARIOS[nextIdx]);
@@ -627,6 +643,7 @@ export function DialoguePage() {
             }
           }}
           onBackToOverview={() => {
+            stopCurrentAudio();
             setShowDebrief(false);
             setActiveScenario(null);
           }}

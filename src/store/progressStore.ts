@@ -33,12 +33,38 @@ function touchStreak(streak: StreakData, today: string): StreakData {
   };
 }
 
-function ensureFresh(goal: DailyGoal, now: Date): DailyGoal {
+export function ensureFresh(goal: DailyGoal, now: Date = new Date()): DailyGoal {
   const today = toDateKey(now);
   return goal.date === today ? goal : { ...goal, date: today, completedReviews: 0 };
 }
 
+/**
+ * Normalisiert den Streak-Zustand gegen das aktuelle Datum.
+ * Wenn der letzte Lerntag weder heute noch gestern war, ist die aktive Serie
+ * unterbrochen (current: 0), der Rekord (longest) bleibt jedoch erhalten.
+ */
+export function normalizeStreak(streak: StreakData, now: Date = new Date()): StreakData {
+  if (!streak.lastActiveDate) return streak;
+  const today = toDateKey(now);
+  if (streak.lastActiveDate === today) return streak;
+
+  const [y, m, d] = today.split('-').map(Number);
+  const yesterday = new Date(y, m - 1, d);
+  yesterday.setDate(yesterday.getDate() - 1);
+  const yesterdayKey = toDateKey(yesterday);
+
+  if (streak.lastActiveDate === yesterdayKey) {
+    return streak;
+  }
+
+  return {
+    ...streak,
+    current: 0,
+  };
+}
+
 export interface ProgressState {
+
   /** true, sobald Dexie-Hydration abgeschlossen ist. */
   hydrated: boolean;
   cards: Record<string, SrsCard>;
@@ -94,11 +120,15 @@ export const useProgressStore = create<ProgressState>()((set, get) => ({
       cards[card.itemId] = card;
     }
 
+    const now = new Date();
+    const effectiveStreak = streak ? normalizeStreak(streak, now) : get().streak;
+    const effectiveGoal = dailyGoal ? ensureFresh(dailyGoal, now) : (timedOut ? get().dailyGoal : todayGoal(now));
+
     set({
       hydrated: true,
       cards,
-      streak: streak ?? get().streak,
-      dailyGoal: dailyGoal ?? (timedOut ? get().dailyGoal : todayGoal(new Date())),
+      streak: effectiveStreak,
+      dailyGoal: effectiveGoal,
     });
 
     if (timedOut) {
@@ -112,10 +142,11 @@ export const useProgressStore = create<ProgressState>()((set, get) => ({
             for (const card of lateRows) {
               lateCards[card.itemId] = card;
             }
+            const lateNow = new Date();
             set((state) => ({
               cards: lateCards,
-              streak: lateStreak ?? state.streak,
-              dailyGoal: lateGoal ?? state.dailyGoal,
+              streak: lateStreak ? normalizeStreak(lateStreak, lateNow) : state.streak,
+              dailyGoal: lateGoal ? ensureFresh(lateGoal, lateNow) : state.dailyGoal,
             }));
           })
           .catch(() => undefined);

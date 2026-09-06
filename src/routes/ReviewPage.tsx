@@ -120,13 +120,8 @@ export function ReviewPage() {
   const [session, setSession] = useState<SessionState | null>(null);
   const [showStrokePad, setShowStrokePad] = useState(false);
   const [selectedCharIndex, setSelectedCharIndex] = useState(0);
-  const [prevCardId, setPrevCardId] = useState<string | null>(null);
 
   const currentId = session?.queue[0] ?? null;
-  if (currentId !== prevCardId) {
-    setPrevCardId(currentId);
-    setSelectedCharIndex(0);
-  }
 
   const currentItem: VocabItem | undefined =
     currentId !== null ? VOCAB_BY_ID.get(currentId) : undefined;
@@ -144,6 +139,7 @@ export function ReviewPage() {
       setPhase('empty');
       return;
     }
+    setSelectedCharIndex(0);
     setSession({
       queue,
       revealed: false,
@@ -220,6 +216,7 @@ export function ReviewPage() {
         finish(gradedTotal, nextPassed.size, session.sessionStartedAt);
         return;
       }
+      setSelectedCharIndex(0);
       setSession({
         ...session,
         queue: nextQueue,

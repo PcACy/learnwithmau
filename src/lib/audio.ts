@@ -8,6 +8,7 @@ import { useSettingsStore } from '../store/settingsStore';
 
 let ctx: AudioContext | null = null;
 let master: GainNode | null = null;
+let synthGain: GainNode | null = null;
 
 const BASE_FREQ = 233;
 const NEUTRAL_MS = 280;
@@ -39,12 +40,24 @@ export function primeAudio(): void {
   }
 }
 
+function getSynthGain(): GainNode | null {
+  if (!ctx || !master) return null;
+  if (!synthGain) {
+    synthGain = ctx.createGain();
+    synthGain.gain.value = 1.0;
+    synthGain.connect(master);
+  }
+  return synthGain;
+}
+
 function toneDurationMs(tone: Tone): number {
   return tone === 5 ? NEUTRAL_MS : SYLLABLE_MS;
 }
 
 function scheduleTone(tones: Tone[], startOffsetSec: number): number {
   if (!ctx || !master) return 0;
+  const targetGain = getSynthGain();
+  if (!targetGain) return 0;
   let cursor = ctx.currentTime + startOffsetSec;
 
   for (const tone of tones) {
@@ -75,7 +88,7 @@ function scheduleTone(tones: Tone[], startOffsetSec: number): number {
     gain.gain.exponentialRampToValueAtTime(0.0001, cursor + durSec);
 
     osc.connect(gain);
-    gain.connect(master);
+    gain.connect(targetGain);
     osc.start(cursor);
     osc.stop(cursor + durSec + 0.02);
 
@@ -117,6 +130,15 @@ export function stopCurrentAudio(): void {
       // ignore
     }
     currentAudio = null;
+  }
+  if (synthGain && ctx) {
+    try {
+      synthGain.gain.setValueAtTime(0, ctx.currentTime);
+      synthGain.disconnect();
+    } catch {
+      // ignore
+    }
+    synthGain = null;
   }
 }
 

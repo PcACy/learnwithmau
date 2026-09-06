@@ -181,7 +181,7 @@ export const ACHIEVEMENTS: readonly Achievement[] = [
   {
     id: 'blitz-champion',
     title: 'Blitz-Champion',
-    description: 'Schließe eine 2-Minuten-Blitzsession erfolgreich ab.',
+    description: 'Schließe eine 90-Sekunden-Blitzsession erfolgreich ab.',
     icon: Zap,
     category: 'games',
     maxProgress: 1,

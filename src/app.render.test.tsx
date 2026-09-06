@@ -33,6 +33,12 @@ const ROUTES: readonly [path: string, marker: string][] = [
   ['/stories', 'Buch-Fließtext'],
   ['/dictionary', 'Suchen'],
   ['/settings', 'Tagesziel'],
+  ['/dialogue', 'Alltagsdialoge'],
+  ['/exam', 'HSK-1 Probeprüfung'],
+  ['/grammar', 'Grammatik-Kompendium'],
+  ['/sentences', 'SVO-Syntax-Baukasten'],
+  ['/blitz', '90 Sekunden'],
+  ['/stats', 'Lernfortschritt'],
 ];
 
 describe('Alle Routen rendern ohne Crash', () => {

@@ -118,3 +118,51 @@ describe('Alchemy Puzzle Integrity & Slot Mechanics', () => {
     expect(isCompleteFilled).toBe(true);
   });
 });
+
+describe('State Hydration & Streak Normalization Fixes', () => {
+  it('normalizes streak when user was active yesterday or today', async () => {
+    const { normalizeStreak } = await import('../store/progressStore');
+    const now = new Date('2026-09-06T12:00:00');
+
+    // Heute aktiv
+    const todayStreak = normalizeStreak({ current: 5, longest: 10, lastActiveDate: '2026-09-06' }, now);
+    expect(todayStreak.current).toBe(5);
+    expect(todayStreak.longest).toBe(10);
+
+    // Gestern aktiv
+    const yesterdayStreak = normalizeStreak({ current: 5, longest: 10, lastActiveDate: '2026-09-05' }, now);
+    expect(yesterdayStreak.current).toBe(5);
+    expect(yesterdayStreak.longest).toBe(10);
+  });
+
+  it('breaks active streak (current = 0) when user missed more than 1 day, while preserving record', async () => {
+    const { normalizeStreak } = await import('../store/progressStore');
+    const now = new Date('2026-09-06T12:00:00');
+
+    // 2 Tage Pause (letzte Aktivität am 04.09.)
+    const brokenStreak = normalizeStreak({ current: 5, longest: 10, lastActiveDate: '2026-09-04' }, now);
+    expect(brokenStreak.current).toBe(0);
+    expect(brokenStreak.longest).toBe(10);
+  });
+
+  it('resets daily goal completed reviews on date transition', async () => {
+    const { ensureFresh } = await import('../store/progressStore');
+    const now = new Date('2026-09-06T12:00:00');
+
+    const freshGoal = ensureFresh(
+      { date: '2026-09-05', targetReviews: 25, completedReviews: 25 },
+      now,
+    );
+    expect(freshGoal.date).toBe('2026-09-06');
+    expect(freshGoal.completedReviews).toBe(0);
+    expect(freshGoal.targetReviews).toBe(25);
+
+    // Gleicher Tag behält Fortschritt
+    const sameDay = ensureFresh(
+      { date: '2026-09-06', targetReviews: 25, completedReviews: 12 },
+      now,
+    );
+    expect(sameDay.completedReviews).toBe(12);
+  });
+});
+

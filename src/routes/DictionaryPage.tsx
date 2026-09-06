@@ -11,6 +11,8 @@ import { DictionaryDetailPanel } from '../components/dictionary/DictionaryDetail
 import { PART_OF_SPEECH_MAP } from '../data/vocabDetails';
 import { SealBadge } from '../components/ui/SealBadge';
 
+import { useKeyDown } from '../hooks/useKeyDown';
+
 export function DictionaryPage() {
   const [searchParams] = useSearchParams();
   const cards = useProgressStore((s) => s.cards);
@@ -40,16 +42,12 @@ export function DictionaryPage() {
   }, []);
 
   // Global Keyboard Shortcut: '/' fokussiert die Suche
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === '/' && document.activeElement !== searchInputRef.current) {
-        e.preventDefault();
-        searchInputRef.current?.focus();
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
+  useKeyDown((e) => {
+    if (e.key === '/' && document.activeElement !== searchInputRef.current) {
+      e.preventDefault();
+      searchInputRef.current?.focus();
+    }
+  });
 
   // Filterung nach Query & Wortart-Kategorie
   const filteredItems = useMemo(() => {
@@ -87,11 +85,12 @@ export function DictionaryPage() {
   };
 
   const selectedItem = useMemo(() => {
-    if (filteredItems.length === 0) return VOCAB[0];
+    if (filteredItems.length === 0) return null;
     return filteredItems.find((it) => it.id === selectedId) || filteredItems[0];
   }, [filteredItems, selectedId]);
 
   const selectedGlobalIndex = useMemo(() => {
+    if (!selectedItem) return -1;
     return VOCAB.findIndex((it) => it.id === selectedItem.id);
   }, [selectedItem]);
 
@@ -133,7 +132,7 @@ export function DictionaryPage() {
           <DictionaryMasterList
             items={filteredItems}
             allItemsCount={VOCAB.length}
-            selectedId={selectedItem.id}
+            selectedId={selectedItem?.id ?? ''}
             onSelect={handleSelect}
             query={query}
             onQueryChange={handleQueryChange}
@@ -145,11 +144,23 @@ export function DictionaryPage() {
 
         {/* Rechte Spalte (Detail Panel): ca. 58 % (7 Spalten) */}
         <div className="lg:col-span-7">
-          <DictionaryDetailPanel
-            item={selectedItem}
-            card={cards[selectedItem.id]}
-            globalIndex={selectedGlobalIndex + 1}
-          />
+          {selectedItem ? (
+            <DictionaryDetailPanel
+              item={selectedItem}
+              card={cards[selectedItem.id]}
+              globalIndex={selectedGlobalIndex + 1}
+            />
+          ) : (
+            <div className="double-bezel-casing shadow-whisper">
+              <div className="double-bezel-core p-12 text-center space-y-3">
+                <span className="font-cjk text-5xl text-zinc-300 dark:text-zinc-700">查</span>
+                <h2 className="text-base font-bold text-zinc-800 dark:text-zinc-200">Keine Vokabeln gefunden</h2>
+                <p className="text-xs text-zinc-500 dark:text-zinc-400 max-w-sm mx-auto">
+                  Für den Suchbegriff „{query}“ gibt es im aktuellen Filter keinen Treffer.
+                </p>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
@@ -159,7 +170,7 @@ export function DictionaryPage() {
           <DictionaryMasterList
             items={filteredItems}
             allItemsCount={VOCAB.length}
-            selectedId={selectedItem.id}
+            selectedId={selectedItem?.id ?? ''}
             onSelect={handleSelect}
             query={query}
             onQueryChange={handleQueryChange}
@@ -177,11 +188,17 @@ export function DictionaryPage() {
               <ArrowLeft className="h-4 w-4" />
               Zurück zur Liste
             </button>
-            <DictionaryDetailPanel
-              item={selectedItem}
-              card={cards[selectedItem.id]}
-              globalIndex={selectedGlobalIndex + 1}
-            />
+            {selectedItem ? (
+              <DictionaryDetailPanel
+                item={selectedItem}
+                card={cards[selectedItem.id]}
+                globalIndex={selectedGlobalIndex + 1}
+              />
+            ) : (
+              <div className="double-bezel-casing p-8 text-center text-xs text-zinc-500">
+                Keine Vokabel gefunden
+              </div>
+            )}
           </div>
         )}
       </div>

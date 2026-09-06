@@ -31,22 +31,35 @@ export function BlitzPage() {
   const [streak, setStreak] = useState(0);
   const [bestStreak, setBestStreak] = useState(0);
   const [answeredCount, setAnsweredCount] = useState(0);
+  const [correctCount, setCorrectCount] = useState(0);
   const [gameState, setGameState] = useState<'intro' | 'playing' | 'ended'>('intro');
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [isAnswerCorrect, setIsAnswerCorrect] = useState<boolean | null>(null);
 
   const answeredRef = useRef(answeredCount);
-  const scoreRef = useRef(score);
+  const correctCountRef = useRef(correctCount);
+  const advanceTimerRef = useRef<number | undefined>(undefined);
 
   useEffect(() => {
     answeredRef.current = answeredCount;
   }, [answeredCount]);
 
   useEffect(() => {
-    scoreRef.current = score;
-  }, [score]);
+    correctCountRef.current = correctCount;
+  }, [correctCount]);
+
+  useEffect(() => {
+    return () => {
+      if (advanceTimerRef.current !== undefined) {
+        window.clearTimeout(advanceTimerRef.current);
+      }
+    };
+  }, []);
 
   const startBlitz = useCallback(() => {
+    if (advanceTimerRef.current !== undefined) {
+      window.clearTimeout(advanceTimerRef.current);
+    }
     const q = generateBlitzQuestions(20);
     setQuestions(q);
     setCurrentIdx(0);
@@ -55,6 +68,7 @@ export function BlitzPage() {
     setStreak(0);
     setBestStreak(0);
     setAnsweredCount(0);
+    setCorrectCount(0);
     setSelectedOption(null);
     setIsAnswerCorrect(null);
     setGameState('playing');
@@ -68,12 +82,15 @@ export function BlitzPage() {
       setTimeLeft((prev) => {
         if (prev <= 1) {
           clearInterval(timer);
+          if (advanceTimerRef.current !== undefined) {
+            window.clearTimeout(advanceTimerRef.current);
+          }
           setGameState('ended');
           fireCelebration();
           void logSession({
             mode: 'blitz',
             answered: answeredRef.current,
-            correct: scoreRef.current > 0 ? Math.round(scoreRef.current / 100) : 0,
+            correct: correctCountRef.current,
             durationMs: TOTAL_TIME_SEC * 1000,
           });
           return 0;
@@ -105,6 +122,7 @@ export function BlitzPage() {
     setAnsweredCount((c) => c + 1);
 
     if (correct) {
+      setCorrectCount((c) => c + 1);
       const newStreak = streak + 1;
       const multiplier = Math.min(3, 1 + Math.floor(newStreak / 3) * 0.5);
       const points = Math.round(100 * multiplier);
@@ -118,7 +136,10 @@ export function BlitzPage() {
       playToneSequence([4]);
     }
 
-    setTimeout(() => {
+    if (advanceTimerRef.current !== undefined) {
+      window.clearTimeout(advanceTimerRef.current);
+    }
+    advanceTimerRef.current = window.setTimeout(() => {
       setSelectedOption(null);
       setIsAnswerCorrect(null);
       if (currentIdx + 1 < questions.length) {

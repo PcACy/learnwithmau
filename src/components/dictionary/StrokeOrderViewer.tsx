@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { useSettingsStore } from '../../store/settingsStore';
 import { fireMicroBurst } from '../../lib/confetti';
+import { useKeyDown } from '../../hooks/useKeyDown';
 
 interface StrokeOrderViewerProps {
   character: string;
@@ -40,6 +41,7 @@ export function StrokeOrderViewer({ character, pinyin, meaning, size = 190 }: St
   const [mode, setMode] = useState<ViewerMode>('animate');
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
+  const [currentQuizStroke, setCurrentQuizStroke] = useState(0);
   const [totalStrokes, setTotalStrokes] = useState<number>(0);
   const [quizStatus, setQuizStatus] = useState<'idle' | 'drawing' | 'success'>('idle');
   const [quizFeedback, setQuizFeedback] = useState<string>('');
@@ -195,6 +197,7 @@ export function StrokeOrderViewer({ character, pinyin, meaning, size = 190 }: St
     setMode('quiz');
     setIsPlaying(false);
     setQuizStatus('drawing');
+    setCurrentQuizStroke(0);
     setQuizFeedback('Zeichne den 1. Strich');
 
     void writerRef.current.showOutline();
@@ -202,6 +205,8 @@ export function StrokeOrderViewer({ character, pinyin, meaning, size = 190 }: St
 
     writerRef.current.quiz({
       onCorrectStroke: (strokeData) => {
+        const nextStroke = strokeData.strokeNum + 1;
+        setCurrentQuizStroke(nextStroke);
         const next = strokeData.strokeNum + 2;
         if (next <= totalStrokes) {
           setQuizFeedback(`Strich ${strokeData.strokeNum + 1}/${totalStrokes} richtig! Weiter mit Strich ${next}.`);
@@ -222,31 +227,27 @@ export function StrokeOrderViewer({ character, pinyin, meaning, size = 190 }: St
     });
   }, [totalStrokes]);
 
-  // Hinweis im Schreibtrainer
+  // Hinweis im Schreibtrainer: animiert genau den aktuellen Strich des Quizzes
   const showHint = useCallback(() => {
     if (!writerRef.current || mode !== 'quiz') return;
-    void writerRef.current.animateStroke(currentStep);
-  }, [mode, currentStep]);
+    void writerRef.current.animateStroke(currentQuizStroke);
+  }, [mode, currentQuizStroke]);
 
   // Tastaturnavigation im Schrittmodus
-  useEffect(() => {
+  useKeyDown((e) => {
     if (mode !== 'step') return;
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
-      if (e.key === 'ArrowLeft') {
-        e.preventDefault();
-        goToStep(currentStep - 1);
-      } else if (e.key === 'ArrowRight') {
-        e.preventDefault();
-        goToStep(currentStep + 1);
-      } else if (e.key === ' ') {
-        e.preventDefault();
-        goToStep(currentStep, true);
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [mode, currentStep, goToStep]);
+    if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+    if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      goToStep(currentStep - 1);
+    } else if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      goToStep(currentStep + 1);
+    } else if (e.key === ' ') {
+      e.preventDefault();
+      goToStep(currentStep, true);
+    }
+  });
 
   return (
     <div className="flex flex-col items-center rounded-2xl border border-zinc-200/80 bg-zinc-50/60 p-5 dark:border-white/[0.08] dark:bg-zinc-950/40">

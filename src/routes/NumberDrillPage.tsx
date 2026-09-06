@@ -115,6 +115,9 @@ export function NumberDrillPage() {
         }
       } else {
         playToneSequence([3, 3]);
+        for (const itemId of promptItemIds(currentQuestion.prompt)) {
+          await review(itemId, 1);
+        }
       }
     },
     [review],
