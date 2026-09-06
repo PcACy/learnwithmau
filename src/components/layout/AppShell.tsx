@@ -187,18 +187,24 @@ export function AppShell() {
 
   useEffect(() => {
     const timer = window.setTimeout(() => setIsMounted(true), 60);
+    let preloadTimer: number | null = null;
     if (typeof window !== 'undefined') {
       const preload = () => {
         void preloadAllRoutes();
       };
       const win = window as Window & { requestIdleCallback?: (cb: () => void) => void };
       if (typeof win.requestIdleCallback === 'function') {
-        win.requestIdleCallback(preload);
+        preloadTimer = window.setTimeout(() => {
+          win.requestIdleCallback?.(preload);
+        }, 1500);
       } else {
-        window.setTimeout(preload, 120);
+        preloadTimer = window.setTimeout(preload, 2000);
       }
     }
-    return () => window.clearTimeout(timer);
+    return () => {
+      window.clearTimeout(timer);
+      if (preloadTimer) window.clearTimeout(preloadTimer);
+    };
   }, []);
 
   if (!hydrated) {

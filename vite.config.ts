@@ -9,7 +9,7 @@ export default defineConfig({
     tailwindcss(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'audio/**/*.mp3', 'data/strokes/**/*.json'],
+      includeAssets: ['favicon.svg'],
       manifest: {
         name: 'Learn with Mau · Hanzi Arcade',
         short_name: 'Hanzi Arcade',
@@ -28,8 +28,8 @@ export default defineConfig({
         ],
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2,mp3,json}'],
-        maximumFileSizeToCacheInBytes: 15 * 1024 * 1024,
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
+        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
         runtimeCaching: [
           {
             urlPattern: ({ request }) => request.destination === 'audio',
@@ -42,6 +42,20 @@ export default defineConfig({
               },
               cacheableResponse: {
                 statuses: [0, 200, 206],
+              },
+            },
+          },
+          {
+            urlPattern: ({ url }) => url.pathname.startsWith('/data/strokes/'),
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'strokes-cache',
+              expiration: {
+                maxEntries: 500,
+                maxAgeSeconds: 60 * 60 * 24 * 365,
+              },
+              cacheableResponse: {
+                statuses: [0, 200],
               },
             },
           },

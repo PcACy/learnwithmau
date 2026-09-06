@@ -159,6 +159,11 @@ html.dark body {
   );
 }
 
+@utility content-visibility-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 72px;
+}
+
 /* ==========================================================================
    View Transitions & Page Motion System (Zero-Flicker Solid Instant Navigation)
    ========================================================================== */

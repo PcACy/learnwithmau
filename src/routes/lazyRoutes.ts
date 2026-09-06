@@ -83,17 +83,48 @@ export async function preloadAllRoutes(): Promise<void> {
     return;
   }
 
-  // 1. Primäre Navigationsrouten sofort vorab laden
-  await Promise.all(PRIMARY_ROUTES.map((c) => c.preload()));
-
-  // 2. Sekundäre Übungsmodi im nächsten freien Leerlaufzyklus nachladen
-  const loadSecondary = () => {
-    void Promise.all(SECONDARY_ROUTES.map((c) => c.preload()));
-  };
-  const win = window as Window & { requestIdleCallback?: (cb: () => void) => void };
-  if (typeof win.requestIdleCallback === 'function') {
-    win.requestIdleCallback(loadSecondary);
-  } else {
-    window.setTimeout(loadSecondary, 400);
+  // Respektiere 'Save-Data' auf Mobilgeräten / getakteten Verbindungen
+  const nav = navigator as Navigator & { connection?: { saveData?: boolean } };
+  if (nav.connection?.saveData) {
+    return;
   }
+
+  const runIdle = (cb: () => void | Promise<void>) => {
+    const win = window as Window & { requestIdleCallback?: (cb: () => void) => void };
+    if (typeof win.requestIdleCallback === 'function') {
+      win.requestIdleCallback(() => void cb());
+    } else {
+      window.setTimeout(() => void cb(), 250);
+    }
+  };
+
+  // 1. Primäre Navigationsrouten sequenziell nacheinander im Idle-Takt vorab laden
+  for (const route of PRIMARY_ROUTES) {
+    await new Promise<void>((resolve) => {
+      runIdle(async () => {
+        try {
+          await route.preload();
+        } catch {
+          // Ignoriere Netzwerkabbrüche im Hintergrund
+        }
+        resolve();
+      });
+    });
+  }
+
+  // 2. Sekundäre Übungsmodi nach geladenen Primärrouten ebenfalls gestaffelt laden
+  runIdle(async () => {
+    for (const route of SECONDARY_ROUTES) {
+      await new Promise<void>((resolve) => {
+        runIdle(async () => {
+          try {
+            await route.preload();
+          } catch {
+            // Ignoriere Netzwerkabbrüche im Hintergrund
+          }
+          resolve();
+        });
+      });
+    }
+  });
 }

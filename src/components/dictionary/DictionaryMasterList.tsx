@@ -49,7 +49,7 @@ const DictionaryCardItem = memo(function DictionaryCardItem({
           onSelect(item.id);
         }
       }}
-      className={`group relative flex cursor-pointer items-center justify-between gap-3 rounded-2xl border p-2.5 sm:p-3 transition-colors duration-150 ${
+      className={`group relative flex cursor-pointer items-center justify-between gap-3 rounded-2xl border p-2.5 sm:p-3 transition-colors duration-150 content-visibility-auto ${
         isSelected
           ? 'border-emerald-600 bg-emerald-500/[0.04] shadow-whisper ring-1 ring-emerald-600/30 dark:border-emerald-500 dark:bg-emerald-500/[0.08]'
           : 'border-zinc-200/80 bg-white hover:border-zinc-300 hover:shadow-xs dark:border-white/10 dark:bg-zinc-900 dark:hover:border-white/20'
