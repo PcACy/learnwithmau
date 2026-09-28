@@ -382,7 +382,7 @@ export function ReviewPage() {
                   全
                 </span>
                 <h2 className="text-lg font-bold text-zinc-900 dark:text-zinc-100">
-                  Gesamt-Deck (Alle 163 Vokabeln)
+                  Gesamt-Deck (Alle {VOCAB_BY_ID.size} Vokabeln)
                 </h2>
                 {selectedDeckId === 'all' && (
                   <span className="rounded-full bg-emerald-600/10 px-2.5 py-0.5 text-[10px] font-bold text-emerald-700 dark:text-emerald-400 border border-emerald-600/20">

@@ -543,7 +543,7 @@ export function DashboardPage() {
                   <BookOpen className="h-5 w-5" />
                 </span>
                 <span className="font-mono text-xs font-semibold text-emerald-700 dark:text-emerald-400">
-                  163 Vokabeln
+                  {VOCAB.length} Vokabeln
                 </span>
               </div>
               <div>

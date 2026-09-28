@@ -80,7 +80,7 @@ describe('HSK-1 Graded Reader Dataset & Integrity', () => {
     });
   });
 
-  it('deckt alle 163 HSK-1-Vokabeln im Fließtext der 12 Geschichten ab', () => {
+  it(`deckt alle ${VOCAB.length} HSK-1-Vokabeln im Fließtext der 12 Geschichten ab`, () => {
     const allText = stories
       .flatMap((s) => s.sentences.map((sent) => sent.hanzi))
       .join('');

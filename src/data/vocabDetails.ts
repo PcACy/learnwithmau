@@ -5785,7 +5785,7 @@ export const COLLOCATIONS_MAP: Record<string, Collocation[]> = {
   ]
 };
 
-// 100 % authentische HSK-1 Beispielsätze für ausnahmslos alle 163 Wörter
+// 100 % authentische HSK-1 Beispielsätze für ausnahmslos alle Wörter des Katalogs
 const EXAMPLE_SENTENCES_MAP: Record<string, ExampleSentence[]> = {
   "hsk1-ai": [
     {

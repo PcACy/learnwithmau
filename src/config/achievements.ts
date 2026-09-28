@@ -109,7 +109,7 @@ export const ACHIEVEMENTS: readonly Achievement[] = [
   {
     id: 'vocab-100',
     title: 'Wort-Gelehrter',
-    description: 'Meistere mehr als 100 der 163 offiziellen HSK-1-Wörter.',
+    description: 'Meistere mehr als 100 der offiziellen HSK-3.0-Wörter der Stufe 1.',
     icon: Award,
     category: 'vocab',
     maxProgress: 100,

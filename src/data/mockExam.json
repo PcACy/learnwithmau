@@ -1,852 +1,1203 @@
 [
   {
-    "id": "hsk1-01",
+    "id": "hsk3-01",
     "section": "listening",
     "part": 1,
-    "prompt": "Stimmt das gehörte Wort mit der deutschen Übersetzung überein?",
-    "chineseText": "苹果 (píngguǒ)",
+    "type": "trueFalse",
+    "prompt": "Stimmt das gehörte Wort mit der angegebenen Bedeutung überein?",
+    "chineseText": "苹果 (píngguǒ) — Apfel",
     "audioUrl": "/audio/hsk1/hsk1-pingguo.mp3",
     "options": [
-      "Wahr (Richtig übersetzt: Apfel)",
-      "Falsch (Falsch übersetzt: Buch)"
+      "Richtig",
+      "Falsch"
     ],
     "correctIndex": 0,
-    "explanation": "„苹果“ (píngguǒ) bedeutet auf Deutsch „Apfel“."
+    "explanation": "„苹果“ (píngguǒ) heißt „Apfel“."
   },
   {
-    "id": "hsk1-02",
+    "id": "hsk3-02",
     "section": "listening",
     "part": 1,
-    "prompt": "Stimmt das gehörte Wort mit der angegebenen Bedeutung überein?",
-    "chineseText": "水 (shuǐ)",
-    "audioUrl": "/audio/hsk1/hsk1-shui.mp3",
+    "type": "trueFalse",
+    "prompt": "Stimmt das gehört Wort mit der angegebenen Bedeutung überein?",
+    "chineseText": "雨 (yǔ) — Regenschirm",
+    "audioUrl": "/audio/hsk1/hsk1-yu.mp3",
     "options": [
-      "Wahr (Bedeutung: Wasser)",
-      "Falsch (Bedeutung: Tee)"
+      "Richtig",
+      "Falsch"
     ],
-    "correctIndex": 0,
-    "explanation": "„水“ (shuǐ) heißt „Wasser“. Tee heißt auf Chinesisch „茶“ (chá)."
+    "correctIndex": 1,
+    "explanation": "„雨“ (yǔ) heißt „Regen“, nicht „Regenschirm“."
   },
   {
-    "id": "hsk1-03",
+    "id": "hsk3-03",
     "section": "listening",
     "part": 1,
-    "prompt": "Stimmt das gehörte Wort mit der Übersetzung „Schule“ überein?",
-    "chineseText": "医院 (yīyuàn)",
+    "type": "trueFalse",
+    "prompt": "Stimmt das gehörte Wort mit der angegebenen Bedeutung überein?",
+    "chineseText": "医院 (yīyuàn) — Krankenhaus",
     "audioUrl": "/audio/hsk1/hsk1-yiyuan.mp3",
     "options": [
-      "Wahr (Es bedeutet Schule)",
-      "Falsch (Es bedeutet Krankenhaus)"
-    ],
-    "correctIndex": 1,
-    "explanation": "„医院“ (yīyuàn) bedeutet „Krankenhaus“. Schule heißt „学校“ (xuéxiào)."
-  },
-  {
-    "id": "hsk1-04",
-    "section": "listening",
-    "part": 1,
-    "prompt": "Stimmt das gehörte Wort mit der Tätigkeit „Schlafen“ überein?",
-    "chineseText": "睡觉 (shuìjiào)",
-    "audioUrl": "/audio/hsk1/hsk1-shuijiao.mp3",
-    "options": [
-      "Wahr (Bedeutet schlafen)",
-      "Falsch (Bedeutet aufstehen)"
+      "Richtig",
+      "Falsch"
     ],
     "correctIndex": 0,
-    "explanation": "„睡觉“ (shuìjiào) bedeutet „schlafen / zu Bett gehen“."
+    "explanation": "„医院“ (yīyuàn) ist das „Krankenhaus“."
   },
   {
-    "id": "hsk1-05",
+    "id": "hsk3-04",
     "section": "listening",
     "part": 1,
-    "prompt": "Stimmt das Wort mit der Übersetzung „Morgen / Vormittag“ überein?",
-    "chineseText": "昨天 (zuótiān)",
-    "audioUrl": "/audio/hsk1/hsk1-zuotian.mp3",
-    "options": [
-      "Wahr (Bedeutet Morgen / Vormittag)",
-      "Falsch (Bedeutet gestern)"
-    ],
-    "correctIndex": 1,
-    "explanation": "„昨天“ (zuótiān) bedeutet „gestern“. Morgen heißt „明天“ (míngtiān)."
-  },
-  {
-    "id": "hsk1-06",
-    "section": "listening",
-    "part": 2,
-    "prompt": "Welche deutsche Übersetzung passt zum gehörten Begriff?",
-    "chineseText": "出租车 (chūzūchē)",
-    "audioUrl": "/audio/hsk1/hsk1-chuzuche.mp3",
-    "options": [
-      "Flugzeug",
-      "Taxi",
-      "Zug"
-    ],
-    "correctIndex": 1,
-    "explanation": "„出租车“ (chūzūchē) ist das Taxi. Flugzeug heißt „飞机“ (fēijī)."
-  },
-  {
-    "id": "hsk1-07",
-    "section": "listening",
-    "part": 2,
-    "prompt": "Welche Zeitangabe hörst du?",
-    "chineseText": "中午 (zhōngwǔ)",
-    "audioUrl": "/audio/hsk1/hsk1-zhongwu.mp3",
-    "options": [
-      "Vormittag (上午)",
-      "Mittag (中午)",
-      "Nachmittag (下午)"
-    ],
-    "correctIndex": 1,
-    "explanation": "„中午“ (zhōngwǔ) bezeichnet den Mittag (ca. 12:00 Uhr)."
-  },
-  {
-    "id": "hsk1-08",
-    "section": "listening",
-    "part": 2,
-    "prompt": "Welches Getränk wird im Audio genannt?",
-    "chineseText": "茶 (chá)",
-    "audioUrl": "/audio/hsk1/hsk1-cha.mp3",
-    "options": [
-      "Wasser (水)",
-      "Tee (茶)",
-      "Kaffee (咖啡)"
-    ],
-    "correctIndex": 1,
-    "explanation": "„茶“ (chá) bedeutet „Tee“."
-  },
-  {
-    "id": "hsk1-09",
-    "section": "listening",
-    "part": 2,
-    "prompt": "Welche Zahl hörst du?",
-    "chineseText": "八 (bā)",
-    "audioUrl": "/audio/hsk1/hsk1-ba.mp3",
-    "options": [
-      "6 (六 · liù)",
-      "8 (八 · bā)",
-      "10 (十 · shí)"
-    ],
-    "correctIndex": 1,
-    "explanation": "„八“ (bā) ist die Zahl Acht."
-  },
-  {
-    "id": "hsk1-10",
-    "section": "listening",
-    "part": 2,
-    "prompt": "Welches Pronomen wird gesprochen?",
-    "chineseText": "我们 (wǒmen)",
-    "audioUrl": "/audio/hsk1/hsk1-women.mp3",
-    "options": [
-      "Ich (我)",
-      "Wir (我们)",
-      "Sie alle (他们)"
-    ],
-    "correctIndex": 1,
-    "explanation": "„我们“ (wǒmen) ist die 1. Person Plural („wir“)."
-  },
-  {
-    "id": "hsk1-11",
-    "section": "listening",
-    "part": 3,
-    "prompt": "Jemand sagt dir das Gehörte. Welche Antwort ist passend?",
-    "chineseText": "谢谢 (xièxie)",
-    "audioUrl": "/audio/hsk1/hsk1-xiexie.mp3",
-    "options": [
-      "不客气 (Gern geschehen)",
-      "没关系 (Macht nichts)",
-      "再见 (Auf Wiedersehen)"
-    ],
-    "correctIndex": 0,
-    "explanation": "Auf „谢谢“ (Danke) antwortet man standardmäßig mit „不客气“ (bú kèqi - Keine Ursache / Gern geschehen)."
-  },
-  {
-    "id": "hsk1-12",
-    "section": "listening",
-    "part": 3,
-    "prompt": "Jemand entschuldigt sich bei dir. Welche Erwiderung passt?",
-    "chineseText": "对不起 (duìbuqǐ)",
-    "audioUrl": "/audio/hsk1/hsk1-duibuqi.mp3",
-    "options": [
-      "好的 (In Ordnung)",
-      "没关系 (Kein Problem / Macht nichts)",
-      "你好 (Hallo)"
-    ],
-    "correctIndex": 1,
-    "explanation": "Auf „对不起“ (Entschuldigung) antwortet man mit „没关系“ (méi guānxi - Macht nichts)."
-  },
-  {
-    "id": "hsk1-13",
-    "section": "listening",
-    "part": 3,
-    "prompt": "Was bedeutet das Verabschiedungswort im Audio?",
-    "chineseText": "再见 (zàijiàn)",
-    "audioUrl": "/audio/hsk1/hsk1-zaijian.mp3",
-    "options": [
-      "Guten Morgen",
-      "Auf Wiedersehen",
-      "Willkommen"
-    ],
-    "correctIndex": 1,
-    "explanation": "„再见“ (zàijiàn) bedeutet wörtlich „wieder sehen“ = Auf Wiedersehen."
-  },
-  {
-    "id": "hsk1-14",
-    "section": "listening",
-    "part": 3,
-    "prompt": "Welcher Ort wird im Audio genannt?",
-    "chineseText": "饭馆 (fànguǎn)",
-    "audioUrl": "/audio/hsk1/hsk1-fanguan.mp3",
-    "options": [
-      "Geschäft / Laden (商店)",
-      "Restaurant / Gasthaus (饭馆)",
-      "Bahnhof (火车站)"
-    ],
-    "correctIndex": 1,
-    "explanation": "„饭馆“ (fànguǎn) bedeutet Restaurant / Speiselokal."
-  },
-  {
-    "id": "hsk1-15",
-    "section": "listening",
-    "part": 3,
-    "prompt": "Welcher Wochentag oder Zeitbegriff wird genannt?",
-    "chineseText": "星期 (xīngqī)",
+    "type": "trueFalse",
+    "prompt": "Stimmt das gehörte Wort mit der angegebenen Bedeutung überein?",
+    "chineseText": "星期 (xīngqī) — Monat",
     "audioUrl": "/audio/hsk1/hsk1-xingqi.mp3",
     "options": [
-      "Monat (月)",
-      "Woche (星期)",
-      "Jahr (年)"
+      "Richtig",
+      "Falsch"
     ],
     "correctIndex": 1,
-    "explanation": "„星期“ (xīngqī) bedeutet „Woche“."
+    "explanation": "„星期“ (xīngqī) heißt „Woche“, nicht „Monat“. „月“ (yuè) wäre der Monat."
   },
   {
-    "id": "hsk1-16",
-    "section": "reading",
+    "id": "hsk3-05",
+    "section": "listening",
     "part": 1,
-    "prompt": "Passen Schriftzeichen und Bedeutung zusammen?",
-    "chineseText": "书 (shū) — „Buch“",
-    "options": [
-      "Richtig (Bedeutet Buch)",
-      "Falsch (Bedeutet Tisch)"
-    ],
-    "correctIndex": 0,
-    "explanation": "„书“ (shū) bedeutet „Buch“. Tisch heißt „桌子“ (zhuōzi)."
-  },
-  {
-    "id": "hsk1-17",
-    "section": "reading",
-    "part": 1,
-    "prompt": "Passen Schriftzeichen und Bedeutung zusammen?",
-    "chineseText": "猫 (māo) — „Hund“",
+    "type": "trueFalse",
+    "prompt": "Stimmt das gehörte Wort mit der angegebenen Bedeutung überein?",
+    "chineseText": "飞机 (fēijī) — Flugzeug",
+    "audioUrl": "/audio/hsk1/hsk1-feiji.mp3",
     "options": [
       "Richtig",
-      "Falsch (猫 bedeutet Katze)"
-    ],
-    "correctIndex": 1,
-    "explanation": "„猫“ (māo) bedeutet „Katze“. Hund heißt „狗“ (gǒu)."
-  },
-  {
-    "id": "hsk1-18",
-    "section": "reading",
-    "part": 1,
-    "prompt": "Passen Schriftzeichen und Bedeutung zusammen?",
-    "chineseText": "北京 (Běijīng) — „Peking“",
-    "options": [
-      "Richtig (Hauptstadt Chinas)",
-      "Falsch (Bedeutet Shanghai)"
+      "Falsch"
     ],
     "correctIndex": 0,
-    "explanation": "„北京“ (Běijīng) ist die Hauptstadt von China (Peking)."
+    "explanation": "„飞机“ (fēijī) heißt „Flugzeug“."
   },
   {
-    "id": "hsk1-19",
-    "section": "reading",
-    "part": 1,
-    "prompt": "Passen Schriftzeichen und Bedeutung zusammen?",
-    "chineseText": "高兴 (gāoxìng) — „Traurig“",
+    "id": "hsk3-06",
+    "section": "listening",
+    "part": 2,
+    "type": "multipleChoice",
+    "prompt": "Wie heißt die Person im Gespräch?",
+    "options": [
+      "Lǐ Míng",
+      "Lǐ Huá",
+      "Wáng Fāng",
+      "Zhāng Wěi"
+    ],
+    "correctIndex": 0,
+    "explanation": "Die Person stellt sich vor: „Wǒ jiào Lǐ Míng.“ – Ich heiße Li Ming.",
+    "audioUrl": "/audio/exam/hsk3-06.mp3"
+  },
+  {
+    "id": "hsk3-07",
+    "section": "listening",
+    "part": 2,
+    "type": "multipleChoice",
+    "prompt": "Welche Sprache lernt die Person?",
+    "options": [
+      "Chinesisch",
+      "Englisch",
+      "Japanisch"
+    ],
+    "correctIndex": 0,
+    "explanation": "Die Antwort lautet „Hànyǔ“ – Chinesisch. Für Englisch sagt man „Yīngyǔ“.",
+    "audioUrl": "/audio/exam/hsk3-07.mp3"
+  },
+  {
+    "id": "hsk3-08",
+    "section": "listening",
+    "part": 2,
+    "type": "multipleChoice",
+    "prompt": "Wie lange ist die Person schon in China?",
+    "options": [
+      "Seit einem Monat",
+      "Seit einem Jahr",
+      "Seit drei Jahren"
+    ],
+    "correctIndex": 1,
+    "explanation": "„Wǒ lái yí nián le.“ – Ich bin seit einem Jahr hier. Vor der zweiten Tonsilbe „年“ liest man „一“ als „yí“.",
+    "audioUrl": "/audio/exam/hsk3-08.mp3"
+  },
+  {
+    "id": "hsk3-09",
+    "section": "listening",
+    "part": 2,
+    "type": "multipleChoice",
+    "prompt": "Was kostet der Artikel?",
+    "options": [
+      "130 Yuan",
+      "100 Yuan",
+      "300 Yuan"
+    ],
+    "correctIndex": 0,
+    "explanation": "„Yìbǎi sānshí yuán.“ – 130 Yuan. Hundert wird vor dem Maßwort „百“ zu „yìbǎi“.",
+    "audioUrl": "/audio/exam/hsk3-09.mp3"
+  },
+  {
+    "id": "hsk3-10",
+    "section": "listening",
+    "part": 2,
+    "type": "trueFalse",
+    "prompt": "Hat die Person etwas gehört?",
     "options": [
       "Richtig",
-      "Falsch (高兴 bedeutet erfreut / glücklich)"
+      "Falsch"
     ],
     "correctIndex": 1,
-    "explanation": "„高兴“ (gāoxìng) bedeutet „glücklich / erfreut sein“."
+    "explanation": "„Wǒ méi tīngjian.“ – Ich habe nichts gehört. „没“ verneint hier das Hören.",
+    "audioUrl": "/audio/exam/hsk3-10.mp3"
   },
   {
-    "id": "hsk1-20",
-    "section": "reading",
-    "part": 1,
-    "prompt": "Passen Schriftzeichen und Bedeutung zusammen?",
-    "chineseText": "大 (dà) — „Groß“",
+    "id": "hsk3-11",
+    "section": "listening",
+    "part": 3,
+    "type": "multipleChoice",
+    "prompt": "Wie heißt die Person?",
     "options": [
-      "Richtig (Gegenteil von 小 xiǎo)",
-      "Falsch (Bedeutet klein)"
+      "Chén Xiǎo",
+      "Chén Dà",
+      "Wáng Fāng",
+      "Lǐ Huá"
     ],
     "correctIndex": 0,
-    "explanation": "„大“ (dà) bedeutet „groß“. Klein heißt „小“ (xiǎo)."
+    "explanation": "„Wǒ jiào Chén Xiǎo.“ – Ich heiße Chen Xiao.",
+    "audioUrl": "/audio/exam/hsk3-form-1.mp3",
+    "context": "Höre das Gespräch mit einer neuen Person und trage ihre Angaben ein."
   },
   {
-    "id": "hsk1-21",
+    "id": "hsk3-12",
+    "section": "listening",
+    "part": 3,
+    "type": "multipleChoice",
+    "prompt": "Welche Nationalität hat die Person?",
+    "options": [
+      "Amerikanisch",
+      "Japanisch",
+      "Chinesisch"
+    ],
+    "correctIndex": 2,
+    "explanation": "„Wǒ shì Zhōngguó rén.“ – Ich bin Chinese.",
+    "audioUrl": "/audio/exam/hsk3-form-1.mp3",
+    "context": "Höre das Gespräch mit einer neuen Person und trage ihre Angaben ein."
+  },
+  {
+    "id": "hsk3-13",
+    "section": "listening",
+    "part": 3,
+    "type": "multipleChoice",
+    "prompt": "Wie alt ist die Person?",
+    "options": [
+      "20 Jahre",
+      "21 Jahre",
+      "22 Jahre"
+    ],
+    "correctIndex": 0,
+    "explanation": "„Wǒ èrshí suì.“ – Ich bin 20 Jahre alt.",
+    "audioUrl": "/audio/exam/hsk3-form-1.mp3",
+    "context": "Höre das Gespräch mit einer neuen Person und trage ihre Angaben ein."
+  },
+  {
+    "id": "hsk3-14",
+    "section": "listening",
+    "part": 3,
+    "type": "multipleChoice",
+    "prompt": "Wo wohnt die Person?",
+    "options": [
+      "In Peking",
+      "In Shanghai",
+      "In Guangzhou"
+    ],
+    "correctIndex": 1,
+    "explanation": "„Wǒ zhù zài Shànghǎi.“ – Ich wohne in Shanghai.",
+    "audioUrl": "/audio/exam/hsk3-form-1.mp3",
+    "context": "Höre das Gespräch mit einer neuen Person und trage ihre Angaben ein."
+  },
+  {
+    "id": "hsk3-15",
+    "section": "listening",
+    "part": 3,
+    "type": "multipleChoice",
+    "prompt": "An welcher Universität studiert die Person?",
+    "options": [
+      "Peking-Universität",
+      "Shanghai-Universität",
+      "Tsinghua-Universität"
+    ],
+    "correctIndex": 0,
+    "explanation": "„Wǒ zài Běijīng Dàxué xuéxí.“ – Ich studiere an der Peking-Universität.",
+    "audioUrl": "/audio/exam/hsk3-form-1.mp3",
+    "context": "Höre das Gespräch mit einer neuen Person und trage ihre Angaben ein."
+  },
+  {
+    "id": "hsk3-16",
+    "section": "listening",
+    "part": 4,
+    "type": "multipleChoice",
+    "prompt": "Wann steht die Person auf?",
+    "options": [
+      "Um fünf Uhr",
+      "Um sechs Uhr",
+      "Um sieben Uhr"
+    ],
+    "correctIndex": 1,
+    "explanation": "„Wǒ zǎoshang liù diǎn qǐchuáng.“ – Ich stehe morgens um sechs Uhr auf.",
+    "audioUrl": "/audio/exam/hsk3-16.mp3"
+  },
+  {
+    "id": "hsk3-17",
+    "section": "listening",
+    "part": 4,
+    "type": "multipleChoice",
+    "prompt": "Was macht die Person?",
+    "options": [
+      "Sie trinkt Tee.",
+      "Sie geht aus.",
+      "Sie schläft."
+    ],
+    "correctIndex": 1,
+    "explanation": "„Xiàyǔ le, wǒmen chūqù ba.“ – Es regnet, lass uns rausgehen.",
+    "audioUrl": "/audio/exam/hsk3-17.mp3"
+  },
+  {
+    "id": "hsk3-18",
+    "section": "listening",
+    "part": 4,
+    "type": "multipleChoice",
+    "prompt": "Was kauft die Person?",
+    "options": [
+      "Einen Kuchen",
+      "Ein Ei",
+      "Einen roten Tee"
+    ],
+    "correctIndex": 2,
+    "explanation": "„Wǒ mài yí ge hóngchá.“ – Ich kaufe einen roten Tee. Rot heißt „hóng“, Tee „chá“.",
+    "audioUrl": "/audio/exam/hsk3-18.mp3"
+  },
+  {
+    "id": "hsk3-19",
+    "section": "listening",
+    "part": 4,
+    "type": "multipleChoice",
+    "prompt": "Welcher Wochentag ist morgen?",
+    "options": [
+      "Donnerstag",
+      "Freitag",
+      "Samstag"
+    ],
+    "correctIndex": 0,
+    "explanation": "„Míngtiān shì Xīngqīsì.“ – Morgen ist Donnerstag. „星期六“ wäre Samstag.",
+    "audioUrl": "/audio/exam/hsk3-19.mp3"
+  },
+  {
+    "id": "hsk3-20",
+    "section": "listening",
+    "part": 4,
+    "type": "multipleChoice",
+    "prompt": "Was trinkt die Person lieber?",
+    "options": [
+      "Tee",
+      "Kaffee",
+      "Wasser"
+    ],
+    "correctIndex": 1,
+    "explanation": "„Wǒ bù ài hē chá, wǒ hē kāfēi.“ – Ich trage keinen Tee gern, ich trinke Kaffee.",
+    "audioUrl": "/audio/exam/hsk3-20.mp3"
+  },
+  {
+    "id": "hsk3-21",
+    "section": "reading",
+    "part": 1,
+    "type": "matching",
+    "prompt": "Welche Bedeutung passt zu diesem Wort?",
+    "chineseText": "便宜 (piányi)",
+    "options": [
+      "teuer",
+      "günstig",
+      "alt"
+    ],
+    "correctIndex": 1,
+    "explanation": "„便宜“ (piányi) heißt „günstig, billig“ – das Gegenteil von „贵“ (guì, teuer)."
+  },
+  {
+    "id": "hsk3-22",
+    "section": "reading",
+    "part": 1,
+    "type": "matching",
+    "prompt": "Welche Bedeutung passt zu diesem Wort?",
+    "chineseText": "生病 (shēngbìng)",
+    "options": [
+      "gesund sein",
+      "krank sein",
+      "zum Arzt gehen"
+    ],
+    "correctIndex": 1,
+    "explanation": "„生病“ (shēngbìng) heißt „krank werden“; „看病“ (kànbìng) wäre „zum Arzt gehen“."
+  },
+  {
+    "id": "hsk3-23",
+    "section": "reading",
+    "part": 1,
+    "type": "matching",
+    "prompt": "Welche Bedeutung passt zu diesem Wort?",
+    "chineseText": "坐 (zuò)",
+    "options": [
+      "fahren",
+      "essen",
+      "sitzen"
+    ],
+    "correctIndex": 2,
+    "explanation": "„坐“ (zuò) heißt „sitzen“ bzw. „mitfahren“. Fahren wäre „开“ (kāi) wie in „开车“."
+  },
+  {
+    "id": "hsk3-24",
+    "section": "reading",
+    "part": 1,
+    "type": "matching",
+    "prompt": "Welche Bedeutung passt zu diesem Wort?",
+    "chineseText": "找 (zhǎo)",
+    "options": [
+      "suchen",
+      "finden",
+      "sehen"
+    ],
+    "correctIndex": 0,
+    "explanation": "„找“ (zhǎo) heißt „suchen“; „看见“ (kànjiàn) wäre „sehen“."
+  },
+  {
+    "id": "hsk3-25",
+    "section": "reading",
+    "part": 1,
+    "type": "matching",
+    "prompt": "Welche Bedeutung passt zu diesem Wort?",
+    "chineseText": "睡 (shuì)",
+    "options": [
+      "schlafen",
+      "spielen",
+      "stehen"
+    ],
+    "correctIndex": 0,
+    "explanation": "„睡“ (shuì) heißt „schlafen“; „起来“ (qǐlái) bedeutet „aufstehen“."
+  },
+  {
+    "id": "hsk3-26",
     "section": "reading",
     "part": 2,
-    "prompt": "Welches Wort füllt die Lücke grammatikalisch korrekt aus?",
-    "chineseText": "我 ___ 中国人。(Wǒ ___ Zhōngguórén - Ich bin Chinese.)",
+    "type": "multipleChoice",
+    "prompt": "Welches Wort passt in die Lücke?",
+    "chineseText": "我 ___ 中国人。 (Ich bin Chinese.)",
     "options": [
-      "有 (yǒu · haben)",
       "是 (shì · sein)",
+      "有 (yǒu · haben)",
       "在 (zài · sich befinden)"
     ],
-    "correctIndex": 1,
-    "explanation": "Für Gleichsetzungen („A ist B“) nutzt man das Kopula-Verb „是“ (shì): 我是中国人。"
+    "correctIndex": 0,
+    "explanation": "Für Gleichsetzungen („A ist B“) braucht man das Kopula-Verb „是“ (shì)."
   },
   {
-    "id": "hsk1-22",
+    "id": "hsk3-27",
     "section": "reading",
     "part": 2,
-    "prompt": "Welches Wort füllt die Lücke sinnvoll aus?",
-    "chineseText": "我想 ___ 水。(Wǒ xiǎng ___ shuǐ - Ich möchte Wasser trinken.)",
+    "type": "multipleChoice",
+    "prompt": "Welches Wort passt in die Lücke?",
+    "chineseText": "她在大学 ___ 汉语。 (Sie studiert an der Universität Chinesisch.)",
+    "options": [
+      "喝 (hē · trinken)",
+      "看 (kàn · sehen)",
+      "学 (xué · lernen)"
+    ],
+    "correctIndex": 2,
+    "explanation": "„学“ (xué) heißt lernen: „Tā zài dàxué xué Hànyǔ.“ – Sie studiert an der Universität Chinesisch."
+  },
+  {
+    "id": "hsk3-28",
+    "section": "reading",
+    "part": 2,
+    "type": "multipleChoice",
+    "prompt": "Welches Wort passt in die Lücke?",
+    "chineseText": "明天 ___ 冷。 (Morgen wird es kalt.)",
+    "options": [
+      "会 (huì · werden, können)",
+      "能 (néng · können)",
+      "要 (yào · wollen)"
+    ],
+    "correctIndex": 0,
+    "explanation": "„会“ (huì) bildet hier das Zukunfts-Verb: „Míngtiān huì lěng.“ – Morgen wird es kalt."
+  },
+  {
+    "id": "hsk3-29",
+    "section": "reading",
+    "part": 2,
+    "type": "multipleChoice",
+    "prompt": "Welches Wort passt in die Lücke?",
+    "chineseText": "爸爸早上七点 ___ 。 (Der Vater steht um sieben Uhr morgens auf.",
+    "options": [
+      "上课 (shàngkè · Unterricht haben)",
+      "起床 (qǐchuáng · aufstehen)",
+      "吃饭 (chīfàn · essen)"
+    ],
+    "correctIndex": 1,
+    "explanation": "„Bàba zǎoshang qī diǎn ___。“ – Der Vater steht um sieben Uhr morgens auf."
+  },
+  {
+    "id": "hsk3-30",
+    "section": "reading",
+    "part": 2,
+    "type": "multipleChoice",
+    "prompt": "Welches Wort passt in die Lücke?",
+    "chineseText": "我 ___ 牛奶。 (Ich trinke Milch.)",
     "options": [
       "喝 (hē · trinken)",
       "吃 (chī · essen)",
-      "听 (tīng · hören)"
+      "买 (mǎi · kaufen)"
     ],
     "correctIndex": 0,
-    "explanation": "Flüssigkeiten wie Wasser oder Tee werden mit „喝“ (hē - trinken) kombiniert."
+    "explanation": "„Wǒ hē niúnǎi.“ – Ich trinke Milch. Für Essen nimmt man „吃“ (chī)."
   },
   {
-    "id": "hsk1-23",
+    "id": "hsk3-31",
     "section": "reading",
-    "part": 2,
-    "prompt": "Welche Fragepartikel verwandelt den Satz in eine Ja/Nein-Frage?",
-    "chineseText": "你好 ___？(Nǐ hǎo ___ ? - Wie geht es dir / Geht es dir gut?)",
+    "part": 3,
+    "type": "multipleChoice",
+    "prompt": "Wie heißt die Person im Text?",
+    "context": "大家好，我叫李华。今年我二十二岁。我是中国人，现在住在北京。我是大学生，我学习中文。我喜欢北京，也喜欢我的学校。我的同学王丽也是中国人。我们一起上课。她会说汉语，我不会汉语。我们很高兴。",
     "options": [
-      "呢 (ne)",
-      "吗 (ma)",
-      "的 (de)"
+      "Li Hua",
+      "Wang Li",
+      "Li Ming"
+    ],
+    "correctIndex": 0,
+    "explanation": "„Wǒ jiào Lǐ Huá.“ – Ich heiße Li Hua."
+  },
+  {
+    "id": "hsk3-32",
+    "section": "reading",
+    "part": 3,
+    "type": "multipleChoice",
+    "prompt": "Wie alt ist die Person?",
+    "context": "大家好，我叫李华。今年我二十二岁。我是中国人，现在住在北京。我是大学生，我学习中文。我喜欢北京，也喜欢我的学校。我的同学王丽也是中国人。我们一起上课。她会说汉语，我不会汉语。我们很高兴。",
+    "options": [
+      "Zwanzig Jahre",
+      "Zweiundzwanzig Jahre",
+      "Dreißig Jahre"
     ],
     "correctIndex": 1,
-    "explanation": "Die Fragepartikel „吗“ (ma) steht am Ende von Aussagesätzen für Entscheidungsfragen."
+    "explanation": "„Jīnnián wǒ èrshí èr suì.“ – In diesem Jahr bin ich 22 Jahre alt."
   },
   {
-    "id": "hsk1-24",
+    "id": "hsk3-33",
     "section": "reading",
-    "part": 2,
-    "prompt": "Welches Wort drückt den Besitz korrekt aus?",
-    "chineseText": "这是我 ___ 书。(Zhè shì wǒ ___ shū - Das ist mein Buch.)",
+    "part": 3,
+    "type": "multipleChoice",
+    "prompt": "Wo wohnt die Person?",
+    "context": "大家好，我叫李华。今年我二十二岁。我是中国人，现在住在北京。我是大学生，我学习中文。我喜欢北京，也喜欢我的学校。我的同学王丽也是中国人。我们一起上课。她会说汉语，我不会汉语。我们很高兴。",
     "options": [
-      "了 (le)",
-      "在 (zài)",
-      "的 (de)"
+      "In Shanghai",
+      "In Peking",
+      "In Guangzhou"
+    ],
+    "correctIndex": 1,
+    "explanation": "„Wǒ zhù zài Běijīng.“ – Ich wohne in Peking."
+  },
+  {
+    "id": "hsk3-34",
+    "section": "reading",
+    "part": 3,
+    "type": "multipleChoice",
+    "prompt": "Was lernt die Person an der Universität?",
+    "context": "大家好，我叫李华。今年我二十二岁。我是中国人，现在住在北京。我是大学生，我学习中文。我喜欢北京，也喜欢我的学校。我的同学王丽也是中国人。我们一起上课。她会说汉语，我不会汉语。我们很高兴。",
+    "options": [
+      "Mathematik",
+      "Chinesisch",
+      "Englisch"
+    ],
+    "correctIndex": 1,
+    "explanation": "„Wǒ xuéxí Zhōngwén.“ – Ich lerne Chinesisch."
+  },
+  {
+    "id": "hsk3-35",
+    "section": "reading",
+    "part": 3,
+    "type": "multipleChoice",
+    "prompt": "Wer im Text kann Chinesisch sprechen?",
+    "context": "大家好，我叫李华。今年我二十二岁。我是中国人，现在住在北京。我是大学生，我学习中文。我喜欢北京，也喜欢我的学校。我的同学王丽也是中国人。我们一起上课。她会说汉语，我不会汉语。我们很高兴。",
+    "options": [
+      "Li Hua",
+      "Wang Li",
+      "Niemand im Text"
+    ],
+    "correctIndex": 1,
+    "explanation": "„Tā huì shuō Hànyǔ, wǒ bù huì.“ – Sie kann Chinesisch sprechen, ich kann es nicht."
+  },
+  {
+    "id": "hsk3-36",
+    "section": "reading",
+    "part": 4,
+    "type": "trueFalse",
+    "prompt": "Der Unterricht endet um 22 Uhr.",
+    "chineseText": "上课时间：上午八点至晚上十点",
+    "options": [
+      "Richtig",
+      "Falsch"
+    ],
+    "correctIndex": 0,
+    "explanation": "„晚上十点“ heißt 22 Uhr – der Unterricht endet um 22 Uhr."
+  },
+  {
+    "id": "hsk3-37",
+    "section": "reading",
+    "part": 4,
+    "type": "trueFalse",
+    "prompt": "Hier darf man sprechen.",
+    "chineseText": "请不要说话",
+    "options": [
+      "Richtig",
+      "Falsch"
+    ],
+    "correctIndex": 1,
+    "explanation": "„请不要说话“ – Sprechen ist hier verboten."
+  },
+  {
+    "id": "hsk3-38",
+    "section": "reading",
+    "part": 4,
+    "type": "trueFalse",
+    "prompt": "Die Taxifahrt kostet 50 Yuan.",
+    "chineseText": "出租车：五十元",
+    "options": [
+      "Richtig",
+      "Falsch"
+    ],
+    "correctIndex": 0,
+    "explanation": "„出租车：五十元“ – die Taxifahrt kostet 50 Yuan."
+  },
+  {
+    "id": "hsk3-39",
+    "section": "reading",
+    "part": 4,
+    "type": "trueFalse",
+    "prompt": "Die Besprechung ist um 15 Uhr.",
+    "chineseText": "开会时间：下午三点",
+    "options": [
+      "Richtig",
+      "Falsch"
+    ],
+    "correctIndex": 0,
+    "explanation": "„下午三点“ heißt 15 Uhr."
+  },
+  {
+    "id": "hsk3-40",
+    "section": "reading",
+    "part": 4,
+    "type": "trueFalse",
+    "prompt": "Die Besprechung findet am Mittwochnachmittag statt.",
+    "chineseText": "星期三下午：开会",
+    "options": [
+      "Richtig",
+      "Falsch"
+    ],
+    "correctIndex": 0,
+    "explanation": "„星期三下午“ heißt Mittwochnachmittag."
+  },
+  {
+    "id": "hsk3-41",
+    "section": "listening",
+    "part": 1,
+    "type": "trueFalse",
+    "prompt": "Stimmt das gehörte Wort mit der angegebenen Bedeutung überein?",
+    "chineseText": "便宜 (piányi) — teuer",
+    "audioUrl": "/audio/hsk1/hsk1-pianyi.mp3",
+    "options": [
+      "Richtig",
+      "Falsch"
+    ],
+    "correctIndex": 1,
+    "explanation": "„便宜“ (piányi) heißt „günstig“, nicht „teuer“."
+  },
+  {
+    "id": "hsk3-42",
+    "section": "listening",
+    "part": 1,
+    "type": "trueFalse",
+    "prompt": "Stimmt das gehörte Wort mit der angegebenen Bedeutung überein?",
+    "chineseText": "汉字 (hànzì) — chinesische Schriftzeichen",
+    "audioUrl": "/audio/hsk1/hsk1-hanzi.mp3",
+    "options": [
+      "Richtig",
+      "Falsch"
+    ],
+    "correctIndex": 0,
+    "explanation": "„汉字“ (hànzì) sind die chinesischen Schriftzeichen."
+  },
+  {
+    "id": "hsk3-43",
+    "section": "listening",
+    "part": 1,
+    "type": "trueFalse",
+    "prompt": "Stimmt das gehörte Wort mit der angegebenen Bedeutung überein?",
+    "chineseText": "早上 (zǎoshang) — Abend",
+    "audioUrl": "/audio/hsk1/hsk1-zaoshang.mp3",
+    "options": [
+      "Richtig",
+      "Falsch"
+    ],
+    "correctIndex": 1,
+    "explanation": "„早上“ (zǎoshang) heißt „Morgen, Vormittag“, nicht „Abend“."
+  },
+  {
+    "id": "hsk3-44",
+    "section": "listening",
+    "part": 1,
+    "type": "trueFalse",
+    "prompt": "Stimmt das gehörte Wort mit der angegebenen Bedeutung überein?",
+    "chineseText": "星期日 (xīngqīrì) — Sonntag",
+    "audioUrl": "/audio/hsk1/hsk1-xingqiri.mp3",
+    "options": [
+      "Richtig",
+      "Falsch"
+    ],
+    "correctIndex": 0,
+    "explanation": "„星期日“ (xīngqīrì) heißt Sonntag."
+  },
+  {
+    "id": "hsk3-45",
+    "section": "listening",
+    "part": 1,
+    "type": "trueFalse",
+    "prompt": "Stimmt das gehörte Wort mit der angegebenen Bedeutung überein?",
+    "chineseText": "上午 (shàngwǔ) — Nachmittag",
+    "audioUrl": "/audio/hsk1/hsk1-shangwu.mp3",
+    "options": [
+      "Richtig",
+      "Falsch"
+    ],
+    "correctIndex": 1,
+    "explanation": "„上午“ (shàngwǔ) ist der Vormittag; Nachmittag wäre „下午“ (xiàwǔ)."
+  },
+  {
+    "id": "hsk3-46",
+    "section": "listening",
+    "part": 2,
+    "type": "multipleChoice",
+    "prompt": "Was ist die Person?",
+    "options": [
+      "Eine Lehrerin",
+      "Eine Studentin",
+      "Eine Ärztin"
+    ],
+    "correctIndex": 1,
+    "explanation": "„Wǒ shì xuéshēng, bù shì lǎoshī.“ – Ich bin Studentin, nicht Lehrerin.",
+    "audioUrl": "/audio/exam/hsk3-46.mp3"
+  },
+  {
+    "id": "hsk3-47",
+    "section": "listening",
+    "part": 2,
+    "type": "multipleChoice",
+    "prompt": "Was kostet der Artikel?",
+    "options": [
+      "20 Yuan",
+      "120 Yuan",
+      "220 Yuan"
+    ],
+    "correctIndex": 1,
+    "explanation": "„Yìbǎi èrshí yuán.“ – 120 Yuan.",
+    "audioUrl": "/audio/exam/hsk3-47.mp3"
+  },
+  {
+    "id": "hsk3-48",
+    "section": "listening",
+    "part": 2,
+    "type": "multipleChoice",
+    "prompt": "Wo arbeitet die Person?",
+    "options": [
+      "Im Hotel",
+      "Am Bahnhof",
+      "In der Buchhandlung"
+    ],
+    "correctIndex": 1,
+    "explanation": "„Wǒ zài huǒchēzhàn gōngzuò.“ – Ich arbeite am Bahnhof.",
+    "audioUrl": "/audio/exam/hsk3-48.mp3"
+  },
+  {
+    "id": "hsk3-49",
+    "section": "listening",
+    "part": 2,
+    "type": "multipleChoice",
+    "prompt": "Welcher Wochentag ist heute?",
+    "options": [
+      "Donnerstag",
+      "Freitag",
+      "Mittwoch"
     ],
     "correctIndex": 2,
-    "explanation": "Das Strukturpartikel „的“ (de) verbindet Besitzer und Nomen (我的书 = mein Buch)."
+    "explanation": "„Jīntiān shì Xīngqīsān.“ – Heute ist Mittwoch.",
+    "audioUrl": "/audio/exam/hsk3-49.mp3"
   },
   {
-    "id": "hsk1-25",
-    "section": "reading",
+    "id": "hsk3-50",
+    "section": "listening",
     "part": 2,
-    "prompt": "Welches Zählwort (Klassifikator) passt zu Büchern?",
-    "chineseText": "三 ___ 书 (sān ___ shū - drei Bücher)",
+    "type": "multipleChoice",
+    "prompt": "Was kauft die Person?",
     "options": [
-      "本 (běn)",
-      "个 (gè)",
-      "块 (kuài)"
-    ],
-    "correctIndex": 0,
-    "explanation": "„本“ (běn) ist das spezifische Zählwort für gebundene Werke wie Bücher und Hefte."
-  },
-  {
-    "id": "hsk1-26",
-    "section": "reading",
-    "part": 3,
-    "prompt": "Frage: „你在哪儿？“ (Nǐ zài nǎr? - Wo bist du?) Welche Antwort passt?",
-    "chineseText": "A: „你在哪儿？“",
-    "options": [
-      "我在学校。(Wǒ zài xuéxiào - Ich bin in der Schule.)",
-      "我是学生。(Wǒ shì xuésheng - Ich bin Schüler.)",
-      "我很好。(Wǒ hěn hǎo - Mir geht es sehr gut.)"
-    ],
-    "correctIndex": 0,
-    "explanation": "Auf eine Ortsfrage mit „在哪儿“ (wo) antwortet man mit einer Ortsangabe: „我在学校“ (Ich bin in der Schule)."
-  },
-  {
-    "id": "hsk1-27",
-    "section": "reading",
-    "part": 3,
-    "prompt": "Frage: „这个多少钱？“ (Zhège duōshao qián? - Wie viel kostet das?) Welche Antwort passt?",
-    "chineseText": "A: „这个多少钱？“",
-    "options": [
-      "五块钱。(Wǔ kuài qián - Fünf Yuan.)",
-      "五个。(Wǔ gè - Fünf Stück.)",
-      "五点。(Wǔ diǎn - Fünf Uhr.)"
-    ],
-    "correctIndex": 0,
-    "explanation": "„多少钱“ fragt nach dem Preis in Geld (块钱 kuài qián = Geldeinheit Yuan)."
-  },
-  {
-    "id": "hsk1-28",
-    "section": "reading",
-    "part": 3,
-    "prompt": "Frage: „现在几点？“ (Xiànzài jǐ diǎn? - Wie spät ist es jetzt?) Welche Antwort passt?",
-    "chineseText": "A: „现在几点？“",
-    "options": [
-      "三号。(Sān hào - Der 3. Tag.)",
-      "两点。(Liǎng diǎn - Zwei Uhr.)",
-      "星期三。(Xīngqīsān - Mittwoch.)"
+      "Einen Tee",
+      "Zwei Tees",
+      "Drei Tees"
     ],
     "correctIndex": 1,
-    "explanation": "„几点“ fragt nach der Uhrzeit. „两点“ bedeutet 2:00 Uhr."
+    "explanation": "„Wǒ mài le liǎng gè chá.“ – Ich habe zwei Tees gekauft.",
+    "audioUrl": "/audio/exam/hsk3-50.mp3"
   },
   {
-    "id": "hsk1-29",
-    "section": "reading",
-    "part": 3,
-    "prompt": "Was bedeutet der Satz: „他不在家。“ (Tā bú zài jiā.)?",
-    "chineseText": "他不在家。",
-    "options": [
-      "Er ist nicht zu Hause.",
-      "Er hat kein Zuhause.",
-      "Er geht nach Hause."
-    ],
-    "correctIndex": 0,
-    "explanation": "„不 (bù) + 在 (zài) + 家 (jiā)“ verneint den Aufenthalt: Er ist nicht zu Hause."
-  },
-  {
-    "id": "hsk1-30",
-    "section": "reading",
-    "part": 3,
-    "prompt": "Was bedeutet der Satz: „我会说汉语。“ (Wǒ huì shuō Hànyǔ.)?",
-    "chineseText": "我会说汉语。",
-    "options": [
-      "Ich kann Chinesisch sprechen.",
-      "Ich möchte Chinesisch lernen.",
-      "Ich mag chinesisches Essen."
-    ],
-    "correctIndex": 0,
-    "explanation": "„会 (huì = können) + 说 (shuō = sprechen) + 汉语 (Hànyǔ = Chinesisch)“: Ich kann Chinesisch sprechen."
-  },
-  {
-    "id": "hsk1-31",
+    "id": "hsk3-51",
     "section": "listening",
-    "part": 1,
-    "prompt": "Stimmt das gehörte Wort mit der deutschen Übersetzung „Katze“ überein?",
-    "chineseText": "猫 (māo)",
-    "audioUrl": "/audio/hsk1/hsk1-31.mp3",
+    "part": 3,
+    "type": "multipleChoice",
+    "prompt": "Wie heißt die Person?",
     "options": [
-      "Wahr (Bedeutet Katze)",
-      "Falsch (Bedeutet Hund)"
+      "Zhang Wei",
+      "Zhang Min",
+      "Wang Fang"
     ],
     "correctIndex": 0,
-    "explanation": "„猫“ (māo) bedeutet „Katze“. Hund heißt „狗“ (gǒu)."
+    "explanation": "„Wǒ jiào Zhāng Wěi.“ – Ich heiße Zhang Wei.",
+    "audioUrl": "/audio/exam/hsk3-form-2.mp3",
+    "context": "Höre das Gespräch mit einer neuen Person und trage ihre Angaben ein."
   },
   {
-    "id": "hsk1-32",
+    "id": "hsk3-52",
     "section": "listening",
-    "part": 1,
-    "prompt": "Stimmt das gehörte Wort mit der deutschen Übersetzung „Brot“ überein?",
-    "chineseText": "米饭 (mǐfàn)",
-    "audioUrl": "/audio/hsk1/hsk1-32.mp3",
+    "part": 3,
+    "type": "multipleChoice",
+    "prompt": "Woher kommt die Person?",
     "options": [
-      "Wahr (Bedeutet Brot)",
-      "Falsch (Bedeutet gekochter Reis)"
+      "Aus China",
+      "Aus Japan",
+      "Aus Amerika"
+    ],
+    "correctIndex": 2,
+    "explanation": "„Wǒ shì Měiguó rén.“ – Ich bin Amerikaner. America heißt auf Chinesisch „Měiguó“.",
+    "audioUrl": "/audio/exam/hsk3-form-2.mp3",
+    "context": "Höre das Gespräch mit einer neuen Person und trage ihre Angaben ein."
+  },
+  {
+    "id": "hsk3-53",
+    "section": "listening",
+    "part": 3,
+    "type": "multipleChoice",
+    "prompt": "Wie alt ist die Person?",
+    "options": [
+      "13 Jahre",
+      "23 Jahre",
+      "33 Jahre"
     ],
     "correctIndex": 1,
-    "explanation": "„米饭“ (mǐfàn) bedeutet „gekochter Reis“, nicht Brot."
+    "explanation": "„Wǒ èrshí sān suì.“ – Ich bin 23 Jahre alt.",
+    "audioUrl": "/audio/exam/hsk3-form-2.mp3",
+    "context": "Höre das Gespräch mit einer neuen Person und trage ihre Angaben ein."
   },
   {
-    "id": "hsk1-33",
+    "id": "hsk3-54",
     "section": "listening",
-    "part": 1,
-    "prompt": "Stimmt das gehörte Wort mit der Tätigkeit „ein Buch lesen“ überein?",
-    "chineseText": "看书 (kànshū)",
-    "audioUrl": "/audio/hsk1/hsk1-33.mp3",
+    "part": 3,
+    "type": "multipleChoice",
+    "prompt": "Was lernt die Person?",
     "options": [
-      "Wahr (Bedeutet ein Buch lesen)",
-      "Falsch (Bedeutet fernsehen)"
-    ],
-    "correctIndex": 0,
-    "explanation": "„看书“ (kànshū) setzt sich aus „看“ (sehen/lesen) und „书“ (Buch) zusammen."
-  },
-  {
-    "id": "hsk1-34",
-    "section": "listening",
-    "part": 1,
-    "prompt": "Stimmt das gehörte Wort mit „Wasser trinken“ überein?",
-    "chineseText": "喝水 (hēshuǐ)",
-    "audioUrl": "/audio/hsk1/hsk1-34.mp3",
-    "options": [
-      "Wahr (Bedeutet Wasser trinken)",
-      "Falsch (Bedeutet Tee trinken)"
-    ],
-    "correctIndex": 0,
-    "explanation": "„喝水“ (hēshuǐ) bedeutet „Wasser trinken“. Tee trinken heißt „喝茶“ (hēchá)."
-  },
-  {
-    "id": "hsk1-35",
-    "section": "listening",
-    "part": 1,
-    "prompt": "Stimmt das Wort mit der Bedeutung „Flughafen“ überein?",
-    "chineseText": "火车站 (huǒchēzhàn)",
-    "audioUrl": "/audio/hsk1/hsk1-35.mp3",
-    "options": [
-      "Wahr (Bedeutet Flughafen)",
-      "Falsch (Bedeutet Bahnhof)"
+      "Englisch",
+      "Chinesisch",
+      "Japanisch"
     ],
     "correctIndex": 1,
-    "explanation": "„火车站“ (huǒchēzhàn) bedeutet „Bahnhof“. Flughafen heißt „飞机场“."
+    "explanation": "„Wǒ xué Hànyǔ.“ – Ich lerne Chinesisch.",
+    "audioUrl": "/audio/exam/hsk3-form-2.mp3",
+    "context": "Höre das Gespräch mit einer neuen Person und trage ihre Angaben ein."
   },
   {
-    "id": "hsk1-36",
-    "section": "listening",
-    "part": 2,
-    "prompt": "Welcher Gegenstand wird im Audio genannt?",
-    "chineseText": "电脑 (diànnǎo)",
-    "audioUrl": "/audio/hsk1/hsk1-36.mp3",
-    "options": [
-      "Computer (电脑)",
-      "Fernseher (电视)",
-      "Film (电影)"
-    ],
-    "correctIndex": 0,
-    "explanation": "„电脑“ (diànnǎo, wörtl. „elektrisches Gehirn“) bedeutet Computer."
-  },
-  {
-    "id": "hsk1-37",
-    "section": "listening",
-    "part": 2,
-    "prompt": "Welche Eigenschaft wird im Audio beschrieben?",
-    "chineseText": "漂亮 (piàoliang)",
-    "audioUrl": "/audio/hsk1/hsk1-37.mp3",
-    "options": [
-      "Groß (大)",
-      "Schön / hübsch (漂亮)",
-      "Kalt (冷)"
-    ],
-    "correctIndex": 1,
-    "explanation": "„漂亮“ (piàoliang) bedeutet „hübsch / schön“."
-  },
-  {
-    "id": "hsk1-38",
-    "section": "listening",
-    "part": 2,
-    "prompt": "Welcher Beruf wird im Audio genannt?",
-    "chineseText": "医生 (yīshēng)",
-    "audioUrl": "/audio/hsk1/hsk1-38.mp3",
-    "options": [
-      "Lehrer (老师)",
-      "Arzt (医生)",
-      "Schüler (学生)"
-    ],
-    "correctIndex": 1,
-    "explanation": "„医生“ (yīshēng) bedeutet „Arzt / Ärztin“."
-  },
-  {
-    "id": "hsk1-39",
-    "section": "listening",
-    "part": 2,
-    "prompt": "Welche Uhrzeit hörst du?",
-    "chineseText": "三点十分 (sān diǎn shí fēn)",
-    "audioUrl": "/audio/hsk1/hsk1-39.mp3",
-    "options": [
-      "03:00 Uhr (三点整)",
-      "03:10 Uhr (三点十分)",
-      "03:30 Uhr (三点半)"
-    ],
-    "correctIndex": 1,
-    "explanation": "„三点十分“ (sān diǎn shí fēn) bedeutet 3 Uhr und 10 Minuten (03:10 Uhr)."
-  },
-  {
-    "id": "hsk1-40",
-    "section": "listening",
-    "part": 2,
-    "prompt": "Welcher Ort wird im Audio genannt?",
-    "chineseText": "商店 (shāngdiàn)",
-    "audioUrl": "/audio/hsk1/hsk1-40.mp3",
-    "options": [
-      "Geschäft / Laden (商店)",
-      "Krankenhaus (医院)",
-      "Schule (学校)"
-    ],
-    "correctIndex": 0,
-    "explanation": "„商店“ (shāngdiàn) bedeutet Geschäft / Laden."
-  },
-  {
-    "id": "hsk1-41",
+    "id": "hsk3-55",
     "section": "listening",
     "part": 3,
-    "prompt": "Jemand stellt dir die Frage im Audio. Was möchte die Person wissen?",
-    "chineseText": "你叫什么名字？ (Nǐ jiào shénme míngzi?)",
-    "audioUrl": "/audio/hsk1/hsk1-41.mp3",
+    "type": "multipleChoice",
+    "prompt": "Warum ist die Person glücklich?",
     "options": [
-      "Deinen Namen",
-      "Dein Alter",
-      "Deine Nationalität"
+      "Weil sie China mag.",
+      "Weil sie reich ist.",
+      "Weil sie in Japan war."
     ],
     "correctIndex": 0,
-    "explanation": "„你叫什么名字？“ fragt: „Wie heißt du? / Wie ist dein Name?“."
+    "explanation": "„Wǒ hěn xǐhuan Zhōngguó.“ – Ich mag China sehr.",
+    "audioUrl": "/audio/exam/hsk3-form-2.mp3",
+    "context": "Höre das Gespräch mit einer neuen Person und trage ihre Angaben ein."
   },
   {
-    "id": "hsk1-42",
+    "id": "hsk3-56",
     "section": "listening",
-    "part": 3,
-    "prompt": "Jemand begrüßt dich mit dieser Frage. Welche Erwiderung ist natürlich?",
-    "chineseText": "你好吗？ (Nǐ hǎo ma?)",
-    "audioUrl": "/audio/hsk1/hsk1-42.mp3",
+    "part": 4,
+    "type": "multipleChoice",
+    "prompt": "Was hat die Person gekauft?",
     "options": [
-      "我很好。 (Mir geht es sehr gut.)",
-      "没关系。 (Macht nichts.)",
-      "不客气。 (Gern geschehen.)"
+      "Ein Handy",
+      "Eine Kamera",
+      "Eine Uhr"
     ],
     "correctIndex": 0,
-    "explanation": "Auf „你好吗？“ (Wie geht es dir?) antwortet man mit „我很好。“ (Mir geht es gut)."
+    "explanation": "„Wǒ mài le yí ge shǒujī.“ – Ich habe ein Handy gekauft.",
+    "audioUrl": "/audio/exam/hsk3-56.mp3"
   },
   {
-    "id": "hsk1-43",
+    "id": "hsk3-57",
     "section": "listening",
-    "part": 3,
-    "prompt": "Was bedeutet die gehörte Frage beim Einkaufen?",
-    "chineseText": "这个多少钱？ (Zhè ge duōshao qián?)",
-    "audioUrl": "/audio/hsk1/hsk1-43.mp3",
+    "part": 4,
+    "type": "multipleChoice",
+    "prompt": "Was trinkt die Person abends?",
     "options": [
-      "Wo ist das Geschäft?",
-      "Wie viel kostet das?",
-      "Gefällt dir das?"
+      "Tee",
+      "Milch",
+      "Wasser"
     ],
     "correctIndex": 1,
-    "explanation": "„这个多少钱？“ (Zhè ge duōshao qián?) bedeutet: „Wie viel kostet das?“."
+    "explanation": "„Wǒ wǎnshang hē niúnǎi.“ – Abends trinke ich Milch.",
+    "audioUrl": "/audio/exam/hsk3-57.mp3"
   },
   {
-    "id": "hsk1-44",
+    "id": "hsk3-58",
     "section": "listening",
-    "part": 3,
-    "prompt": "Wo befindet sich die Person laut Audio?",
-    "chineseText": "他在学校。 (Tā zài xuéxiào.)",
-    "audioUrl": "/audio/hsk1/hsk1-44.mp3",
+    "part": 4,
+    "type": "multipleChoice",
+    "prompt": "Was lernt die Person in China?",
     "options": [
-      "Zu Hause (在家)",
-      "In der Schule (在学校)",
-      "Im Krankenhaus (在医院)"
+      "Englisch",
+      "Chinesisch",
+      "Japanisch"
     ],
     "correctIndex": 1,
-    "explanation": "„他在学校。“ bedeutet „Er ist in der Schule.“."
+    "explanation": "„Wǒ yào xué Hànyǔ.“ – Ich will Chinesisch lernen.",
+    "audioUrl": "/audio/exam/hsk3-58.mp3"
   },
   {
-    "id": "hsk1-45",
+    "id": "hsk3-59",
     "section": "listening",
-    "part": 3,
-    "prompt": "Wonach erkundigt sich der Sprecher?",
-    "chineseText": "今天天气怎么样？ (Jīntiān tiānqì zěnmeyàng?)",
-    "audioUrl": "/audio/hsk1/hsk1-45.mp3",
+    "part": 4,
+    "type": "multipleChoice",
+    "prompt": "Wie ist der Tee?",
     "options": [
-      "Nach dem heutigen Wetter",
-      "Nach der heutigen Uhrzeit",
-      "Nach dem heutigen Essen"
+      "Teuer",
+      "Billig",
+      "Süß"
+    ],
+    "correctIndex": 1,
+    "explanation": "„Hěn piányi de chá.“ – Sehr billiger Tee. „便宜“ heißt günstig.",
+    "audioUrl": "/audio/exam/hsk3-59.mp3"
+  },
+  {
+    "id": "hsk3-60",
+    "section": "listening",
+    "part": 4,
+    "type": "multipleChoice",
+    "prompt": "Wie kommt die Person dorthin?",
+    "options": [
+      "Mit dem Taxi",
+      "Mit dem Bus",
+      "Zu Fuß"
     ],
     "correctIndex": 0,
-    "explanation": "„天气“ (tiānqì) bedeutet Wetter und „怎么样“ (zěnmeyàng) fragt nach der Beschaffenheit: „Wie ist das Wetter heute?“."
+    "explanation": "„Wǒ bù huì qíchē, wǒ yào zuò chūzūchē.“ – Ich kann nicht Fahrrad fahren, ich nehme ein Taxi.",
+    "audioUrl": "/audio/exam/hsk3-60.mp3"
   },
   {
-    "id": "hsk1-46",
+    "id": "hsk3-61",
     "section": "reading",
     "part": 1,
-    "prompt": "Passen Schriftzeichen und deutsche Bedeutung zusammen?",
-    "chineseText": "狗 (gǒu) — „Hund“",
+    "type": "matching",
+    "prompt": "Welche Bedeutung passt zu diesem Wort?",
+    "chineseText": "贵 (guì)",
     "options": [
-      "Richtig (Bedeutet Hund)",
-      "Falsch (Bedeutet Katze)"
+      "teuer",
+      "günstig",
+      "neu"
     ],
     "correctIndex": 0,
-    "explanation": "„狗“ (gǒu) bedeutet „Hund“."
+    "explanation": "„贵“ (guì) heißt „teuer, wertvoll“ – das Gegenteil von „便宜“ (piányi)."
   },
   {
-    "id": "hsk1-47",
+    "id": "hsk3-62",
     "section": "reading",
     "part": 1,
-    "prompt": "Passen Schriftzeichen und deutsche Bedeutung zusammen?",
-    "chineseText": "热 (rè) — „kalt“",
+    "type": "matching",
+    "prompt": "Welche Bedeutung passt zu diesem Wort?",
+    "chineseText": "医院 (yīyuàn)",
     "options": [
-      "Richtig (Bedeutet kalt)",
-      "Falsch (Bedeutet heiß / warm)"
+      "Schule",
+      "Krankenhaus",
+      "Fabrik"
     ],
     "correctIndex": 1,
-    "explanation": "„热“ (rè) bedeutet „heiß / warm“. Kalt heißt „冷“ (lěng)."
+    "explanation": "„医院“ (yīyuàn) ist das Krankenhaus."
   },
   {
-    "id": "hsk1-48",
+    "id": "hsk3-63",
     "section": "reading",
     "part": 1,
-    "prompt": "Passen Schriftzeichen und deutsche Bedeutung zusammen?",
-    "chineseText": "北京 (Běijīng) — „Peking“",
+    "type": "matching",
+    "prompt": "Welche Bedeutung passt zu diesem Wort?",
+    "chineseText": "星期日 (xīngqīrì)",
     "options": [
-      "Richtig (Chinas Hauptstadt)",
-      "Falsch (Ein Name einer Person)"
+      "Sonntag",
+      "Samstag",
+      "Montag"
     ],
     "correctIndex": 0,
-    "explanation": "„北京“ (Běijīng) ist die Hauptstadt Chinas (Peking)."
+    "explanation": "„星期日“ (xīngqīrì) heißt Sonntag; Sonntag sagt man auch „星期天“ (xīngqītiān)."
   },
   {
-    "id": "hsk1-49",
+    "id": "hsk3-64",
     "section": "reading",
     "part": 1,
-    "prompt": "Passen Schriftzeichen und deutsche Bedeutung zusammen?",
-    "chineseText": "衣服 (yīfu) — „Kleidung“",
+    "type": "matching",
+    "prompt": "Welche Bedeutung passt zu diesem Wort?",
+    "chineseText": "见面 (jiànmiàn)",
     "options": [
-      "Richtig (Bedeutet Kleidung)",
-      "Falsch (Bedeutet Essen)"
+      "sich treffen",
+      "sich trennen",
+      "sich verabschieden"
     ],
     "correctIndex": 0,
-    "explanation": "„衣服“ (yīfu) bedeutet „Kleidung / Anziehsachen“."
+    "explanation": "„见面“ (jiànmiàn) heißt „sich treffen“; „再见“ (zàijiàn) bedeutet „auf Wiedersehen“."
   },
   {
-    "id": "hsk1-50",
+    "id": "hsk3-65",
     "section": "reading",
     "part": 1,
-    "prompt": "Passen Schriftzeichen und deutsche Bedeutung zusammen?",
-    "chineseText": "写字 (xiězì) — „sprechen“",
+    "type": "matching",
+    "prompt": "Welche Bedeutung passt zu diesem Wort?",
+    "chineseText": "高兴 (gāoxìng)",
     "options": [
-      "Richtig (Bedeutet sprechen)",
-      "Falsch (Bedeutet Schriftzeichen schreiben)"
+      "müde",
+      "glücklich",
+      "krank"
     ],
     "correctIndex": 1,
-    "explanation": "„写字“ (xiězì) bedeutet „Zeichen schreiben“. Sprechen heißt „说话“ (shuōhuà)."
+    "explanation": "„高兴“ (gāoxìng) heißt „glücklich, froh“."
   },
   {
-    "id": "hsk1-51",
+    "id": "hsk3-66",
     "section": "reading",
     "part": 2,
-    "prompt": "Welches Zähleinheitswort gehört in die Lücke: „我买了一___苹果。“ (Wǒ mǎi le yí ___ píngguǒ.)?",
-    "chineseText": "我买了一___苹果。",
+    "type": "multipleChoice",
+    "prompt": "Welches Wort passt in die Lücke?",
+    "chineseText": "我早上七点 ___ 。 (Um sieben Uhr morgens stehe ich auf.",
     "options": [
-      "个 (gè - allgemeines ZEW)",
-      "本 (běn - ZEW für Bücher)",
-      "岁 (suì - Lebensjahre)"
+      "上课 (shàngkè · Unterricht haben)",
+      "起床 (qǐchuáng · aufstehen)",
+      "上班 (shàngbān · zur Arbeit gehen)"
     ],
-    "correctIndex": 0,
-    "explanation": "Für Äpfel (苹果) verwendet man das allgemeine Zähleinheitswort „个“ (gè)."
+    "correctIndex": 1,
+    "explanation": "„Wǒ zǎoshang qī diǎn qǐchuáng.“ – Ich stehe um sieben Uhr morgens auf."
   },
   {
-    "id": "hsk1-52",
+    "id": "hsk3-67",
     "section": "reading",
     "part": 2,
-    "prompt": "Welches Fragewort passt in die Lücke: „你想吃___？“ (Nǐ xiǎng chī ___?)?",
-    "chineseText": "你想吃___？",
+    "type": "multipleChoice",
+    "prompt": "Welches Satzende passt in die Lücke?",
+    "chineseText": "你是老师 ___ ? (Bist du Lehrerin?)",
     "options": [
-      "什么 (shénme - was)",
-      "哪儿 (nǎr - wo)",
-      "谁 (shéi - wer)"
+      "吗 (ma · Fragepartikel)",
+      "呢 (ne · Themenpartikel)",
+      "吧 (ba · Vorschlagspartikel)"
     ],
     "correctIndex": 0,
-    "explanation": "„你想吃什么？“ fragt nach dem Essensobjekt: „Was möchtest du essen?“."
+    "explanation": "„Nǐ shì lǎoshī ma?“ – Bist du Lehrerin? Für eine allgemeine Frage steht am Satzende „吗“ (ma)."
   },
   {
-    "id": "hsk1-53",
+    "id": "hsk3-68",
     "section": "reading",
     "part": 2,
-    "prompt": "Welches Verb passt in die Lücke: „我们在家___电视。“ (Wǒmen zài jiā ___ diànshì.)?",
-    "chineseText": "我们在家___电视。",
+    "type": "multipleChoice",
+    "prompt": "Welches Verb passt in die Lücke?",
+    "chineseText": "我是中国人，我 ___ 中文。 (Ich bin Chinese, ich spreche Chinesisch.)",
     "options": [
-      "看 (kàn - schauen)",
-      "听 (tīng - hören)",
-      "写 (xiě - schreiben)"
+      "看 (kàn · sehen)",
+      "说 (shuō · sprechen)",
+      "问 (wèn · fragen)"
     ],
-    "correctIndex": 0,
-    "explanation": "Fernsehen heißt „看电视“ (kàn diànshì = Fernseher schauen)."
+    "correctIndex": 1,
+    "explanation": "„Wǒ shì Zhōngguó rén, wǒ shuō Zhōngwén.“ – Ich bin Chinese, ich spreche Chinesisch."
   },
   {
-    "id": "hsk1-54",
+    "id": "hsk3-69",
     "section": "reading",
     "part": 2,
-    "prompt": "Welches Wort drückt die Verneinung in der Vergangenheit aus: „我昨天___去学校。“ (Wǒ zuótiān ___ qù xuéxiào.)?",
-    "chineseText": "我昨天___去学校。",
+    "type": "multipleChoice",
+    "prompt": "Welches Wort passt in die Lücke?",
+    "chineseText": "她在 ___ 工作。 (Sie arbeitet in einer Firma.)",
     "options": [
-      "没 (méi)",
-      "不 (bù)",
-      "很 (hěn)"
+      "公司 (gōngsī · Firma)",
+      "学校 (xuéxiào · Schule)",
+      "商店 (shāngdiàn · Laden)"
     ],
     "correctIndex": 0,
-    "explanation": "Für vergangene Handlungen (昨天 = gestern) verneint man Verben mit „没 (méi)“: „我昨天没去学校。“ (Ich ging gestern nicht zur Schule)."
+    "explanation": "„Tā zài gōngsī gōngzuò.“ – Sie arbeitet in einer Firma."
   },
   {
-    "id": "hsk1-55",
+    "id": "hsk3-70",
     "section": "reading",
     "part": 2,
-    "prompt": "Welche höfliche Begrüßung passt: „老师，___！“ (Lǎoshī, ___!)?",
-    "chineseText": "老师，___！",
+    "type": "multipleChoice",
+    "prompt": "Welches Zahlwort passt in die Lücke?",
+    "chineseText": "我买了 ___ 本书。 (Ich habe zwei Bücher gekauft.)",
     "options": [
-      "您好 (nín hǎo - Guten Tag / Höflichkeitsform)",
-      "再见 (zàijiàn - Auf Wiedersehen)",
-      "谢谢 (xièxie - Danke)"
+      "两 (liǎng · zwei)",
+      "二 (èr · zwei, als Ziffer)",
+      "十 (shí · zehn)"
     ],
     "correctIndex": 0,
-    "explanation": "Gegenüber Respektspersonen wie Lehrern (老师) verwendet man die Höflichkeitsform „您好“ (nín hǎo)."
+    "explanation": "„Wǒ mǎi le liǎng běn shū.“ – Ich habe zwei Bücher gekauft. Vor dem Maßwort „本“ steht „两“, nicht „二“."
   },
   {
-    "id": "hsk1-56",
+    "id": "hsk3-71",
     "section": "reading",
     "part": 3,
-    "prompt": "Was bedeutet der Satz: „他是我的中国朋友。“ (Tā shì wǒ de Zhōngguó péngyou.)?",
-    "chineseText": "他是我的中国朋友。",
+    "type": "multipleChoice",
+    "prompt": "Was kann die Person?",
+    "context": "大家好，我是李老师。我会说汉语，我会写汉字。星期一到星期五，上午八点上课。中午十二点下课，下午两点上课。星期日不上课。请大家来学校，写汉字，读汉字。",
     "options": [
-      "Er ist mein chinesischer Freund.",
-      "Er reist nach China.",
-      "Er lernt mit Freunden Chinesisch."
+      "Chinesisch sprechen und Schriftzeichen schreiben",
+      "Im Krankenhaus arbeiten",
+      "Am Bahnhof arbeiten"
     ],
     "correctIndex": 0,
-    "explanation": "„他是 (Er ist) + 我的 (mein) + 中国朋友 (chinesischer Freund)“."
+    "explanation": "„Wǒ huì shuō Hànyǔ, wǒ huì xiě hànzì.“ – Ich kann Chinesisch sprechen und Schriftzeichen schreiben."
   },
   {
-    "id": "hsk1-57",
+    "id": "hsk3-72",
     "section": "reading",
     "part": 3,
-    "prompt": "Wonach fragt der Satz: „前面那个人是谁？“ (Qiánmiàn nà ge rén shì shéi?)?",
-    "chineseText": "前面那个人是谁？",
+    "type": "multipleChoice",
+    "prompt": "Wann fängt der Unterricht an?",
+    "context": "大家好，我是李老师。我会说汉语，我会写汉字。星期一到星期五，上午八点上课。中午十二点下课，下午两点上课。星期日不上课。请大家来学校，写汉字，读汉字。",
     "options": [
-      "Wer die Person da vorne ist.",
-      "Wo die Person wohnt.",
-      "Wie alt die Person ist."
+      "Um acht Uhr morgens",
+      "Um zwölf Uhr",
+      "Um zwei Uhr nachmittags"
     ],
     "correctIndex": 0,
-    "explanation": "„前面“ (qiánmiàn = vorne) + „那个人“ (jene Person) + „是谁“ (ist wer?)."
+    "explanation": "„Shàngwǔ bā diǎn shàngkè.“ – Morgens um acht Uhr beginnt der Unterricht."
   },
   {
-    "id": "hsk1-58",
+    "id": "hsk3-73",
     "section": "reading",
     "part": 3,
-    "prompt": "Wo befinden sich die Gegenstände: „桌子上有三个杯子。“ (Zhuōzi shang yǒu sān ge bēizi.)?",
-    "chineseText": "桌子上有三个杯子。",
+    "type": "multipleChoice",
+    "prompt": "Wann ist Mittagspause?",
+    "context": "大家好，我是李老师。我会说汉语，我会写汉字。星期一到星期五，上午八点上课。中午十二点下课，下午两点上课。星期日不上课。请大家来学校，写汉字，读汉字。",
     "options": [
-      "Auf dem Tisch stehen drei Becher.",
-      "Unter dem Stuhl liegen drei Bücher.",
-      "Im Zimmer sind drei Leute."
+      "Um acht Uhr morgens",
+      "Um zwölf Uhr mittags",
+      "Um zwei Uhr nachmittags"
     ],
-    "correctIndex": 0,
-    "explanation": "„桌子上“ = auf dem Tisch; „三个杯子“ = drei Becher / Tassen."
+    "correctIndex": 1,
+    "explanation": "„Zhōngwǔ shí’èr diǎn xiàkè.“ – Um zwölf Uhr mittags ist Unterrichtsschluss."
   },
   {
-    "id": "hsk1-59",
+    "id": "hsk3-74",
     "section": "reading",
     "part": 3,
-    "prompt": "Was hat die Person vor: „我想去商店买东西。“ (Wǒ xiǎng qù shāngdiàn mǎi dōngxi.)?",
-    "chineseText": "我想去商店买东西。",
+    "type": "multipleChoice",
+    "prompt": "Wann gibt es keinen Unterricht?",
+    "context": "大家好，我是李老师。我会说汉语，我会写汉字。星期一到星期五，上午八点上课。中午十二点下课，下午两点上课。星期日不上课。请大家来学校，写汉字，读汉字。",
     "options": [
-      "Im Geschäft einkaufen gehen.",
-      "Zu Hause Freunde treffen.",
-      "Im Restaurant essen gehen."
+      "Am Samstag",
+      "Am Sonntag",
+      "Am Montag"
     ],
-    "correctIndex": 0,
-    "explanation": "„去商店“ (ins Geschäft gehen) + „买东西“ (Dinge kaufen / einkaufen)."
+    "correctIndex": 1,
+    "explanation": "„Xīngqīrì bú shàngkè.“ – Sonntags gibt es keinen Unterricht."
   },
   {
-    "id": "hsk1-60",
+    "id": "hsk3-75",
     "section": "reading",
     "part": 3,
-    "prompt": "Warum arbeitet die Person morgen nicht: „明天是星期天，我不去工作。“ (Míngtiān shì xīngqītiān, wǒ bú qù gōngzuò.)?",
-    "chineseText": "明天是星期天，我不去工作。",
+    "type": "multipleChoice",
+    "prompt": "Was sollen die Lernenden in der Schule machen?",
+    "context": "大家好，我是李老师。我会说汉语，我会写汉字。星期一到星期五，上午八点上课。中午十二点下课，下午两点上课。星期日不上课。请大家来学校，写汉字，读汉字。",
     "options": [
-      "Weil morgen Sonntag ist.",
-      "Weil sie krank ist.",
-      "Weil sie verreisen muss."
+      "Chinesische Zeichen schreiben und lesen",
+      "Im Krankenhaus arbeiten",
+      "Am Bahnhof arbeiten"
     ],
     "correctIndex": 0,
-    "explanation": "„明天“ (morgen) + „是星期天“ (ist Sonntag) + „我不去工作“ (ich gehe nicht arbeiten)."
+    "explanation": "„Qǐng dàjiā lái xuéxiào, xiě hànzì, dú hànzì.“ – Bitte kommt in die Schule, schreibt und lest Schriftzeichen."
+  },
+  {
+    "id": "hsk3-76",
+    "section": "reading",
+    "part": 4,
+    "type": "trueFalse",
+    "prompt": "Das Krankenhaus ist von 8 bis 12 Uhr geöffnet.",
+    "chineseText": "医院：上午八点至中午十二点",
+    "options": [
+      "Richtig",
+      "Falsch"
+    ],
+    "correctIndex": 0,
+    "explanation": "„上午八点至中午十二点“ – von 8 Uhr bis 12 Uhr mittags."
+  },
+  {
+    "id": "hsk3-77",
+    "section": "reading",
+    "part": 4,
+    "type": "trueFalse",
+    "prompt": "Heute ist Sonntag.",
+    "chineseText": "今天是星期日",
+    "options": [
+      "Richtig",
+      "Falsch"
+    ],
+    "correctIndex": 0,
+    "explanation": "„今天是星期日“ – Heute ist Sonntag."
+  },
+  {
+    "id": "hsk3-78",
+    "section": "reading",
+    "part": 4,
+    "type": "trueFalse",
+    "prompt": "Die Kleidung ist teuer.",
+    "chineseText": "衣服很便宜",
+    "options": [
+      "Richtig",
+      "Falsch"
+    ],
+    "correctIndex": 1,
+    "explanation": "„衣服很便宜“ – die Kleidung ist billig."
+  },
+  {
+    "id": "hsk3-79",
+    "section": "reading",
+    "part": 4,
+    "type": "trueFalse",
+    "prompt": "Hier darf man Auto fahren.",
+    "chineseText": "这里不能开车",
+    "options": [
+      "Richtig",
+      "Falsch"
+    ],
+    "correctIndex": 1,
+    "explanation": "„这里不能开车“ – Hier darf man kein Auto fahren."
+  },
+  {
+    "id": "hsk3-80",
+    "section": "reading",
+    "part": 4,
+    "type": "trueFalse",
+    "prompt": "Das Abendessen ist um 19 Uhr.",
+    "chineseText": "晚上七点：吃饭",
+    "options": [
+      "Richtig",
+      "Falsch"
+    ],
+    "correctIndex": 0,
+    "explanation": "„晚上七点“ heißt 19 Uhr."
   }
 ]

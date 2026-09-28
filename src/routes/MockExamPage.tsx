@@ -15,8 +15,15 @@ import {
   XCircle,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import type { ExamSubmission } from '../types/exam';
-import { buildExam, EXAM_MODES, findVocabForExamQuestion, type ExamMode } from '../lib/mockExamEngine';
+import type { ExamQuestion, ExamSection, ExamSubmission } from '../types/exam';
+import {
+  buildExam,
+  EXAM_FORMAT,
+  EXAM_MODES,
+  findVocabForExamQuestion,
+  scoreExam,
+  type ExamMode,
+} from '../lib/mockExamEngine';
 import { playAsset, stopCurrentAudio } from '../lib/audio';
 import { fireCelebration } from '../lib/confetti';
 import { useKeyDown } from '../hooks/useKeyDown';
@@ -25,7 +32,29 @@ import { SealBadge } from '../components/ui/SealBadge';
 import { KineticButton } from '../components/ui/KineticButton';
 import { useProgressStore } from '../store/progressStore';
 
-const DEFAULT_TIME_SEC = 35 * 60; // 35 Minuten
+const DEFAULT_TIME_SEC = EXAM_FORMAT.durationMinutes * 60;
+
+const PART_TITLES: Record<ExamSection, Record<number, string>> = {
+  listening: {
+    1: 'Wortbedeutungen',
+    2: 'Kurze Dialoge',
+    3: 'Personalangaben',
+    4: 'Alltagsgespräche',
+  },
+  reading: {
+    1: 'Wortbedeutungen',
+    2: 'Lückensätze',
+    3: 'Lesetext',
+    4: 'Bekanntmachungen',
+  },
+};
+
+const SECTION_LABELS: Record<ExamSection, string> = {
+  listening: 'Hören',
+  reading: 'Lesen',
+};
+
+const POINTS_PER_QUESTION = EXAM_FORMAT.pointsPerQuestion;
 
 export function MockExamPage() {
   const logSession = useProgressStore((s) => s.logSession);
@@ -46,21 +75,21 @@ export function MockExamPage() {
 
   const examStartedAtRef = useRef<number>(0);
   const currentQ = questions[currentIndex];
+  const totalQuestions = questions.length;
+
+  /** Nummer der Frage innerhalb ihres Sektions-Teils (1–5), wie im echten Heft. */
+  const questionNumberInPart = (q: ExamQuestion): number => {
+    const inPart = questions.filter((other) => other.section === q.section && other.part === q.part);
+    return inPart.findIndex((other) => other.id === q.id) + 1;
+  };
 
   // Prüfung auswerten
   const handleSubmitExam = useCallback(() => {
     setShowSubmitModal(false);
     stopCurrentAudio();
 
-    let listeningCorrect = 0;
-    let readingCorrect = 0;
-
     questions.forEach((q) => {
-      const given = answers[q.id];
-      if (given === q.correctIndex) {
-        if (q.section === 'listening') listeningCorrect += 1;
-        else readingCorrect += 1;
-      } else {
+      if (answers[q.id] !== q.correctIndex) {
         const item = findVocabForExamQuestion(q);
         if (item) {
           void recordMistake(item.id, 'exam');
@@ -68,12 +97,8 @@ export function MockExamPage() {
       }
     });
 
-    const totalListening = questions.filter((q) => q.section === 'listening').length || 1;
-    const totalReading = questions.filter((q) => q.section === 'reading').length || 1;
-    const listeningScore = Math.round((listeningCorrect / totalListening) * 150);
-    const readingScore = Math.round((readingCorrect / totalReading) * 150);
-    const score = listeningScore + readingScore;
-    const passed = score >= 180;
+    const result = scoreExam(questions, answers);
+    const { score, listeningScore, readingScore, passed, totalCorrect } = result;
 
     const sub: ExamSubmission = {
       startedAt: examStartedAtRef.current,
@@ -85,7 +110,7 @@ export function MockExamPage() {
       readingScore,
       passed,
       totalAnswered: Object.keys(answers).length,
-      totalCorrect: listeningCorrect + readingCorrect,
+      totalCorrect,
     };
 
     setSubmission(sub);
@@ -95,7 +120,7 @@ export function MockExamPage() {
     void logSession({
       mode: 'exam',
       answered: Object.keys(answers).length,
-      correct: listeningCorrect + readingCorrect,
+      correct: totalCorrect,
       durationMs,
     });
 
@@ -271,7 +296,9 @@ export function MockExamPage() {
                 HSK-1 Probeprüfung
               </h1>
               <p className="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-                Teste dein Chinesisch-Wissen unter realitätsnahen Bedingungen. Die Probeprüfung umfasst 30 Fragen aufgeteilt in Hör- und Leseverstehen.
+                Teste dein Chinesisch-Wissen unter realitätsnahen Bedingungen. Die Probeprüfung bildet den
+                offiziellen Aufbau der HSK-3.0-Prüfung ab: 40 Fragen in acht Teilen, 200 Punkte, Bestehensgrenze
+                120 Punkte.
               </p>
             </div>
 
@@ -284,11 +311,11 @@ export function MockExamPage() {
                   </span>
                   <div>
                     <h2 className="text-sm font-bold text-zinc-900 dark:text-zinc-100">Teil 1: Hörverstehen</h2>
-                    <p className="font-mono text-xs text-zinc-500">15 Fragen · Max. 150 Pkt.</p>
+                    <p className="font-mono text-xs text-zinc-500">20 Fragen · 4 Teile · Max. 100 Pkt.</p>
                   </div>
                 </div>
                 <p className="mt-3 text-xs leading-relaxed text-zinc-500 dark:text-zinc-400">
-                  Wahr/Falsch-Abgleich, Dialog-Zuordnung und Audio-Bedeutungsfragen mit nativer Aussprache.
+                  Wortbedeutungen, kurze Dialoge, Personalangaben und Alltagsgespräche mit nativer Aussprache.
                 </p>
               </div>
 
@@ -299,12 +326,35 @@ export function MockExamPage() {
                   </span>
                   <div>
                     <h2 className="text-sm font-bold text-zinc-900 dark:text-zinc-100">Teil 2: Leseverstehen</h2>
-                    <p className="font-mono text-xs text-zinc-500">15 Fragen · Max. 150 Pkt.</p>
+                    <p className="font-mono text-xs text-zinc-500">20 Fragen · 4 Teile · Max. 100 Pkt.</p>
                   </div>
                 </div>
                 <p className="mt-3 text-xs leading-relaxed text-zinc-500 dark:text-zinc-400">
-                  Schriftzeichenerkennung, Satzbau, Lückentexte und logische Gesprächsführung.
+                  Wortbedeutungen, Lückensätze, ein zusammenhängender Lesetext und Bekanntmachungen.
                 </p>
+              </div>
+            </div>
+
+            {/* Teile-Übersicht */}
+            <div className="rounded-2xl border border-zinc-200/80 bg-zinc-50/70 p-5 dark:border-white/10 dark:bg-zinc-950/50 relative">
+              <h2 className="text-xs font-bold uppercase tracking-wider text-zinc-400">Aufbau der Prüfung</h2>
+              <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
+                {(Object.keys(PART_TITLES) as ExamSection[]).flatMap((section) =>
+                  [1, 2, 3, 4].map((part) => (
+                    <div
+                      key={`${section}-${part}`}
+                      className="flex items-center gap-2.5 rounded-xl border border-zinc-200/70 bg-white/70 px-3 py-2 dark:border-white/[0.06] dark:bg-zinc-900/40"
+                    >
+                      <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-zinc-400">
+                        {SECTION_LABELS[section]} {part}
+                      </span>
+                      <span className="flex-1 truncate text-xs font-semibold text-zinc-700 dark:text-zinc-200">
+                        {PART_TITLES[section][part]}
+                      </span>
+                      <span className="font-mono text-[11px] text-zinc-400">5 F.</span>
+                    </div>
+                  )),
+                )}
               </div>
             </div>
 
@@ -314,9 +364,7 @@ export function MockExamPage() {
                 <h2 className="text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
                   Prüfungsvariante wählen
                 </h2>
-                <span className="font-mono text-[11px] text-zinc-400">
-                  60 Fragen im Gesamtpool
-                </span>
+                <span className="font-mono text-[11px] text-zinc-400">80 Fragen im Gesamtpool</span>
               </div>
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
                 {EXAM_MODES.map((cfg) => {
@@ -343,7 +391,7 @@ export function MockExamPage() {
                           >
                             {cfg.badge}
                           </span>
-                          <span className="font-mono text-[11px] text-zinc-400">30 F.</span>
+                          <span className="font-mono text-[11px] text-zinc-400">40 F.</span>
                         </div>
                         <h3
                           className={`text-sm font-bold ${
@@ -368,14 +416,18 @@ export function MockExamPage() {
               <ul className="mt-3 space-y-2 text-xs leading-relaxed text-zinc-600 dark:text-zinc-300">
                 <li className="flex items-start gap-2">
                   <span className="font-mono font-bold text-emerald-600 dark:text-emerald-400">01</span>
-                  <span><strong>Zeitlimit:</strong> 35 Minuten für alle 30 Fragen (kann bei Bedarf pausiert werden).</span>
+                  <span><strong>Zeitlimit:</strong> {EXAM_FORMAT.durationMinutes} Minuten für alle {EXAM_FORMAT.questionsPerSet} Fragen (kann bei Bedarf pausiert werden).</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="font-mono font-bold text-emerald-600 dark:text-emerald-400">02</span>
-                  <span><strong>Bestehensgrenze:</strong> Mindestens 180 von 300 Punkten (60 %).</span>
+                  <span><strong>Punkte:</strong> {POINTS_PER_QUESTION} Punkte je Frage, also {EXAM_FORMAT.maxScore} Punkte gesamt.</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="font-mono font-bold text-emerald-600 dark:text-emerald-400">03</span>
+                  <span><strong>Bestehensgrenze:</strong> Mindestens {EXAM_FORMAT.passMark} von {EXAM_FORMAT.maxScore} Punkten.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="font-mono font-bold text-emerald-600 dark:text-emerald-400">04</span>
                   <span><strong>Flexibles Springen:</strong> Jederzeit zwischen Fragen wechseln und unklare markieren.</span>
                 </li>
               </ul>
@@ -410,7 +462,8 @@ export function MockExamPage() {
           {/* Section Indicator */}
           <div className="flex items-center gap-2">
             <span className="rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 font-mono text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
-              {currentQ.section === 'listening' ? 'Teil 1: Hören' : 'Teil 2: Lesen'} · {currentIndex + 1}/30
+              {SECTION_LABELS[currentQ.section]} {currentQ.part} · Frage {questionNumberInPart(currentQ)}/
+              {EXAM_FORMAT.questionsPerPart}
             </span>
           </div>
 
@@ -443,17 +496,17 @@ export function MockExamPage() {
             onClick={() => setShowSubmitModal(true)}
             className="rounded-xl bg-zinc-900 px-4 py-2 text-xs font-bold text-white transition-all hover:bg-zinc-800 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-100"
           >
-            Prüfung abgeben ({answeredCount}/30)
+            Prüfung abgeben ({answeredCount}/{totalQuestions})
           </button>
         </div>
 
-        {/* 30-Fragen Schnellwahl-Gitter */}
+        {/* Schnellwahl-Gitter */}
         <div className="rounded-3xl border border-zinc-200/80 bg-white p-4 shadow-whisper dark:border-white/10 dark:bg-zinc-900">
           <div className="flex items-center justify-between text-xs text-zinc-400 mb-2.5">
             <span className="font-semibold uppercase tracking-wider">Fragenübersicht</span>
-            <span>{answeredCount} von 30 beantwortet</span>
+            <span>{answeredCount} von {totalQuestions} beantwortet</span>
           </div>
-          <div className="grid grid-cols-10 sm:grid-cols-15 gap-1.5">
+          <div className="grid grid-cols-8 sm:grid-cols-10 gap-1.5">
             {questions.map((q, idx) => {
               const isAns = answers[q.id] !== undefined;
               const isCur = idx === currentIndex;
@@ -489,7 +542,7 @@ export function MockExamPage() {
             <div className="flex items-start justify-between gap-4 relative">
               <div>
                 <span className="font-mono text-xs font-semibold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
-                  Frage {currentIndex + 1} von 30 · {currentQ.section === 'listening' ? 'Hörverstehen' : 'Leseverstehen'}
+                  {SECTION_LABELS[currentQ.section]} {currentQ.part} · {PART_TITLES[currentQ.section][currentQ.part]}
                 </span>
                 <h2 className="mt-1 text-lg font-bold sm:text-xl text-zinc-900 dark:text-zinc-100">
                   {currentQ.prompt}
@@ -512,25 +565,43 @@ export function MockExamPage() {
               </button>
             </div>
 
-            {/* Chinese Text / Audio Prompts */}
-            <div className="flex flex-col items-center justify-center rounded-2xl border border-zinc-200/60 bg-zinc-50/50 p-6 text-center dark:border-white/[0.05] dark:bg-zinc-950/40 relative">
-              {currentQ.chineseText && (
-                <span className="font-cjk text-3xl font-semibold sm:text-4xl text-zinc-900 dark:text-zinc-100">
-                  {currentQ.chineseText}
+            {/* Gemeinsamer Kontext: Lesetext bzw. Hinweis zum Hörverständnis */}
+            {currentQ.context && (
+              <div className="rounded-2xl border border-zinc-200/70 bg-zinc-50/60 p-5 text-left dark:border-white/[0.06] dark:bg-zinc-950/40 relative">
+                <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-zinc-400">
+                  {currentQ.section === 'listening' ? 'Hörverständnis' : 'Lesetext'}
                 </span>
-              )}
-
-              {currentQ.audioUrl && (
-                <button
-                  type="button"
-                  onClick={() => playAsset(currentQ.audioUrl!)}
-                  className="mt-4 inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-5 py-2.5 text-xs font-bold text-emerald-800 transition-all hover:bg-emerald-500/20 active:translate-y-px dark:text-emerald-300 cursor-pointer"
+                <p
+                  className={`mt-1.5 text-base leading-loose text-zinc-800 dark:text-zinc-200 ${
+                    currentQ.section === 'listening' ? '' : 'font-cjk'
+                  }`}
                 >
-                  <Volume2 className="h-4 w-4" />
-                  Audio abspielen / wiederholen (␣)
-                </button>
-              )}
-            </div>
+                  {currentQ.context}
+                </p>
+              </div>
+            )}
+
+            {/* Chinesischer Text und/oder Audiowiedergabe */}
+            {(currentQ.chineseText || currentQ.audioUrl) && (
+              <div className="flex flex-col items-center justify-center rounded-2xl border border-zinc-200/60 bg-zinc-50/50 p-6 text-center dark:border-white/[0.05] dark:bg-zinc-950/40 relative">
+                {currentQ.chineseText && (
+                  <span className="font-cjk text-3xl font-semibold sm:text-4xl text-zinc-900 dark:text-zinc-100">
+                    {currentQ.chineseText}
+                  </span>
+                )}
+
+                {currentQ.audioUrl && (
+                  <button
+                    type="button"
+                    onClick={() => playAsset(currentQ.audioUrl!)}
+                    className="mt-4 inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-5 py-2.5 text-xs font-bold text-emerald-800 transition-all hover:bg-emerald-500/20 active:translate-y-px dark:text-emerald-300 cursor-pointer"
+                  >
+                    <Volume2 className="h-4 w-4" />
+                    Audio abspielen / wiederholen (␣)
+                  </button>
+                )}
+              </div>
+            )}
 
             {/* Antwort-Optionen */}
             <div className="space-y-3 relative">
@@ -615,10 +686,10 @@ export function MockExamPage() {
             <div className="w-full max-w-md rounded-3xl border border-zinc-200 bg-white p-7 shadow-2xl dark:border-white/10 dark:bg-zinc-900 space-y-4">
               <h2 className="text-xl font-bold">Prüfung jetzt abgeben?</h2>
               <p className="text-sm text-zinc-600 dark:text-zinc-400">
-                Du hast <strong>{answeredCount} von 30 Fragen</strong> beantwortet.
-                {answeredCount < 30 && (
+                Du hast <strong>{answeredCount} von {totalQuestions} Fragen</strong> beantwortet.
+                {answeredCount < totalQuestions && (
                   <span className="block mt-1 text-amber-600 dark:text-amber-400 font-semibold">
-                    Achtung: {30 - answeredCount} Fragen sind noch unbeantwortet!
+                    Achtung: {totalQuestions - answeredCount} Fragen sind noch unbeantwortet!
                   </span>
                 )}
               </p>
@@ -719,8 +790,8 @@ export function MockExamPage() {
               </h1>
               <p className="mt-1 text-sm text-zinc-500">
                 {submission.passed
-                  ? 'Glückwunsch! Du hast das offizielle HSK-1-Niveau souverän erreicht.'
-                  : 'Knapp verfehlt. Wiederhole deine Fehler im Vokabeltrainer und versuche es erneut.'}
+                  ? `Glückwunsch! Du hast die Bestehensgrenze von ${EXAM_FORMAT.passMark} Punkten erreicht.`
+                  : `Knapp verfehlt: ${EXAM_FORMAT.passMark} Punkte waren nötig. Wiederhole deine Fehler im Vokabeltrainer und versuche es erneut.`}
               </p>
             </div>
 
@@ -729,9 +800,9 @@ export function MockExamPage() {
               <span className="text-4xl font-extrabold text-emerald-700 dark:text-emerald-400">
                 {submission.score}
               </span>
-              <span className="font-mono text-sm text-zinc-400">/ 300 Punkte</span>
+              <span className="font-mono text-sm text-zinc-400">/ {EXAM_FORMAT.maxScore} Punkte</span>
               <span className="ml-2 font-mono text-xs font-semibold text-zinc-400">
-                ({Math.round((submission.score / 300) * 100)}%)
+                ({Math.round((submission.score / EXAM_FORMAT.maxScore) * 100)}%)
               </span>
             </div>
 
@@ -741,13 +812,13 @@ export function MockExamPage() {
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-bold text-zinc-500">Teil 1: Hörverstehen</span>
                   <span className="font-mono text-sm font-bold text-emerald-600 dark:text-emerald-400">
-                    {submission.listeningScore} / 150 Pkt.
+                    {submission.listeningScore} / {EXAM_FORMAT.listeningMaxScore} Pkt.
                   </span>
                 </div>
                 <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-zinc-100 dark:bg-zinc-800">
                   <div
                     className="h-full rounded-full bg-emerald-600"
-                    style={{ width: `${(submission.listeningScore / 150) * 100}%` }}
+                    style={{ width: `${(submission.listeningScore / EXAM_FORMAT.listeningMaxScore) * 100}%` }}
                   />
                 </div>
               </div>
@@ -756,13 +827,13 @@ export function MockExamPage() {
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-bold text-zinc-500">Teil 2: Leseverstehen</span>
                   <span className="font-mono text-sm font-bold text-emerald-600 dark:text-emerald-400">
-                    {submission.readingScore} / 150 Pkt.
+                    {submission.readingScore} / {EXAM_FORMAT.readingMaxScore} Pkt.
                   </span>
                 </div>
                 <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-zinc-100 dark:bg-zinc-800">
                   <div
                     className="h-full rounded-full bg-emerald-600"
-                    style={{ width: `${(submission.readingScore / 150) * 100}%` }}
+                    style={{ width: `${(submission.readingScore / EXAM_FORMAT.readingMaxScore) * 100}%` }}
                   />
                 </div>
               </div>
@@ -802,7 +873,7 @@ export function MockExamPage() {
                     : 'text-zinc-500 hover:text-zinc-800 dark:text-zinc-400'
                 }`}
               >
-                Alle (30)
+                Alle ({totalQuestions})
               </button>
               <button
                 type="button"
@@ -813,7 +884,7 @@ export function MockExamPage() {
                     : 'text-zinc-500 hover:text-zinc-800 dark:text-zinc-400'
                 }`}
               >
-                Nur Fehler ({30 - submission.totalCorrect})
+                Nur Fehler ({totalQuestions - submission.totalCorrect})
               </button>
             </div>
           </div>
@@ -835,7 +906,8 @@ export function MockExamPage() {
                   <div className="flex items-start justify-between gap-3">
                     <div>
                       <span className="font-mono text-xs font-bold text-zinc-400">
-                        Frage {questions.indexOf(q) + 1} · {q.section === 'listening' ? 'Hören' : 'Lesen'}
+                        {SECTION_LABELS[q.section]} {q.part} · Frage {questionNumberInPart(q)}/
+                        {EXAM_FORMAT.questionsPerPart}
                       </span>
                       <h3 className="mt-1 text-sm font-bold text-zinc-900 dark:text-zinc-100">{q.prompt}</h3>
                     </div>
@@ -846,9 +918,19 @@ export function MockExamPage() {
                           : 'bg-rose-500/15 text-rose-700 dark:text-rose-300'
                       }`}
                     >
-                      {isCorrect ? 'Richtig (+10)' : 'Falsch (+0)'}
+                      {isCorrect ? `Richtig (+${POINTS_PER_QUESTION})` : 'Falsch (+0)'}
                     </span>
                   </div>
+
+                  {q.context && (
+                    <p
+                      className={`mt-2 rounded-xl border border-zinc-100 bg-zinc-50/70 p-3 text-sm leading-loose text-zinc-700 dark:border-white/[0.04] dark:bg-zinc-950/40 dark:text-zinc-300 ${
+                        q.section === 'listening' ? '' : 'font-cjk'
+                      }`}
+                    >
+                      {q.context}
+                    </p>
+                  )}
 
                   {q.chineseText && (
                     <p className="mt-2 font-cjk text-lg font-semibold text-zinc-800 dark:text-zinc-200">
