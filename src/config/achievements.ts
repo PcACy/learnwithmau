@@ -217,7 +217,7 @@ export const ACHIEVEMENTS: readonly Achievement[] = [
   {
     id: 'exam-graduate',
     title: 'HSK-1-Zertifikat',
-    description: 'Bestehe mindestens eine offizielle HSK-1-Probeprüfung mit mindestens 180 Punkten.',
+    description: 'Bestehe mindestens eine offizielle HSK-1-Probeprüfung mit mindestens 120 von 200 Punkten.',
     icon: GraduationCap,
     category: 'mastery',
     maxProgress: 1,
