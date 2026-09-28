@@ -2123,9 +2123,9 @@ export const COLLOCATIONS_MAP: Record<string, Collocation[]> = {
       "audioPath": "/audio/collocations/col-hsk1-le-2.mp3"
     },
     {
-      "hanzi": "走啦 / 走了",
+      "hanzi": "走了",
       "pinyin": "zǒu le",
-      "german": "losgegangen / fertig",
+      "german": "ist gegangen / ist fertig",
       "audioPath": "/audio/collocations/col-hsk1-le-3.mp3"
     }
   ],

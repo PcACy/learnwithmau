@@ -26,7 +26,7 @@
         "speakerAvatar": "茶",
         "gender": "female",
         "hanzi": "您好！请问你想喝什么？",
-        "pinyin": "Nǐn hǎo! Qǐngwèn nǐ xiǎng hē shénme?",
+        "pinyin": "Nín hǎo! Qǐngwèn nǐ xiǎng hē shénme?",
         "german": "Guten Tag! Darf ich fragen, was Sie trinken möchten?",
         "audioUrl": "/audio/dialogues/tea-01.mp3",
         "tokens": [
