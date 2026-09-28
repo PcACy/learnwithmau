@@ -4,7 +4,8 @@ import { stripToneMarks } from '../lib/pinyinUtils';
 
 describe('Katalog-Integrität', () => {
   it('umfasst den vollständigen HSK-1-Bestand', () => {
-    expect(VOCAB.length).toBeGreaterThanOrEqual(150);
+    // HSK 3.0 (gültig ab 1. Juli 2026) umfasst 300 Wörter auf Stufe 1.
+    expect(VOCAB.length).toBeGreaterThanOrEqual(300);
   });
 
   it('hat keine doppelten IDs', () => {
@@ -55,7 +56,7 @@ describe('Katalog-Integrität', () => {
     }
   });
 
-  it('besitzt für alle 163 Vokabeln authentische Beispielsätze ohne Platzhalter', async () => {
+  it(`besitzt für alle ${VOCAB.length} Vokabeln authentische Beispielsätze ohne Platzhalter`, async () => {
     const { getEnrichedVocab } = await import('../data/vocabDetails');
     for (const item of VOCAB) {
       const enriched = getEnrichedVocab(item);
@@ -70,7 +71,23 @@ describe('Katalog-Integrität', () => {
       }
 
       // Kollokationen dürfen keine Fake-Strings enthalten
-      const legitimateCompounds = new Set(['您好', '很好', '下午好', '说好']);
+      // Echte Wortbildungen, die zufällig auf <Wort>好 enden: Begrüßungen,
+      // Redewendungen und adjektivische Komposita.
+      const legitimateCompounds = new Set([
+        '大家好',
+        '哪个好',
+        '你们好',
+        '你好',
+        '您好',
+        '很好',
+        '非常好',
+        '晚上好',
+        '真好',
+        '说好',
+        '这个好',
+        '下午好',
+        '早上好',
+      ]);
       for (const c of enriched.collocations) {
         expect(c.german).not.toContain('mit hallo');
         if (!legitimateCompounds.has(c.hanzi)) {

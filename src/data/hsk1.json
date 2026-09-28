@@ -2745,12 +2745,12 @@
   {
     "id": "hsk1-ge",
     "hanzi": "个",
-    "pinyin": "ge",
+    "pinyin": "gè",
     "syllables": [
       {
         "plain": "ge",
-        "marked": "ge",
-        "tone": 5
+        "marked": "gè",
+        "tone": 4
       }
     ],
     "meaning": "Zähleinheitswort (allgemein)",
@@ -5081,7 +5081,7 @@
   {
     "id": "hsk1-qianmian",
     "hanzi": "前面",
-    "pinyin": "qián mian",
+    "pinyin": "qián miàn",
     "syllables": [
       {
         "plain": "qian",
@@ -5090,8 +5090,8 @@
       },
       {
         "plain": "mian",
-        "marked": "mian",
-        "tone": 5
+        "marked": "miàn",
+        "tone": 4
       }
     ],
     "meaning": "vorne, Vorderseite, vor",
@@ -5143,7 +5143,7 @@
   {
     "id": "hsk1-houmian",
     "hanzi": "后面",
-    "pinyin": "hòu mian",
+    "pinyin": "hòu miàn",
     "syllables": [
       {
         "plain": "hou",
@@ -5152,8 +5152,8 @@
       },
       {
         "plain": "mian",
-        "marked": "mian",
-        "tone": 5
+        "marked": "miàn",
+        "tone": 4
       }
     ],
     "meaning": "hinten, Rückseite, hinter",
@@ -6920,5 +6920,6964 @@
     ],
     "audioPath": "/audio/hsk1/hsk1-shijian.mp3",
     "hskLevel": 1
+  },
+  {
+    "id": "hsk1-baitian",
+    "hanzi": "白天",
+    "pinyin": "bái tiān",
+    "syllables": [
+      {
+        "plain": "bai",
+        "marked": "bái",
+        "tone": 2
+      },
+      {
+        "plain": "tian",
+        "marked": "tiān",
+        "tone": 1
+      }
+    ],
+    "meaning": "Tag, tagsüber (am helllichten Tag)",
+    "characters": [
+      {
+        "char": "白",
+        "parts": [
+          {
+            "id": "white",
+            "hanzi": "白",
+            "position": "single"
+          }
+        ]
+      },
+      {
+        "char": "天",
+        "parts": [
+          {
+            "id": "one",
+            "hanzi": "一",
+            "position": "top"
+          },
+          {
+            "id": "big",
+            "hanzi": "大",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-baitian.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-ban",
+    "hanzi": "半",
+    "pinyin": "bàn",
+    "syllables": [
+      {
+        "plain": "ban",
+        "marked": "bàn",
+        "tone": 4
+      }
+    ],
+    "meaning": "halb, eine Hälfte",
+    "characters": [
+      {
+        "char": "半",
+        "parts": [
+          {
+            "id": "eight-horns",
+            "hanzi": "丷",
+            "position": "top"
+          },
+          {
+            "id": "one",
+            "hanzi": "一",
+            "position": "middle"
+          },
+          {
+            "id": "line",
+            "hanzi": "丨",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-ban.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "adjektiv",
+    "notes": "Wird wie eine Zahl behandelt: 一半 = die Hälfte."
+  },
+  {
+    "id": "hsk1-baozi",
+    "hanzi": "包子",
+    "pinyin": "bāo zi",
+    "syllables": [
+      {
+        "plain": "bao",
+        "marked": "bāo",
+        "tone": 1
+      },
+      {
+        "plain": "zi",
+        "marked": "zi",
+        "tone": 5
+      }
+    ],
+    "meaning": "Dampfbrötchen (gefülltes Teiggebäck)",
+    "characters": [
+      {
+        "char": "包",
+        "parts": [
+          {
+            "id": "wrap",
+            "hanzi": "勹",
+            "position": "enclosure"
+          },
+          {
+            "id": "si-curl",
+            "hanzi": "巳",
+            "position": "inside"
+          }
+        ]
+      },
+      {
+        "char": "子",
+        "parts": [
+          {
+            "id": "child",
+            "hanzi": "子",
+            "position": "single"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-baozi.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-bian",
+    "hanzi": "边",
+    "pinyin": "biān",
+    "syllables": [
+      {
+        "plain": "bian",
+        "marked": "biān",
+        "tone": 1
+      }
+    ],
+    "meaning": "Seite, Rand, Kante",
+    "characters": [
+      {
+        "char": "边",
+        "parts": [
+          {
+            "id": "li-strength",
+            "hanzi": "力",
+            "position": "top-left"
+          },
+          {
+            "id": "walk-rad",
+            "hanzi": "辶",
+            "position": "bottom-right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-bian.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen",
+    "notes": "Zweite Silbe neutral (biān) in 旁边, 后面."
+  },
+  {
+    "id": "hsk1-bing",
+    "hanzi": "病",
+    "pinyin": "bìng",
+    "syllables": [
+      {
+        "plain": "bing",
+        "marked": "bìng",
+        "tone": 4
+      }
+    ],
+    "meaning": "Krankheit, krank",
+    "characters": [
+      {
+        "char": "病",
+        "parts": [
+          {
+            "id": "sickness",
+            "hanzi": "疒",
+            "position": "top"
+          },
+          {
+            "id": "bing-third",
+            "hanzi": "丙",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-bing.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-buyao",
+    "hanzi": "不要",
+    "pinyin": "bú yào",
+    "syllables": [
+      {
+        "plain": "bu",
+        "marked": "bú",
+        "tone": 2
+      },
+      {
+        "plain": "yao",
+        "marked": "yào",
+        "tone": 4
+      }
+    ],
+    "meaning": "bitte nicht, nicht wollen, lass (nicht)",
+    "characters": [
+      {
+        "char": "不",
+        "parts": [
+          {
+            "id": "not",
+            "hanzi": "不",
+            "position": "single"
+          }
+        ]
+      },
+      {
+        "char": "要",
+        "parts": [
+          {
+            "id": "xi-top",
+            "hanzi": "覀",
+            "position": "top"
+          },
+          {
+            "id": "woman",
+            "hanzi": "女",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-buyao.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "adverb"
+  },
+  {
+    "id": "hsk1-chang",
+    "hanzi": "唱",
+    "pinyin": "chàng",
+    "syllables": [
+      {
+        "plain": "chang",
+        "marked": "chàng",
+        "tone": 4
+      }
+    ],
+    "meaning": "singen",
+    "characters": [
+      {
+        "char": "唱",
+        "parts": [
+          {
+            "id": "mouth",
+            "hanzi": "口",
+            "position": "left"
+          },
+          {
+            "id": "sun",
+            "hanzi": "日",
+            "position": "top-right"
+          },
+          {
+            "id": "sun",
+            "hanzi": "日",
+            "position": "bottom-right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-chang.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "verb"
+  },
+  {
+    "id": "hsk1-chaoshi",
+    "hanzi": "超市",
+    "pinyin": "chāo shì",
+    "syllables": [
+      {
+        "plain": "chao",
+        "marked": "chāo",
+        "tone": 1
+      },
+      {
+        "plain": "shi",
+        "marked": "shì",
+        "tone": 4
+      }
+    ],
+    "meaning": "Supermarkt",
+    "characters": [
+      {
+        "char": "超",
+        "parts": [
+          {
+            "id": "zou-walk",
+            "hanzi": "走",
+            "position": "left"
+          },
+          {
+            "id": "zhao-call",
+            "hanzi": "召",
+            "position": "right"
+          }
+        ]
+      },
+      {
+        "char": "市",
+        "parts": [
+          {
+            "id": "crown",
+            "hanzi": "亠",
+            "position": "top"
+          },
+          {
+            "id": "towel",
+            "hanzi": "巾",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-chaoshi.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-che",
+    "hanzi": "车",
+    "pinyin": "chē",
+    "syllables": [
+      {
+        "plain": "che",
+        "marked": "chē",
+        "tone": 1
+      }
+    ],
+    "meaning": "Auto, Fahrzeug",
+    "characters": [
+      {
+        "char": "车",
+        "parts": [
+          {
+            "id": "cart",
+            "hanzi": "车",
+            "position": "single"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-che.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-chuan",
+    "hanzi": "穿",
+    "pinyin": "chuān",
+    "syllables": [
+      {
+        "plain": "chuan",
+        "marked": "chuān",
+        "tone": 1
+      }
+    ],
+    "meaning": "anziehen, tragen (Kleidung)",
+    "characters": [
+      {
+        "char": "穿",
+        "parts": [
+          {
+            "id": "cave",
+            "hanzi": "穴",
+            "position": "top"
+          },
+          {
+            "id": "tooth",
+            "hanzi": "牙",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-chuan.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "verb"
+  },
+  {
+    "id": "hsk1-dajia",
+    "hanzi": "大家",
+    "pinyin": "dà jiā",
+    "syllables": [
+      {
+        "plain": "da",
+        "marked": "dà",
+        "tone": 4
+      },
+      {
+        "plain": "jia",
+        "marked": "jiā",
+        "tone": 1
+      }
+    ],
+    "meaning": "alle, ihr (alle zusammen)",
+    "characters": [
+      {
+        "char": "大",
+        "parts": [
+          {
+            "id": "big",
+            "hanzi": "大",
+            "position": "single"
+          }
+        ]
+      },
+      {
+        "char": "家",
+        "parts": [
+          {
+            "id": "roof",
+            "hanzi": "宀",
+            "position": "top"
+          },
+          {
+            "id": "pig",
+            "hanzi": "豕",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-dajia.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "pronomen"
+  },
+  {
+    "id": "hsk1-daxue",
+    "hanzi": "大学",
+    "pinyin": "dà xué",
+    "syllables": [
+      {
+        "plain": "da",
+        "marked": "dà",
+        "tone": 4
+      },
+      {
+        "plain": "xue",
+        "marked": "xué",
+        "tone": 2
+      }
+    ],
+    "meaning": "Universität",
+    "characters": [
+      {
+        "char": "大",
+        "parts": [
+          {
+            "id": "big",
+            "hanzi": "大",
+            "position": "single"
+          }
+        ]
+      },
+      {
+        "char": "学",
+        "parts": [
+          {
+            "id": "learn-top",
+            "hanzi": "⺍",
+            "position": "top"
+          },
+          {
+            "id": "cover",
+            "hanzi": "冖",
+            "position": "middle"
+          },
+          {
+            "id": "child",
+            "hanzi": "子",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-daxue.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-daxuesheng",
+    "hanzi": "大学生",
+    "pinyin": "dà xué shēng",
+    "syllables": [
+      {
+        "plain": "da",
+        "marked": "dà",
+        "tone": 4
+      },
+      {
+        "plain": "xue",
+        "marked": "xué",
+        "tone": 2
+      },
+      {
+        "plain": "sheng",
+        "marked": "shēng",
+        "tone": 1
+      }
+    ],
+    "meaning": "Universitätsstudent, Student",
+    "characters": [
+      {
+        "char": "大",
+        "parts": [
+          {
+            "id": "big",
+            "hanzi": "大",
+            "position": "single"
+          }
+        ]
+      },
+      {
+        "char": "学",
+        "parts": [
+          {
+            "id": "learn-top",
+            "hanzi": "⺍",
+            "position": "top"
+          },
+          {
+            "id": "cover",
+            "hanzi": "冖",
+            "position": "middle"
+          },
+          {
+            "id": "child",
+            "hanzi": "子",
+            "position": "bottom"
+          }
+        ]
+      },
+      {
+        "char": "生",
+        "parts": [
+          {
+            "id": "born",
+            "hanzi": "生",
+            "position": "single"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-daxuesheng.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-dao-arrive",
+    "hanzi": "到",
+    "pinyin": "dào",
+    "syllables": [
+      {
+        "plain": "dao",
+        "marked": "dào",
+        "tone": 4
+      }
+    ],
+    "meaning": "ankommen, ankommen in, erreichen",
+    "characters": [
+      {
+        "char": "到",
+        "parts": [
+          {
+            "id": "zhi-reach",
+            "hanzi": "至",
+            "position": "left"
+          },
+          {
+            "id": "knife",
+            "hanzi": "刂",
+            "position": "right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-dao-arrive.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "verb"
+  },
+  {
+    "id": "hsk1-di-ordinal",
+    "hanzi": "第",
+    "pinyin": "dì",
+    "syllables": [
+      {
+        "plain": "di",
+        "marked": "dì",
+        "tone": 4
+      }
+    ],
+    "meaning": "Nummer- (Ordinalpräfix: 第一 = der Erste)",
+    "characters": [
+      {
+        "char": "第",
+        "parts": [
+          {
+            "id": "bamboo",
+            "hanzi": "⺮",
+            "position": "top"
+          },
+          {
+            "id": "bow",
+            "hanzi": "弓",
+            "position": "middle"
+          },
+          {
+            "id": "pie-slash",
+            "hanzi": "丿",
+            "position": "bottom-left"
+          },
+          {
+            "id": "line",
+            "hanzi": "丨",
+            "position": "bottom-right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-di-ordinal.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "zahl",
+    "notes": "Ordinalpräfix: 第 + Zahl + Zählwort, z. B. 第三个 'das Dritte'."
+  },
+  {
+    "id": "hsk1-didi",
+    "hanzi": "弟弟",
+    "pinyin": "dì di",
+    "syllables": [
+      {
+        "plain": "di",
+        "marked": "dì",
+        "tone": 4
+      },
+      {
+        "plain": "di",
+        "marked": "di",
+        "tone": 5
+      }
+    ],
+    "meaning": "jüngerer Bruder",
+    "characters": [
+      {
+        "char": "弟",
+        "parts": [
+          {
+            "id": "eight-horns",
+            "hanzi": "丷",
+            "position": "top"
+          },
+          {
+            "id": "bow",
+            "hanzi": "弓",
+            "position": "middle"
+          },
+          {
+            "id": "pie-slash",
+            "hanzi": "丿",
+            "position": "bottom-left"
+          },
+          {
+            "id": "line",
+            "hanzi": "丨",
+            "position": "bottom-right"
+          }
+        ]
+      },
+      {
+        "char": "弟",
+        "parts": [
+          {
+            "id": "eight-horns",
+            "hanzi": "丷",
+            "position": "top"
+          },
+          {
+            "id": "bow",
+            "hanzi": "弓",
+            "position": "middle"
+          },
+          {
+            "id": "pie-slash",
+            "hanzi": "丿",
+            "position": "bottom-left"
+          },
+          {
+            "id": "line",
+            "hanzi": "丨",
+            "position": "bottom-right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-didi.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-dian-store",
+    "hanzi": "店",
+    "pinyin": "diàn",
+    "syllables": [
+      {
+        "plain": "dian",
+        "marked": "diàn",
+        "tone": 4
+      }
+    ],
+    "meaning": "Laden, Geschäft, Hotel",
+    "characters": [
+      {
+        "char": "店",
+        "parts": [
+          {
+            "id": "shelter",
+            "hanzi": "广",
+            "position": "top-left"
+          },
+          {
+            "id": "divination",
+            "hanzi": "卜",
+            "position": "top-right"
+          },
+          {
+            "id": "mouth",
+            "hanzi": "口",
+            "position": "bottom-right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-dian-store.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-dianhua",
+    "hanzi": "电话",
+    "pinyin": "diàn huà",
+    "syllables": [
+      {
+        "plain": "dian",
+        "marked": "diàn",
+        "tone": 4
+      },
+      {
+        "plain": "hua",
+        "marked": "huà",
+        "tone": 4
+      }
+    ],
+    "meaning": "Telefon, Telefonnummer",
+    "characters": [
+      {
+        "char": "电",
+        "parts": [
+          {
+            "id": "sun",
+            "hanzi": "日",
+            "position": "top"
+          },
+          {
+            "id": "line",
+            "hanzi": "丨",
+            "position": "middle"
+          },
+          {
+            "id": "legs",
+            "hanzi": "儿",
+            "position": "bottom"
+          }
+        ]
+      },
+      {
+        "char": "话",
+        "parts": [
+          {
+            "id": "speech",
+            "hanzi": "讠",
+            "position": "left"
+          },
+          {
+            "id": "tongue",
+            "hanzi": "舌",
+            "position": "right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-dianhua.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-dianyingyuan",
+    "hanzi": "电影院",
+    "pinyin": "diàn yǐng yuàn",
+    "syllables": [
+      {
+        "plain": "dian",
+        "marked": "diàn",
+        "tone": 4
+      },
+      {
+        "plain": "ying",
+        "marked": "yǐng",
+        "tone": 3
+      },
+      {
+        "plain": "yuan",
+        "marked": "yuàn",
+        "tone": 4
+      }
+    ],
+    "meaning": "Kino, Filmtheater",
+    "characters": [
+      {
+        "char": "电",
+        "parts": [
+          {
+            "id": "sun",
+            "hanzi": "日",
+            "position": "top"
+          },
+          {
+            "id": "line",
+            "hanzi": "丨",
+            "position": "middle"
+          },
+          {
+            "id": "legs",
+            "hanzi": "儿",
+            "position": "bottom"
+          }
+        ]
+      },
+      {
+        "char": "影",
+        "parts": [
+          {
+            "id": "sun",
+            "hanzi": "日",
+            "position": "top-left"
+          },
+          {
+            "id": "capital",
+            "hanzi": "京",
+            "position": "bottom-left"
+          },
+          {
+            "id": "bristle",
+            "hanzi": "彡",
+            "position": "right"
+          }
+        ]
+      },
+      {
+        "char": "院",
+        "parts": [
+          {
+            "id": "ear-mound",
+            "hanzi": "阝",
+            "position": "left"
+          },
+          {
+            "id": "roof",
+            "hanzi": "宀",
+            "position": "top-right"
+          },
+          {
+            "id": "two",
+            "hanzi": "二",
+            "position": "bottom-right"
+          },
+          {
+            "id": "legs",
+            "hanzi": "儿",
+            "position": "bottom-right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-dianyingyuan.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-dushu",
+    "hanzi": "读书",
+    "pinyin": "dú shū",
+    "syllables": [
+      {
+        "plain": "du",
+        "marked": "dú",
+        "tone": 2
+      },
+      {
+        "plain": "shu",
+        "marked": "shū",
+        "tone": 1
+      }
+    ],
+    "meaning": "lesen, ein Buch lesen, zur Schule gehen (studieren)",
+    "characters": [
+      {
+        "char": "读",
+        "parts": [
+          {
+            "id": "speech",
+            "hanzi": "讠",
+            "position": "left"
+          },
+          {
+            "id": "ten",
+            "hanzi": "十",
+            "position": "top-right"
+          },
+          {
+            "id": "head-rad",
+            "hanzi": "页",
+            "position": "bottom-right"
+          }
+        ]
+      },
+      {
+        "char": "书",
+        "parts": [
+          {
+            "id": "book-rad",
+            "hanzi": "书",
+            "position": "single"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-dushu.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "verb"
+  },
+  {
+    "id": "hsk1-dui",
+    "hanzi": "对",
+    "pinyin": "duì",
+    "syllables": [
+      {
+        "plain": "dui",
+        "marked": "duì",
+        "tone": 4
+      }
+    ],
+    "meaning": "richtig, richtig sein; gegenüber, zu",
+    "characters": [
+      {
+        "char": "对",
+        "parts": [
+          {
+            "id": "right-hand",
+            "hanzi": "又",
+            "position": "left"
+          },
+          {
+            "id": "inch",
+            "hanzi": "寸",
+            "position": "right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-dui.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "adjektiv",
+    "notes": "Als 'richtig' eine Partikel (duì, nicht der 3. Ton); als 'gegenüber' mit einer Person."
+  },
+  {
+    "id": "hsk1-fan",
+    "hanzi": "饭",
+    "pinyin": "fàn",
+    "syllables": [
+      {
+        "plain": "fan",
+        "marked": "fàn",
+        "tone": 4
+      }
+    ],
+    "meaning": "Reis, gekochter Reis, Mahlzeit",
+    "characters": [
+      {
+        "char": "饭",
+        "parts": [
+          {
+            "id": "food",
+            "hanzi": "饣",
+            "position": "left"
+          },
+          {
+            "id": "oppose",
+            "hanzi": "反",
+            "position": "right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-fan.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-fangjian",
+    "hanzi": "房间",
+    "pinyin": "fáng jiān",
+    "syllables": [
+      {
+        "plain": "fang",
+        "marked": "fáng",
+        "tone": 2
+      },
+      {
+        "plain": "jian",
+        "marked": "jiān",
+        "tone": 1
+      }
+    ],
+    "meaning": "Zimmer, Raum",
+    "characters": [
+      {
+        "char": "房",
+        "parts": [
+          {
+            "id": "hu-door",
+            "hanzi": "户",
+            "position": "top"
+          },
+          {
+            "id": "fang-square",
+            "hanzi": "方",
+            "position": "bottom"
+          }
+        ]
+      },
+      {
+        "char": "间",
+        "parts": [
+          {
+            "id": "gate",
+            "hanzi": "门",
+            "position": "enclosure"
+          },
+          {
+            "id": "sun",
+            "hanzi": "日",
+            "position": "inside"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-fangjian.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-feichang",
+    "hanzi": "非常",
+    "pinyin": "fēi cháng",
+    "syllables": [
+      {
+        "plain": "fei",
+        "marked": "fēi",
+        "tone": 1
+      },
+      {
+        "plain": "chang",
+        "marked": "cháng",
+        "tone": 2
+      }
+    ],
+    "meaning": "sehr, überaus, wirklich",
+    "characters": [
+      {
+        "char": "非",
+        "parts": [
+          {
+            "id": "fei-not",
+            "hanzi": "非",
+            "position": "single"
+          }
+        ]
+      },
+      {
+        "char": "常",
+        "parts": [
+          {
+            "id": "small",
+            "hanzi": "⺌",
+            "position": "top"
+          },
+          {
+            "id": "cover",
+            "hanzi": "冖",
+            "position": "middle"
+          },
+          {
+            "id": "mouth",
+            "hanzi": "口",
+            "position": "middle"
+          },
+          {
+            "id": "towel",
+            "hanzi": "巾",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-feichang.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "adverb"
+  },
+  {
+    "id": "hsk1-fen",
+    "hanzi": "分",
+    "pinyin": "fēn",
+    "syllables": [
+      {
+        "plain": "fen",
+        "marked": "fēn",
+        "tone": 1
+      }
+    ],
+    "meaning": "Minute; Punkt, Teil; teilen",
+    "characters": [
+      {
+        "char": "分",
+        "parts": [
+          {
+            "id": "eight",
+            "hanzi": "八",
+            "position": "top"
+          },
+          {
+            "id": "knife",
+            "hanzi": "刀",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-fen.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen",
+    "notes": "Als Zählwort für Minuten üblich (十分钟); die Uhrzeit sagt man mit 点 (三点十分)."
+  },
+  {
+    "id": "hsk1-ge-song",
+    "hanzi": "歌",
+    "pinyin": "gē",
+    "syllables": [
+      {
+        "plain": "ge",
+        "marked": "gē",
+        "tone": 1
+      }
+    ],
+    "meaning": "Lied, Gesang; singen",
+    "characters": [
+      {
+        "char": "歌",
+        "parts": [
+          {
+            "id": "ge-brother",
+            "hanzi": "哥",
+            "position": "left"
+          },
+          {
+            "id": "lack",
+            "hanzi": "欠",
+            "position": "right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-ge-song.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen",
+    "notes": "哥 (Bruder) + 欠 (fehlen) - 'was der Bruder sang, fehlt noch'."
+  },
+  {
+    "id": "hsk1-gege",
+    "hanzi": "哥哥",
+    "pinyin": "gē ge",
+    "syllables": [
+      {
+        "plain": "ge",
+        "marked": "gē",
+        "tone": 1
+      },
+      {
+        "plain": "ge",
+        "marked": "ge",
+        "tone": 5
+      }
+    ],
+    "meaning": "älterer Bruder",
+    "characters": [
+      {
+        "char": "哥",
+        "parts": [
+          {
+            "id": "ke-can",
+            "hanzi": "可",
+            "position": "top"
+          },
+          {
+            "id": "ke-can",
+            "hanzi": "可",
+            "position": "bottom"
+          }
+        ]
+      },
+      {
+        "char": "哥",
+        "parts": [
+          {
+            "id": "ke-can",
+            "hanzi": "可",
+            "position": "top"
+          },
+          {
+            "id": "ke-can",
+            "hanzi": "可",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-gege.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-gei-give",
+    "hanzi": "给",
+    "pinyin": "gěi",
+    "syllables": [
+      {
+        "plain": "gei",
+        "marked": "gěi",
+        "tone": 3
+      }
+    ],
+    "meaning": "geben, schenken; für, an",
+    "characters": [
+      {
+        "char": "给",
+        "parts": [
+          {
+            "id": "silk",
+            "hanzi": "纟",
+            "position": "left"
+          },
+          {
+            "id": "he-combine",
+            "hanzi": "合",
+            "position": "right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-gei-give.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "verb"
+  },
+  {
+    "id": "hsk1-gongsi",
+    "hanzi": "公司",
+    "pinyin": "gōng sī",
+    "syllables": [
+      {
+        "plain": "gong",
+        "marked": "gōng",
+        "tone": 1
+      },
+      {
+        "plain": "si",
+        "marked": "sī",
+        "tone": 1
+      }
+    ],
+    "meaning": "Firma, Unternehmen",
+    "characters": [
+      {
+        "char": "公",
+        "parts": [
+          {
+            "id": "eight",
+            "hanzi": "八",
+            "position": "top"
+          },
+          {
+            "id": "private",
+            "hanzi": "厶",
+            "position": "bottom"
+          }
+        ]
+      },
+      {
+        "char": "司",
+        "parts": [
+          {
+            "id": "si-admin",
+            "hanzi": "司",
+            "position": "single"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-gongsi.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-gui",
+    "hanzi": "贵",
+    "pinyin": "guì",
+    "syllables": [
+      {
+        "plain": "gui",
+        "marked": "guì",
+        "tone": 4
+      }
+    ],
+    "meaning": "teuer, kostspielig; edel, wertvoll",
+    "characters": [
+      {
+        "char": "贵",
+        "parts": [
+          {
+            "id": "zhong-middle",
+            "hanzi": "中",
+            "position": "top"
+          },
+          {
+            "id": "one",
+            "hanzi": "一",
+            "position": "middle"
+          },
+          {
+            "id": "bei-shell",
+            "hanzi": "贝",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-gui.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "adjektiv"
+  },
+  {
+    "id": "hsk1-guo",
+    "hanzi": "国",
+    "pinyin": "guó",
+    "syllables": [
+      {
+        "plain": "guo",
+        "marked": "guó",
+        "tone": 2
+      }
+    ],
+    "meaning": "Land, Staat",
+    "characters": [
+      {
+        "char": "国",
+        "parts": [
+          {
+            "id": "enclosure",
+            "hanzi": "囗",
+            "position": "enclosure"
+          },
+          {
+            "id": "jade",
+            "hanzi": "玉",
+            "position": "inside"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-guo.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-hai-still",
+    "hanzi": "还",
+    "pinyin": "hái",
+    "syllables": [
+      {
+        "plain": "hai",
+        "marked": "hái",
+        "tone": 2
+      }
+    ],
+    "meaning": "noch, immer noch, auch",
+    "characters": [
+      {
+        "char": "还",
+        "parts": [
+          {
+            "id": "not",
+            "hanzi": "不",
+            "position": "top-left"
+          },
+          {
+            "id": "walk-rad",
+            "hanzi": "辶",
+            "position": "bottom-right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-hai-still.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "adverb",
+    "notes": "Zweite Lesart: 还 (huán) 'zurückgeben', z. B. 还书."
+  },
+  {
+    "id": "hsk1-haizi",
+    "hanzi": "孩子",
+    "pinyin": "hái zi",
+    "syllables": [
+      {
+        "plain": "hai",
+        "marked": "hái",
+        "tone": 2
+      },
+      {
+        "plain": "zi",
+        "marked": "zi",
+        "tone": 5
+      }
+    ],
+    "meaning": "Kind",
+    "characters": [
+      {
+        "char": "孩",
+        "parts": [
+          {
+            "id": "child",
+            "hanzi": "子",
+            "position": "left"
+          },
+          {
+            "id": "hai-branch",
+            "hanzi": "亥",
+            "position": "right"
+          }
+        ]
+      },
+      {
+        "char": "子",
+        "parts": [
+          {
+            "id": "child",
+            "hanzi": "子",
+            "position": "single"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-haizi.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-hanzi",
+    "hanzi": "汉字",
+    "pinyin": "hàn zì",
+    "syllables": [
+      {
+        "plain": "han",
+        "marked": "hàn",
+        "tone": 4
+      },
+      {
+        "plain": "zi",
+        "marked": "zì",
+        "tone": 4
+      }
+    ],
+    "meaning": "chinesisches Schriftzeichen, Hanzi",
+    "characters": [
+      {
+        "char": "汉",
+        "parts": [
+          {
+            "id": "water",
+            "hanzi": "氵",
+            "position": "left"
+          },
+          {
+            "id": "right-hand",
+            "hanzi": "又",
+            "position": "right"
+          }
+        ]
+      },
+      {
+        "char": "字",
+        "parts": [
+          {
+            "id": "roof",
+            "hanzi": "宀",
+            "position": "top"
+          },
+          {
+            "id": "child",
+            "hanzi": "子",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-hanzi.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-haochi",
+    "hanzi": "好吃",
+    "pinyin": "hǎo chī",
+    "syllables": [
+      {
+        "plain": "hao",
+        "marked": "hǎo",
+        "tone": 3
+      },
+      {
+        "plain": "chi",
+        "marked": "chī",
+        "tone": 1
+      }
+    ],
+    "meaning": "lecker, schmackhaft",
+    "characters": [
+      {
+        "char": "好",
+        "parts": [
+          {
+            "id": "woman",
+            "hanzi": "女",
+            "position": "left"
+          },
+          {
+            "id": "child",
+            "hanzi": "子",
+            "position": "right"
+          }
+        ]
+      },
+      {
+        "char": "吃",
+        "parts": [
+          {
+            "id": "mouth",
+            "hanzi": "口",
+            "position": "left"
+          },
+          {
+            "id": "beg",
+            "hanzi": "乞",
+            "position": "right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-haochi.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "adjektiv"
+  },
+  {
+    "id": "hsk1-haokan",
+    "hanzi": "好看",
+    "pinyin": "hǎo kàn",
+    "syllables": [
+      {
+        "plain": "hao",
+        "marked": "hǎo",
+        "tone": 3
+      },
+      {
+        "plain": "kan",
+        "marked": "kàn",
+        "tone": 4
+      }
+    ],
+    "meaning": "schön, hübsch, gut aussehend",
+    "characters": [
+      {
+        "char": "好",
+        "parts": [
+          {
+            "id": "woman",
+            "hanzi": "女",
+            "position": "left"
+          },
+          {
+            "id": "child",
+            "hanzi": "子",
+            "position": "right"
+          }
+        ]
+      },
+      {
+        "char": "看",
+        "parts": [
+          {
+            "id": "hand",
+            "hanzi": "手",
+            "position": "top"
+          },
+          {
+            "id": "eye",
+            "hanzi": "目",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-haokan.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "adjektiv"
+  },
+  {
+    "id": "hsk1-haoting",
+    "hanzi": "好听",
+    "pinyin": "hǎo tīng",
+    "syllables": [
+      {
+        "plain": "hao",
+        "marked": "hǎo",
+        "tone": 3
+      },
+      {
+        "plain": "ting",
+        "marked": "tīng",
+        "tone": 1
+      }
+    ],
+    "meaning": "schön klingend, angenehm zu hören",
+    "characters": [
+      {
+        "char": "好",
+        "parts": [
+          {
+            "id": "woman",
+            "hanzi": "女",
+            "position": "left"
+          },
+          {
+            "id": "child",
+            "hanzi": "子",
+            "position": "right"
+          }
+        ]
+      },
+      {
+        "char": "听",
+        "parts": [
+          {
+            "id": "mouth",
+            "hanzi": "口",
+            "position": "left"
+          },
+          {
+            "id": "axe",
+            "hanzi": "斤",
+            "position": "right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-haoting.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "adjektiv"
+  },
+  {
+    "id": "hsk1-haowaner",
+    "hanzi": "好玩儿",
+    "pinyin": "hǎo wán ér",
+    "syllables": [
+      {
+        "plain": "hao",
+        "marked": "hǎo",
+        "tone": 3
+      },
+      {
+        "plain": "wan",
+        "marked": "wán",
+        "tone": 2
+      },
+      {
+        "plain": "er",
+        "marked": "ér",
+        "tone": 2
+      }
+    ],
+    "meaning": "lustig, unterhaltsam, spaßig",
+    "characters": [
+      {
+        "char": "好",
+        "parts": [
+          {
+            "id": "woman",
+            "hanzi": "女",
+            "position": "left"
+          },
+          {
+            "id": "child",
+            "hanzi": "子",
+            "position": "right"
+          }
+        ]
+      },
+      {
+        "char": "玩",
+        "parts": [
+          {
+            "id": "king",
+            "hanzi": "王",
+            "position": "left"
+          },
+          {
+            "id": "yuan-origin",
+            "hanzi": "元",
+            "position": "right"
+          }
+        ]
+      },
+      {
+        "char": "儿",
+        "parts": [
+          {
+            "id": "legs",
+            "hanzi": "儿",
+            "position": "single"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-haowaner.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "adjektiv"
+  },
+  {
+    "id": "hsk1-hou-behind",
+    "hanzi": "后",
+    "pinyin": "hòu",
+    "syllables": [
+      {
+        "plain": "hou",
+        "marked": "hòu",
+        "tone": 4
+      }
+    ],
+    "meaning": "hinten, zurück, nach; Kaiserin (historisch)",
+    "characters": [
+      {
+        "char": "后",
+        "parts": [
+          {
+            "id": "cliff",
+            "hanzi": "𠂆",
+            "position": "top"
+          },
+          {
+            "id": "one",
+            "hanzi": "一",
+            "position": "middle"
+          },
+          {
+            "id": "mouth",
+            "hanzi": "口",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-hou-behind.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen",
+    "notes": "Historische Lesart: 后 (hòu) 'Kaiserin'; heute vor allem 'hinten/nach'."
+  },
+  {
+    "id": "hsk1-huoche",
+    "hanzi": "火车",
+    "pinyin": "huǒ chē",
+    "syllables": [
+      {
+        "plain": "huo",
+        "marked": "huǒ",
+        "tone": 3
+      },
+      {
+        "plain": "che",
+        "marked": "chē",
+        "tone": 1
+      }
+    ],
+    "meaning": "Zug",
+    "characters": [
+      {
+        "char": "火",
+        "parts": [
+          {
+            "id": "fire",
+            "hanzi": "火",
+            "position": "single"
+          }
+        ]
+      },
+      {
+        "char": "车",
+        "parts": [
+          {
+            "id": "cart",
+            "hanzi": "车",
+            "position": "single"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-huoche.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-jidan",
+    "hanzi": "鸡蛋",
+    "pinyin": "jī dàn",
+    "syllables": [
+      {
+        "plain": "ji",
+        "marked": "jī",
+        "tone": 1
+      },
+      {
+        "plain": "dan",
+        "marked": "dàn",
+        "tone": 4
+      }
+    ],
+    "meaning": "Hühnerei, Ei",
+    "characters": [
+      {
+        "char": "鸡",
+        "parts": [
+          {
+            "id": "right-hand",
+            "hanzi": "又",
+            "position": "left"
+          },
+          {
+            "id": "niao-bird",
+            "hanzi": "鸟",
+            "position": "right"
+          }
+        ]
+      },
+      {
+        "char": "蛋",
+        "parts": [
+          {
+            "id": "zhi-foot",
+            "hanzi": "疋",
+            "position": "top"
+          },
+          {
+            "id": "insect",
+            "hanzi": "虫",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-jidan.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-jiaren",
+    "hanzi": "家人",
+    "pinyin": "jiā rén",
+    "syllables": [
+      {
+        "plain": "jia",
+        "marked": "jiā",
+        "tone": 1
+      },
+      {
+        "plain": "ren",
+        "marked": "rén",
+        "tone": 2
+      }
+    ],
+    "meaning": "Familienmitglied",
+    "characters": [
+      {
+        "char": "家",
+        "parts": [
+          {
+            "id": "roof",
+            "hanzi": "宀",
+            "position": "top"
+          },
+          {
+            "id": "pig",
+            "hanzi": "豕",
+            "position": "bottom"
+          }
+        ]
+      },
+      {
+        "char": "人",
+        "parts": [
+          {
+            "id": "person",
+            "hanzi": "人",
+            "position": "single"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-jiaren.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-jian",
+    "hanzi": "见",
+    "pinyin": "jiàn",
+    "syllables": [
+      {
+        "plain": "jian",
+        "marked": "jiàn",
+        "tone": 4
+      }
+    ],
+    "meaning": "sehen, treffen",
+    "characters": [
+      {
+        "char": "见",
+        "parts": [
+          {
+            "id": "see",
+            "hanzi": "见",
+            "position": "single"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-jian.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "verb"
+  },
+  {
+    "id": "hsk1-jian-measure",
+    "hanzi": "件",
+    "pinyin": "jiàn",
+    "syllables": [
+      {
+        "plain": "jian",
+        "marked": "jiàn",
+        "tone": 4
+      }
+    ],
+    "meaning": "Zählwort für Dinge und Kleidungsstücke",
+    "characters": [
+      {
+        "char": "件",
+        "parts": [
+          {
+            "id": "person",
+            "hanzi": "亻",
+            "position": "left"
+          },
+          {
+            "id": "cattle",
+            "hanzi": "牛",
+            "position": "right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-jian-measure.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "zahl"
+  },
+  {
+    "id": "hsk1-jiaozi",
+    "hanzi": "饺子",
+    "pinyin": "jiǎo zi",
+    "syllables": [
+      {
+        "plain": "jiao",
+        "marked": "jiǎo",
+        "tone": 3
+      },
+      {
+        "plain": "zi",
+        "marked": "zi",
+        "tone": 5
+      }
+    ],
+    "meaning": "Jiaozi, Dumpling/Nudeltasche",
+    "characters": [
+      {
+        "char": "饺",
+        "parts": [
+          {
+            "id": "food",
+            "hanzi": "饣",
+            "position": "left"
+          },
+          {
+            "id": "exchange",
+            "hanzi": "交",
+            "position": "right"
+          }
+        ]
+      },
+      {
+        "char": "子",
+        "parts": [
+          {
+            "id": "child",
+            "hanzi": "子",
+            "position": "single"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-jiaozi.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-jiejie",
+    "hanzi": "姐姐",
+    "pinyin": "jiě jie",
+    "syllables": [
+      {
+        "plain": "jie",
+        "marked": "jiě",
+        "tone": 3
+      },
+      {
+        "plain": "jie",
+        "marked": "jie",
+        "tone": 5
+      }
+    ],
+    "meaning": "ältere Schwester",
+    "characters": [
+      {
+        "char": "姐",
+        "parts": [
+          {
+            "id": "woman",
+            "hanzi": "女",
+            "position": "left"
+          },
+          {
+            "id": "stand",
+            "hanzi": "且",
+            "position": "right"
+          }
+        ]
+      },
+      {
+        "char": "姐",
+        "parts": [
+          {
+            "id": "woman",
+            "hanzi": "女",
+            "position": "left"
+          },
+          {
+            "id": "stand",
+            "hanzi": "且",
+            "position": "right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-jiejie.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-jinnian",
+    "hanzi": "今年",
+    "pinyin": "jīn nián",
+    "syllables": [
+      {
+        "plain": "jin",
+        "marked": "jīn",
+        "tone": 1
+      },
+      {
+        "plain": "nian",
+        "marked": "nián",
+        "tone": 2
+      }
+    ],
+    "meaning": "dieses Jahr",
+    "characters": [
+      {
+        "char": "今",
+        "parts": [
+          {
+            "id": "now-rad",
+            "hanzi": "今",
+            "position": "single"
+          }
+        ]
+      },
+      {
+        "char": "年",
+        "parts": [
+          {
+            "id": "year-rad",
+            "hanzi": "年",
+            "position": "single"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-jinnian.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-juede",
+    "hanzi": "觉得",
+    "pinyin": "jué de",
+    "syllables": [
+      {
+        "plain": "jue",
+        "marked": "jué",
+        "tone": 2
+      },
+      {
+        "plain": "de",
+        "marked": "de",
+        "tone": 5
+      }
+    ],
+    "meaning": "finden, denken, meinen; sich fühlen",
+    "characters": [
+      {
+        "char": "觉",
+        "parts": [
+          {
+            "id": "small",
+            "hanzi": "⺍",
+            "position": "top"
+          },
+          {
+            "id": "cover",
+            "hanzi": "冖",
+            "position": "middle"
+          },
+          {
+            "id": "see",
+            "hanzi": "见",
+            "position": "bottom"
+          }
+        ]
+      },
+      {
+        "char": "得",
+        "parts": [
+          {
+            "id": "step",
+            "hanzi": "彳",
+            "position": "left"
+          },
+          {
+            "id": "sun",
+            "hanzi": "日",
+            "position": "top-right"
+          },
+          {
+            "id": "one",
+            "hanzi": "一",
+            "position": "middle"
+          },
+          {
+            "id": "inch",
+            "hanzi": "寸",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-juede.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "verb"
+  },
+  {
+    "id": "hsk1-kaiche",
+    "hanzi": "开车",
+    "pinyin": "kāi chē",
+    "syllables": [
+      {
+        "plain": "kai",
+        "marked": "kāi",
+        "tone": 1
+      },
+      {
+        "plain": "che",
+        "marked": "chē",
+        "tone": 1
+      }
+    ],
+    "meaning": "Auto fahren, lenken",
+    "characters": [
+      {
+        "char": "开",
+        "parts": [
+          {
+            "id": "one",
+            "hanzi": "一",
+            "position": "top"
+          },
+          {
+            "id": "hands-joined",
+            "hanzi": "廾",
+            "position": "bottom"
+          }
+        ]
+      },
+      {
+        "char": "车",
+        "parts": [
+          {
+            "id": "cart",
+            "hanzi": "车",
+            "position": "single"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-kaiche.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "verb"
+  },
+  {
+    "id": "hsk1-kanbing",
+    "hanzi": "看病",
+    "pinyin": "kàn bìng",
+    "syllables": [
+      {
+        "plain": "kan",
+        "marked": "kàn",
+        "tone": 4
+      },
+      {
+        "plain": "bing",
+        "marked": "bìng",
+        "tone": 4
+      }
+    ],
+    "meaning": "zum Arzt gehen, sich behandeln lassen",
+    "characters": [
+      {
+        "char": "看",
+        "parts": [
+          {
+            "id": "hand",
+            "hanzi": "手",
+            "position": "top"
+          },
+          {
+            "id": "eye",
+            "hanzi": "目",
+            "position": "bottom"
+          }
+        ]
+      },
+      {
+        "char": "病",
+        "parts": [
+          {
+            "id": "sickness",
+            "hanzi": "疒",
+            "position": "top"
+          },
+          {
+            "id": "bing-third",
+            "hanzi": "丙",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-kanbing.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "verb"
+  },
+  {
+    "id": "hsk1-keyi",
+    "hanzi": "可以",
+    "pinyin": "kě yǐ",
+    "syllables": [
+      {
+        "plain": "ke",
+        "marked": "kě",
+        "tone": 3
+      },
+      {
+        "plain": "yi",
+        "marked": "yǐ",
+        "tone": 3
+      }
+    ],
+    "meaning": "können, dürfen, erlaubt sein",
+    "characters": [
+      {
+        "char": "可",
+        "parts": [
+          {
+            "id": "one",
+            "hanzi": "一",
+            "position": "top"
+          },
+          {
+            "id": "mouth",
+            "hanzi": "口",
+            "position": "inside"
+          },
+          {
+            "id": "gou-hook",
+            "hanzi": "亅",
+            "position": "bottom"
+          }
+        ]
+      },
+      {
+        "char": "以",
+        "parts": [
+          {
+            "id": "yi-use",
+            "hanzi": "以",
+            "position": "single"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-keyi.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "verb"
+  },
+  {
+    "id": "hsk1-ke",
+    "hanzi": "课",
+    "pinyin": "kè",
+    "syllables": [
+      {
+        "plain": "ke",
+        "marked": "kè",
+        "tone": 4
+      }
+    ],
+    "meaning": "Unterricht, Kurs, Lektion, Fach",
+    "characters": [
+      {
+        "char": "课",
+        "parts": [
+          {
+            "id": "speech",
+            "hanzi": "讠",
+            "position": "left"
+          },
+          {
+            "id": "guo-fruit",
+            "hanzi": "果",
+            "position": "right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-ke.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen",
+    "notes": "课 - die zugeteilte Lektion; zweimal Zählcharakter für Lerninhalte."
+  },
+  {
+    "id": "hsk1-kou-mouth",
+    "hanzi": "口",
+    "pinyin": "kǒu",
+    "syllables": [
+      {
+        "plain": "kou",
+        "marked": "kǒu",
+        "tone": 3
+      }
+    ],
+    "meaning": "Mund; Zählwort für Personen",
+    "characters": [
+      {
+        "char": "口",
+        "parts": [
+          {
+            "id": "mouth",
+            "hanzi": "口",
+            "position": "single"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-kou-mouth.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen",
+    "notes": "Doppelfunktion: Mund (kǒu) und Zählwort für Personen (三口人); als Zählwort immer 3. Ton."
+  },
+  {
+    "id": "hsk1-liang",
+    "hanzi": "两",
+    "pinyin": "liǎng",
+    "syllables": [
+      {
+        "plain": "liang",
+        "marked": "liǎng",
+        "tone": 3
+      }
+    ],
+    "meaning": "zwei (vor einem Zählwort)",
+    "characters": [
+      {
+        "char": "两",
+        "parts": [
+          {
+            "id": "one",
+            "hanzi": "一",
+            "position": "top"
+          },
+          {
+            "id": "cong-from",
+            "hanzi": "从",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-liang.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "zahl",
+    "notes": "Tonsandhi: die zweite Silbe ist neutral (liǎng gè, liǎng shí)."
+  },
+  {
+    "id": "hsk1-mai-sell",
+    "hanzi": "卖",
+    "pinyin": "mài",
+    "syllables": [
+      {
+        "plain": "mai",
+        "marked": "mài",
+        "tone": 4
+      }
+    ],
+    "meaning": "verkaufen, feilbieten",
+    "characters": [
+      {
+        "char": "卖",
+        "parts": [
+          {
+            "id": "ten",
+            "hanzi": "十",
+            "position": "top"
+          },
+          {
+            "id": "mai-buy",
+            "hanzi": "买",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-mai-sell.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "verb"
+  },
+  {
+    "id": "hsk1-mang",
+    "hanzi": "忙",
+    "pinyin": "máng",
+    "syllables": [
+      {
+        "plain": "mang",
+        "marked": "máng",
+        "tone": 2
+      }
+    ],
+    "meaning": "beschäftigt, fleißig; hastig",
+    "characters": [
+      {
+        "char": "忙",
+        "parts": [
+          {
+            "id": "heart",
+            "hanzi": "忄",
+            "position": "left"
+          },
+          {
+            "id": "wang-perish",
+            "hanzi": "亡",
+            "position": "right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-mang.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "adjektiv"
+  },
+  {
+    "id": "hsk1-meishi",
+    "hanzi": "没事",
+    "pinyin": "méi shì",
+    "syllables": [
+      {
+        "plain": "mei",
+        "marked": "méi",
+        "tone": 2
+      },
+      {
+        "plain": "shi",
+        "marked": "shì",
+        "tone": 4
+      }
+    ],
+    "meaning": "nichts passiert, alles in Ordnung, es ist gut",
+    "characters": [
+      {
+        "char": "没",
+        "parts": [
+          {
+            "id": "water",
+            "hanzi": "氵",
+            "position": "left"
+          },
+          {
+            "id": "table",
+            "hanzi": "几",
+            "position": "top-right"
+          },
+          {
+            "id": "right-hand",
+            "hanzi": "又",
+            "position": "bottom-right"
+          }
+        ]
+      },
+      {
+        "char": "事",
+        "parts": [
+          {
+            "id": "one",
+            "hanzi": "一",
+            "position": "top"
+          },
+          {
+            "id": "mouth",
+            "hanzi": "口",
+            "position": "middle"
+          },
+          {
+            "id": "gou-hook",
+            "hanzi": "亅",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-meishi.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "verb"
+  },
+  {
+    "id": "hsk1-meimei",
+    "hanzi": "妹妹",
+    "pinyin": "mèi mei",
+    "syllables": [
+      {
+        "plain": "mei",
+        "marked": "mèi",
+        "tone": 4
+      },
+      {
+        "plain": "mei",
+        "marked": "mei",
+        "tone": 5
+      }
+    ],
+    "meaning": "jüngere Schwester",
+    "characters": [
+      {
+        "char": "妹",
+        "parts": [
+          {
+            "id": "woman",
+            "hanzi": "女",
+            "position": "left"
+          },
+          {
+            "id": "wei-notyet",
+            "hanzi": "未",
+            "position": "right"
+          }
+        ]
+      },
+      {
+        "char": "妹",
+        "parts": [
+          {
+            "id": "woman",
+            "hanzi": "女",
+            "position": "left"
+          },
+          {
+            "id": "wei-notyet",
+            "hanzi": "未",
+            "position": "right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-meimei.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-men",
+    "hanzi": "们",
+    "pinyin": "men",
+    "syllables": [
+      {
+        "plain": "men",
+        "marked": "men",
+        "tone": 5
+      }
+    ],
+    "meaning": "Plural-Morphem für Personen",
+    "characters": [
+      {
+        "char": "们",
+        "parts": [
+          {
+            "id": "person",
+            "hanzi": "亻",
+            "position": "left"
+          },
+          {
+            "id": "gate",
+            "hanzi": "门",
+            "position": "right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-men.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "partikel",
+    "notes": "Reines Suffix ohne eigene Bedeutung; steht direkt hinter dem Pronomen (我们, 你们)."
+  },
+  {
+    "id": "hsk1-mianbao",
+    "hanzi": "面包",
+    "pinyin": "miàn bāo",
+    "syllables": [
+      {
+        "plain": "mian",
+        "marked": "miàn",
+        "tone": 4
+      },
+      {
+        "plain": "bao",
+        "marked": "bāo",
+        "tone": 1
+      }
+    ],
+    "meaning": "Brot",
+    "characters": [
+      {
+        "char": "面",
+        "parts": [
+          {
+            "id": "one",
+            "hanzi": "一",
+            "position": "top"
+          },
+          {
+            "id": "enclosure",
+            "hanzi": "囗",
+            "position": "middle"
+          },
+          {
+            "id": "eye",
+            "hanzi": "目",
+            "position": "inside"
+          }
+        ]
+      },
+      {
+        "char": "包",
+        "parts": [
+          {
+            "id": "wrap",
+            "hanzi": "勹",
+            "position": "enclosure"
+          },
+          {
+            "id": "si-curl",
+            "hanzi": "巳",
+            "position": "inside"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-mianbao.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-miantiaoer",
+    "hanzi": "面条儿",
+    "pinyin": "miàn tiáo ér",
+    "syllables": [
+      {
+        "plain": "mian",
+        "marked": "miàn",
+        "tone": 4
+      },
+      {
+        "plain": "tiao",
+        "marked": "tiáo",
+        "tone": 2
+      },
+      {
+        "plain": "er",
+        "marked": "ér",
+        "tone": 2
+      }
+    ],
+    "meaning": "Nudeln",
+    "characters": [
+      {
+        "char": "面",
+        "parts": [
+          {
+            "id": "one",
+            "hanzi": "一",
+            "position": "top"
+          },
+          {
+            "id": "enclosure",
+            "hanzi": "囗",
+            "position": "middle"
+          },
+          {
+            "id": "eye",
+            "hanzi": "目",
+            "position": "inside"
+          }
+        ]
+      },
+      {
+        "char": "条",
+        "parts": [
+          {
+            "id": "winter-go",
+            "hanzi": "夂",
+            "position": "top"
+          },
+          {
+            "id": "tree",
+            "hanzi": "木",
+            "position": "bottom"
+          }
+        ]
+      },
+      {
+        "char": "儿",
+        "parts": [
+          {
+            "id": "legs",
+            "hanzi": "儿",
+            "position": "single"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-miantiaoer.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-mingnian",
+    "hanzi": "明年",
+    "pinyin": "míng nián",
+    "syllables": [
+      {
+        "plain": "ming",
+        "marked": "míng",
+        "tone": 2
+      },
+      {
+        "plain": "nian",
+        "marked": "nián",
+        "tone": 2
+      }
+    ],
+    "meaning": "nächstes Jahr",
+    "characters": [
+      {
+        "char": "明",
+        "parts": [
+          {
+            "id": "sun",
+            "hanzi": "日",
+            "position": "left"
+          },
+          {
+            "id": "moon",
+            "hanzi": "月",
+            "position": "right"
+          }
+        ]
+      },
+      {
+        "char": "年",
+        "parts": [
+          {
+            "id": "year-rad",
+            "hanzi": "年",
+            "position": "single"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-mingnian.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-nage",
+    "hanzi": "哪个",
+    "pinyin": "nǎ ge",
+    "syllables": [
+      {
+        "plain": "na",
+        "marked": "nǎ",
+        "tone": 3
+      },
+      {
+        "plain": "ge",
+        "marked": "ge",
+        "tone": 5
+      }
+    ],
+    "meaning": "welcher, welcher von mehreren",
+    "characters": [
+      {
+        "char": "哪",
+        "parts": [
+          {
+            "id": "mouth",
+            "hanzi": "口",
+            "position": "left"
+          },
+          {
+            "id": "knife",
+            "hanzi": "刀",
+            "position": "top"
+          },
+          {
+            "id": "ear-mound",
+            "hanzi": "阝",
+            "position": "right"
+          }
+        ]
+      },
+      {
+        "char": "个",
+        "parts": [
+          {
+            "id": "person",
+            "hanzi": "人",
+            "position": "top"
+          },
+          {
+            "id": "line",
+            "hanzi": "丨",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-nage.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "pronomen"
+  },
+  {
+    "id": "hsk1-nali",
+    "hanzi": "哪里",
+    "pinyin": "nǎ lǐ",
+    "syllables": [
+      {
+        "plain": "na",
+        "marked": "nǎ",
+        "tone": 3
+      },
+      {
+        "plain": "li",
+        "marked": "lǐ",
+        "tone": 3
+      }
+    ],
+    "meaning": "wo (mit räumlichem Bezug auf Orte)",
+    "characters": [
+      {
+        "char": "哪",
+        "parts": [
+          {
+            "id": "mouth",
+            "hanzi": "口",
+            "position": "left"
+          },
+          {
+            "id": "knife",
+            "hanzi": "刀",
+            "position": "top"
+          },
+          {
+            "id": "ear-mound",
+            "hanzi": "阝",
+            "position": "right"
+          }
+        ]
+      },
+      {
+        "char": "里",
+        "parts": [
+          {
+            "id": "field",
+            "hanzi": "田",
+            "position": "top"
+          },
+          {
+            "id": "earth",
+            "hanzi": "土",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-nali.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "pronomen"
+  },
+  {
+    "id": "hsk1-naxie",
+    "hanzi": "哪些",
+    "pinyin": "nǎ xiē",
+    "syllables": [
+      {
+        "plain": "na",
+        "marked": "nǎ",
+        "tone": 3
+      },
+      {
+        "plain": "xie",
+        "marked": "xiē",
+        "tone": 1
+      }
+    ],
+    "meaning": "welche (Plural)",
+    "characters": [
+      {
+        "char": "哪",
+        "parts": [
+          {
+            "id": "mouth",
+            "hanzi": "口",
+            "position": "left"
+          },
+          {
+            "id": "knife",
+            "hanzi": "刀",
+            "position": "top"
+          },
+          {
+            "id": "ear-mound",
+            "hanzi": "阝",
+            "position": "right"
+          }
+        ]
+      },
+      {
+        "char": "些",
+        "parts": [
+          {
+            "id": "stop",
+            "hanzi": "止",
+            "position": "top-left"
+          },
+          {
+            "id": "dagger",
+            "hanzi": "匕",
+            "position": "top-right"
+          },
+          {
+            "id": "two",
+            "hanzi": "二",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-naxie.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "pronomen"
+  },
+  {
+    "id": "hsk1-nabian",
+    "hanzi": "那边",
+    "pinyin": "nà biān",
+    "syllables": [
+      {
+        "plain": "na",
+        "marked": "nà",
+        "tone": 4
+      },
+      {
+        "plain": "bian",
+        "marked": "biān",
+        "tone": 1
+      }
+    ],
+    "meaning": "dort drüben, auf der anderen Seite",
+    "characters": [
+      {
+        "char": "那",
+        "parts": [
+          {
+            "id": "knife",
+            "hanzi": "刀",
+            "position": "top-left"
+          },
+          {
+            "id": "two",
+            "hanzi": "二",
+            "position": "bottom-left"
+          },
+          {
+            "id": "ear-mound",
+            "hanzi": "阝",
+            "position": "right"
+          }
+        ]
+      },
+      {
+        "char": "边",
+        "parts": [
+          {
+            "id": "li-strength",
+            "hanzi": "力",
+            "position": "top-left"
+          },
+          {
+            "id": "walk-rad",
+            "hanzi": "辶",
+            "position": "bottom-right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-nabian.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "pronomen"
+  },
+  {
+    "id": "hsk1-nage-that",
+    "hanzi": "那个",
+    "pinyin": "nà ge",
+    "syllables": [
+      {
+        "plain": "na",
+        "marked": "nà",
+        "tone": 4
+      },
+      {
+        "plain": "ge",
+        "marked": "ge",
+        "tone": 5
+      }
+    ],
+    "meaning": "das dort, jenes (Ding)",
+    "characters": [
+      {
+        "char": "那",
+        "parts": [
+          {
+            "id": "knife",
+            "hanzi": "刀",
+            "position": "top-left"
+          },
+          {
+            "id": "two",
+            "hanzi": "二",
+            "position": "bottom-left"
+          },
+          {
+            "id": "ear-mound",
+            "hanzi": "阝",
+            "position": "right"
+          }
+        ]
+      },
+      {
+        "char": "个",
+        "parts": [
+          {
+            "id": "person",
+            "hanzi": "人",
+            "position": "top"
+          },
+          {
+            "id": "line",
+            "hanzi": "丨",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-nage-that.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "pronomen"
+  },
+  {
+    "id": "hsk1-nali-there",
+    "hanzi": "那里",
+    "pinyin": "nà lǐ",
+    "syllables": [
+      {
+        "plain": "na",
+        "marked": "nà",
+        "tone": 4
+      },
+      {
+        "plain": "li",
+        "marked": "lǐ",
+        "tone": 3
+      }
+    ],
+    "meaning": "dort (mit räumlichem Bezug auf Orte)",
+    "characters": [
+      {
+        "char": "那",
+        "parts": [
+          {
+            "id": "knife",
+            "hanzi": "刀",
+            "position": "top-left"
+          },
+          {
+            "id": "two",
+            "hanzi": "二",
+            "position": "bottom-left"
+          },
+          {
+            "id": "ear-mound",
+            "hanzi": "阝",
+            "position": "right"
+          }
+        ]
+      },
+      {
+        "char": "里",
+        "parts": [
+          {
+            "id": "field",
+            "hanzi": "田",
+            "position": "top"
+          },
+          {
+            "id": "earth",
+            "hanzi": "土",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-nali-there.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "pronomen"
+  },
+  {
+    "id": "hsk1-naxie-those",
+    "hanzi": "那些",
+    "pinyin": "nà xiē",
+    "syllables": [
+      {
+        "plain": "na",
+        "marked": "nà",
+        "tone": 4
+      },
+      {
+        "plain": "xie",
+        "marked": "xiē",
+        "tone": 1
+      }
+    ],
+    "meaning": "jene dort, die dort (Plural)",
+    "characters": [
+      {
+        "char": "那",
+        "parts": [
+          {
+            "id": "knife",
+            "hanzi": "刀",
+            "position": "top-left"
+          },
+          {
+            "id": "two",
+            "hanzi": "二",
+            "position": "bottom-left"
+          },
+          {
+            "id": "ear-mound",
+            "hanzi": "阝",
+            "position": "right"
+          }
+        ]
+      },
+      {
+        "char": "些",
+        "parts": [
+          {
+            "id": "stop",
+            "hanzi": "止",
+            "position": "top-left"
+          },
+          {
+            "id": "dagger",
+            "hanzi": "匕",
+            "position": "top-right"
+          },
+          {
+            "id": "two",
+            "hanzi": "二",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-naxie-those.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "pronomen"
+  },
+  {
+    "id": "hsk1-nan",
+    "hanzi": "男",
+    "pinyin": "nán",
+    "syllables": [
+      {
+        "plain": "nan",
+        "marked": "nán",
+        "tone": 2
+      }
+    ],
+    "meaning": "männlich, Mann",
+    "characters": [
+      {
+        "char": "男",
+        "parts": [
+          {
+            "id": "field",
+            "hanzi": "田",
+            "position": "top"
+          },
+          {
+            "id": "li-strength",
+            "hanzi": "力",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-nan.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "adjektiv"
+  },
+  {
+    "id": "hsk1-nanpengyou",
+    "hanzi": "男朋友",
+    "pinyin": "nán péng you",
+    "syllables": [
+      {
+        "plain": "nan",
+        "marked": "nán",
+        "tone": 2
+      },
+      {
+        "plain": "peng",
+        "marked": "péng",
+        "tone": 2
+      },
+      {
+        "plain": "you",
+        "marked": "you",
+        "tone": 5
+      }
+    ],
+    "meaning": "Freund (von einer Frau)",
+    "characters": [
+      {
+        "char": "男",
+        "parts": [
+          {
+            "id": "field",
+            "hanzi": "田",
+            "position": "top"
+          },
+          {
+            "id": "li-strength",
+            "hanzi": "力",
+            "position": "bottom"
+          }
+        ]
+      },
+      {
+        "char": "朋",
+        "parts": [
+          {
+            "id": "moon",
+            "hanzi": "月",
+            "position": "left"
+          },
+          {
+            "id": "moon",
+            "hanzi": "月",
+            "position": "right"
+          }
+        ]
+      },
+      {
+        "char": "友",
+        "parts": [
+          {
+            "id": "left-hand",
+            "hanzi": "𠂇",
+            "position": "top-left"
+          },
+          {
+            "id": "right-hand",
+            "hanzi": "又",
+            "position": "bottom-right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-nanpengyou.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-nimen",
+    "hanzi": "你们",
+    "pinyin": "nǐ men",
+    "syllables": [
+      {
+        "plain": "ni",
+        "marked": "nǐ",
+        "tone": 3
+      },
+      {
+        "plain": "men",
+        "marked": "men",
+        "tone": 5
+      }
+    ],
+    "meaning": "ihr (Plural), Sie (mehrere)",
+    "characters": [
+      {
+        "char": "你",
+        "parts": [
+          {
+            "id": "person",
+            "hanzi": "亻",
+            "position": "left"
+          },
+          {
+            "id": "you-archaic",
+            "hanzi": "尔",
+            "position": "right"
+          }
+        ]
+      },
+      {
+        "char": "们",
+        "parts": [
+          {
+            "id": "person",
+            "hanzi": "亻",
+            "position": "left"
+          },
+          {
+            "id": "gate",
+            "hanzi": "门",
+            "position": "right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-nimen.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "pronomen"
+  },
+  {
+    "id": "hsk1-niunai",
+    "hanzi": "牛奶",
+    "pinyin": "niú nǎi",
+    "syllables": [
+      {
+        "plain": "niu",
+        "marked": "niú",
+        "tone": 2
+      },
+      {
+        "plain": "nai",
+        "marked": "nǎi",
+        "tone": 3
+      }
+    ],
+    "meaning": "Milch, Kuhmilch",
+    "characters": [
+      {
+        "char": "牛",
+        "parts": [
+          {
+            "id": "cattle",
+            "hanzi": "牛",
+            "position": "single"
+          }
+        ]
+      },
+      {
+        "char": "奶",
+        "parts": [
+          {
+            "id": "woman",
+            "hanzi": "女",
+            "position": "left"
+          },
+          {
+            "id": "nai-then",
+            "hanzi": "乃",
+            "position": "right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-niunai.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-nv",
+    "hanzi": "女",
+    "pinyin": "nǚ",
+    "syllables": [
+      {
+        "plain": "nü",
+        "marked": "nǚ",
+        "tone": 3
+      }
+    ],
+    "meaning": "weiblich, Frau, Mädchen",
+    "characters": [
+      {
+        "char": "女",
+        "parts": [
+          {
+            "id": "woman",
+            "hanzi": "女",
+            "position": "single"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-nv.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "adjektiv"
+  },
+  {
+    "id": "hsk1-nvpengyou",
+    "hanzi": "女朋友",
+    "pinyin": "nǚ péng you",
+    "syllables": [
+      {
+        "plain": "nü",
+        "marked": "nǚ",
+        "tone": 3
+      },
+      {
+        "plain": "peng",
+        "marked": "péng",
+        "tone": 2
+      },
+      {
+        "plain": "you",
+        "marked": "you",
+        "tone": 5
+      }
+    ],
+    "meaning": "Freundin (von einem Mann)",
+    "characters": [
+      {
+        "char": "女",
+        "parts": [
+          {
+            "id": "woman",
+            "hanzi": "女",
+            "position": "single"
+          }
+        ]
+      },
+      {
+        "char": "朋",
+        "parts": [
+          {
+            "id": "moon",
+            "hanzi": "月",
+            "position": "left"
+          },
+          {
+            "id": "moon",
+            "hanzi": "月",
+            "position": "right"
+          }
+        ]
+      },
+      {
+        "char": "友",
+        "parts": [
+          {
+            "id": "left-hand",
+            "hanzi": "𠂇",
+            "position": "top-left"
+          },
+          {
+            "id": "right-hand",
+            "hanzi": "又",
+            "position": "bottom-right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-nvpengyou.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-nvshi",
+    "hanzi": "女士",
+    "pinyin": "nǚ shì",
+    "syllables": [
+      {
+        "plain": "nü",
+        "marked": "nǚ",
+        "tone": 3
+      },
+      {
+        "plain": "shi",
+        "marked": "shì",
+        "tone": 4
+      }
+    ],
+    "meaning": "Dame, Frau (Anrede)",
+    "characters": [
+      {
+        "char": "女",
+        "parts": [
+          {
+            "id": "woman",
+            "hanzi": "女",
+            "position": "single"
+          }
+        ]
+      },
+      {
+        "char": "士",
+        "parts": [
+          {
+            "id": "scholar",
+            "hanzi": "士",
+            "position": "single"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-nvshi.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-pianyi",
+    "hanzi": "便宜",
+    "pinyin": "pián yi",
+    "syllables": [
+      {
+        "plain": "pian",
+        "marked": "pián",
+        "tone": 2
+      },
+      {
+        "plain": "yi",
+        "marked": "yi",
+        "tone": 5
+      }
+    ],
+    "meaning": "billig, günstig",
+    "characters": [
+      {
+        "char": "便",
+        "parts": [
+          {
+            "id": "person",
+            "hanzi": "亻",
+            "position": "left"
+          },
+          {
+            "id": "geng-change",
+            "hanzi": "更",
+            "position": "right"
+          }
+        ]
+      },
+      {
+        "char": "宜",
+        "parts": [
+          {
+            "id": "roof",
+            "hanzi": "宀",
+            "position": "top"
+          },
+          {
+            "id": "stand",
+            "hanzi": "且",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-pianyi.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "adjektiv"
+  },
+  {
+    "id": "hsk1-qichuang",
+    "hanzi": "起床",
+    "pinyin": "qǐ chuáng",
+    "syllables": [
+      {
+        "plain": "qi",
+        "marked": "qǐ",
+        "tone": 3
+      },
+      {
+        "plain": "chuang",
+        "marked": "chuáng",
+        "tone": 2
+      }
+    ],
+    "meaning": "aufstehen, aufwachen, aus dem Bett steigen",
+    "characters": [
+      {
+        "char": "起",
+        "parts": [
+          {
+            "id": "stop",
+            "hanzi": "止",
+            "position": "bottom-left"
+          },
+          {
+            "id": "beg",
+            "hanzi": "乞",
+            "position": "right"
+          }
+        ]
+      },
+      {
+        "char": "床",
+        "parts": [
+          {
+            "id": "shelter",
+            "hanzi": "广",
+            "position": "top"
+          },
+          {
+            "id": "tree",
+            "hanzi": "木",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-qichuang.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "verb"
+  },
+  {
+    "id": "hsk1-qian-thousand",
+    "hanzi": "千",
+    "pinyin": "qiān",
+    "syllables": [
+      {
+        "plain": "qian",
+        "marked": "qiān",
+        "tone": 1
+      }
+    ],
+    "meaning": "tausend",
+    "characters": [
+      {
+        "char": "千",
+        "parts": [
+          {
+            "id": "pie-slash",
+            "hanzi": "丿",
+            "position": "top"
+          },
+          {
+            "id": "ten",
+            "hanzi": "十",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-qian-thousand.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "zahl"
+  },
+  {
+    "id": "hsk1-qian-front",
+    "hanzi": "前",
+    "pinyin": "qián",
+    "syllables": [
+      {
+        "plain": "qian",
+        "marked": "qián",
+        "tone": 2
+      }
+    ],
+    "meaning": "vorne, davor, vor",
+    "characters": [
+      {
+        "char": "前",
+        "parts": [
+          {
+            "id": "eight-horns",
+            "hanzi": "丷",
+            "position": "top"
+          },
+          {
+            "id": "moon",
+            "hanzi": "月",
+            "position": "bottom-left"
+          },
+          {
+            "id": "knife",
+            "hanzi": "刂",
+            "position": "bottom-right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-qian-front.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen",
+    "notes": "Die zweite Silbe von 前面 (qiánmiàn) wird im Redefluss oft neutral gesprochen; geschrieben bleibt der 4. Ton."
+  },
+  {
+    "id": "hsk1-qingwen",
+    "hanzi": "请问",
+    "pinyin": "qǐng wèn",
+    "syllables": [
+      {
+        "plain": "qing",
+        "marked": "qǐng",
+        "tone": 3
+      },
+      {
+        "plain": "wen",
+        "marked": "wèn",
+        "tone": 4
+      }
+    ],
+    "meaning": "Entschuldigen Sie, darf ich fragen...?; Auskunft",
+    "characters": [
+      {
+        "char": "请",
+        "parts": [
+          {
+            "id": "speech",
+            "hanzi": "讠",
+            "position": "left"
+          },
+          {
+            "id": "blue-green",
+            "hanzi": "青",
+            "position": "right"
+          }
+        ]
+      },
+      {
+        "char": "问",
+        "parts": [
+          {
+            "id": "gate",
+            "hanzi": "门",
+            "position": "enclosure"
+          },
+          {
+            "id": "mouth",
+            "hanzi": "口",
+            "position": "inside"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-qingwen.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "verb"
+  },
+  {
+    "id": "hsk1-qunian",
+    "hanzi": "去年",
+    "pinyin": "qù nián",
+    "syllables": [
+      {
+        "plain": "qu",
+        "marked": "qù",
+        "tone": 4
+      },
+      {
+        "plain": "nian",
+        "marked": "nián",
+        "tone": 2
+      }
+    ],
+    "meaning": "letztes Jahr",
+    "characters": [
+      {
+        "char": "去",
+        "parts": [
+          {
+            "id": "earth",
+            "hanzi": "土",
+            "position": "top"
+          },
+          {
+            "id": "private",
+            "hanzi": "厶",
+            "position": "bottom"
+          }
+        ]
+      },
+      {
+        "char": "年",
+        "parts": [
+          {
+            "id": "year-rad",
+            "hanzi": "年",
+            "position": "single"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-qunian.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-shangban",
+    "hanzi": "上班",
+    "pinyin": "shàng bān",
+    "syllables": [
+      {
+        "plain": "shang",
+        "marked": "shàng",
+        "tone": 4
+      },
+      {
+        "plain": "ban",
+        "marked": "bān",
+        "tone": 1
+      }
+    ],
+    "meaning": "zur Arbeit gehen, anfangen zu arbeiten",
+    "characters": [
+      {
+        "char": "上",
+        "parts": [
+          {
+            "id": "one",
+            "hanzi": "一",
+            "position": "bottom"
+          },
+          {
+            "id": "line",
+            "hanzi": "丨",
+            "position": "top"
+          }
+        ]
+      },
+      {
+        "char": "班",
+        "parts": [
+          {
+            "id": "king",
+            "hanzi": "王",
+            "position": "left"
+          },
+          {
+            "id": "knife",
+            "hanzi": "刂",
+            "position": "middle"
+          },
+          {
+            "id": "king",
+            "hanzi": "王",
+            "position": "right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-shangban.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "verb"
+  },
+  {
+    "id": "hsk1-shangke",
+    "hanzi": "上课",
+    "pinyin": "shàng kè",
+    "syllables": [
+      {
+        "plain": "shang",
+        "marked": "shàng",
+        "tone": 4
+      },
+      {
+        "plain": "ke",
+        "marked": "kè",
+        "tone": 4
+      }
+    ],
+    "meaning": "zum Unterricht gehen, Unterricht haben",
+    "characters": [
+      {
+        "char": "上",
+        "parts": [
+          {
+            "id": "one",
+            "hanzi": "一",
+            "position": "bottom"
+          },
+          {
+            "id": "line",
+            "hanzi": "丨",
+            "position": "top"
+          }
+        ]
+      },
+      {
+        "char": "课",
+        "parts": [
+          {
+            "id": "speech",
+            "hanzi": "讠",
+            "position": "left"
+          },
+          {
+            "id": "guo-fruit",
+            "hanzi": "果",
+            "position": "right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-shangke.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "verb"
+  },
+  {
+    "id": "hsk1-shangxue",
+    "hanzi": "上学",
+    "pinyin": "shàng xué",
+    "syllables": [
+      {
+        "plain": "shang",
+        "marked": "shàng",
+        "tone": 4
+      },
+      {
+        "plain": "xue",
+        "marked": "xué",
+        "tone": 2
+      }
+    ],
+    "meaning": "zur Schule gehen",
+    "characters": [
+      {
+        "char": "上",
+        "parts": [
+          {
+            "id": "one",
+            "hanzi": "一",
+            "position": "bottom"
+          },
+          {
+            "id": "line",
+            "hanzi": "丨",
+            "position": "top"
+          }
+        ]
+      },
+      {
+        "char": "学",
+        "parts": [
+          {
+            "id": "learn-top",
+            "hanzi": "⺍",
+            "position": "top"
+          },
+          {
+            "id": "cover",
+            "hanzi": "冖",
+            "position": "middle"
+          },
+          {
+            "id": "child",
+            "hanzi": "子",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-shangxue.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "verb"
+  },
+  {
+    "id": "hsk1-shengbing",
+    "hanzi": "生病",
+    "pinyin": "shēng bìng",
+    "syllables": [
+      {
+        "plain": "sheng",
+        "marked": "shēng",
+        "tone": 1
+      },
+      {
+        "plain": "bing",
+        "marked": "bìng",
+        "tone": 4
+      }
+    ],
+    "meaning": "krank werden, erkranken",
+    "characters": [
+      {
+        "char": "生",
+        "parts": [
+          {
+            "id": "born",
+            "hanzi": "生",
+            "position": "single"
+          }
+        ]
+      },
+      {
+        "char": "病",
+        "parts": [
+          {
+            "id": "sickness",
+            "hanzi": "疒",
+            "position": "top"
+          },
+          {
+            "id": "bing-third",
+            "hanzi": "丙",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-shengbing.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "verb"
+  },
+  {
+    "id": "hsk1-shi-thing",
+    "hanzi": "事",
+    "pinyin": "shì",
+    "syllables": [
+      {
+        "plain": "shi",
+        "marked": "shì",
+        "tone": 4
+      }
+    ],
+    "meaning": "Sache, Angelegenheit, Ereignis",
+    "characters": [
+      {
+        "char": "事",
+        "parts": [
+          {
+            "id": "one",
+            "hanzi": "一",
+            "position": "top"
+          },
+          {
+            "id": "mouth",
+            "hanzi": "口",
+            "position": "middle"
+          },
+          {
+            "id": "gou-hook",
+            "hanzi": "亅",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-shi-thing.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-shouji",
+    "hanzi": "手机",
+    "pinyin": "shǒu jī",
+    "syllables": [
+      {
+        "plain": "shou",
+        "marked": "shǒu",
+        "tone": 3
+      },
+      {
+        "plain": "ji",
+        "marked": "jī",
+        "tone": 1
+      }
+    ],
+    "meaning": "Handy, Mobiltelefon",
+    "characters": [
+      {
+        "char": "手",
+        "parts": [
+          {
+            "id": "hand",
+            "hanzi": "手",
+            "position": "single"
+          }
+        ]
+      },
+      {
+        "char": "机",
+        "parts": [
+          {
+            "id": "tree",
+            "hanzi": "木",
+            "position": "left"
+          },
+          {
+            "id": "table",
+            "hanzi": "几",
+            "position": "right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-shouji.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-shudian",
+    "hanzi": "书店",
+    "pinyin": "shū diàn",
+    "syllables": [
+      {
+        "plain": "shu",
+        "marked": "shū",
+        "tone": 1
+      },
+      {
+        "plain": "dian",
+        "marked": "diàn",
+        "tone": 4
+      }
+    ],
+    "meaning": "Buchhandlung",
+    "characters": [
+      {
+        "char": "书",
+        "parts": [
+          {
+            "id": "book-rad",
+            "hanzi": "书",
+            "position": "single"
+          }
+        ]
+      },
+      {
+        "char": "店",
+        "parts": [
+          {
+            "id": "shelter",
+            "hanzi": "广",
+            "position": "top-left"
+          },
+          {
+            "id": "divination",
+            "hanzi": "卜",
+            "position": "top-right"
+          },
+          {
+            "id": "mouth",
+            "hanzi": "口",
+            "position": "bottom-right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-shudian.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-shui-sleep",
+    "hanzi": "睡",
+    "pinyin": "shuì",
+    "syllables": [
+      {
+        "plain": "shui",
+        "marked": "shuì",
+        "tone": 4
+      }
+    ],
+    "meaning": "schlafen",
+    "characters": [
+      {
+        "char": "睡",
+        "parts": [
+          {
+            "id": "eye",
+            "hanzi": "目",
+            "position": "left"
+          },
+          {
+            "id": "droop",
+            "hanzi": "垂",
+            "position": "right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-shui-sleep.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "verb",
+    "notes": "Zusammensetzung aus 垂 (die Augen sinken) und 觉 (schlafen)."
+  },
+  {
+    "id": "hsk1-ta-it",
+    "hanzi": "它",
+    "pinyin": "tā",
+    "syllables": [
+      {
+        "plain": "ta",
+        "marked": "tā",
+        "tone": 1
+      }
+    ],
+    "meaning": "es (Dinge, Tiere,抽象es)",
+    "characters": [
+      {
+        "char": "它",
+        "parts": [
+          {
+            "id": "roof",
+            "hanzi": "宀",
+            "position": "top"
+          },
+          {
+            "id": "dagger",
+            "hanzi": "匕",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-ta-it.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "pronomen"
+  },
+  {
+    "id": "hsk1-tamen-they-things",
+    "hanzi": "它们",
+    "pinyin": "tā men",
+    "syllables": [
+      {
+        "plain": "ta",
+        "marked": "tā",
+        "tone": 1
+      },
+      {
+        "plain": "men",
+        "marked": "men",
+        "tone": 5
+      }
+    ],
+    "meaning": "sie (Sachen, Tiere)",
+    "characters": [
+      {
+        "char": "它",
+        "parts": [
+          {
+            "id": "roof",
+            "hanzi": "宀",
+            "position": "top"
+          },
+          {
+            "id": "dagger",
+            "hanzi": "匕",
+            "position": "bottom"
+          }
+        ]
+      },
+      {
+        "char": "们",
+        "parts": [
+          {
+            "id": "person",
+            "hanzi": "亻",
+            "position": "left"
+          },
+          {
+            "id": "gate",
+            "hanzi": "门",
+            "position": "right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-tamen-they-things.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "pronomen"
+  },
+  {
+    "id": "hsk1-tamen-they-female",
+    "hanzi": "她们",
+    "pinyin": "tā men",
+    "syllables": [
+      {
+        "plain": "ta",
+        "marked": "tā",
+        "tone": 1
+      },
+      {
+        "plain": "men",
+        "marked": "men",
+        "tone": 5
+      }
+    ],
+    "meaning": "sie (weibliche Personen)",
+    "characters": [
+      {
+        "char": "她",
+        "parts": [
+          {
+            "id": "woman",
+            "hanzi": "女",
+            "position": "left"
+          },
+          {
+            "id": "also",
+            "hanzi": "也",
+            "position": "right"
+          }
+        ]
+      },
+      {
+        "char": "们",
+        "parts": [
+          {
+            "id": "person",
+            "hanzi": "亻",
+            "position": "left"
+          },
+          {
+            "id": "gate",
+            "hanzi": "门",
+            "position": "right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-tamen-they-female.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "pronomen"
+  },
+  {
+    "id": "hsk1-tian-day",
+    "hanzi": "天",
+    "pinyin": "tiān",
+    "syllables": [
+      {
+        "plain": "tian",
+        "marked": "tiān",
+        "tone": 1
+      }
+    ],
+    "meaning": "Tag, Himmel",
+    "characters": [
+      {
+        "char": "天",
+        "parts": [
+          {
+            "id": "one",
+            "hanzi": "一",
+            "position": "top"
+          },
+          {
+            "id": "big",
+            "hanzi": "大",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-tian-day.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen",
+    "notes": "Historisch ein großer Mensch unter einer Linie - der Himmel; heute zuerst 'Tag'."
+  },
+  {
+    "id": "hsk1-tingjian",
+    "hanzi": "听见",
+    "pinyin": "tīng jiàn",
+    "syllables": [
+      {
+        "plain": "ting",
+        "marked": "tīng",
+        "tone": 1
+      },
+      {
+        "plain": "jian",
+        "marked": "jiàn",
+        "tone": 4
+      }
+    ],
+    "meaning": "hören, etwas hören",
+    "characters": [
+      {
+        "char": "听",
+        "parts": [
+          {
+            "id": "mouth",
+            "hanzi": "口",
+            "position": "left"
+          },
+          {
+            "id": "axe",
+            "hanzi": "斤",
+            "position": "right"
+          }
+        ]
+      },
+      {
+        "char": "见",
+        "parts": [
+          {
+            "id": "see",
+            "hanzi": "见",
+            "position": "single"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-tingjian.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "verb"
+  },
+  {
+    "id": "hsk1-wai-outside",
+    "hanzi": "外",
+    "pinyin": "wài",
+    "syllables": [
+      {
+        "plain": "wai",
+        "marked": "wài",
+        "tone": 4
+      }
+    ],
+    "meaning": "außen, draußen; fremd",
+    "characters": [
+      {
+        "char": "外",
+        "parts": [
+          {
+            "id": "evening",
+            "hanzi": "夕",
+            "position": "left"
+          },
+          {
+            "id": "divination",
+            "hanzi": "卜",
+            "position": "right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-wai-outside.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-waibian",
+    "hanzi": "外边",
+    "pinyin": "wài bian",
+    "syllables": [
+      {
+        "plain": "wai",
+        "marked": "wài",
+        "tone": 4
+      },
+      {
+        "plain": "bian",
+        "marked": "bian",
+        "tone": 5
+      }
+    ],
+    "meaning": "draußen, außerhalb",
+    "characters": [
+      {
+        "char": "外",
+        "parts": [
+          {
+            "id": "evening",
+            "hanzi": "夕",
+            "position": "left"
+          },
+          {
+            "id": "divination",
+            "hanzi": "卜",
+            "position": "right"
+          }
+        ]
+      },
+      {
+        "char": "边",
+        "parts": [
+          {
+            "id": "li-strength",
+            "hanzi": "力",
+            "position": "top-left"
+          },
+          {
+            "id": "walk-rad",
+            "hanzi": "辶",
+            "position": "bottom-right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-waibian.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-wan-play",
+    "hanzi": "玩",
+    "pinyin": "wán",
+    "syllables": [
+      {
+        "plain": "wan",
+        "marked": "wán",
+        "tone": 2
+      }
+    ],
+    "meaning": "spielen, sich amüsieren",
+    "characters": [
+      {
+        "char": "玩",
+        "parts": [
+          {
+            "id": "king",
+            "hanzi": "王",
+            "position": "left"
+          },
+          {
+            "id": "yuan-origin",
+            "hanzi": "元",
+            "position": "right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-wan-play.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "verb"
+  },
+  {
+    "id": "hsk1-wan-evening",
+    "hanzi": "晚",
+    "pinyin": "wǎn",
+    "syllables": [
+      {
+        "plain": "wan",
+        "marked": "wǎn",
+        "tone": 3
+      }
+    ],
+    "meaning": "spät, Abend; Abend (adjektivisch)",
+    "characters": [
+      {
+        "char": "晚",
+        "parts": [
+          {
+            "id": "sun",
+            "hanzi": "日",
+            "position": "left"
+          },
+          {
+            "id": "mian-exempt",
+            "hanzi": "免",
+            "position": "right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-wan-evening.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "adjektiv",
+    "notes": "日 über 免: die Sonne geht unter, es ist Abend."
+  },
+  {
+    "id": "hsk1-wanfan",
+    "hanzi": "晚饭",
+    "pinyin": "wǎn fàn",
+    "syllables": [
+      {
+        "plain": "wan",
+        "marked": "wǎn",
+        "tone": 3
+      },
+      {
+        "plain": "fan",
+        "marked": "fàn",
+        "tone": 4
+      }
+    ],
+    "meaning": "Abendessen",
+    "characters": [
+      {
+        "char": "晚",
+        "parts": [
+          {
+            "id": "sun",
+            "hanzi": "日",
+            "position": "left"
+          },
+          {
+            "id": "mian-exempt",
+            "hanzi": "免",
+            "position": "right"
+          }
+        ]
+      },
+      {
+        "char": "饭",
+        "parts": [
+          {
+            "id": "food",
+            "hanzi": "饣",
+            "position": "left"
+          },
+          {
+            "id": "oppose",
+            "hanzi": "反",
+            "position": "right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-wanfan.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-wanshang",
+    "hanzi": "晚上",
+    "pinyin": "wǎn shang",
+    "syllables": [
+      {
+        "plain": "wan",
+        "marked": "wǎn",
+        "tone": 3
+      },
+      {
+        "plain": "shang",
+        "marked": "shang",
+        "tone": 5
+      }
+    ],
+    "meaning": "Abend, abends, nachts",
+    "characters": [
+      {
+        "char": "晚",
+        "parts": [
+          {
+            "id": "sun",
+            "hanzi": "日",
+            "position": "left"
+          },
+          {
+            "id": "mian-exempt",
+            "hanzi": "免",
+            "position": "right"
+          }
+        ]
+      },
+      {
+        "char": "上",
+        "parts": [
+          {
+            "id": "one",
+            "hanzi": "一",
+            "position": "bottom"
+          },
+          {
+            "id": "line",
+            "hanzi": "丨",
+            "position": "top"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-wanshang.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-wen-ask",
+    "hanzi": "问",
+    "pinyin": "wèn",
+    "syllables": [
+      {
+        "plain": "wen",
+        "marked": "wèn",
+        "tone": 4
+      }
+    ],
+    "meaning": "fragen",
+    "characters": [
+      {
+        "char": "问",
+        "parts": [
+          {
+            "id": "gate",
+            "hanzi": "门",
+            "position": "enclosure"
+          },
+          {
+            "id": "mouth",
+            "hanzi": "口",
+            "position": "inside"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-wen-ask.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "verb",
+    "notes": "Tür 门 und Mund 口: die Frage, die durch die Tür gerufen wird."
+  },
+  {
+    "id": "hsk1-wenti",
+    "hanzi": "问题",
+    "pinyin": "wèn tí",
+    "syllables": [
+      {
+        "plain": "wen",
+        "marked": "wèn",
+        "tone": 4
+      },
+      {
+        "plain": "ti",
+        "marked": "tí",
+        "tone": 2
+      }
+    ],
+    "meaning": "Frage, Problem, Angelegenheit",
+    "characters": [
+      {
+        "char": "问",
+        "parts": [
+          {
+            "id": "gate",
+            "hanzi": "门",
+            "position": "enclosure"
+          },
+          {
+            "id": "mouth",
+            "hanzi": "口",
+            "position": "inside"
+          }
+        ]
+      },
+      {
+        "char": "题",
+        "parts": [
+          {
+            "id": "be",
+            "hanzi": "是",
+            "position": "left"
+          },
+          {
+            "id": "head-rad",
+            "hanzi": "页",
+            "position": "right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-wenti.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-wufan",
+    "hanzi": "午饭",
+    "pinyin": "wǔ fàn",
+    "syllables": [
+      {
+        "plain": "wu",
+        "marked": "wǔ",
+        "tone": 3
+      },
+      {
+        "plain": "fan",
+        "marked": "fàn",
+        "tone": 4
+      }
+    ],
+    "meaning": "Mittagessen",
+    "characters": [
+      {
+        "char": "午",
+        "parts": [
+          {
+            "id": "noon",
+            "hanzi": "午",
+            "position": "single"
+          }
+        ]
+      },
+      {
+        "char": "饭",
+        "parts": [
+          {
+            "id": "food",
+            "hanzi": "饣",
+            "position": "left"
+          },
+          {
+            "id": "oppose",
+            "hanzi": "反",
+            "position": "right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-wufan.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-xiaban",
+    "hanzi": "下班",
+    "pinyin": "xià bān",
+    "syllables": [
+      {
+        "plain": "xia",
+        "marked": "xià",
+        "tone": 4
+      },
+      {
+        "plain": "ban",
+        "marked": "bān",
+        "tone": 1
+      }
+    ],
+    "meaning": "Feierabend, Arbeit beenden",
+    "characters": [
+      {
+        "char": "下",
+        "parts": [
+          {
+            "id": "one",
+            "hanzi": "一",
+            "position": "top"
+          },
+          {
+            "id": "divination",
+            "hanzi": "卜",
+            "position": "bottom"
+          }
+        ]
+      },
+      {
+        "char": "班",
+        "parts": [
+          {
+            "id": "king",
+            "hanzi": "王",
+            "position": "left"
+          },
+          {
+            "id": "knife",
+            "hanzi": "刂",
+            "position": "middle"
+          },
+          {
+            "id": "king",
+            "hanzi": "王",
+            "position": "right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-xiaban.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "verb"
+  },
+  {
+    "id": "hsk1-xiake",
+    "hanzi": "下课",
+    "pinyin": "xià kè",
+    "syllables": [
+      {
+        "plain": "xia",
+        "marked": "xià",
+        "tone": 4
+      },
+      {
+        "plain": "ke",
+        "marked": "kè",
+        "tone": 4
+      }
+    ],
+    "meaning": "Unterricht beenden, Unterricht vorbei",
+    "characters": [
+      {
+        "char": "下",
+        "parts": [
+          {
+            "id": "one",
+            "hanzi": "一",
+            "position": "top"
+          },
+          {
+            "id": "divination",
+            "hanzi": "卜",
+            "position": "bottom"
+          }
+        ]
+      },
+      {
+        "char": "课",
+        "parts": [
+          {
+            "id": "speech",
+            "hanzi": "讠",
+            "position": "left"
+          },
+          {
+            "id": "guo-fruit",
+            "hanzi": "果",
+            "position": "right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-xiake.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "verb"
+  },
+  {
+    "id": "hsk1-xiaopengyou",
+    "hanzi": "小朋友",
+    "pinyin": "xiǎo péng yǒu",
+    "syllables": [
+      {
+        "plain": "xiao",
+        "marked": "xiǎo",
+        "tone": 3
+      },
+      {
+        "plain": "peng",
+        "marked": "péng",
+        "tone": 2
+      },
+      {
+        "plain": "you",
+        "marked": "yǒu",
+        "tone": 3
+      }
+    ],
+    "meaning": "Kind, kleines Kind (Anrede)",
+    "characters": [
+      {
+        "char": "小",
+        "parts": [
+          {
+            "id": "small",
+            "hanzi": "小",
+            "position": "single"
+          }
+        ]
+      },
+      {
+        "char": "朋",
+        "parts": [
+          {
+            "id": "moon",
+            "hanzi": "月",
+            "position": "left"
+          },
+          {
+            "id": "moon",
+            "hanzi": "月",
+            "position": "right"
+          }
+        ]
+      },
+      {
+        "char": "友",
+        "parts": [
+          {
+            "id": "left-hand",
+            "hanzi": "𠂇",
+            "position": "top-left"
+          },
+          {
+            "id": "right-hand",
+            "hanzi": "又",
+            "position": "bottom-right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-xiaopengyou.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-xiaoshi",
+    "hanzi": "小时",
+    "pinyin": "xiǎo shí",
+    "syllables": [
+      {
+        "plain": "xiao",
+        "marked": "xiǎo",
+        "tone": 3
+      },
+      {
+        "plain": "shi",
+        "marked": "shí",
+        "tone": 2
+      }
+    ],
+    "meaning": "Stunde",
+    "characters": [
+      {
+        "char": "小",
+        "parts": [
+          {
+            "id": "small",
+            "hanzi": "小",
+            "position": "single"
+          }
+        ]
+      },
+      {
+        "char": "时",
+        "parts": [
+          {
+            "id": "sun",
+            "hanzi": "日",
+            "position": "left"
+          },
+          {
+            "id": "inch",
+            "hanzi": "寸",
+            "position": "right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-xiaoshi.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-xiaoxue",
+    "hanzi": "小学",
+    "pinyin": "xiǎo xué",
+    "syllables": [
+      {
+        "plain": "xiao",
+        "marked": "xiǎo",
+        "tone": 3
+      },
+      {
+        "plain": "xue",
+        "marked": "xué",
+        "tone": 2
+      }
+    ],
+    "meaning": "Grundschule",
+    "characters": [
+      {
+        "char": "小",
+        "parts": [
+          {
+            "id": "small",
+            "hanzi": "小",
+            "position": "single"
+          }
+        ]
+      },
+      {
+        "char": "学",
+        "parts": [
+          {
+            "id": "learn-top",
+            "hanzi": "⺍",
+            "position": "top"
+          },
+          {
+            "id": "cover",
+            "hanzi": "冖",
+            "position": "middle"
+          },
+          {
+            "id": "child",
+            "hanzi": "子",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-xiaoxue.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-xiaoxuesheng",
+    "hanzi": "小学生",
+    "pinyin": "xiǎo xué shēng",
+    "syllables": [
+      {
+        "plain": "xiao",
+        "marked": "xiǎo",
+        "tone": 3
+      },
+      {
+        "plain": "xue",
+        "marked": "xué",
+        "tone": 2
+      },
+      {
+        "plain": "sheng",
+        "marked": "shēng",
+        "tone": 1
+      }
+    ],
+    "meaning": "Grundschüler",
+    "characters": [
+      {
+        "char": "小",
+        "parts": [
+          {
+            "id": "small",
+            "hanzi": "小",
+            "position": "single"
+          }
+        ]
+      },
+      {
+        "char": "学",
+        "parts": [
+          {
+            "id": "learn-top",
+            "hanzi": "⺍",
+            "position": "top"
+          },
+          {
+            "id": "cover",
+            "hanzi": "冖",
+            "position": "middle"
+          },
+          {
+            "id": "child",
+            "hanzi": "子",
+            "position": "bottom"
+          }
+        ]
+      },
+      {
+        "char": "生",
+        "parts": [
+          {
+            "id": "born",
+            "hanzi": "生",
+            "position": "single"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-xiaoxuesheng.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-xin",
+    "hanzi": "新",
+    "pinyin": "xīn",
+    "syllables": [
+      {
+        "plain": "xin",
+        "marked": "xīn",
+        "tone": 1
+      }
+    ],
+    "meaning": "neu, frisch",
+    "characters": [
+      {
+        "char": "新",
+        "parts": [
+          {
+            "id": "qin-parent",
+            "hanzi": "亲",
+            "position": "left"
+          },
+          {
+            "id": "axe",
+            "hanzi": "斤",
+            "position": "right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-xin.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "adjektiv",
+    "notes": "亲 (Eltern) + 斤 (Axt): mit der Axt frisches Holz schlagen."
+  },
+  {
+    "id": "hsk1-xingqiri",
+    "hanzi": "星期日",
+    "pinyin": "xīng qī rì",
+    "syllables": [
+      {
+        "plain": "xing",
+        "marked": "xīng",
+        "tone": 1
+      },
+      {
+        "plain": "qi",
+        "marked": "qī",
+        "tone": 1
+      },
+      {
+        "plain": "ri",
+        "marked": "rì",
+        "tone": 4
+      }
+    ],
+    "meaning": "Sonntag",
+    "characters": [
+      {
+        "char": "星",
+        "parts": [
+          {
+            "id": "sun",
+            "hanzi": "日",
+            "position": "top"
+          },
+          {
+            "id": "born",
+            "hanzi": "生",
+            "position": "bottom"
+          }
+        ]
+      },
+      {
+        "char": "期",
+        "parts": [
+          {
+            "id": "its",
+            "hanzi": "其",
+            "position": "left"
+          },
+          {
+            "id": "moon",
+            "hanzi": "月",
+            "position": "right"
+          }
+        ]
+      },
+      {
+        "char": "日",
+        "parts": [
+          {
+            "id": "sun",
+            "hanzi": "日",
+            "position": "single"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-xingqiri.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-xingqitian",
+    "hanzi": "星期天",
+    "pinyin": "xīng qī tiān",
+    "syllables": [
+      {
+        "plain": "xing",
+        "marked": "xīng",
+        "tone": 1
+      },
+      {
+        "plain": "qi",
+        "marked": "qī",
+        "tone": 1
+      },
+      {
+        "plain": "tian",
+        "marked": "tiān",
+        "tone": 1
+      }
+    ],
+    "meaning": "Sonntag",
+    "characters": [
+      {
+        "char": "星",
+        "parts": [
+          {
+            "id": "sun",
+            "hanzi": "日",
+            "position": "top"
+          },
+          {
+            "id": "born",
+            "hanzi": "生",
+            "position": "bottom"
+          }
+        ]
+      },
+      {
+        "char": "期",
+        "parts": [
+          {
+            "id": "its",
+            "hanzi": "其",
+            "position": "left"
+          },
+          {
+            "id": "moon",
+            "hanzi": "月",
+            "position": "right"
+          }
+        ]
+      },
+      {
+        "char": "天",
+        "parts": [
+          {
+            "id": "one",
+            "hanzi": "一",
+            "position": "top"
+          },
+          {
+            "id": "big",
+            "hanzi": "大",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-xingqitian.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-xiuxi",
+    "hanzi": "休息",
+    "pinyin": "xiū xi",
+    "syllables": [
+      {
+        "plain": "xiu",
+        "marked": "xiū",
+        "tone": 1
+      },
+      {
+        "plain": "xi",
+        "marked": "xi",
+        "tone": 5
+      }
+    ],
+    "meaning": "ruhen, sich ausruhen, Pause",
+    "characters": [
+      {
+        "char": "休",
+        "parts": [
+          {
+            "id": "person",
+            "hanzi": "亻",
+            "position": "left"
+          },
+          {
+            "id": "tree",
+            "hanzi": "木",
+            "position": "right"
+          }
+        ]
+      },
+      {
+        "char": "息",
+        "parts": [
+          {
+            "id": "zi-self",
+            "hanzi": "自",
+            "position": "top"
+          },
+          {
+            "id": "heart",
+            "hanzi": "心",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-xiuxi.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "verb"
+  },
+  {
+    "id": "hsk1-xue-learn",
+    "hanzi": "学",
+    "pinyin": "xué",
+    "syllables": [
+      {
+        "plain": "xue",
+        "marked": "xué",
+        "tone": 2
+      }
+    ],
+    "meaning": "lernen, studieren",
+    "characters": [
+      {
+        "char": "学",
+        "parts": [
+          {
+            "id": "learn-top",
+            "hanzi": "⺍",
+            "position": "top"
+          },
+          {
+            "id": "cover",
+            "hanzi": "冖",
+            "position": "middle"
+          },
+          {
+            "id": "child",
+            "hanzi": "子",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-xue-learn.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "verb",
+    "notes": "In der Grundschrift ein mit Seilen geflochtenes Muster; heute 'lernen'."
+  },
+  {
+    "id": "hsk1-xue-snow",
+    "hanzi": "雪",
+    "pinyin": "xuě",
+    "syllables": [
+      {
+        "plain": "xue",
+        "marked": "xuě",
+        "tone": 3
+      }
+    ],
+    "meaning": "Schnee",
+    "characters": [
+      {
+        "char": "雪",
+        "parts": [
+          {
+            "id": "rain",
+            "hanzi": "雨",
+            "position": "top"
+          },
+          {
+            "id": "ji-snout",
+            "hanzi": "彐",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-xue-snow.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen",
+    "notes": "Das gekürzte 雨 über 彐: kleine Flocken."
+  },
+  {
+    "id": "hsk1-yao-want",
+    "hanzi": "要",
+    "pinyin": "yào",
+    "syllables": [
+      {
+        "plain": "yao",
+        "marked": "yào",
+        "tone": 4
+      }
+    ],
+    "meaning": "wollen, brauchen, verlangen; müssen, werden",
+    "characters": [
+      {
+        "char": "要",
+        "parts": [
+          {
+            "id": "xi-top",
+            "hanzi": "覀",
+            "position": "top"
+          },
+          {
+            "id": "woman",
+            "hanzi": "女",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-yao-want.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "verb",
+    "notes": "Zweite Lesart: 要 (yāo) als Reduction von 腰 'Gürtel'."
+  },
+  {
+    "id": "hsk1-ye-also",
+    "hanzi": "也",
+    "pinyin": "yě",
+    "syllables": [
+      {
+        "plain": "ye",
+        "marked": "yě",
+        "tone": 3
+      }
+    ],
+    "meaning": "auch",
+    "characters": [
+      {
+        "char": "也",
+        "parts": [
+          {
+            "id": "also",
+            "hanzi": "也",
+            "position": "single"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-ye-also.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "adverb",
+    "notes": "Reines Adverb 'auch'; in der Negation bleibt es unübersetzt und unbetont (不也 → bù yě, kein Tonwechsel auf 也)."
+  },
+  {
+    "id": "hsk1-yiban",
+    "hanzi": "一半",
+    "pinyin": "yí bàn",
+    "syllables": [
+      {
+        "plain": "yi",
+        "marked": "yí",
+        "tone": 2
+      },
+      {
+        "plain": "ban",
+        "marked": "bàn",
+        "tone": 4
+      }
+    ],
+    "meaning": "die Hälfte",
+    "characters": [
+      {
+        "char": "一",
+        "parts": [
+          {
+            "id": "one",
+            "hanzi": "一",
+            "position": "single"
+          }
+        ]
+      },
+      {
+        "char": "半",
+        "parts": [
+          {
+            "id": "eight-horns",
+            "hanzi": "丷",
+            "position": "top"
+          },
+          {
+            "id": "one",
+            "hanzi": "一",
+            "position": "middle"
+          },
+          {
+            "id": "line",
+            "hanzi": "丨",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-yiban.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "zahl"
+  },
+  {
+    "id": "hsk1-yixia",
+    "hanzi": "一下",
+    "pinyin": "yí xià",
+    "syllables": [
+      {
+        "plain": "yi",
+        "marked": "yí",
+        "tone": 2
+      },
+      {
+        "plain": "xia",
+        "marked": "xià",
+        "tone": 4
+      }
+    ],
+    "meaning": "ein wenig, ein bisschen; einmal",
+    "characters": [
+      {
+        "char": "一",
+        "parts": [
+          {
+            "id": "one",
+            "hanzi": "一",
+            "position": "single"
+          }
+        ]
+      },
+      {
+        "char": "下",
+        "parts": [
+          {
+            "id": "one",
+            "hanzi": "一",
+            "position": "top"
+          },
+          {
+            "id": "divination",
+            "hanzi": "卜",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-yixia.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "adverb"
+  },
+  {
+    "id": "hsk1-yidianer",
+    "hanzi": "一点儿",
+    "pinyin": "yì diǎn ér",
+    "syllables": [
+      {
+        "plain": "yi",
+        "marked": "yì",
+        "tone": 4
+      },
+      {
+        "plain": "dian",
+        "marked": "diǎn",
+        "tone": 3
+      },
+      {
+        "plain": "er",
+        "marked": "ér",
+        "tone": 2
+      }
+    ],
+    "meaning": "ein wenig, ein bisschen",
+    "characters": [
+      {
+        "char": "一",
+        "parts": [
+          {
+            "id": "one",
+            "hanzi": "一",
+            "position": "single"
+          }
+        ]
+      },
+      {
+        "char": "点",
+        "parts": [
+          {
+            "id": "divination",
+            "hanzi": "卜",
+            "position": "top"
+          },
+          {
+            "id": "mouth",
+            "hanzi": "口",
+            "position": "middle"
+          },
+          {
+            "id": "fire",
+            "hanzi": "灬",
+            "position": "bottom"
+          }
+        ]
+      },
+      {
+        "char": "儿",
+        "parts": [
+          {
+            "id": "legs",
+            "hanzi": "儿",
+            "position": "single"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-yidianer.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "adverb"
+  },
+  {
+    "id": "hsk1-yixie",
+    "hanzi": "一些",
+    "pinyin": "yì xiē",
+    "syllables": [
+      {
+        "plain": "yi",
+        "marked": "yì",
+        "tone": 4
+      },
+      {
+        "plain": "xie",
+        "marked": "xiē",
+        "tone": 1
+      }
+    ],
+    "meaning": "ein paar, einige",
+    "characters": [
+      {
+        "char": "一",
+        "parts": [
+          {
+            "id": "one",
+            "hanzi": "一",
+            "position": "single"
+          }
+        ]
+      },
+      {
+        "char": "些",
+        "parts": [
+          {
+            "id": "stop",
+            "hanzi": "止",
+            "position": "top-left"
+          },
+          {
+            "id": "dagger",
+            "hanzi": "匕",
+            "position": "top-right"
+          },
+          {
+            "id": "two",
+            "hanzi": "二",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-yixie.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "pronomen"
+  },
+  {
+    "id": "hsk1-youde",
+    "hanzi": "有的",
+    "pinyin": "yǒu de",
+    "syllables": [
+      {
+        "plain": "you",
+        "marked": "yǒu",
+        "tone": 3
+      },
+      {
+        "plain": "de",
+        "marked": "de",
+        "tone": 5
+      }
+    ],
+    "meaning": "manche, einige (von vielen)",
+    "characters": [
+      {
+        "char": "有",
+        "parts": [
+          {
+            "id": "left-hand",
+            "hanzi": "𠂇",
+            "position": "top-left"
+          },
+          {
+            "id": "moon",
+            "hanzi": "月",
+            "position": "bottom-right"
+          }
+        ]
+      },
+      {
+        "char": "的",
+        "parts": [
+          {
+            "id": "white",
+            "hanzi": "白",
+            "position": "left"
+          },
+          {
+            "id": "ladle",
+            "hanzi": "勺",
+            "position": "right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-youde.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "pronomen"
+  },
+  {
+    "id": "hsk1-youdianer",
+    "hanzi": "有点儿",
+    "pinyin": "yǒu diǎn ér",
+    "syllables": [
+      {
+        "plain": "you",
+        "marked": "yǒu",
+        "tone": 3
+      },
+      {
+        "plain": "dian",
+        "marked": "diǎn",
+        "tone": 3
+      },
+      {
+        "plain": "er",
+        "marked": "ér",
+        "tone": 2
+      }
+    ],
+    "meaning": "ein wenig, etwas, ein bisschen",
+    "characters": [
+      {
+        "char": "有",
+        "parts": [
+          {
+            "id": "left-hand",
+            "hanzi": "𠂇",
+            "position": "top-left"
+          },
+          {
+            "id": "moon",
+            "hanzi": "月",
+            "position": "bottom-right"
+          }
+        ]
+      },
+      {
+        "char": "点",
+        "parts": [
+          {
+            "id": "divination",
+            "hanzi": "卜",
+            "position": "top"
+          },
+          {
+            "id": "mouth",
+            "hanzi": "口",
+            "position": "middle"
+          },
+          {
+            "id": "fire",
+            "hanzi": "灬",
+            "position": "bottom"
+          }
+        ]
+      },
+      {
+        "char": "儿",
+        "parts": [
+          {
+            "id": "legs",
+            "hanzi": "儿",
+            "position": "single"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-youdianer.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "adverb"
+  },
+  {
+    "id": "hsk1-youxie",
+    "hanzi": "有些",
+    "pinyin": "yǒu xiē",
+    "syllables": [
+      {
+        "plain": "you",
+        "marked": "yǒu",
+        "tone": 3
+      },
+      {
+        "plain": "xie",
+        "marked": "xiē",
+        "tone": 1
+      }
+    ],
+    "meaning": "manche, einige",
+    "characters": [
+      {
+        "char": "有",
+        "parts": [
+          {
+            "id": "left-hand",
+            "hanzi": "𠂇",
+            "position": "top-left"
+          },
+          {
+            "id": "moon",
+            "hanzi": "月",
+            "position": "bottom-right"
+          }
+        ]
+      },
+      {
+        "char": "些",
+        "parts": [
+          {
+            "id": "stop",
+            "hanzi": "止",
+            "position": "top-left"
+          },
+          {
+            "id": "dagger",
+            "hanzi": "匕",
+            "position": "top-right"
+          },
+          {
+            "id": "two",
+            "hanzi": "二",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-youxie.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "pronomen"
+  },
+  {
+    "id": "hsk1-yu",
+    "hanzi": "雨",
+    "pinyin": "yǔ",
+    "syllables": [
+      {
+        "plain": "yu",
+        "marked": "yǔ",
+        "tone": 3
+      }
+    ],
+    "meaning": "Regen",
+    "characters": [
+      {
+        "char": "雨",
+        "parts": [
+          {
+            "id": "rain",
+            "hanzi": "雨",
+            "position": "single"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-yu.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-yuan",
+    "hanzi": "元",
+    "pinyin": "yuán",
+    "syllables": [
+      {
+        "plain": "yuan",
+        "marked": "yuán",
+        "tone": 2
+      }
+    ],
+    "meaning": "Yuan (chinesische Währungseinheit)",
+    "characters": [
+      {
+        "char": "元",
+        "parts": [
+          {
+            "id": "two",
+            "hanzi": "二",
+            "position": "top"
+          },
+          {
+            "id": "legs",
+            "hanzi": "儿",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-yuan.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "zahl",
+    "notes": "Ursprünglich Kopf und Beine; heute Währungseinheit."
+  },
+  {
+    "id": "hsk1-zai-again",
+    "hanzi": "再",
+    "pinyin": "zài",
+    "syllables": [
+      {
+        "plain": "zai",
+        "marked": "zài",
+        "tone": 4
+      }
+    ],
+    "meaning": "wieder, noch einmal, erneut",
+    "characters": [
+      {
+        "char": "再",
+        "parts": [
+          {
+            "id": "one",
+            "hanzi": "一",
+            "position": "top"
+          },
+          {
+            "id": "frame",
+            "hanzi": "冂",
+            "position": "enclosure"
+          },
+          {
+            "id": "earth",
+            "hanzi": "土",
+            "position": "inside"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-zai-again.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "adverb"
+  },
+  {
+    "id": "hsk1-zao-early",
+    "hanzi": "早",
+    "pinyin": "zǎo",
+    "syllables": [
+      {
+        "plain": "zao",
+        "marked": "zǎo",
+        "tone": 3
+      }
+    ],
+    "meaning": "früh, früh am Morgen; Guten Morgen",
+    "characters": [
+      {
+        "char": "早",
+        "parts": [
+          {
+            "id": "sun",
+            "hanzi": "日",
+            "position": "top"
+          },
+          {
+            "id": "ten",
+            "hanzi": "十",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-zao-early.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "adjektiv",
+    "notes": "Die Sonne 日 über einem Strich: der erste Sonnenstrahl des Tages."
+  },
+  {
+    "id": "hsk1-zaofan",
+    "hanzi": "早饭",
+    "pinyin": "zǎo fàn",
+    "syllables": [
+      {
+        "plain": "zao",
+        "marked": "zǎo",
+        "tone": 3
+      },
+      {
+        "plain": "fan",
+        "marked": "fàn",
+        "tone": 4
+      }
+    ],
+    "meaning": "Frühstück",
+    "characters": [
+      {
+        "char": "早",
+        "parts": [
+          {
+            "id": "sun",
+            "hanzi": "日",
+            "position": "top"
+          },
+          {
+            "id": "ten",
+            "hanzi": "十",
+            "position": "bottom"
+          }
+        ]
+      },
+      {
+        "char": "饭",
+        "parts": [
+          {
+            "id": "food",
+            "hanzi": "饣",
+            "position": "left"
+          },
+          {
+            "id": "oppose",
+            "hanzi": "反",
+            "position": "right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-zaofan.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-zaoshang",
+    "hanzi": "早上",
+    "pinyin": "zǎo shang",
+    "syllables": [
+      {
+        "plain": "zao",
+        "marked": "zǎo",
+        "tone": 3
+      },
+      {
+        "plain": "shang",
+        "marked": "shang",
+        "tone": 5
+      }
+    ],
+    "meaning": "früh am Morgen, Morgen",
+    "characters": [
+      {
+        "char": "早",
+        "parts": [
+          {
+            "id": "sun",
+            "hanzi": "日",
+            "position": "top"
+          },
+          {
+            "id": "ten",
+            "hanzi": "十",
+            "position": "bottom"
+          }
+        ]
+      },
+      {
+        "char": "上",
+        "parts": [
+          {
+            "id": "one",
+            "hanzi": "一",
+            "position": "bottom"
+          },
+          {
+            "id": "line",
+            "hanzi": "丨",
+            "position": "top"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-zaoshang.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-zhao-look-for",
+    "hanzi": "找",
+    "pinyin": "zhǎo",
+    "syllables": [
+      {
+        "plain": "zhao",
+        "marked": "zhǎo",
+        "tone": 3
+      }
+    ],
+    "meaning": "suchen, finden; Geld wechseln",
+    "characters": [
+      {
+        "char": "找",
+        "parts": [
+          {
+            "id": "hand",
+            "hanzi": "扌",
+            "position": "left"
+          },
+          {
+            "id": "halberd",
+            "hanzi": "戈",
+            "position": "right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-zhao-look-for.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "verb",
+    "notes": "Ursprünglich mit der Hand (扌) nach etwas greifen - daher 'suchen'."
+  },
+  {
+    "id": "hsk1-zhebian",
+    "hanzi": "这边",
+    "pinyin": "zhè biān",
+    "syllables": [
+      {
+        "plain": "zhe",
+        "marked": "zhè",
+        "tone": 4
+      },
+      {
+        "plain": "bian",
+        "marked": "biān",
+        "tone": 1
+      }
+    ],
+    "meaning": "hier, auf dieser Seite",
+    "characters": [
+      {
+        "char": "这",
+        "parts": [
+          {
+            "id": "script",
+            "hanzi": "文",
+            "position": "inside"
+          },
+          {
+            "id": "walk-rad",
+            "hanzi": "辶",
+            "position": "enclosure"
+          }
+        ]
+      },
+      {
+        "char": "边",
+        "parts": [
+          {
+            "id": "li-strength",
+            "hanzi": "力",
+            "position": "top-left"
+          },
+          {
+            "id": "walk-rad",
+            "hanzi": "辶",
+            "position": "bottom-right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-zhebian.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "pronomen"
+  },
+  {
+    "id": "hsk1-zhege",
+    "hanzi": "这个",
+    "pinyin": "zhè ge",
+    "syllables": [
+      {
+        "plain": "zhe",
+        "marked": "zhè",
+        "tone": 4
+      },
+      {
+        "plain": "ge",
+        "marked": "ge",
+        "tone": 5
+      }
+    ],
+    "meaning": "dieses (Ding hier)",
+    "characters": [
+      {
+        "char": "这",
+        "parts": [
+          {
+            "id": "script",
+            "hanzi": "文",
+            "position": "inside"
+          },
+          {
+            "id": "walk-rad",
+            "hanzi": "辶",
+            "position": "enclosure"
+          }
+        ]
+      },
+      {
+        "char": "个",
+        "parts": [
+          {
+            "id": "person",
+            "hanzi": "人",
+            "position": "top"
+          },
+          {
+            "id": "line",
+            "hanzi": "丨",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-zhege.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "pronomen"
+  },
+  {
+    "id": "hsk1-zheli",
+    "hanzi": "这里",
+    "pinyin": "zhè lǐ",
+    "syllables": [
+      {
+        "plain": "zhe",
+        "marked": "zhè",
+        "tone": 4
+      },
+      {
+        "plain": "li",
+        "marked": "lǐ",
+        "tone": 3
+      }
+    ],
+    "meaning": "hier (mit räumlichem Bezug auf Orte)",
+    "characters": [
+      {
+        "char": "这",
+        "parts": [
+          {
+            "id": "script",
+            "hanzi": "文",
+            "position": "inside"
+          },
+          {
+            "id": "walk-rad",
+            "hanzi": "辶",
+            "position": "enclosure"
+          }
+        ]
+      },
+      {
+        "char": "里",
+        "parts": [
+          {
+            "id": "field",
+            "hanzi": "田",
+            "position": "top"
+          },
+          {
+            "id": "earth",
+            "hanzi": "土",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-zheli.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "pronomen"
+  },
+  {
+    "id": "hsk1-zhexie",
+    "hanzi": "这些",
+    "pinyin": "zhè xiē",
+    "syllables": [
+      {
+        "plain": "zhe",
+        "marked": "zhè",
+        "tone": 4
+      },
+      {
+        "plain": "xie",
+        "marked": "xiē",
+        "tone": 1
+      }
+    ],
+    "meaning": "diese hier (Plural)",
+    "characters": [
+      {
+        "char": "这",
+        "parts": [
+          {
+            "id": "script",
+            "hanzi": "文",
+            "position": "inside"
+          },
+          {
+            "id": "walk-rad",
+            "hanzi": "辶",
+            "position": "enclosure"
+          }
+        ]
+      },
+      {
+        "char": "些",
+        "parts": [
+          {
+            "id": "stop",
+            "hanzi": "止",
+            "position": "top-left"
+          },
+          {
+            "id": "dagger",
+            "hanzi": "匕",
+            "position": "top-right"
+          },
+          {
+            "id": "two",
+            "hanzi": "二",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-zhexie.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "pronomen"
+  },
+  {
+    "id": "hsk1-zhen-really",
+    "hanzi": "真",
+    "pinyin": "zhēn",
+    "syllables": [
+      {
+        "plain": "zhen",
+        "marked": "zhēn",
+        "tone": 1
+      }
+    ],
+    "meaning": "wirklich, sehr, wahr",
+    "characters": [
+      {
+        "char": "真",
+        "parts": [
+          {
+            "id": "ten",
+            "hanzi": "十",
+            "position": "top"
+          },
+          {
+            "id": "eye",
+            "hanzi": "目",
+            "position": "middle"
+          },
+          {
+            "id": "one",
+            "hanzi": "一",
+            "position": "middle"
+          },
+          {
+            "id": "eight",
+            "hanzi": "八",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-zhen-really.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "adverb",
+    "notes": "Wie 真的 (zhēn de) wird auch 真 im Redefluss mit neutralem Auslaut gesprochen."
+  },
+  {
+    "id": "hsk1-zhengzai",
+    "hanzi": "正在",
+    "pinyin": "zhèng zài",
+    "syllables": [
+      {
+        "plain": "zheng",
+        "marked": "zhèng",
+        "tone": 4
+      },
+      {
+        "plain": "zai",
+        "marked": "zài",
+        "tone": 4
+      }
+    ],
+    "meaning": "gerade (während etwas geschieht)",
+    "characters": [
+      {
+        "char": "正",
+        "parts": [
+          {
+            "id": "one",
+            "hanzi": "一",
+            "position": "top"
+          },
+          {
+            "id": "stop",
+            "hanzi": "止",
+            "position": "bottom"
+          }
+        ]
+      },
+      {
+        "char": "在",
+        "parts": [
+          {
+            "id": "left-hand",
+            "hanzi": "𠂇",
+            "position": "top-left"
+          },
+          {
+            "id": "earth",
+            "hanzi": "土",
+            "position": "bottom-right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-zhengzai.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "adverb"
+  },
+  {
+    "id": "hsk1-zhi-only",
+    "hanzi": "只",
+    "pinyin": "zhī",
+    "syllables": [
+      {
+        "plain": "zhi",
+        "marked": "zhī",
+        "tone": 1
+      }
+    ],
+    "meaning": "Zählwort für manche Tiere; nur, bloß",
+    "characters": [
+      {
+        "char": "只",
+        "parts": [
+          {
+            "id": "mouth",
+            "hanzi": "口",
+            "position": "top"
+          },
+          {
+            "id": "eight",
+            "hanzi": "八",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-zhi-only.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "zahl",
+    "notes": "Reines Zählwort für bestimmte Tiere (一只猫); die umgangssprachliche Form mit Neutralton ist in der Prüfung nicht üblich."
+  },
+  {
+    "id": "hsk1-zhidao",
+    "hanzi": "知道",
+    "pinyin": "zhī dào",
+    "syllables": [
+      {
+        "plain": "zhi",
+        "marked": "zhī",
+        "tone": 1
+      },
+      {
+        "plain": "dao",
+        "marked": "dào",
+        "tone": 4
+      }
+    ],
+    "meaning": "wissen, kennen",
+    "characters": [
+      {
+        "char": "知",
+        "parts": [
+          {
+            "id": "arrow",
+            "hanzi": "矢",
+            "position": "left"
+          },
+          {
+            "id": "mouth",
+            "hanzi": "口",
+            "position": "right"
+          }
+        ]
+      },
+      {
+        "char": "道",
+        "parts": [
+          {
+            "id": "shou-head",
+            "hanzi": "首",
+            "position": "top"
+          },
+          {
+            "id": "walk-rad",
+            "hanzi": "辶",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-zhidao.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "verb"
+  },
+  {
+    "id": "hsk1-zhongwen",
+    "hanzi": "中文",
+    "pinyin": "zhōng wén",
+    "syllables": [
+      {
+        "plain": "zhong",
+        "marked": "zhōng",
+        "tone": 1
+      },
+      {
+        "plain": "wen",
+        "marked": "wén",
+        "tone": 2
+      }
+    ],
+    "meaning": "Chinesisch (auf Chinesisch)",
+    "characters": [
+      {
+        "char": "中",
+        "parts": [
+          {
+            "id": "mouth",
+            "hanzi": "口",
+            "position": "middle"
+          },
+          {
+            "id": "line",
+            "hanzi": "丨",
+            "position": "middle"
+          }
+        ]
+      },
+      {
+        "char": "文",
+        "parts": [
+          {
+            "id": "script",
+            "hanzi": "文",
+            "position": "single"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-zhongwen.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-zhongxue",
+    "hanzi": "中学",
+    "pinyin": "zhōng xué",
+    "syllables": [
+      {
+        "plain": "zhong",
+        "marked": "zhōng",
+        "tone": 1
+      },
+      {
+        "plain": "xue",
+        "marked": "xué",
+        "tone": 2
+      }
+    ],
+    "meaning": "Mittelschule, Gymnasium",
+    "characters": [
+      {
+        "char": "中",
+        "parts": [
+          {
+            "id": "mouth",
+            "hanzi": "口",
+            "position": "middle"
+          },
+          {
+            "id": "line",
+            "hanzi": "丨",
+            "position": "middle"
+          }
+        ]
+      },
+      {
+        "char": "学",
+        "parts": [
+          {
+            "id": "learn-top",
+            "hanzi": "⺍",
+            "position": "top"
+          },
+          {
+            "id": "cover",
+            "hanzi": "冖",
+            "position": "middle"
+          },
+          {
+            "id": "child",
+            "hanzi": "子",
+            "position": "bottom"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-zhongxue.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-zhongxuesheng",
+    "hanzi": "中学生",
+    "pinyin": "zhōng xué shēng",
+    "syllables": [
+      {
+        "plain": "zhong",
+        "marked": "zhōng",
+        "tone": 1
+      },
+      {
+        "plain": "xue",
+        "marked": "xué",
+        "tone": 2
+      },
+      {
+        "plain": "sheng",
+        "marked": "shēng",
+        "tone": 1
+      }
+    ],
+    "meaning": "Mittelschüler, Gymnasialschüler",
+    "characters": [
+      {
+        "char": "中",
+        "parts": [
+          {
+            "id": "mouth",
+            "hanzi": "口",
+            "position": "middle"
+          },
+          {
+            "id": "line",
+            "hanzi": "丨",
+            "position": "middle"
+          }
+        ]
+      },
+      {
+        "char": "学",
+        "parts": [
+          {
+            "id": "learn-top",
+            "hanzi": "⺍",
+            "position": "top"
+          },
+          {
+            "id": "cover",
+            "hanzi": "冖",
+            "position": "middle"
+          },
+          {
+            "id": "child",
+            "hanzi": "子",
+            "position": "bottom"
+          }
+        ]
+      },
+      {
+        "char": "生",
+        "parts": [
+          {
+            "id": "born",
+            "hanzi": "生",
+            "position": "single"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-zhongxuesheng.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "nomen"
+  },
+  {
+    "id": "hsk1-zuofan",
+    "hanzi": "做饭",
+    "pinyin": "zuò fàn",
+    "syllables": [
+      {
+        "plain": "zuo",
+        "marked": "zuò",
+        "tone": 4
+      },
+      {
+        "plain": "fan",
+        "marked": "fàn",
+        "tone": 4
+      }
+    ],
+    "meaning": "kochen, Essen zubereiten",
+    "characters": [
+      {
+        "char": "做",
+        "parts": [
+          {
+            "id": "person",
+            "hanzi": "亻",
+            "position": "left"
+          },
+          {
+            "id": "ten",
+            "hanzi": "十",
+            "position": "top"
+          },
+          {
+            "id": "mouth",
+            "hanzi": "口",
+            "position": "middle"
+          },
+          {
+            "id": "strike",
+            "hanzi": "攵",
+            "position": "right"
+          }
+        ]
+      },
+      {
+        "char": "饭",
+        "parts": [
+          {
+            "id": "food",
+            "hanzi": "饣",
+            "position": "left"
+          },
+          {
+            "id": "oppose",
+            "hanzi": "反",
+            "position": "right"
+          }
+        ]
+      }
+    ],
+    "audioPath": "/audio/hsk1/hsk1-zuofan.mp3",
+    "hskLevel": 1,
+    "partOfSpeech": "verb"
   }
 ]

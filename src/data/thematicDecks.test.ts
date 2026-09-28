@@ -17,15 +17,15 @@ describe('ThematicDecks – Struktur und HSK-1-Abdeckung', () => {
     }
   });
 
-  it('deckt alle 163 HSK-1-Vokabeln ohne Lücken oder Duplikate ab', () => {
+  it('deckt alle HSK-1-Vokabeln ohne Lücken oder Duplikate ab', () => {
     const allAssignedIds: string[] = [];
     for (const deck of THEMATIC_DECKS) {
       allAssignedIds.push(...deck.itemIds);
     }
 
-    expect(allAssignedIds).toHaveLength(163);
+    expect(allAssignedIds).toHaveLength(VOCAB.length);
     const uniqueIds = new Set(allAssignedIds);
-    expect(uniqueIds.size).toBe(163);
+    expect(uniqueIds.size).toBe(VOCAB.length);
 
     const vocabIds = new Set(VOCAB.map((v) => v.id));
     for (const id of allAssignedIds) {

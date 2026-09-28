@@ -965,7 +965,9 @@
   {
     "id": "silk",
     "hanzi": "幺",
-    "forms": [],
+    "forms": [
+      "纟"
+    ],
     "meaning": "Seidenfaden/winzig",
     "pinyin": "yāo",
     "strokes": 3
@@ -1116,6 +1118,335 @@
     "meaning": "hängen/herabhängen",
     "pinyin": "chuí",
     "strokes": 8
+  },
+  {
+    "id": "cong-from",
+    "hanzi": "从",
+    "forms": [],
+    "meaning": "von/aus/folgen",
+    "pinyin": "cóng",
+    "strokes": 4
+  },
+  {
+    "id": "geng-change",
+    "hanzi": "更",
+    "forms": [],
+    "meaning": "wechseln/mehr",
+    "pinyin": "gēng",
+    "strokes": 7
+  },
+  {
+    "id": "zhi-reach",
+    "hanzi": "至",
+    "forms": [],
+    "meaning": "bis/hin",
+    "pinyin": "zhì",
+    "strokes": 6
+  },
+  {
+    "id": "si-curl",
+    "hanzi": "巳",
+    "forms": [],
+    "meaning": "sich winden",
+    "pinyin": "sì",
+    "strokes": 3
+  },
+  {
+    "id": "pie-slash",
+    "hanzi": "丿",
+    "forms": [],
+    "meaning": "Strich links oben",
+    "pinyin": "piě",
+    "strokes": 1
+  },
+  {
+    "id": "gou-hook",
+    "hanzi": "亅",
+    "forms": [],
+    "meaning": "Hakenstrich",
+    "pinyin": "jué",
+    "strokes": 1
+  },
+  {
+    "id": "mai-buy",
+    "hanzi": "买",
+    "forms": [],
+    "meaning": "kaufen",
+    "pinyin": "mǎi",
+    "strokes": 6
+  },
+  {
+    "id": "ke-can",
+    "hanzi": "可",
+    "forms": [],
+    "meaning": "können/mögen",
+    "pinyin": "kě",
+    "strokes": 5
+  },
+  {
+    "id": "ge-brother",
+    "hanzi": "哥",
+    "forms": [],
+    "meaning": "älterer Bruder",
+    "pinyin": "gē",
+    "strokes": 10
+  },
+  {
+    "id": "nai-then",
+    "hanzi": "乃",
+    "forms": [],
+    "meaning": "dann/somit",
+    "pinyin": "nǎi",
+    "strokes": 2
+  },
+  {
+    "id": "wei-notyet",
+    "hanzi": "未",
+    "forms": [],
+    "meaning": "noch nicht",
+    "pinyin": "wèi",
+    "strokes": 5
+  },
+  {
+    "id": "hai-branch",
+    "hanzi": "亥",
+    "forms": [],
+    "meaning": "12. Erdzweig",
+    "pinyin": "hài",
+    "strokes": 6
+  },
+  {
+    "id": "bow",
+    "hanzi": "弓",
+    "forms": [],
+    "meaning": "Bogen",
+    "pinyin": "gōng",
+    "strokes": 3
+  },
+  {
+    "id": "wang-perish",
+    "hanzi": "亡",
+    "forms": [],
+    "meaning": "sterben/verlieren",
+    "pinyin": "wáng",
+    "strokes": 3
+  },
+  {
+    "id": "zi-self",
+    "hanzi": "自",
+    "forms": [],
+    "meaning": "selbst",
+    "pinyin": "zì",
+    "strokes": 6
+  },
+  {
+    "id": "hu-door",
+    "hanzi": "户",
+    "forms": [],
+    "meaning": "Tür/Haushalt",
+    "pinyin": "hù",
+    "strokes": 4
+  },
+  {
+    "id": "fang-square",
+    "hanzi": "方",
+    "forms": [],
+    "meaning": "Quadrat/Seite",
+    "pinyin": "fāng",
+    "strokes": 4
+  },
+  {
+    "id": "qin-parent",
+    "hanzi": "亲",
+    "forms": [],
+    "meaning": "Verwandter",
+    "pinyin": "qīn",
+    "strokes": 9
+  },
+  {
+    "id": "mian-exempt",
+    "hanzi": "免",
+    "forms": [],
+    "meaning": "befreien/erlassen",
+    "pinyin": "miǎn",
+    "strokes": 7
+  },
+  {
+    "id": "yuan-origin",
+    "hanzi": "元",
+    "forms": [],
+    "meaning": "Ursprung/Yuan",
+    "pinyin": "yuán",
+    "strokes": 4
+  },
+  {
+    "id": "li-strength",
+    "hanzi": "力",
+    "forms": [],
+    "meaning": "Kraft",
+    "pinyin": "lì",
+    "strokes": 2
+  },
+  {
+    "id": "sickness",
+    "hanzi": "疒",
+    "forms": [],
+    "meaning": "Krankheit",
+    "pinyin": "bìng",
+    "strokes": 5
+  },
+  {
+    "id": "bing-third",
+    "hanzi": "丙",
+    "forms": [],
+    "meaning": "3. Himmelsstamm",
+    "pinyin": "bǐng",
+    "strokes": 5
+  },
+  {
+    "id": "cave",
+    "hanzi": "穴",
+    "forms": [],
+    "meaning": "Höhle",
+    "pinyin": "xué",
+    "strokes": 5
+  },
+  {
+    "id": "tooth",
+    "hanzi": "牙",
+    "forms": [],
+    "meaning": "Zahn",
+    "pinyin": "yá",
+    "strokes": 4
+  },
+  {
+    "id": "bamboo",
+    "hanzi": "⺮",
+    "forms": [
+      "竹"
+    ],
+    "meaning": "Bambus",
+    "pinyin": "zhú",
+    "strokes": 6
+  },
+  {
+    "id": "he-combine",
+    "hanzi": "合",
+    "forms": [],
+    "meaning": "verbinden",
+    "pinyin": "hé",
+    "strokes": 6
+  },
+  {
+    "id": "zhi-foot",
+    "hanzi": "疋",
+    "forms": [],
+    "meaning": "Fuß",
+    "pinyin": "pǐ",
+    "strokes": 5
+  },
+  {
+    "id": "insect",
+    "hanzi": "虫",
+    "forms": [],
+    "meaning": "Insekt/Wurm",
+    "pinyin": "chóng",
+    "strokes": 6
+  },
+  {
+    "id": "guo-fruit",
+    "hanzi": "果",
+    "forms": [],
+    "meaning": "Frucht/Ergebnis",
+    "pinyin": "guǒ",
+    "strokes": 8
+  },
+  {
+    "id": "zhong-middle",
+    "hanzi": "中",
+    "forms": [],
+    "meaning": "Mitte",
+    "pinyin": "zhōng",
+    "strokes": 4
+  },
+  {
+    "id": "bei-shell",
+    "hanzi": "贝",
+    "forms": [],
+    "meaning": "Muschel/Geld",
+    "pinyin": "bèi",
+    "strokes": 4
+  },
+  {
+    "id": "zou-walk",
+    "hanzi": "走",
+    "forms": [],
+    "meaning": "gehen/ziehen",
+    "pinyin": "zǒu",
+    "strokes": 7
+  },
+  {
+    "id": "zhao-call",
+    "hanzi": "召",
+    "forms": [],
+    "meaning": "rufen",
+    "pinyin": "zhào",
+    "strokes": 5
+  },
+  {
+    "id": "shou-head",
+    "hanzi": "首",
+    "forms": [],
+    "meaning": "Kopf",
+    "pinyin": "shǒu",
+    "strokes": 9
+  },
+  {
+    "id": "ji-snout",
+    "hanzi": "彐",
+    "forms": [],
+    "meaning": "Rüssel",
+    "pinyin": "jì",
+    "strokes": 3
+  },
+  {
+    "id": "niao-bird",
+    "hanzi": "鸟",
+    "forms": [],
+    "meaning": "Vogel",
+    "pinyin": "niǎo",
+    "strokes": 5
+  },
+  {
+    "id": "si-admin",
+    "hanzi": "司",
+    "forms": [],
+    "meaning": "verwalten/zuständig",
+    "pinyin": "sī",
+    "strokes": 5
+  },
+  {
+    "id": "fei-not",
+    "hanzi": "非",
+    "forms": [],
+    "meaning": "nicht",
+    "pinyin": "fēi",
+    "strokes": 8
+  },
+  {
+    "id": "yi-use",
+    "hanzi": "以",
+    "forms": [],
+    "meaning": "mit/mit Hilfe von",
+    "pinyin": "yǐ",
+    "strokes": 4
+  },
+  {
+    "id": "xi-top",
+    "hanzi": "覀",
+    "forms": [],
+    "meaning": "westlicher Kopf",
+    "pinyin": "xī",
+    "strokes": 6
   }
 ]
-

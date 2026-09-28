@@ -8,7 +8,7 @@
     "subtitle": "Name, Herkunft, Alter und Studium",
     "hanziTag": "自",
     "difficulty": "HSK 1",
-    "wordCount": 42,
+    "wordCount": 86,
     "summary": "Li Yue stellt sich vor: Sie ist 20 Jahre alt, kommt aus China und studiert an der Universität.",
     "audioUrl": "/audio/stories/story-01-full.mp3",
     "sentences": [
@@ -157,6 +157,280 @@
             "german": "erfreut / glücklich"
           }
         ]
+      },
+      {
+        "id": "s01-05",
+        "hanzi": "我在大学学中文。",
+        "pinyin": "Wǒ zài dàxué xué Zhōngwén.",
+        "german": "Ich studiere an der Universität Chinesisch.",
+        "audioUrl": "/audio/stories/s01-05.mp3",
+        "tokens": [
+          {
+            "hanzi": "我",
+            "pinyin": "wǒ",
+            "german": "ich"
+          },
+          {
+            "hanzi": "在",
+            "pinyin": "zài",
+            "german": "in / an"
+          },
+          {
+            "hanzi": "大学",
+            "pinyin": "dàxué",
+            "german": "Universität"
+          },
+          {
+            "hanzi": "学",
+            "pinyin": "xué",
+            "german": "lernen"
+          },
+          {
+            "hanzi": "中文",
+            "pinyin": "Zhōngwén",
+            "german": "Chinesisch"
+          }
+        ]
+      },
+      {
+        "id": "s01-06",
+        "hanzi": "我哥哥在中学当老师，我姐姐在小学。",
+        "pinyin": "Wǒ gēge zài zhōngxué dāng lǎoshī, wǒ jiějie zài xiǎoxué.",
+        "german": "Mein älterer Bruder ist Lehrer an einer Mittelschule, meine Schwester an einer Grundschule.",
+        "audioUrl": "/audio/stories/s01-06.mp3",
+        "tokens": [
+          {
+            "hanzi": "我",
+            "pinyin": "wǒ",
+            "german": "ich"
+          },
+          {
+            "hanzi": "哥哥",
+            "pinyin": "gēge",
+            "german": "älterer Bruder"
+          },
+          {
+            "hanzi": "在",
+            "pinyin": "zài",
+            "german": "in / an"
+          },
+          {
+            "hanzi": "中学",
+            "pinyin": "zhōngxué",
+            "german": "Mittelschule"
+          },
+          {
+            "hanzi": "当",
+            "pinyin": "dāng",
+            "german": "als / sein"
+          },
+          {
+            "hanzi": "老师",
+            "pinyin": "lǎoshī",
+            "german": "Lehrer"
+          },
+          {
+            "hanzi": "我",
+            "pinyin": "wǒ",
+            "german": "ich"
+          },
+          {
+            "hanzi": "姐姐",
+            "pinyin": "jiějie",
+            "german": "ältere Schwester"
+          },
+          {
+            "hanzi": "在",
+            "pinyin": "zài",
+            "german": "in / an"
+          },
+          {
+            "hanzi": "小学",
+            "pinyin": "xiǎoxué",
+            "german": "Grundschule"
+          }
+        ]
+      },
+      {
+        "id": "s01-07",
+        "hanzi": "大家好，我是一个中国人。",
+        "pinyin": "Dàjiā hǎo, wǒ shì yí ge Zhōngguórén.",
+        "german": "Hallo zusammen, ich bin Chinese.",
+        "audioUrl": "/audio/stories/s01-07.mp3",
+        "tokens": [
+          {
+            "hanzi": "大家",
+            "pinyin": "dàjiā",
+            "german": "alle"
+          },
+          {
+            "hanzi": "好",
+            "pinyin": "hǎo",
+            "german": "gut"
+          },
+          {
+            "hanzi": "我",
+            "pinyin": "wǒ",
+            "german": "ich"
+          },
+          {
+            "hanzi": "是",
+            "pinyin": "shì",
+            "german": "sein"
+          },
+          {
+            "hanzi": "一个",
+            "pinyin": "yí ge",
+            "german": "ein"
+          },
+          {
+            "hanzi": "中国人",
+            "pinyin": "Zhōngguórén",
+            "german": "Chinese"
+          }
+        ]
+      },
+      {
+        "id": "s01-08",
+        "hanzi": "我的家人很好：爸爸、妈妈、弟弟和妹妹。",
+        "pinyin": "Wǒ de jiārén hěn hǎo: bàba, māma, dìdi hé mèimei.",
+        "german": "Meine Familie ist nett: Papa, Mama, kleiner Bruder und kleine Schwester.",
+        "audioUrl": "/audio/stories/s01-08.mp3",
+        "tokens": [
+          {
+            "hanzi": "我的",
+            "pinyin": "wǒ de",
+            "german": "mein"
+          },
+          {
+            "hanzi": "家人",
+            "pinyin": "jiārén",
+            "german": "Familie"
+          },
+          {
+            "hanzi": "很",
+            "pinyin": "hěn",
+            "german": "sehr"
+          },
+          {
+            "hanzi": "好",
+            "pinyin": "hǎo",
+            "german": "gut"
+          },
+          {
+            "hanzi": "爸爸",
+            "pinyin": "bàba",
+            "german": "Papa"
+          },
+          {
+            "hanzi": "妈妈",
+            "pinyin": "māma",
+            "german": "Mama"
+          },
+          {
+            "hanzi": "弟弟",
+            "pinyin": "dìdi",
+            "german": "jüngerer Bruder"
+          },
+          {
+            "hanzi": "和",
+            "pinyin": "hé",
+            "german": "und"
+          },
+          {
+            "hanzi": "妹妹",
+            "pinyin": "mèimei",
+            "german": "jüngere Schwester"
+          }
+        ]
+      },
+      {
+        "id": "s01-09",
+        "hanzi": "白天我上课，晚上我休息。",
+        "pinyin": "Báitiān wǒ shàngkè, wǎnshang wǒ xiūxi.",
+        "german": "Tagsüber habe ich Unterricht, abends ruhe ich mich aus.",
+        "audioUrl": "/audio/stories/s01-09.mp3",
+        "tokens": [
+          {
+            "hanzi": "白天",
+            "pinyin": "báitiān",
+            "german": "tagsüber"
+          },
+          {
+            "hanzi": "我",
+            "pinyin": "wǒ",
+            "german": "ich"
+          },
+          {
+            "hanzi": "上课",
+            "pinyin": "shàngkè",
+            "german": "Unterricht haben"
+          },
+          {
+            "hanzi": "晚上",
+            "pinyin": "wǎnshang",
+            "german": "abends"
+          },
+          {
+            "hanzi": "我",
+            "pinyin": "wǒ",
+            "german": "ich"
+          },
+          {
+            "hanzi": "休息",
+            "pinyin": "xiūxi",
+            "german": "sich ausruhen"
+          }
+        ]
+      },
+      {
+        "id": "s01-10",
+        "hanzi": "我觉得这里很好，真的很好。",
+        "pinyin": "Wǒ juéde zhèlǐ hěn hǎo, zhēn de hěn hǎo.",
+        "german": "Ich finde, hier ist sehr gut, wirklich sehr gut.",
+        "audioUrl": "/audio/stories/s01-10.mp3",
+        "tokens": [
+          {
+            "hanzi": "我",
+            "pinyin": "wǒ",
+            "german": "ich"
+          },
+          {
+            "hanzi": "觉得",
+            "pinyin": "juéde",
+            "german": "finden"
+          },
+          {
+            "hanzi": "这里",
+            "pinyin": "zhèlǐ",
+            "german": "hier"
+          },
+          {
+            "hanzi": "很",
+            "pinyin": "hěn",
+            "german": "sehr"
+          },
+          {
+            "hanzi": "好",
+            "pinyin": "hǎo",
+            "german": "gut"
+          },
+          {
+            "hanzi": "真的",
+            "pinyin": "zhēn de",
+            "german": "wirklich"
+          },
+          {
+            "hanzi": "很",
+            "pinyin": "hěn",
+            "german": "sehr"
+          },
+          {
+            "hanzi": "好",
+            "pinyin": "hǎo",
+            "german": "gut"
+          }
+        ]
       }
     ],
     "quizzes": [
@@ -191,7 +465,7 @@
     "subtitle": "Essen bestellen und nach dem Preis fragen",
     "hanziTag": "饭",
     "difficulty": "HSK 1",
-    "wordCount": 46,
+    "wordCount": 73,
     "summary": "Wang Peng und Li Yue gehen mittags ins Restaurant, trinken chinesischen Tee und essen Reis mit Gemüse.",
     "audioUrl": "/audio/stories/story-02-full.mp3",
     "sentences": [
@@ -335,6 +609,177 @@
             "german": "dreißig Yuan"
           }
         ]
+      },
+      {
+        "id": "s02-05",
+        "hanzi": "我要吃包子、饺子、面条儿和面包。",
+        "pinyin": "Wǒ yào chī bāozi, jiǎozi, miàntiáor hé miànbāo.",
+        "german": "Ich möchte Brötchen, Dumplings, Nudeln und Brot essen.",
+        "audioUrl": "/audio/stories/s02-05.mp3",
+        "tokens": [
+          {
+            "hanzi": "我",
+            "pinyin": "wǒ",
+            "german": "ich"
+          },
+          {
+            "hanzi": "要",
+            "pinyin": "yào",
+            "german": "wollen"
+          },
+          {
+            "hanzi": "吃",
+            "pinyin": "chī",
+            "german": "essen"
+          },
+          {
+            "hanzi": "包子",
+            "pinyin": "bāozi",
+            "german": "Dampfbrötchen"
+          },
+          {
+            "hanzi": "饺子",
+            "pinyin": "jiǎozi",
+            "german": "Dumplings"
+          },
+          {
+            "hanzi": "面条儿",
+            "pinyin": "miàntiáor",
+            "german": "Nudeln"
+          },
+          {
+            "hanzi": "和",
+            "pinyin": "hé",
+            "german": "und"
+          },
+          {
+            "hanzi": "面包",
+            "pinyin": "miànbāo",
+            "german": "Brot"
+          }
+        ]
+      },
+      {
+        "id": "s02-06",
+        "hanzi": "我还想喝牛奶，鸡蛋也要一个。",
+        "pinyin": "Wǒ hái xiǎng hē niúnǎi, jīdàn yě yào yí ge.",
+        "german": "Ich möchte auch Milch trinken, und ein Ei brauche ich auch.",
+        "audioUrl": "/audio/stories/s02-06.mp3",
+        "tokens": [
+          {
+            "hanzi": "我",
+            "pinyin": "wǒ",
+            "german": "ich"
+          },
+          {
+            "hanzi": "还",
+            "pinyin": "hái",
+            "german": "noch / auch"
+          },
+          {
+            "hanzi": "想",
+            "pinyin": "xiǎng",
+            "german": "möchten"
+          },
+          {
+            "hanzi": "喝",
+            "pinyin": "hē",
+            "german": "trinken"
+          },
+          {
+            "hanzi": "牛奶",
+            "pinyin": "niúnǎi",
+            "german": "Milch"
+          },
+          {
+            "hanzi": "鸡蛋",
+            "pinyin": "jīdàn",
+            "german": "Ei"
+          },
+          {
+            "hanzi": "也",
+            "pinyin": "yě",
+            "german": "auch"
+          },
+          {
+            "hanzi": "要",
+            "pinyin": "yào",
+            "german": "brauchen"
+          },
+          {
+            "hanzi": "一个",
+            "pinyin": "yí ge",
+            "german": "ein"
+          }
+        ]
+      },
+      {
+        "id": "s02-07",
+        "hanzi": "这里不贵，很便宜！",
+        "pinyin": "Zhèlǐ bú guì, hěn piányi!",
+        "german": "Hier ist es nicht teuer, sehr günstig!",
+        "audioUrl": "/audio/stories/s02-07.mp3",
+        "tokens": [
+          {
+            "hanzi": "这里",
+            "pinyin": "zhèlǐ",
+            "german": "hier"
+          },
+          {
+            "hanzi": "不",
+            "pinyin": "bú",
+            "german": "nicht"
+          },
+          {
+            "hanzi": "贵",
+            "pinyin": "guì",
+            "german": "teuer"
+          },
+          {
+            "hanzi": "很",
+            "pinyin": "hěn",
+            "german": "sehr"
+          },
+          {
+            "hanzi": "便宜",
+            "pinyin": "piányi",
+            "german": "billig"
+          }
+        ]
+      },
+      {
+        "id": "s02-08",
+        "hanzi": "不要点了，我吃饱。",
+        "pinyin": "Bú yào diǎn le, wǒ chībǎo.",
+        "german": "Bestell nicht mehr, ich bin satt.",
+        "audioUrl": "/audio/stories/s02-08.mp3",
+        "tokens": [
+          {
+            "hanzi": "不要",
+            "pinyin": "bú yào",
+            "german": "nicht (mehr)"
+          },
+          {
+            "hanzi": "点",
+            "pinyin": "diǎn",
+            "german": "bestellen"
+          },
+          {
+            "hanzi": "了",
+            "pinyin": "le",
+            "german": "Perfektpartikel"
+          },
+          {
+            "hanzi": "我",
+            "pinyin": "wǒ",
+            "german": "ich"
+          },
+          {
+            "hanzi": "吃饱",
+            "pinyin": "chībǎo",
+            "german": "satt sein"
+          }
+        ]
       }
     ],
     "quizzes": [
@@ -369,7 +814,7 @@
     "subtitle": "Familienmitglieder und tierische Mitbewohner",
     "hanziTag": "家",
     "difficulty": "HSK 1",
-    "wordCount": 44,
+    "wordCount": 82,
     "summary": "Ein Einblick in die Familie: Vater, Mutter, ein kleiner Hund und eine Katze, die gerne auf dem Stuhl schläft.",
     "audioUrl": "/audio/stories/story-03-full.mp3",
     "sentences": [
@@ -513,6 +958,241 @@
             "german": "schläft gerade"
           }
         ]
+      },
+      {
+        "id": "s03-05",
+        "hanzi": "我的房间很大，外边有一个花园。",
+        "pinyin": "Wǒ de fángjiān hěn dà, wàibian yǒu yí ge huāyuán.",
+        "german": "Mein Zimmer ist groß, draußen ist ein Garten.",
+        "audioUrl": "/audio/stories/s03-05.mp3",
+        "tokens": [
+          {
+            "hanzi": "我的",
+            "pinyin": "wǒ de",
+            "german": "mein"
+          },
+          {
+            "hanzi": "房间",
+            "pinyin": "fángjiān",
+            "german": "Zimmer"
+          },
+          {
+            "hanzi": "很",
+            "pinyin": "hěn",
+            "german": "sehr"
+          },
+          {
+            "hanzi": "大",
+            "pinyin": "dà",
+            "german": "groß"
+          },
+          {
+            "hanzi": "外边",
+            "pinyin": "wàibian",
+            "german": "draußen"
+          },
+          {
+            "hanzi": "有",
+            "pinyin": "yǒu",
+            "german": "es gibt"
+          },
+          {
+            "hanzi": "一个",
+            "pinyin": "yí ge",
+            "german": "ein"
+          },
+          {
+            "hanzi": "花园",
+            "pinyin": "huāyuán",
+            "german": "Garten"
+          }
+        ]
+      },
+      {
+        "id": "s03-06",
+        "hanzi": "弟弟和妹妹在花园里玩。",
+        "pinyin": "Dìdi hé mèimei zài huāyuán lǐ wán.",
+        "german": "Der kleine Bruder und die kleine Schwester spielen im Garten.",
+        "audioUrl": "/audio/stories/s03-06.mp3",
+        "tokens": [
+          {
+            "hanzi": "弟弟",
+            "pinyin": "dìdi",
+            "german": "jüngerer Bruder"
+          },
+          {
+            "hanzi": "和",
+            "pinyin": "hé",
+            "german": "und"
+          },
+          {
+            "hanzi": "妹妹",
+            "pinyin": "mèimei",
+            "german": "jüngere Schwester"
+          },
+          {
+            "hanzi": "在",
+            "pinyin": "zài",
+            "german": "in"
+          },
+          {
+            "hanzi": "花园",
+            "pinyin": "huāyuán",
+            "german": "Garten"
+          },
+          {
+            "hanzi": "里",
+            "pinyin": "lǐ",
+            "german": "innen"
+          },
+          {
+            "hanzi": "玩",
+            "pinyin": "wán",
+            "german": "spielen"
+          }
+        ]
+      },
+      {
+        "id": "s03-07",
+        "hanzi": "它们是我们的好朋友。",
+        "pinyin": "Tāmen shì wǒmen de hǎo péngyou.",
+        "german": "Sie sind unsere guten Freunde.",
+        "audioUrl": "/audio/stories/s03-07.mp3",
+        "tokens": [
+          {
+            "hanzi": "它们",
+            "pinyin": "tāmen",
+            "german": "sie (Tiere)"
+          },
+          {
+            "hanzi": "是",
+            "pinyin": "shì",
+            "german": "sein"
+          },
+          {
+            "hanzi": "我们",
+            "pinyin": "wǒmen",
+            "german": "wir"
+          },
+          {
+            "hanzi": "的",
+            "pinyin": "de",
+            "german": "Possessiv"
+          },
+          {
+            "hanzi": "好朋友",
+            "pinyin": "hǎo péngyou",
+            "german": "gute Freunde"
+          }
+        ]
+      },
+      {
+        "id": "s03-08",
+        "hanzi": "早上七点，我妹妹和弟弟一起起床。",
+        "pinyin": "Zǎoshang qī diǎn, wǒ mèimei hé dìdi yìqǐ qǐchuáng.",
+        "german": "Um sieben morgens stehen meine Schwester und mein Bruder gemeinsam auf.",
+        "audioUrl": "/audio/stories/s03-08.mp3",
+        "tokens": [
+          {
+            "hanzi": "早上",
+            "pinyin": "zǎoshang",
+            "german": "morgens"
+          },
+          {
+            "hanzi": "七",
+            "pinyin": "qī",
+            "german": "sieben"
+          },
+          {
+            "hanzi": "点",
+            "pinyin": "diǎn",
+            "german": "Uhr"
+          },
+          {
+            "hanzi": "我",
+            "pinyin": "wǒ",
+            "german": "ich"
+          },
+          {
+            "hanzi": "妹妹",
+            "pinyin": "mèimei",
+            "german": "jüngere Schwester"
+          },
+          {
+            "hanzi": "和",
+            "pinyin": "hé",
+            "german": "und"
+          },
+          {
+            "hanzi": "弟弟",
+            "pinyin": "dìdi",
+            "german": "jüngerer Bruder"
+          },
+          {
+            "hanzi": "一起",
+            "pinyin": "yìqǐ",
+            "german": "zusammen"
+          },
+          {
+            "hanzi": "起床",
+            "pinyin": "qǐchuáng",
+            "german": "aufstehen"
+          }
+        ]
+      },
+      {
+        "id": "s03-09",
+        "hanzi": "奶奶买了一件新衣服，给小猫一件。",
+        "pinyin": "Nǎinai mǎi le yí jiàn xīn yīfu, gěi xiǎomāo yí jiàn.",
+        "german": "Oma hat ein neues Kleidungsstück gekauft, die Katze bekommt auch eins.",
+        "audioUrl": "/audio/stories/s03-09.mp3",
+        "tokens": [
+          {
+            "hanzi": "奶奶",
+            "pinyin": "nǎinai",
+            "german": "Oma"
+          },
+          {
+            "hanzi": "买",
+            "pinyin": "mǎi",
+            "german": "kaufen"
+          },
+          {
+            "hanzi": "了",
+            "pinyin": "le",
+            "german": "Perfektpartikel"
+          },
+          {
+            "hanzi": "一件",
+            "pinyin": "yí jiàn",
+            "german": "ein Stück"
+          },
+          {
+            "hanzi": "新",
+            "pinyin": "xīn",
+            "german": "neu"
+          },
+          {
+            "hanzi": "衣服",
+            "pinyin": "yīfu",
+            "german": "Kleidung"
+          },
+          {
+            "hanzi": "给",
+            "pinyin": "gěi",
+            "german": "geben"
+          },
+          {
+            "hanzi": "小猫",
+            "pinyin": "xiǎomāo",
+            "german": "Kätzchen"
+          },
+          {
+            "hanzi": "一件",
+            "pinyin": "yí jiàn",
+            "german": "ein Stück"
+          }
+        ]
       }
     ],
     "quizzes": [
@@ -547,7 +1227,7 @@
     "subtitle": "Chinesisch lernen mit Lehrern und Mitschülern",
     "hanziTag": "校",
     "difficulty": "HSK 1",
-    "wordCount": 45,
+    "wordCount": 79,
     "summary": "Ein Schultag: Wang Peng geht morgens in die Schule, lernt Chinesisch mit Lehrer Wang und liest Bücher.",
     "audioUrl": "/audio/stories/story-04-full.mp3",
     "sentences": [
@@ -676,6 +1356,221 @@
             "german": "lernen"
           }
         ]
+      },
+      {
+        "id": "s04-05",
+        "hanzi": "我每天上午上课，下午不上课。",
+        "pinyin": "Wǒ měitiān shàngwǔ shàngkè, xiàwǔ bù shàngkè.",
+        "german": "Ich habe jeden Vormittag Unterricht, nachmittags keinen.",
+        "audioUrl": "/audio/stories/s04-05.mp3",
+        "tokens": [
+          {
+            "hanzi": "我",
+            "pinyin": "wǒ",
+            "german": "ich"
+          },
+          {
+            "hanzi": "每天",
+            "pinyin": "měitiān",
+            "german": "jeden Tag"
+          },
+          {
+            "hanzi": "上午",
+            "pinyin": "shàngwǔ",
+            "german": "Vormittag"
+          },
+          {
+            "hanzi": "上课",
+            "pinyin": "shàngkè",
+            "german": "Unterricht haben"
+          },
+          {
+            "hanzi": "下午",
+            "pinyin": "xiàwǔ",
+            "german": "Nachmittag"
+          },
+          {
+            "hanzi": "不",
+            "pinyin": "bù",
+            "german": "nicht"
+          },
+          {
+            "hanzi": "上课",
+            "pinyin": "shàngkè",
+            "german": "Unterricht haben"
+          }
+        ]
+      },
+      {
+        "id": "s04-06",
+        "hanzi": "我正在学中文，我不知道第四课。",
+        "pinyin": "Wǒ zhèngzài xué Zhōngwén, wǒ bù zhīdào dì sì kè.",
+        "german": "Ich lerne gerade Chinesisch, die vierte Lektion kenne ich nicht.",
+        "audioUrl": "/audio/stories/s04-06.mp3",
+        "tokens": [
+          {
+            "hanzi": "我",
+            "pinyin": "wǒ",
+            "german": "ich"
+          },
+          {
+            "hanzi": "正在",
+            "pinyin": "zhèngzài",
+            "german": "gerade"
+          },
+          {
+            "hanzi": "学",
+            "pinyin": "xué",
+            "german": "lernen"
+          },
+          {
+            "hanzi": "中文",
+            "pinyin": "Zhōngwén",
+            "german": "Chinesisch"
+          },
+          {
+            "hanzi": "我",
+            "pinyin": "wǒ",
+            "german": "ich"
+          },
+          {
+            "hanzi": "不",
+            "pinyin": "bù",
+            "german": "nicht"
+          },
+          {
+            "hanzi": "知道",
+            "pinyin": "zhīdào",
+            "german": "wissen"
+          },
+          {
+            "hanzi": "第四",
+            "pinyin": "dì sì",
+            "german": "die vierte"
+          },
+          {
+            "hanzi": "课",
+            "pinyin": "kè",
+            "german": "Lektion"
+          }
+        ]
+      },
+      {
+        "id": "s04-07",
+        "hanzi": "中午我们休息一小时。",
+        "pinyin": "Zhōngwǔ wǒmen xiūxi yí xiǎoshí.",
+        "german": "Mittags machen wir eine Stunde Pause.",
+        "audioUrl": "/audio/stories/s04-07.mp3",
+        "tokens": [
+          {
+            "hanzi": "中午",
+            "pinyin": "zhōngwǔ",
+            "german": "Mittag"
+          },
+          {
+            "hanzi": "我们",
+            "pinyin": "wǒmen",
+            "german": "wir"
+          },
+          {
+            "hanzi": "休息",
+            "pinyin": "xiūxi",
+            "german": "Pause machen"
+          },
+          {
+            "hanzi": "一",
+            "pinyin": "yí",
+            "german": "eine"
+          },
+          {
+            "hanzi": "小时",
+            "pinyin": "xiǎoshí",
+            "german": "Stunde"
+          }
+        ]
+      },
+      {
+        "id": "s04-08",
+        "hanzi": "下课以后我们去书店买书。",
+        "pinyin": "Xiàkè yǐhòu wǒmen qù shūdiàn mǎi shū.",
+        "german": "Nach dem Unterricht gehen wir in die Buchhandlung.",
+        "audioUrl": "/audio/stories/s04-08.mp3",
+        "tokens": [
+          {
+            "hanzi": "下课",
+            "pinyin": "xiàkè",
+            "german": "Unterricht beenden"
+          },
+          {
+            "hanzi": "以后",
+            "pinyin": "yǐhòu",
+            "german": "nachher"
+          },
+          {
+            "hanzi": "我们",
+            "pinyin": "wǒmen",
+            "german": "wir"
+          },
+          {
+            "hanzi": "去",
+            "pinyin": "qù",
+            "german": "gehen"
+          },
+          {
+            "hanzi": "书店",
+            "pinyin": "shūdiàn",
+            "german": "Buchhandlung"
+          },
+          {
+            "hanzi": "买",
+            "pinyin": "mǎi",
+            "german": "kaufen"
+          },
+          {
+            "hanzi": "书",
+            "pinyin": "shū",
+            "german": "Buch"
+          }
+        ]
+      },
+      {
+        "id": "s04-09",
+        "hanzi": "你可以唱歌，我们一起唱。",
+        "pinyin": "Nǐ kěyǐ chàng gē, wǒmen yìqǐ chàng.",
+        "german": "Du kannst singen, wir singen zusammen.",
+        "audioUrl": "/audio/stories/s04-09.mp3",
+        "tokens": [
+          {
+            "hanzi": "你",
+            "pinyin": "nǐ",
+            "german": "du"
+          },
+          {
+            "hanzi": "可以",
+            "pinyin": "kěyǐ",
+            "german": "kannst"
+          },
+          {
+            "hanzi": "唱歌",
+            "pinyin": "chàng gē",
+            "german": "ein Lied singen"
+          },
+          {
+            "hanzi": "我们",
+            "pinyin": "wǒmen",
+            "german": "wir"
+          },
+          {
+            "hanzi": "一起",
+            "pinyin": "yìqǐ",
+            "german": "zusammen"
+          },
+          {
+            "hanzi": "唱",
+            "pinyin": "chàng",
+            "german": "singen"
+          }
+        ]
       }
     ],
     "quizzes": [
@@ -710,7 +1605,7 @@
     "subtitle": "Klima in Peking, Regen und Kleidung",
     "hanziTag": "天",
     "difficulty": "HSK 1",
-    "wordCount": 43,
+    "wordCount": 88,
     "summary": "Über das Wetter sprechen: Gestern war es heiß, heute regnet es und ist kühl.",
     "audioUrl": "/audio/stories/story-05-full.mp3",
     "sentences": [
@@ -844,6 +1739,285 @@
             "german": "neue Kleidung"
           }
         ]
+      },
+      {
+        "id": "s05-05",
+        "hanzi": "早上很冷，我要穿新衣服。",
+        "pinyin": "Zǎoshang hěn lěng, wǒ yào chuān xīn yīfu.",
+        "german": "Am Morgen ist es kalt, ich will neue Kleidung anziehen.",
+        "audioUrl": "/audio/stories/s05-05.mp3",
+        "tokens": [
+          {
+            "hanzi": "早上",
+            "pinyin": "zǎoshang",
+            "german": "früh am Morgen"
+          },
+          {
+            "hanzi": "很",
+            "pinyin": "hěn",
+            "german": "sehr"
+          },
+          {
+            "hanzi": "冷",
+            "pinyin": "lěng",
+            "german": "kalt"
+          },
+          {
+            "hanzi": "我",
+            "pinyin": "wǒ",
+            "german": "ich"
+          },
+          {
+            "hanzi": "要",
+            "pinyin": "yào",
+            "german": "will"
+          },
+          {
+            "hanzi": "穿",
+            "pinyin": "chuān",
+            "german": "anziehen"
+          },
+          {
+            "hanzi": "新",
+            "pinyin": "xīn",
+            "german": "neu"
+          },
+          {
+            "hanzi": "衣服",
+            "pinyin": "yīfu",
+            "german": "Kleidung"
+          }
+        ]
+      },
+      {
+        "id": "s05-06",
+        "hanzi": "午饭前我吃了早饭。",
+        "pinyin": "Wǔfàn qián wǒ chī le zǎofàn.",
+        "german": "Vor dem Mittagessen habe ich gefrühstückt.",
+        "audioUrl": "/audio/stories/s05-06.mp3",
+        "tokens": [
+          {
+            "hanzi": "午饭",
+            "pinyin": "wǔfàn",
+            "german": "Mittagessen"
+          },
+          {
+            "hanzi": "前",
+            "pinyin": "qián",
+            "german": "vor"
+          },
+          {
+            "hanzi": "我",
+            "pinyin": "wǒ",
+            "german": "ich"
+          },
+          {
+            "hanzi": "吃",
+            "pinyin": "chī",
+            "german": "essen"
+          },
+          {
+            "hanzi": "了",
+            "pinyin": "le",
+            "german": "Perfektpartikel"
+          },
+          {
+            "hanzi": "早饭",
+            "pinyin": "zǎofàn",
+            "german": "Frühstück"
+          }
+        ]
+      },
+      {
+        "id": "s05-07",
+        "hanzi": "晚上可能下雪，因为外面很冷。",
+        "pinyin": "Wǎnshang kěnéng xià xuě, yīnwài hěn lěng.",
+        "german": "Abends schneit es vielleicht, denn draußen ist es kalt.",
+        "audioUrl": "/audio/stories/s05-07.mp3",
+        "tokens": [
+          {
+            "hanzi": "晚上",
+            "pinyin": "wǎnshang",
+            "german": "Abend"
+          },
+          {
+            "hanzi": "可能",
+            "pinyin": "kěnéng",
+            "german": "vielleicht"
+          },
+          {
+            "hanzi": "下",
+            "pinyin": "xià",
+            "german": "fallen"
+          },
+          {
+            "hanzi": "雪",
+            "pinyin": "xuě",
+            "german": "Schnee"
+          },
+          {
+            "hanzi": "因为",
+            "pinyin": "yīnwèi",
+            "german": "denn"
+          },
+          {
+            "hanzi": "外面",
+            "pinyin": "wàimiàn",
+            "german": "draußen"
+          },
+          {
+            "hanzi": "很",
+            "pinyin": "hěn",
+            "german": "sehr"
+          },
+          {
+            "hanzi": "冷",
+            "pinyin": "lěng",
+            "german": "kalt"
+          }
+        ]
+      },
+      {
+        "id": "s05-08",
+        "hanzi": "这首歌很好听，我很喜欢。",
+        "pinyin": "Zhè shǒu gē hěn hǎotīng, wǒ hěn xǐhuan.",
+        "german": "Dieses Lied klingt sehr schön, ich mag es sehr.",
+        "audioUrl": "/audio/stories/s05-08.mp3",
+        "tokens": [
+          {
+            "hanzi": "这",
+            "pinyin": "zhè",
+            "german": "dieses"
+          },
+          {
+            "hanzi": "首",
+            "pinyin": "shǒu",
+            "german": "Zählwort für Lieder"
+          },
+          {
+            "hanzi": "歌",
+            "pinyin": "gē",
+            "german": "Lied"
+          },
+          {
+            "hanzi": "很",
+            "pinyin": "hěn",
+            "german": "sehr"
+          },
+          {
+            "hanzi": "好听",
+            "pinyin": "hǎotīng",
+            "german": "schön klingend"
+          },
+          {
+            "hanzi": "我",
+            "pinyin": "wǒ",
+            "german": "ich"
+          },
+          {
+            "hanzi": "很",
+            "pinyin": "hěn",
+            "german": "sehr"
+          },
+          {
+            "hanzi": "喜欢",
+            "pinyin": "xǐhuan",
+            "german": "mögen"
+          }
+        ]
+      },
+      {
+        "id": "s05-09",
+        "hanzi": "这个公园很好玩儿，孩子也来。",
+        "pinyin": "Zhège gōngyuán hěn hǎowánr, háizi yě lái.",
+        "german": "Dieser Park ist spaßig, die Kinder kommen auch.",
+        "audioUrl": "/audio/stories/s05-09.mp3",
+        "tokens": [
+          {
+            "hanzi": "这个",
+            "pinyin": "zhège",
+            "german": "dieser"
+          },
+          {
+            "hanzi": "公园",
+            "pinyin": "gōngyuán",
+            "german": "Park"
+          },
+          {
+            "hanzi": "很",
+            "pinyin": "hěn",
+            "german": "sehr"
+          },
+          {
+            "hanzi": "好玩儿",
+            "pinyin": "hǎowánr",
+            "german": "lustig"
+          },
+          {
+            "hanzi": "孩子",
+            "pinyin": "háizi",
+            "german": "Kinder"
+          },
+          {
+            "hanzi": "也",
+            "pinyin": "yě",
+            "german": "auch"
+          },
+          {
+            "hanzi": "来",
+            "pinyin": "lái",
+            "german": "kommen"
+          }
+        ]
+      },
+      {
+        "id": "s05-10",
+        "hanzi": "这个游戏很好玩儿，谁也不想走。",
+        "pinyin": "Zhège yóuxì hěn hǎowánr, shuí yě bù xiǎng zǒu.",
+        "german": "Dieses Spiel ist richtig lustig, niemand will gehen.",
+        "audioUrl": "/audio/stories/s05-10.mp3",
+        "tokens": [
+          {
+            "hanzi": "这个",
+            "pinyin": "zhège",
+            "german": "dieses"
+          },
+          {
+            "hanzi": "游戏",
+            "pinyin": "yóuxì",
+            "german": "Spiel"
+          },
+          {
+            "hanzi": "很",
+            "pinyin": "hěn",
+            "german": "sehr"
+          },
+          {
+            "hanzi": "好玩儿",
+            "pinyin": "hǎowánr",
+            "german": "lustig"
+          },
+          {
+            "hanzi": "谁",
+            "pinyin": "shéi",
+            "german": "wer"
+          },
+          {
+            "hanzi": "也",
+            "pinyin": "yě",
+            "german": "auch"
+          },
+          {
+            "hanzi": "不想",
+            "pinyin": "bù xiǎng",
+            "german": "will nicht"
+          },
+          {
+            "hanzi": "走",
+            "pinyin": "zǒu",
+            "german": "gehen"
+          }
+        ]
       }
     ],
     "quizzes": [
@@ -878,7 +2052,7 @@
     "subtitle": "Obst kaufen und Zählwörter anwenden",
     "hanziTag": "买",
     "difficulty": "HSK 1",
-    "wordCount": 48,
+    "wordCount": 85,
     "summary": "Im Obstladen: Äpfel kaufen, nach dem Preis fragen und Bücher für den Chinesischkurs besorgen.",
     "audioUrl": "/audio/stories/story-06-full.mp3",
     "sentences": [
@@ -1012,6 +2186,227 @@
             "german": "ein Buch"
           }
         ]
+      },
+      {
+        "id": "s06-05",
+        "hanzi": "这家超市很便宜，苹果五块钱一斤。",
+        "pinyin": "Zhè jiā chāoshì hěn piányi, píngguǒ wǔ kuài qián yì jīn.",
+        "german": "Dieser Supermarkt ist billig, Äpfel kosten fünf Yuan pro Pfund.",
+        "audioUrl": "/audio/stories/s06-05.mp3",
+        "tokens": [
+          {
+            "hanzi": "这",
+            "pinyin": "zhè",
+            "german": "dieser"
+          },
+          {
+            "hanzi": "家",
+            "pinyin": "jiā",
+            "german": "Zählwort"
+          },
+          {
+            "hanzi": "超市",
+            "pinyin": "chāoshì",
+            "german": "Supermarkt"
+          },
+          {
+            "hanzi": "很",
+            "pinyin": "hěn",
+            "german": "sehr"
+          },
+          {
+            "hanzi": "便宜",
+            "pinyin": "piányi",
+            "german": "billig"
+          },
+          {
+            "hanzi": "苹果",
+            "pinyin": "píngguǒ",
+            "german": "Äpfel"
+          },
+          {
+            "hanzi": "五",
+            "pinyin": "wǔ",
+            "german": "fünf"
+          },
+          {
+            "hanzi": "块",
+            "pinyin": "kuài",
+            "german": "Yuan"
+          },
+          {
+            "hanzi": "钱",
+            "pinyin": "qián",
+            "german": "Geld"
+          },
+          {
+            "hanzi": "一斤",
+            "pinyin": "yì jīn",
+            "german": "ein Pfund"
+          }
+        ]
+      },
+      {
+        "id": "s06-06",
+        "hanzi": "老板卖水果，我找他要一个袋子。",
+        "pinyin": "Lǎobǎn mài shuǐguǒ, wǒ zhǎo tā yào yí ge dàizi.",
+        "german": "Der Chef verkauft Obst, ich bitte ihn um eine Tüte.",
+        "audioUrl": "/audio/stories/s06-06.mp3",
+        "tokens": [
+          {
+            "hanzi": "老板",
+            "pinyin": "lǎobǎn",
+            "german": "Chef"
+          },
+          {
+            "hanzi": "卖",
+            "pinyin": "mài",
+            "german": "verkaufen"
+          },
+          {
+            "hanzi": "水果",
+            "pinyin": "shuǐguǒ",
+            "german": "Obst"
+          },
+          {
+            "hanzi": "我",
+            "pinyin": "wǒ",
+            "german": "ich"
+          },
+          {
+            "hanzi": "找",
+            "pinyin": "zhǎo",
+            "german": "suchen / bitten"
+          },
+          {
+            "hanzi": "他",
+            "pinyin": "tā",
+            "german": "ihn"
+          },
+          {
+            "hanzi": "要",
+            "pinyin": "yào",
+            "german": "brauchen"
+          },
+          {
+            "hanzi": "一个",
+            "pinyin": "yí ge",
+            "german": "eine"
+          },
+          {
+            "hanzi": "袋子",
+            "pinyin": "dàizi",
+            "german": "Tüte"
+          }
+        ]
+      },
+      {
+        "id": "s06-07",
+        "hanzi": "一半的苹果在这儿，其他的一半在那边。",
+        "pinyin": "Yíbàn de píngguǒ zài zhèr, qítā de yíbàn zài nàbiān.",
+        "german": "Die Hälfte der Äpfel ist hier, die andere Hälfte dort drüben.",
+        "audioUrl": "/audio/stories/s06-07.mp3",
+        "tokens": [
+          {
+            "hanzi": "一半",
+            "pinyin": "yíbàn",
+            "german": "die Hälfte"
+          },
+          {
+            "hanzi": "的",
+            "pinyin": "de",
+            "german": "Possessiv"
+          },
+          {
+            "hanzi": "苹果",
+            "pinyin": "píngguǒ",
+            "german": "Äpfel"
+          },
+          {
+            "hanzi": "在",
+            "pinyin": "zài",
+            "german": "in"
+          },
+          {
+            "hanzi": "这儿",
+            "pinyin": "zhèr",
+            "german": "hier"
+          },
+          {
+            "hanzi": "其他",
+            "pinyin": "qítā",
+            "german": "die anderen"
+          },
+          {
+            "hanzi": "的",
+            "pinyin": "de",
+            "german": "Possessiv"
+          },
+          {
+            "hanzi": "一半",
+            "pinyin": "yíbàn",
+            "german": "die Hälfte"
+          },
+          {
+            "hanzi": "在",
+            "pinyin": "zài",
+            "german": "in"
+          },
+          {
+            "hanzi": "那边",
+            "pinyin": "nàbiān",
+            "german": "dort drüben"
+          }
+        ]
+      },
+      {
+        "id": "s06-08",
+        "hanzi": "两百块钱在这里，你要多少？",
+        "pinyin": "Liǎng bǎi kuài qián zài zhèlǐ, nǐ yào duōshao?",
+        "german": "Zweihundert Yuan sind hier, wie viel brauchst du?",
+        "audioUrl": "/audio/stories/s06-08.mp3",
+        "tokens": [
+          {
+            "hanzi": "两百",
+            "pinyin": "liǎng bǎi",
+            "german": "zweihundert"
+          },
+          {
+            "hanzi": "块",
+            "pinyin": "kuài",
+            "german": "Yuan"
+          },
+          {
+            "hanzi": "钱",
+            "pinyin": "qián",
+            "german": "Geld"
+          },
+          {
+            "hanzi": "在",
+            "pinyin": "zài",
+            "german": "sind"
+          },
+          {
+            "hanzi": "这里",
+            "pinyin": "zhèlǐ",
+            "german": "hier"
+          },
+          {
+            "hanzi": "你",
+            "pinyin": "nǐ",
+            "german": "du"
+          },
+          {
+            "hanzi": "要",
+            "pinyin": "yào",
+            "german": "brauchst"
+          },
+          {
+            "hanzi": "多少",
+            "pinyin": "duōshao",
+            "german": "wie viel"
+          }
+        ]
       }
     ],
     "quizzes": [
@@ -1046,7 +2441,7 @@
     "subtitle": "Einen Treffpunkt und eine Uhrzeit vereinbaren",
     "hanziTag": "话",
     "difficulty": "HSK 1",
-    "wordCount": 47,
+    "wordCount": 92,
     "summary": "Ein Telefongespräch zwischen Freunden: Treffpunkt morgen Nachmittag vor dem Kino.",
     "audioUrl": "/audio/stories/story-07-full.mp3",
     "sentences": [
@@ -1180,6 +2575,285 @@
             "german": "Auf Wiedersehen"
           }
         ]
+      },
+      {
+        "id": "s07-05",
+        "hanzi": "我用手机给你打电话。",
+        "pinyin": "Wǒ yòng shǒujī gěi nǐ dǎ diànhuà.",
+        "german": "Ich rufe dich mit dem Handy an.",
+        "audioUrl": "/audio/stories/s07-05.mp3",
+        "tokens": [
+          {
+            "hanzi": "我",
+            "pinyin": "wǒ",
+            "german": "ich"
+          },
+          {
+            "hanzi": "用",
+            "pinyin": "yòng",
+            "german": "mit"
+          },
+          {
+            "hanzi": "手机",
+            "pinyin": "shǒujī",
+            "german": "Handy"
+          },
+          {
+            "hanzi": "给",
+            "pinyin": "gěi",
+            "german": "für"
+          },
+          {
+            "hanzi": "你",
+            "pinyin": "nǐ",
+            "german": "dich"
+          },
+          {
+            "hanzi": "打电话",
+            "pinyin": "dǎ diànhuà",
+            "german": "anrufen"
+          }
+        ]
+      },
+      {
+        "id": "s07-06",
+        "hanzi": "星期天下午，我们在那边的电影院门口见。",
+        "pinyin": "Xīngqītiān xiàwǔ, wǒmen zài nàbiān de diànyǐngyuàn ménkǒu jiàn.",
+        "german": "Sonntagnachmittag treffen wir uns dort drüben vor dem Kino.",
+        "audioUrl": "/audio/stories/s07-06.mp3",
+        "tokens": [
+          {
+            "hanzi": "星期天",
+            "pinyin": "xīngqītiān",
+            "german": "Sonntag"
+          },
+          {
+            "hanzi": "下午",
+            "pinyin": "xiàwǔ",
+            "german": "Nachmittag"
+          },
+          {
+            "hanzi": "我们",
+            "pinyin": "wǒmen",
+            "german": "wir"
+          },
+          {
+            "hanzi": "在",
+            "pinyin": "zài",
+            "german": "in"
+          },
+          {
+            "hanzi": "那边",
+            "pinyin": "nàbiān",
+            "german": "dort drüben"
+          },
+          {
+            "hanzi": "的",
+            "pinyin": "de",
+            "german": "Possessiv"
+          },
+          {
+            "hanzi": "电影院",
+            "pinyin": "diànyǐngyuàn",
+            "german": "Kino"
+          },
+          {
+            "hanzi": "门口",
+            "pinyin": "ménkǒu",
+            "german": "Eingang"
+          },
+          {
+            "hanzi": "见",
+            "pinyin": "jiàn",
+            "german": "treffen"
+          }
+        ]
+      },
+      {
+        "id": "s07-07",
+        "hanzi": "这个电影院里有很多好看的电影。",
+        "pinyin": "Zhège diànyǐngyuàn lǐ yǒu hěn duō hǎokàn de diànyǐng.",
+        "german": "In diesem Kino gibt es viele schöne Filme.",
+        "audioUrl": "/audio/stories/s07-07.mp3",
+        "tokens": [
+          {
+            "hanzi": "这个",
+            "pinyin": "zhège",
+            "german": "dieses"
+          },
+          {
+            "hanzi": "电影院",
+            "pinyin": "diànyǐngyuàn",
+            "german": "Kino"
+          },
+          {
+            "hanzi": "里",
+            "pinyin": "lǐ",
+            "german": "in"
+          },
+          {
+            "hanzi": "有",
+            "pinyin": "yǒu",
+            "german": "es gibt"
+          },
+          {
+            "hanzi": "很多",
+            "pinyin": "hěn duō",
+            "german": "viele"
+          },
+          {
+            "hanzi": "好看",
+            "pinyin": "hǎokàn",
+            "german": "schön"
+          },
+          {
+            "hanzi": "的",
+            "pinyin": "de",
+            "german": "Attribut"
+          },
+          {
+            "hanzi": "电影",
+            "pinyin": "diànyǐng",
+            "german": "Film"
+          }
+        ]
+      },
+      {
+        "id": "s07-08",
+        "hanzi": "你听见音乐了吗？真好听。",
+        "pinyin": "Nǐ tīngjiàn yīnyuè le ma? Zhēn hǎotīng.",
+        "german": "Hast du die Musik gehört? Die klingt wirklich schön.",
+        "audioUrl": "/audio/stories/s07-08.mp3",
+        "tokens": [
+          {
+            "hanzi": "你",
+            "pinyin": "nǐ",
+            "german": "du"
+          },
+          {
+            "hanzi": "听见",
+            "pinyin": "tīngjiàn",
+            "german": "hören"
+          },
+          {
+            "hanzi": "音乐",
+            "pinyin": "yīnyuè",
+            "german": "Musik"
+          },
+          {
+            "hanzi": "了",
+            "pinyin": "le",
+            "german": "Perfektpartikel"
+          },
+          {
+            "hanzi": "吗",
+            "pinyin": "ma",
+            "german": "Fragepartikel"
+          },
+          {
+            "hanzi": "真",
+            "pinyin": "zhēn",
+            "german": "wirklich"
+          },
+          {
+            "hanzi": "好听",
+            "pinyin": "hǎotīng",
+            "german": "schön klingend"
+          }
+        ]
+      },
+      {
+        "id": "s07-09",
+        "hanzi": "哪些人在这儿？那个和那些。",
+        "pinyin": "Nǎxiē rén zài zhèr? Nàge hé nàxiē.",
+        "german": "Welche Leute sind hier? Der dort und die dort.",
+        "audioUrl": "/audio/stories/s07-09.mp3",
+        "tokens": [
+          {
+            "hanzi": "哪些",
+            "pinyin": "nǎxiē",
+            "german": "welche"
+          },
+          {
+            "hanzi": "人",
+            "pinyin": "rén",
+            "german": "Leute"
+          },
+          {
+            "hanzi": "在",
+            "pinyin": "zài",
+            "german": "sind"
+          },
+          {
+            "hanzi": "这儿",
+            "pinyin": "zhèr",
+            "german": "hier"
+          },
+          {
+            "hanzi": "那个",
+            "pinyin": "nàge",
+            "german": "der dort"
+          },
+          {
+            "hanzi": "和",
+            "pinyin": "hé",
+            "german": "und"
+          },
+          {
+            "hanzi": "那些",
+            "pinyin": "nàxiē",
+            "german": "die dort"
+          }
+        ]
+      },
+      {
+        "id": "s07-10",
+        "hanzi": "我们坐地铁到这边，票价一百元。",
+        "pinyin": "Wǒmen zuò dìtiě dào zhèbiān, piàojia yì bǎi yuán.",
+        "german": "Wir fahren mit der U-Bahn hierher, die Fahrkarte kostet hundert Yuan.",
+        "audioUrl": "/audio/stories/s07-10.mp3",
+        "tokens": [
+          {
+            "hanzi": "我们",
+            "pinyin": "wǒmen",
+            "german": "wir"
+          },
+          {
+            "hanzi": "坐",
+            "pinyin": "zuò",
+            "german": "fahren mit"
+          },
+          {
+            "hanzi": "地铁",
+            "pinyin": "dìtiě",
+            "german": "U-Bahn"
+          },
+          {
+            "hanzi": "到",
+            "pinyin": "dào",
+            "german": "nach"
+          },
+          {
+            "hanzi": "这边",
+            "pinyin": "zhèbiān",
+            "german": "hierher"
+          },
+          {
+            "hanzi": "票价",
+            "pinyin": "piàojia",
+            "german": "Fahrpreis"
+          },
+          {
+            "hanzi": "一百",
+            "pinyin": "yì bǎi",
+            "german": "hundert"
+          },
+          {
+            "hanzi": "元",
+            "pinyin": "yuán",
+            "german": "Yuan"
+          }
+        ]
       }
     ],
     "quizzes": [
@@ -1214,7 +2888,7 @@
     "subtitle": "Berufe, Verkehrsmittel und Arbeitsorte",
     "hanziTag": "医",
     "difficulty": "HSK 1",
-    "wordCount": 46,
+    "wordCount": 78,
     "summary": "Über den Vater sprechen: Er ist Arzt in einem großen Krankenhaus und fährt jeden Morgen mit dem Taxi zur Arbeit.",
     "audioUrl": "/audio/stories/story-08-full.mp3",
     "sentences": [
@@ -1363,6 +3037,202 @@
             "german": "meinen Papa"
           }
         ]
+      },
+      {
+        "id": "s08-05",
+        "hanzi": "他在一家大公司工作，工作很忙。",
+        "pinyin": "Tā zài yì jiā dà gōngsī gōngzuò, gōngzuò hěn máng.",
+        "german": "Er arbeitet in einer großen Firma, die Arbeit ist sehr busy.",
+        "audioUrl": "/audio/stories/s08-05.mp3",
+        "tokens": [
+          {
+            "hanzi": "他",
+            "pinyin": "tā",
+            "german": "er"
+          },
+          {
+            "hanzi": "在",
+            "pinyin": "zài",
+            "german": "in"
+          },
+          {
+            "hanzi": "一家",
+            "pinyin": "yì jiā",
+            "german": "eine"
+          },
+          {
+            "hanzi": "大",
+            "pinyin": "dà",
+            "german": "groß"
+          },
+          {
+            "hanzi": "公司",
+            "pinyin": "gōngsī",
+            "german": "Firma"
+          },
+          {
+            "hanzi": "工作",
+            "pinyin": "gōngzuò",
+            "german": "arbeiten"
+          },
+          {
+            "hanzi": "工作",
+            "pinyin": "gōngzuò",
+            "german": "Arbeit"
+          },
+          {
+            "hanzi": "很",
+            "pinyin": "hěn",
+            "german": "sehr"
+          },
+          {
+            "hanzi": "忙",
+            "pinyin": "máng",
+            "german": "beschäftigt"
+          }
+        ]
+      },
+      {
+        "id": "s08-06",
+        "hanzi": "他生病了，去医院看病。",
+        "pinyin": "Tā shēngbìng le, qù yīyuàn kànbìng.",
+        "german": "Er ist krank und geht ins Krankenhaus zum Arzt.",
+        "audioUrl": "/audio/stories/s08-06.mp3",
+        "tokens": [
+          {
+            "hanzi": "他",
+            "pinyin": "tā",
+            "german": "er"
+          },
+          {
+            "hanzi": "生病",
+            "pinyin": "shēngbìng",
+            "german": "erkranken"
+          },
+          {
+            "hanzi": "了",
+            "pinyin": "le",
+            "german": "Perfektpartikel"
+          },
+          {
+            "hanzi": "去",
+            "pinyin": "qù",
+            "german": "gehen"
+          },
+          {
+            "hanzi": "医院",
+            "pinyin": "yīyuàn",
+            "german": "Krankenhaus"
+          },
+          {
+            "hanzi": "看病",
+            "pinyin": "kànbìng",
+            "german": "zum Arzt gehen"
+          }
+        ]
+      },
+      {
+        "id": "s08-07",
+        "hanzi": "下班以后他开车回家，晚上在家休息。",
+        "pinyin": "Xiàbān yǐhòu tā kāichē huí jiā, wǎnshang zài jiā xiūxi.",
+        "german": "Nach der Arbeit fährt er mit dem Auto nach Hause, abends ruht er sich zu Hause aus.",
+        "audioUrl": "/audio/stories/s08-07.mp3",
+        "tokens": [
+          {
+            "hanzi": "下班",
+            "pinyin": "xiàbān",
+            "german": "Feierabend"
+          },
+          {
+            "hanzi": "以后",
+            "pinyin": "yǐhòu",
+            "german": "nach"
+          },
+          {
+            "hanzi": "他",
+            "pinyin": "tā",
+            "german": "er"
+          },
+          {
+            "hanzi": "开车",
+            "pinyin": "kāichē",
+            "german": "Auto fahren"
+          },
+          {
+            "hanzi": "回家",
+            "pinyin": "huí jiā",
+            "german": "nach Hause"
+          },
+          {
+            "hanzi": "晚上",
+            "pinyin": "wǎnshang",
+            "german": "abends"
+          },
+          {
+            "hanzi": "在",
+            "pinyin": "zài",
+            "german": "in"
+          },
+          {
+            "hanzi": "家",
+            "pinyin": "jiā",
+            "german": "zu Hause"
+          },
+          {
+            "hanzi": "休息",
+            "pinyin": "xiūxi",
+            "german": "sich ausruhen"
+          }
+        ]
+      },
+      {
+        "id": "s08-09",
+        "hanzi": "那里的事我知道，他没生病。",
+        "pinyin": "Nàlǐ de shì wǒ zhīdào, tā méi shēngbìng.",
+        "german": "Die Sache dort kenne ich, er ist nicht krank.",
+        "audioUrl": "/audio/stories/s08-09.mp3",
+        "tokens": [
+          {
+            "hanzi": "那里",
+            "pinyin": "nàlǐ",
+            "german": "dort"
+          },
+          {
+            "hanzi": "的",
+            "pinyin": "de",
+            "german": "Possessiv"
+          },
+          {
+            "hanzi": "事",
+            "pinyin": "shì",
+            "german": "Sache"
+          },
+          {
+            "hanzi": "我",
+            "pinyin": "wǒ",
+            "german": "ich"
+          },
+          {
+            "hanzi": "知道",
+            "pinyin": "zhīdào",
+            "german": "wissen"
+          },
+          {
+            "hanzi": "他",
+            "pinyin": "tā",
+            "german": "er"
+          },
+          {
+            "hanzi": "没",
+            "pinyin": "méi",
+            "german": "nicht"
+          },
+          {
+            "hanzi": "生病",
+            "pinyin": "shēngbìng",
+            "german": "krank"
+          }
+        ]
       }
     ],
     "quizzes": [
@@ -1394,7 +3264,7 @@
     "pinyinTitle": "Zài Huǒchēzhàn",
     "germanTitle": "Am Bahnhof — Ankunft & Freunde abholen",
     "difficulty": "HSK 1",
-    "wordCount": 56,
+    "wordCount": 69,
     "hanziTag": "站",
     "summary": "Heute Nachmittag um vier Uhr fahren wir zum Bahnhof, um Freunde abzuholen, die mit dem Flugzeug nach Peking gekommen sind.",
     "audioUrl": "/audio/stories/story-09-full.mp3",
@@ -1693,6 +3563,89 @@
             "german": "Zuhause"
           }
         ]
+      },
+      {
+        "id": "s09-06",
+        "hanzi": "火车一点钟到，北京在那边。",
+        "pinyin": "Huǒchē yī diǎnzhōng dào, Běijīng zài nàbiān.",
+        "german": "Der Zug kommt um eins an, Peking ist dort drüben.",
+        "audioUrl": "/audio/stories/s09-06.mp3",
+        "tokens": [
+          {
+            "hanzi": "火车",
+            "pinyin": "huǒchē",
+            "german": "Zug"
+          },
+          {
+            "hanzi": "一点",
+            "pinyin": "yī diǎn",
+            "german": "ein Uhr"
+          },
+          {
+            "hanzi": "钟",
+            "pinyin": "zhōng",
+            "german": "Uhr"
+          },
+          {
+            "hanzi": "到",
+            "pinyin": "dào",
+            "german": "ankommen"
+          },
+          {
+            "hanzi": "北京",
+            "pinyin": "Běijīng",
+            "german": "Peking"
+          },
+          {
+            "hanzi": "在",
+            "pinyin": "zài",
+            "german": "in"
+          },
+          {
+            "hanzi": "那边",
+            "pinyin": "nàbiān",
+            "german": "dort drüben"
+          }
+        ]
+      },
+      {
+        "id": "s09-07",
+        "hanzi": "我的朋友们在这里等火车。",
+        "pinyin": "Wǒ de péngyou men zài zhèlǐ děng huǒchē.",
+        "german": "Meine Freunde warten hier auf den Zug.",
+        "audioUrl": "/audio/stories/s09-07.mp3",
+        "tokens": [
+          {
+            "hanzi": "我的",
+            "pinyin": "wǒ de",
+            "german": "meine"
+          },
+          {
+            "hanzi": "朋友们",
+            "pinyin": "péngyou men",
+            "german": "Freunde"
+          },
+          {
+            "hanzi": "在",
+            "pinyin": "zài",
+            "german": "in"
+          },
+          {
+            "hanzi": "这里",
+            "pinyin": "zhèlǐ",
+            "german": "hier"
+          },
+          {
+            "hanzi": "等",
+            "pinyin": "děng",
+            "german": "warten"
+          },
+          {
+            "hanzi": "火车",
+            "pinyin": "huǒchē",
+            "german": "Zug"
+          }
+        ]
       }
     ],
     "quizzes": [
@@ -1725,7 +3678,7 @@
     "pinyinTitle": "Péngyou Jùhuì yǔ Lǐmào",
     "germanTitle": "Treffen mit Freunden — Begrüßung, Dank & Entschuldigung",
     "difficulty": "HSK 1",
-    "wordCount": 58,
+    "wordCount": 105,
     "hanziTag": "友",
     "summary": "Herr Wang und Fräulein Li treffen sich in einem Teehaus. Ein Gespräch über Höflichkeit, Pünktlichkeit und Teegenuss.",
     "audioUrl": "/audio/stories/story-10-full.mp3",
@@ -2034,6 +3987,295 @@
             "german": "keine Ursache / gern geschehen"
           }
         ]
+      },
+      {
+        "id": "s10-06",
+        "hanzi": "我们晚上见，先生和女士也来。",
+        "pinyin": "Wǒmen wǎnshang jiàn, xiānsheng hé nǚshì yě lái.",
+        "german": "Wir sehen uns abends, der Herr und die Dame kommen auch.",
+        "audioUrl": "/audio/stories/s10-06.mp3",
+        "tokens": [
+          {
+            "hanzi": "我们",
+            "pinyin": "wǒmen",
+            "german": "wir"
+          },
+          {
+            "hanzi": "晚上",
+            "pinyin": "wǎnshang",
+            "german": "abends"
+          },
+          {
+            "hanzi": "见",
+            "pinyin": "jiàn",
+            "german": "treffen"
+          },
+          {
+            "hanzi": "先生",
+            "pinyin": "xiānsheng",
+            "german": "Herr"
+          },
+          {
+            "hanzi": "和",
+            "pinyin": "hé",
+            "german": "und"
+          },
+          {
+            "hanzi": "女士",
+            "pinyin": "nǚshì",
+            "german": "Dame"
+          },
+          {
+            "hanzi": "也",
+            "pinyin": "yě",
+            "german": "auch"
+          },
+          {
+            "hanzi": "来",
+            "pinyin": "lái",
+            "german": "kommen"
+          }
+        ]
+      },
+      {
+        "id": "s10-07",
+        "hanzi": "我有一个男朋友，他很英俊。",
+        "pinyin": "Wǒ yǒu yí ge nánpéngyou, tā hěn yīngjùn.",
+        "german": "Ich habe einen Freund, er ist sehr gut aussehend.",
+        "audioUrl": "/audio/stories/s10-07.mp3",
+        "tokens": [
+          {
+            "hanzi": "我",
+            "pinyin": "wǒ",
+            "german": "ich"
+          },
+          {
+            "hanzi": "有",
+            "pinyin": "yǒu",
+            "german": "haben"
+          },
+          {
+            "hanzi": "一个",
+            "pinyin": "yí ge",
+            "german": "ein"
+          },
+          {
+            "hanzi": "男朋友",
+            "pinyin": "nánpéngyou",
+            "german": "Freund"
+          },
+          {
+            "hanzi": "他",
+            "pinyin": "tā",
+            "german": "er"
+          },
+          {
+            "hanzi": "很",
+            "pinyin": "hěn",
+            "german": "sehr"
+          },
+          {
+            "hanzi": "英俊",
+            "pinyin": "yīngjùn",
+            "german": "gut aussehend"
+          }
+        ]
+      },
+      {
+        "id": "s10-08",
+        "hanzi": "你有女朋友吗？她很漂亮。",
+        "pinyin": "Nǐ yǒu nǚpéngyou ma? Tā hěn piàoliang.",
+        "german": "Hast du eine Freundin? Sie ist sehr schön.",
+        "audioUrl": "/audio/stories/s10-08.mp3",
+        "tokens": [
+          {
+            "hanzi": "你",
+            "pinyin": "nǐ",
+            "german": "du"
+          },
+          {
+            "hanzi": "有",
+            "pinyin": "yǒu",
+            "german": "haben"
+          },
+          {
+            "hanzi": "女朋友",
+            "pinyin": "nǚpéngyou",
+            "german": "Freundin"
+          },
+          {
+            "hanzi": "吗",
+            "pinyin": "ma",
+            "german": "Fragepartikel"
+          },
+          {
+            "hanzi": "她",
+            "pinyin": "tā",
+            "german": "sie"
+          },
+          {
+            "hanzi": "很",
+            "pinyin": "hěn",
+            "german": "sehr"
+          },
+          {
+            "hanzi": "漂亮",
+            "pinyin": "piàoliang",
+            "german": "schön"
+          }
+        ]
+      },
+      {
+        "id": "s10-09",
+        "hanzi": "你们在哪里？那边的桌子上。",
+        "pinyin": "Nǐmen zài nǎlǐ? Nàbiān de zhuōzi shang.",
+        "german": "Wo seid ihr? Auf dem Tisch dort drüben.",
+        "audioUrl": "/audio/stories/s10-09.mp3",
+        "tokens": [
+          {
+            "hanzi": "你们",
+            "pinyin": "nǐmen",
+            "german": "ihr"
+          },
+          {
+            "hanzi": "在",
+            "pinyin": "zài",
+            "german": "sind"
+          },
+          {
+            "hanzi": "哪里",
+            "pinyin": "nǎlǐ",
+            "german": "wo"
+          },
+          {
+            "hanzi": "那边",
+            "pinyin": "nàbiān",
+            "german": "dort drüben"
+          },
+          {
+            "hanzi": "的",
+            "pinyin": "de",
+            "german": "Possessiv"
+          },
+          {
+            "hanzi": "桌子",
+            "pinyin": "zhuōzi",
+            "german": "Tisch"
+          },
+          {
+            "hanzi": "上",
+            "pinyin": "shàng",
+            "german": "auf"
+          }
+        ]
+      },
+      {
+        "id": "s10-10",
+        "hanzi": "她们也在这儿，有的喝茶，有的唱歌。",
+        "pinyin": "Tāmen yě zài zhèr, yǒude hē chá, yǒude chàng gē.",
+        "german": "Sie sind auch hier, manche trinken Tee, manche singen.",
+        "audioUrl": "/audio/stories/s10-10.mp3",
+        "tokens": [
+          {
+            "hanzi": "她们",
+            "pinyin": "tāmen",
+            "german": "sie (Frauen)"
+          },
+          {
+            "hanzi": "也",
+            "pinyin": "yě",
+            "german": "auch"
+          },
+          {
+            "hanzi": "在",
+            "pinyin": "zài",
+            "german": "sind"
+          },
+          {
+            "hanzi": "这儿",
+            "pinyin": "zhèr",
+            "german": "hier"
+          },
+          {
+            "hanzi": "有的",
+            "pinyin": "yǒude",
+            "german": "manche"
+          },
+          {
+            "hanzi": "喝",
+            "pinyin": "hē",
+            "german": "trinken"
+          },
+          {
+            "hanzi": "茶",
+            "pinyin": "chá",
+            "german": "Tee"
+          },
+          {
+            "hanzi": "有的",
+            "pinyin": "yǒude",
+            "german": "manche"
+          },
+          {
+            "hanzi": "唱歌",
+            "pinyin": "chàng gē",
+            "german": "singen"
+          }
+        ]
+      },
+      {
+        "id": "s10-11",
+        "hanzi": "这里有两千块钱，那是你的。",
+        "pinyin": "Zhèlǐ yǒu liǎng qiān kuài qián, nà shì nǐ de.",
+        "german": "Hier sind zweitausend Yuan, das ist deins.",
+        "audioUrl": "/audio/stories/s10-11.mp3",
+        "tokens": [
+          {
+            "hanzi": "这里",
+            "pinyin": "zhèlǐ",
+            "german": "hier"
+          },
+          {
+            "hanzi": "有",
+            "pinyin": "yǒu",
+            "german": "sind"
+          },
+          {
+            "hanzi": "两千",
+            "pinyin": "liǎng qiān",
+            "german": "zweitausend"
+          },
+          {
+            "hanzi": "块",
+            "pinyin": "kuài",
+            "german": "Yuan"
+          },
+          {
+            "hanzi": "钱",
+            "pinyin": "qián",
+            "german": "Geld"
+          },
+          {
+            "hanzi": "那",
+            "pinyin": "nà",
+            "german": "das dort"
+          },
+          {
+            "hanzi": "是",
+            "pinyin": "shì",
+            "german": "ist"
+          },
+          {
+            "hanzi": "你",
+            "pinyin": "nǐ",
+            "german": "dein"
+          },
+          {
+            "hanzi": "的",
+            "pinyin": "de",
+            "german": "Possessiv"
+          }
+        ]
       }
     ],
     "quizzes": [
@@ -2066,7 +4308,7 @@
     "pinyinTitle": "Zài Jiā Lǐ de Rìcháng Shēnghuó",
     "germanTitle": "Familienalltag — Kinder, Haushaltsdinge & Hobbys",
     "difficulty": "HSK 1",
-    "wordCount": 62,
+    "wordCount": 102,
     "hanziTag": "家",
     "summary": "Frau Zhang verbringt den Nachmittag mit ihrem Sohn und ihrer Tochter zu Hause. Zusammen lernen sie, kochen und kaufen ein.",
     "audioUrl": "/audio/stories/story-11-full.mp3",
@@ -2390,6 +4632,251 @@
             "german": "Dinge / Sachen"
           }
         ]
+      },
+      {
+        "id": "s11-06",
+        "hanzi": "孩子们要上学了，他们坐两点半的车。",
+        "pinyin": "Háizi men yào shàngxué le, tāmen zuò liǎng diǎn bàn de chē.",
+        "german": "Die Kinder müssen zur Schule, sie nehmen den Bus um halb drei.",
+        "audioUrl": "/audio/stories/s11-06.mp3",
+        "tokens": [
+          {
+            "hanzi": "孩子们",
+            "pinyin": "háizi men",
+            "german": "die Kinder"
+          },
+          {
+            "hanzi": "要",
+            "pinyin": "yào",
+            "german": "müssen"
+          },
+          {
+            "hanzi": "上学",
+            "pinyin": "shàngxué",
+            "german": "zur Schule gehen"
+          },
+          {
+            "hanzi": "了",
+            "pinyin": "le",
+            "german": "Perfektpartikel"
+          },
+          {
+            "hanzi": "他们",
+            "pinyin": "tāmen",
+            "german": "sie"
+          },
+          {
+            "hanzi": "坐",
+            "pinyin": "zuò",
+            "german": "fahren mit"
+          },
+          {
+            "hanzi": "两点半",
+            "pinyin": "liǎng diǎn bàn",
+            "german": "halb drei"
+          },
+          {
+            "hanzi": "的",
+            "pinyin": "de",
+            "german": "Possessiv"
+          },
+          {
+            "hanzi": "车",
+            "pinyin": "chē",
+            "german": "Auto / Bus"
+          }
+        ]
+      },
+      {
+        "id": "s11-07",
+        "hanzi": "这是一个问题，我要找女儿问她。",
+        "pinyin": "Zhè shì yí ge wèntí, wǒ yào zhǎo nǚ'ér wèn tā.",
+        "german": "Das ist eine Frage, ich muss meine Tochter fragen.",
+        "audioUrl": "/audio/stories/s11-07.mp3",
+        "tokens": [
+          {
+            "hanzi": "这",
+            "pinyin": "zhè",
+            "german": "das"
+          },
+          {
+            "hanzi": "是",
+            "pinyin": "shì",
+            "german": "sein"
+          },
+          {
+            "hanzi": "一个",
+            "pinyin": "yí ge",
+            "german": "ein"
+          },
+          {
+            "hanzi": "问题",
+            "pinyin": "wèntí",
+            "german": "Frage"
+          },
+          {
+            "hanzi": "我",
+            "pinyin": "wǒ",
+            "german": "ich"
+          },
+          {
+            "hanzi": "要",
+            "pinyin": "yào",
+            "german": "muss"
+          },
+          {
+            "hanzi": "找",
+            "pinyin": "zhǎo",
+            "german": "suchen"
+          },
+          {
+            "hanzi": "女儿",
+            "pinyin": "nǚ'ér",
+            "german": "Tochter"
+          },
+          {
+            "hanzi": "问",
+            "pinyin": "wèn",
+            "german": "fragen"
+          },
+          {
+            "hanzi": "她",
+            "pinyin": "tā",
+            "german": "sie"
+          }
+        ]
+      },
+      {
+        "id": "s11-08",
+        "hanzi": "我们只吃一半面包，牛奶喝一点儿。",
+        "pinyin": "Wǒmen zhǐ chī yíbàn miànbāo, niúnǎi hē yìdiǎnr.",
+        "german": "Wir essen nur die Hälfte vom Brot, ein bisschen Milch trinken wir.",
+        "audioUrl": "/audio/stories/s11-08.mp3",
+        "tokens": [
+          {
+            "hanzi": "我们",
+            "pinyin": "wǒmen",
+            "german": "wir"
+          },
+          {
+            "hanzi": "只",
+            "pinyin": "zhǐ",
+            "german": "nur"
+          },
+          {
+            "hanzi": "吃",
+            "pinyin": "chī",
+            "german": "essen"
+          },
+          {
+            "hanzi": "一半",
+            "pinyin": "yíbàn",
+            "german": "die Hälfte"
+          },
+          {
+            "hanzi": "面包",
+            "pinyin": "miànbāo",
+            "german": "Brot"
+          },
+          {
+            "hanzi": "牛奶",
+            "pinyin": "niúnǎi",
+            "german": "Milch"
+          },
+          {
+            "hanzi": "喝",
+            "pinyin": "hē",
+            "german": "trinken"
+          },
+          {
+            "hanzi": "一点儿",
+            "pinyin": "yìdiǎnr",
+            "german": "ein wenig"
+          }
+        ]
+      },
+      {
+        "id": "s11-09",
+        "hanzi": "有些事妈妈知道，她明年也来。",
+        "pinyin": "Yǒuxiē shì māma zhīdào, tā míngnián yě lái.",
+        "german": "Einige Dinge weiß Mama, sie kommt auch nächstes Jahr.",
+        "audioUrl": "/audio/stories/s11-09.mp3",
+        "tokens": [
+          {
+            "hanzi": "有些",
+            "pinyin": "yǒuxiē",
+            "german": "einige"
+          },
+          {
+            "hanzi": "事",
+            "pinyin": "shì",
+            "german": "Dinge"
+          },
+          {
+            "hanzi": "妈妈",
+            "pinyin": "māma",
+            "german": "Mama"
+          },
+          {
+            "hanzi": "知道",
+            "pinyin": "zhīdào",
+            "german": "wissen"
+          },
+          {
+            "hanzi": "她",
+            "pinyin": "tā",
+            "german": "sie"
+          },
+          {
+            "hanzi": "明年",
+            "pinyin": "míngnián",
+            "german": "nächstes Jahr"
+          },
+          {
+            "hanzi": "也",
+            "pinyin": "yě",
+            "german": "auch"
+          },
+          {
+            "hanzi": "来",
+            "pinyin": "lái",
+            "german": "kommen"
+          }
+        ]
+      },
+      {
+        "id": "s11-10",
+        "hanzi": "小朋友们在里边，休息一下。",
+        "pinyin": "Xiǎopéngyǒu men zài lǐbiān, xiūxi yíxià.",
+        "german": "Die Kinder sind drinnen, macht mal Pause.",
+        "audioUrl": "/audio/stories/s11-10.mp3",
+        "tokens": [
+          {
+            "hanzi": "小朋友们",
+            "pinyin": "xiǎopéngyǒu men",
+            "german": "die Kinder"
+          },
+          {
+            "hanzi": "在",
+            "pinyin": "zài",
+            "german": "in"
+          },
+          {
+            "hanzi": "里边",
+            "pinyin": "lǐbiān",
+            "german": "drinnen"
+          },
+          {
+            "hanzi": "休息",
+            "pinyin": "xiūxi",
+            "german": "sich ausruhen"
+          },
+          {
+            "hanzi": "一下",
+            "pinyin": "yíxià",
+            "german": "ein wenig"
+          }
+        ]
       }
     ],
     "quizzes": [
@@ -2422,7 +4909,7 @@
     "pinyinTitle": "Dǎ Diànhuà Wènhòu",
     "germanTitle": "Ein Telefonat — Verabredung & Wochentage",
     "difficulty": "HSK 1",
-    "wordCount": 57,
+    "wordCount": 113,
     "hanziTag": "话",
     "summary": "Ein Telefonat zwischen David und Lehrer Wang zur Terminabsprache für das kommende Wochenende.",
     "audioUrl": "/audio/stories/story-12-full.mp3",
@@ -2759,6 +5246,358 @@
             "hanzi": "见",
             "pinyin": "jiàn",
             "german": "sehen / treffen"
+          }
+        ]
+      },
+      {
+        "id": "s12-06",
+        "hanzi": "请问老师在哪儿办公？",
+        "pinyin": "Qǐngwèn lǎoshī zài nǎlǐ bàngōng?",
+        "german": "Entschuldigen Sie, wo hat der Lehrer sein Büro?",
+        "audioUrl": "/audio/stories/s12-06.mp3",
+        "tokens": [
+          {
+            "hanzi": "请问",
+            "pinyin": "qǐngwèn",
+            "german": "Entschuldigen Sie"
+          },
+          {
+            "hanzi": "老师",
+            "pinyin": "lǎoshī",
+            "german": "Lehrer"
+          },
+          {
+            "hanzi": "在",
+            "pinyin": "zài",
+            "german": "in"
+          },
+          {
+            "hanzi": "哪儿",
+            "pinyin": "nǎr",
+            "german": "wo"
+          },
+          {
+            "hanzi": "办公",
+            "pinyin": "bàngōng",
+            "german": "Büro"
+          }
+        ]
+      },
+      {
+        "id": "s12-07",
+        "hanzi": "哪个是你要的书？那个和那些好。",
+        "pinyin": "Nǎge shì nǐ yào de shū? Nàge hé nàxiē hǎo.",
+        "german": "Welches ist das Buch, das du willst? Der dort und die dort sind gut.",
+        "audioUrl": "/audio/stories/s12-07.mp3",
+        "tokens": [
+          {
+            "hanzi": "哪个",
+            "pinyin": "nǎge",
+            "german": "welches"
+          },
+          {
+            "hanzi": "是",
+            "pinyin": "shì",
+            "german": "ist"
+          },
+          {
+            "hanzi": "你",
+            "pinyin": "nǐ",
+            "german": "du"
+          },
+          {
+            "hanzi": "要",
+            "pinyin": "yào",
+            "german": "willst"
+          },
+          {
+            "hanzi": "的",
+            "pinyin": "de",
+            "german": "Possessiv"
+          },
+          {
+            "hanzi": "书",
+            "pinyin": "shū",
+            "german": "Buch"
+          },
+          {
+            "hanzi": "那个",
+            "pinyin": "nàge",
+            "german": "der dort"
+          },
+          {
+            "hanzi": "和",
+            "pinyin": "hé",
+            "german": "und"
+          },
+          {
+            "hanzi": "那些",
+            "pinyin": "nàxiē",
+            "german": "die dort"
+          },
+          {
+            "hanzi": "好",
+            "pinyin": "hǎo",
+            "german": "gut"
+          }
+        ]
+      },
+      {
+        "id": "s12-08",
+        "hanzi": "昨天我买了一个手机，非常便宜。",
+        "pinyin": "Zuótiān wǒ mǎi le yí ge shǒujī, fēicháng piányi.",
+        "german": "Gestern habe ich ein Handy gekauft, es war sehr billig.",
+        "audioUrl": "/audio/stories/s12-08.mp3",
+        "tokens": [
+          {
+            "hanzi": "昨天",
+            "pinyin": "zuótiān",
+            "german": "gestern"
+          },
+          {
+            "hanzi": "我",
+            "pinyin": "wǒ",
+            "german": "ich"
+          },
+          {
+            "hanzi": "买",
+            "pinyin": "mǎi",
+            "german": "kaufen"
+          },
+          {
+            "hanzi": "了",
+            "pinyin": "le",
+            "german": "Perfektpartikel"
+          },
+          {
+            "hanzi": "一个",
+            "pinyin": "yí ge",
+            "german": "ein"
+          },
+          {
+            "hanzi": "手机",
+            "pinyin": "shǒujī",
+            "german": "Handy"
+          },
+          {
+            "hanzi": "非常",
+            "pinyin": "fēicháng",
+            "german": "sehr"
+          },
+          {
+            "hanzi": "便宜",
+            "pinyin": "piányi",
+            "german": "billig"
+          }
+        ]
+      },
+      {
+        "id": "s12-09",
+        "hanzi": "去年我在这里，小学生也来了。",
+        "pinyin": "Qùnián wǒ zài zhèlǐ, xiǎoxuéshēng yě lái le.",
+        "german": "Letztes Jahr war ich hier, die Grundschüler kamen auch.",
+        "audioUrl": "/audio/stories/s12-09.mp3",
+        "tokens": [
+          {
+            "hanzi": "去年",
+            "pinyin": "qùnián",
+            "german": "letztes Jahr"
+          },
+          {
+            "hanzi": "我",
+            "pinyin": "wǒ",
+            "german": "ich"
+          },
+          {
+            "hanzi": "在",
+            "pinyin": "zài",
+            "german": "war"
+          },
+          {
+            "hanzi": "这里",
+            "pinyin": "zhèlǐ",
+            "german": "hier"
+          },
+          {
+            "hanzi": "小学生",
+            "pinyin": "xiǎoxuéshēng",
+            "german": "Grundschüler"
+          },
+          {
+            "hanzi": "也",
+            "pinyin": "yě",
+            "german": "auch"
+          },
+          {
+            "hanzi": "来",
+            "pinyin": "lái",
+            "german": "kommen"
+          },
+          {
+            "hanzi": "了",
+            "pinyin": "le",
+            "german": "Perfektpartikel"
+          }
+        ]
+      },
+      {
+        "id": "s12-10",
+        "hanzi": "中学生在这儿，大学生在那边。",
+        "pinyin": "Zhōngxuéshēng zài zhèr, dàxuéshēng zài nàbiān.",
+        "german": "Die Mittelschüler sind hier, die Studenten dort drüben.",
+        "audioUrl": "/audio/stories/s12-10.mp3",
+        "tokens": [
+          {
+            "hanzi": "中学生",
+            "pinyin": "zhōngxuéshēng",
+            "german": "Mittelschüler"
+          },
+          {
+            "hanzi": "在",
+            "pinyin": "zài",
+            "german": "sind"
+          },
+          {
+            "hanzi": "这儿",
+            "pinyin": "zhèr",
+            "german": "hier"
+          },
+          {
+            "hanzi": "大学生",
+            "pinyin": "dàxuéshēng",
+            "german": "Studenten"
+          },
+          {
+            "hanzi": "在",
+            "pinyin": "zài",
+            "german": "sind"
+          },
+          {
+            "hanzi": "那边",
+            "pinyin": "nàbiān",
+            "german": "dort drüben"
+          }
+        ]
+      },
+      {
+        "id": "s12-11",
+        "hanzi": "星期日没事，我和她吃晚饭。",
+        "pinyin": "Xīngqīrì méishi, wǒ hé tā chī wǎnfàn.",
+        "german": "Am Sonntag ist nichts, ich esse mit ihr Abendessen.",
+        "audioUrl": "/audio/stories/s12-11.mp3",
+        "tokens": [
+          {
+            "hanzi": "星期日",
+            "pinyin": "xīngqīrì",
+            "german": "Sonntag"
+          },
+          {
+            "hanzi": "没事",
+            "pinyin": "méishi",
+            "german": "nichts los"
+          },
+          {
+            "hanzi": "我",
+            "pinyin": "wǒ",
+            "german": "ich"
+          },
+          {
+            "hanzi": "和",
+            "pinyin": "hé",
+            "german": "mit"
+          },
+          {
+            "hanzi": "她",
+            "pinyin": "tā",
+            "german": "sie"
+          },
+          {
+            "hanzi": "吃",
+            "pinyin": "chī",
+            "german": "essen"
+          },
+          {
+            "hanzi": "晚饭",
+            "pinyin": "wǎnfàn",
+            "german": "Abendessen"
+          }
+        ]
+      },
+      {
+        "id": "s12-12",
+        "hanzi": "那件事有一点儿难。",
+        "pinyin": "Nà jiàn shì yǒu yìdiǎnr nán.",
+        "german": "Diese Sache ist ein wenig schwierig.",
+        "audioUrl": "/audio/stories/s12-12.mp3",
+        "tokens": [
+          {
+            "hanzi": "那",
+            "pinyin": "nà",
+            "german": "diese"
+          },
+          {
+            "hanzi": "件事",
+            "pinyin": "jiàn shì",
+            "german": "Angelegenheit"
+          },
+          {
+            "hanzi": "有",
+            "pinyin": "yǒu",
+            "german": "ist"
+          },
+          {
+            "hanzi": "一点儿",
+            "pinyin": "yìdiǎnr",
+            "german": "ein wenig"
+          },
+          {
+            "hanzi": "难",
+            "pinyin": "nán",
+            "german": "schwierig"
+          }
+        ]
+      },
+      {
+        "id": "s12-13",
+        "hanzi": "这些书多少钱一本？一百块。",
+        "pinyin": "Zhèxiē shū duōshao qián yì běn? Yì bǎi kuài.",
+        "german": "Was kosten diese Bücher pro Stück? Hundert Yuan.",
+        "audioUrl": "/audio/stories/s12-13.mp3",
+        "tokens": [
+          {
+            "hanzi": "这些",
+            "pinyin": "zhèxiē",
+            "german": "diese"
+          },
+          {
+            "hanzi": "书",
+            "pinyin": "shū",
+            "german": "Bücher"
+          },
+          {
+            "hanzi": "多少",
+            "pinyin": "duōshao",
+            "german": "wie viel"
+          },
+          {
+            "hanzi": "钱",
+            "pinyin": "qián",
+            "german": "Geld"
+          },
+          {
+            "hanzi": "一本",
+            "pinyin": "yì běn",
+            "german": "pro Stück"
+          },
+          {
+            "hanzi": "一百",
+            "pinyin": "yì bǎi",
+            "german": "hundert"
+          },
+          {
+            "hanzi": "块",
+            "pinyin": "kuài",
+            "german": "Yuan"
           }
         ]
       }
