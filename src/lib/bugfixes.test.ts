@@ -263,9 +263,11 @@ describe('Audio Speech Synthesis & Mandarin Fallback', () => {
 describe('Game Modes Streak & Daily Goal Activity Credit', () => {
   it('credits completed questions and updates streak when logging sessions from any mode', async () => {
     const { useProgressStore } = await import('../store/progressStore');
+    const { toDateKey } = await import('./srs');
+    const today = toDateKey(new Date());
 
     useProgressStore.setState({
-      dailyGoal: { date: '2026-09-07', targetReviews: 20, completedReviews: 0 },
+      dailyGoal: { date: today, targetReviews: 20, completedReviews: 0 },
       streak: { current: 0, longest: 0, lastActiveDate: null },
     });
 
@@ -279,15 +281,17 @@ describe('Game Modes Streak & Daily Goal Activity Credit', () => {
     const state = useProgressStore.getState();
     expect(state.dailyGoal.completedReviews).toBe(4);
     expect(state.streak.current).toBe(1);
-    expect(state.streak.lastActiveDate).toBe('2026-09-07');
+    expect(state.streak.lastActiveDate).toBe(today);
   });
 
   it('awards at least 1 credit for completed sessions even if correct count is 0', async () => {
     const { useProgressStore } = await import('../store/progressStore');
+    const { toDateKey } = await import('./srs');
+    const today = toDateKey(new Date());
 
     useProgressStore.setState({
-      dailyGoal: { date: '2026-09-07', targetReviews: 20, completedReviews: 2 },
-      streak: { current: 1, longest: 1, lastActiveDate: '2026-09-07' },
+      dailyGoal: { date: today, targetReviews: 20, completedReviews: 2 },
+      streak: { current: 1, longest: 1, lastActiveDate: today },
     });
 
     await useProgressStore.getState().logSession({
