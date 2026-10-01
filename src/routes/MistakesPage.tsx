@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   AlertTriangle,
   ArrowRight,
@@ -40,7 +40,12 @@ const SOURCE_LABELS: Record<MistakeSourceMode, { label: string; icon: typeof Zap
   review: { label: 'Review', icon: Layers },
 };
 
+/** Fallback für importierte/korrumpierte Fehlerbanken mit unbekanntem lastSourceMode. */
+const UNKNOWN_SOURCE: { label: string; icon: typeof Zap } = { label: 'Unbekannt', icon: Zap };
+
 const BATCH_SIZE = 5;
+/** Anzahl leerer Batches, bevor der Drill abbricht statt endlos neu zu generieren. */
+const MAX_EMPTY_BATCH_RETRIES = 2;
 
 export function MistakesPage() {
   const mistakes = useProgressStore((s) => s.mistakes);
@@ -68,6 +73,7 @@ export function MistakesPage() {
   const [resolvedInSession, setResolvedInSession] = useState<string[]>([]);
   const [batchFinished, setBatchFinished] = useState(false);
   const [batchCorrectCount, setBatchCorrectCount] = useState(0);
+  const [drillUnavailable, setDrillUnavailable] = useState(false);
 
   // Audio cleanup
   useEffect(() => {
@@ -75,15 +81,30 @@ export function MistakesPage() {
   }, []);
 
   // Initialisiere oder erneuere Batch
+  const retryAttemptsRef = useRef(0);
+
   const startNewBatch = useCallback(() => {
     stopCurrentAudio();
     const freshActive = filterActiveMistakes(useProgressStore.getState().mistakes);
     if (freshActive.length === 0) {
+      retryAttemptsRef.current = 0;
       setBatchQuestions([]);
       setBatchFinished(false);
+      setDrillUnavailable(false);
       return;
     }
     const questions = generateMistakeDrillBatch(freshActive, VOCAB_BY_ID, BATCH_SIZE);
+    if (questions.length === 0) {
+      // Unbekannte itemIds: der Generator liefert nichts. Nicht blind neu
+      // versuchen – nach zwei Fehlversuchen sichtbar melden statt 100% CPU.
+      retryAttemptsRef.current += 1;
+      if (retryAttemptsRef.current >= MAX_EMPTY_BATCH_RETRIES) {
+        setDrillUnavailable(true);
+      }
+      return;
+    }
+    retryAttemptsRef.current = 0;
+    setDrillUnavailable(false);
     setBatchQuestions(questions);
     setCurrentIdx(0);
     setSelectedOption(null);
@@ -95,13 +116,18 @@ export function MistakesPage() {
   }, []);
 
   useEffect(() => {
-    if (batchQuestions.length === 0 && activeMistakes.length > 0 && !batchFinished) {
+    if (
+      batchQuestions.length === 0 &&
+      activeMistakes.length > 0 &&
+      !batchFinished &&
+      !drillUnavailable
+    ) {
       const timer = window.setTimeout(() => {
         startNewBatch();
       }, 0);
       return () => window.clearTimeout(timer);
     }
-  }, [activeMistakes.length, batchQuestions.length, batchFinished, startNewBatch]);
+  }, [activeMistakes.length, batchQuestions.length, batchFinished, startNewBatch, drillUnavailable]);
 
   const currentQ: MistakeDrillQuestion | undefined = batchQuestions[currentIdx];
   const currentMistakeRecord = currentQ ? mistakes[currentQ.itemId] : undefined;
@@ -377,6 +403,29 @@ export function MistakesPage() {
                 </button>
               </div>
             </div>
+          ) : drillUnavailable ? (
+            <div className="double-bezel-casing shadow-whisper p-8 sm:p-12 text-center space-y-6">
+              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-3xl bg-amber-500/10 text-amber-600 dark:text-amber-400">
+                <AlertTriangle className="h-8 w-8" />
+              </div>
+              <div className="space-y-2 max-w-md mx-auto">
+                <SealBadge sealChar="缺" label="KEINE FRAGEN VERFÜGBAR" variant="cinnabar" />
+                <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">
+                  Drill gerade nicht möglich
+                </h2>
+                <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                  Die Fehlerbank enthält Einträge ohne passendes Vokabel-Datenmaterial. Im
+                  Fehler-Katalog findest du alle Details.
+                </p>
+              </div>
+              <KineticButton
+                variant="secondary"
+                onClick={() => setActiveTab('catalog')}
+                icon={<Search className="h-4 w-4" />}
+              >
+                Zum Fehler-Katalog
+              </KineticButton>
+            </div>
           ) : currentQ ? (
             <div className="double-bezel-casing shadow-whisper">
               <div className="double-bezel-core p-6 sm:p-10 space-y-8 relative">
@@ -553,7 +602,7 @@ export function MistakesPage() {
                 {/* Feedback-Banner nach der Antwort */}
                 {isAnswered && (
                   <div
-                    className={`rounded-2xl border p-4 text-center max-w-lg mx-auto space-y-2 animate-in fade-in zoom-in-95 duration-200 ${
+                    className={`animate-pop-in rounded-2xl border p-4 text-center max-w-lg mx-auto space-y-2 ${
                       lastCorrect
                         ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-900 dark:text-emerald-200'
                         : 'border-rose-500/40 bg-rose-500/10 text-rose-900 dark:text-rose-200'
@@ -574,8 +623,8 @@ export function MistakesPage() {
                     </div>
                     <p className="text-xs text-zinc-600 dark:text-zinc-400">
                       {lastCorrect
-                        ? (currentMistakeRecord?.consecutiveCorrect ?? 0) >= REQUIRED_CONSECUTIVE_CORRECT - 1
-                          ? 'Damit hast du die Vokabel 2x in Folge gelöst und aus der Fehlerbank bereinigt!'
+                        ? currentMistakeRecord?.isResolved
+                          ? `Damit hast du die Vokabel ${REQUIRED_CONSECUTIVE_CORRECT}x in Folge gelöst und aus der Fehlerbank bereinigt!`
                           : 'Noch 1 weiterer Treffer in der nächsten Einheit zur vollständigen Bereinigung.'
                         : 'Die Serie wurde auf 0 zurückgesetzt. Du wirst dieser Vokabel bald wieder begegnen.'}
                     </p>
@@ -636,7 +685,8 @@ export function MistakesPage() {
             {filteredCatalogMistakes.map((record) => {
               const vocab = VOCAB_BY_ID.get(record.itemId);
               if (!vocab) return null;
-              const sourceInfo = SOURCE_LABELS[record.lastSourceMode];
+              const sourceInfo =
+                SOURCE_LABELS[record.lastSourceMode] ?? UNKNOWN_SOURCE;
               const Icon = sourceInfo.icon;
 
               return (
@@ -688,7 +738,7 @@ export function MistakesPage() {
                     </div>
 
                     <Link
-                      to={`/dictionary?search=${encodeURIComponent(vocab.hanzi)}`}
+                      to={`/dictionary?q=${encodeURIComponent(vocab.hanzi)}`}
                       className="font-mono text-[11px] font-semibold text-emerald-700 dark:text-emerald-400 hover:underline flex items-center gap-0.5"
                     >
                       <span>Im Wörterbuch</span>

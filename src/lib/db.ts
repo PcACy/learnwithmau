@@ -96,7 +96,7 @@ export async function putCompletedStories(ids: string[]): Promise<void> {
 
 export async function getCompletedDialogues(): Promise<Record<string, { stars: number; bestScore: number; completedAt: string }>> {
   const meta = await getMeta('completedDialogues');
-  if (meta && typeof meta === 'object') return meta;
+  if (meta && typeof meta === 'object' && !Array.isArray(meta)) return meta;
   try {
     const raw = typeof window !== 'undefined' ? localStorage.getItem('hanzi_completed_dialogues') : null;
     return raw ? JSON.parse(raw) : {};
@@ -118,7 +118,7 @@ export async function putCompletedDialogues(dialogues: Record<string, { stars: n
 
 export async function getMistakeBank(): Promise<Record<string, MistakeRecord>> {
   const meta = await getMeta('mistakeBank');
-  if (meta && typeof meta === 'object') return meta;
+  if (meta && typeof meta === 'object' && !Array.isArray(meta)) return meta;
   try {
     const raw = typeof window !== 'undefined' ? localStorage.getItem('hanzi_mistake_bank') : null;
     return raw ? JSON.parse(raw) : {};
@@ -176,8 +176,78 @@ export async function exportBackup(): Promise<string> {
   return JSON.stringify(backup, null, 2);
 }
 
+/** YYYY-MM-DD Datumsschlüssel (wie von createCard erzeugt). */
+const DATE_KEY_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
+
+function isValidDateKey(value: unknown): value is string {
+  return typeof value === 'string' && DATE_KEY_PATTERN.test(value) && !Number.isNaN(Date.parse(value));
+}
+
+function isIsoTimestampOrNull(value: unknown): value is string | null {
+  return value === null || (typeof value === 'string' && !Number.isNaN(Date.parse(value)));
+}
+
+function isFiniteNumber(value: unknown): value is number {
+  return typeof value === 'number' && Number.isFinite(value);
+}
+
+/** Element-Validator: eine fremde/korrumpierte Backup-Datei darf keine Rows in Dexie schreiben. */
+function isValidSrsCard(value: unknown): value is SrsCard {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return false;
+  const card = value as Record<string, unknown>;
+  return (
+    typeof card.itemId === 'string' &&
+    card.itemId.length > 0 &&
+    isFiniteNumber(card.easiness) &&
+    card.easiness > 0 &&
+    isFiniteNumber(card.intervalDays) &&
+    card.intervalDays >= 0 &&
+    isFiniteNumber(card.repetitions) &&
+    card.repetitions >= 0 &&
+    isFiniteNumber(card.lapses) &&
+    card.lapses >= 0 &&
+    isValidDateKey(card.dueDate) &&
+    isIsoTimestampOrNull(card.lastReviewedAt)
+  );
+}
+
+/** Element-Validator für SessionStat-Zeilen aus fremden Backups. */
+function isValidSessionStat(value: unknown): value is SessionStat {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return false;
+  const row = value as Record<string, unknown>;
+  return (
+    typeof row.mode === 'string' &&
+    row.mode.length > 0 &&
+    typeof row.finishedAt === 'string' &&
+    !Number.isNaN(Date.parse(row.finishedAt)) &&
+    isFiniteNumber(row.answered) &&
+    row.answered >= 0 &&
+    isFiniteNumber(row.correct) &&
+    row.correct >= 0 &&
+    isFiniteNumber(row.durationMs) &&
+    row.durationMs >= 0
+  );
+}
+
+const META_KEYS: readonly MetaKey[] = [
+  'streak',
+  'dailyGoal',
+  'completedGrammar',
+  'completedStories',
+  'completedDialogues',
+  'mistakeBank',
+];
+
+function isValidMetaRow(value: unknown): value is MetaRow {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return false;
+  const row = value as Record<string, unknown>;
+  if (typeof row.key !== 'string') return false;
+  return (META_KEYS as readonly string[]).includes(row.key);
+}
+
 /**
  * Importiert ein Backup-JSON in Dexie (atomar in einer Transaktion).
+ * Ungültige oder importierte Fremd-Einträge werden verworfen, nicht geschrieben.
  */
 export async function importBackup(
   jsonContent: string | Record<string, unknown>,
@@ -193,17 +263,29 @@ export async function importBackup(
       throw new Error('Ungültiges Dateiformat: Tabellen fehlen');
     }
 
+    const cards = data.cards.filter(isValidSrsCard);
+    const stats = data.stats.filter(isValidSessionStat);
+    const meta = Array.isArray(data.meta) ? data.meta.filter(isValidMetaRow) : [];
+
     await db.transaction('rw', db.cards, db.meta, db.stats, async () => {
       await db.cards.clear();
       await db.meta.clear();
       await db.stats.clear();
 
-      if (data.cards.length > 0) {
-        await db.cards.bulkPut(data.cards);
+      // Lokaler Spiegel muss vor dem Import sterben, sonst reaktiviert ein
+      // Backup ohne mistakeBank-Zeile die alte Fehlerbank nach dem Neuladen.
+      try {
+        localStorage.removeItem('hanzi_mistake_bank');
+      } catch {
+        // ignore
       }
-      if (Array.isArray(data.meta) && data.meta.length > 0) {
-        await db.meta.bulkPut(data.meta);
-        for (const row of data.meta) {
+
+      if (cards.length > 0) {
+        await db.cards.bulkPut(cards);
+      }
+      if (meta.length > 0) {
+        await db.meta.bulkPut(meta);
+        for (const row of meta) {
           if (row.key === 'completedGrammar' && Array.isArray(row.value)) {
             try {
               localStorage.setItem('hanzi_completed_grammar', JSON.stringify(row.value));
@@ -231,9 +313,9 @@ export async function importBackup(
           }
         }
       }
-      if (data.stats.length > 0) {
+      if (stats.length > 0) {
         // Strip previous auto-increment IDs
-        const cleanedStats = data.stats.map((s) => ({
+        const cleanedStats = stats.map((s) => ({
           mode: s.mode,
           finishedAt: s.finishedAt,
           answered: s.answered,
@@ -246,8 +328,8 @@ export async function importBackup(
 
     return {
       success: true,
-      cardsCount: data.cards.length,
-      statsCount: data.stats.length,
+      cardsCount: cards.length,
+      statsCount: stats.length,
     };
   } catch (error) {
     return {

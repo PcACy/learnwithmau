@@ -26,6 +26,7 @@ import { db } from '../lib/db';
 import { selectDueItemIds } from '../lib/srsQuery';
 import { ACHIEVEMENTS } from '../config/achievements';
 import { MASTERY_LEVELS, getMasteryLevel } from '../lib/mastery';
+import { EXAM_FORMAT, PASS_MARK } from '../lib/mockExamEngine';
 import { SealBadge } from '../components/ui/SealBadge';
 
 const ALL_ITEM_IDS: readonly string[] = VOCAB.map((item) => item.id);
@@ -81,7 +82,7 @@ export function StatsPage() {
           else if (row.mode === 'number-drill') numbersCorrect += row.correct;
           else if (row.mode === 'review') reviewCount += row.answered;
           else if (row.mode === 'exam') {
-            if (row.correct >= 18) examPassed += 1;
+            if (row.correct * EXAM_FORMAT.pointsPerQuestion >= PASS_MARK) examPassed += 1;
           }
           else if (row.mode === 'dialogue') {
             dialogueCompleted += 1;
@@ -422,7 +423,7 @@ export function StatsPage() {
             </span>
             <div>
               <h3 className="font-bold text-zinc-900 dark:text-zinc-100">HSK-1 Wörterbuch</h3>
-              <p className="text-xs text-zinc-500 dark:text-zinc-400">Alle 162 Wörter & Strichreihenfolge</p>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400">Alle {VOCAB.length} Wörter & Strichreihenfolge</p>
             </div>
           </div>
           <ArrowRight className="h-5 w-5 text-zinc-400 transition-transform group-hover:translate-x-1 group-hover:text-emerald-600 dark:group-hover:text-emerald-400" />

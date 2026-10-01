@@ -72,7 +72,13 @@ export function HorizontalScrollRow({
       if (ro) ro.disconnect();
       window.removeEventListener('resize', onResize);
     };
-  }, [updateScrollState, children]);
+  }, [updateScrollState]);
+
+  // Neue/entfernte Kinder ändern scrollWidth – nur den Zustand nachziehen,
+  // ohne die Listener (und den ResizeObserver) neu aufzubauen.
+  useEffect(() => {
+    updateScrollState();
+  }, [children, updateScrollState]);
 
   // Mausrad-Unterstützung: Vertikales Rad scrollt horizontal, sofern im Überlauf
   useEffect(() => {

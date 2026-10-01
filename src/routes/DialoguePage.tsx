@@ -542,7 +542,7 @@ export function DialoguePage() {
               return (
                 <div
                   key={sc.id}
-                  className="group relative flex flex-col justify-between rounded-[2rem] border border-zinc-200/80 bg-white p-6 shadow-whisper transition-all duration-200 hover:-translate-y-1 hover:border-emerald-500/50 hover:shadow-hover dark:border-white/[0.08] dark:bg-zinc-900 dark:hover:border-emerald-500/30 cursor-pointer"
+                  className="group relative flex flex-col justify-between rounded-[2rem] border border-zinc-200/80 bg-white p-6 shadow-whisper transition-all duration-200 hover:-translate-y-1 hover:border-emerald-500/50 hover:shadow-lg dark:border-white/[0.08] dark:bg-zinc-900 dark:hover:border-emerald-500/30 cursor-pointer"
                   onClick={() => setBriefingScenario(sc)}
                 >
                   <div>

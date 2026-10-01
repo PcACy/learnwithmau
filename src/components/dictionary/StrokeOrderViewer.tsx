@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type HanziWriter from 'hanzi-writer';
 import {
+  AlertTriangle,
   Check,
   ChevronLeft,
   ChevronRight,
@@ -17,6 +18,7 @@ import {
 import { useSettingsStore } from '../../store/settingsStore';
 import { fireMicroBurst } from '../../lib/confetti';
 import { useKeyDown } from '../../hooks/useKeyDown';
+import { usePrefersDark } from '../../hooks/usePrefersDark';
 
 interface StrokeOrderViewerProps {
   character: string;
@@ -27,16 +29,21 @@ interface StrokeOrderViewerProps {
 
 type ViewerMode = 'animate' | 'step' | 'quiz';
 
+/**
+ * HanziWriter garantiert `_renderState` nicht über die öffentliche API –
+ * der Schrittmodus prüft daher zur Laufzeit, ob der RenderState existiert.
+ */
+type MaybeRenderStateWriter = HanziWriter & {
+  _renderState?: { cancelAll(): void; updateState(state: unknown): void } | undefined;
+};
+
 export function StrokeOrderViewer({ character, pinyin, meaning, size = 190 }: StrokeOrderViewerProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const writerRef = useRef<HanziWriter | null>(null);
 
   const theme = useSettingsStore((s) => s.theme);
-  const isDark =
-    theme === 'dark' ||
-    (theme === 'system' &&
-      typeof window !== 'undefined' &&
-      window.matchMedia('(prefers-color-scheme: dark)').matches);
+  const prefersDark = usePrefersDark();
+  const isDark = theme === 'dark' || (theme === 'system' && prefersDark);
 
   const [mode, setMode] = useState<ViewerMode>('animate');
   const [isPlaying, setIsPlaying] = useState(false);
@@ -46,6 +53,7 @@ export function StrokeOrderViewer({ character, pinyin, meaning, size = 190 }: St
   const [quizStatus, setQuizStatus] = useState<'idle' | 'drawing' | 'success'>('idle');
   const [quizFeedback, setQuizFeedback] = useState<string>('');
   const [loading, setLoading] = useState(true);
+  const [strokeDataMissing, setStrokeDataMissing] = useState(false);
 
   const strokeColor = isDark ? '#34d399' : '#059669';
   const outlineColor = isDark ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.12)';
@@ -54,10 +62,12 @@ export function StrokeOrderViewer({ character, pinyin, meaning, size = 190 }: St
 
   // Hilfsfunktion: Setzt exakt die ersten `count` Striche sichtbar und verbirgt den Rest
   const setVisibleStrokes = useCallback((count: number, total: number) => {
-    const writer = writerRef.current as any;
+    const writer = writerRef.current as MaybeRenderStateWriter | null;
     if (!writer) return;
 
     writer.cancelQuiz();
+    // Feature-Detect: HanziWriter garantiert _renderState nicht über die
+    // öffentliche API – ohne RenderState einfach den Zeichen-Turnus abbrechen.
     if (writer._renderState) {
       writer._renderState.cancelAll();
       const strokesObj: Record<number, { opacity: number; displayPortion: number }> = {};
@@ -91,6 +101,7 @@ export function StrokeOrderViewer({ character, pinyin, meaning, size = 190 }: St
     let cancelled = false;
     containerRef.current.innerHTML = '';
     setLoading(true);
+    setStrokeDataMissing(false);
     setQuizStatus('idle');
     setQuizFeedback('');
 
@@ -124,19 +135,12 @@ export function StrokeOrderViewer({ character, pinyin, meaning, size = 190 }: St
                 }
                 onComplete(data);
               })
-              .catch(() => {
+              .catch((err) => {
                 if (cancelled) return;
-                // Fallback auf CDN falls lokale Datei fehlt
-                fetch(`https://cdn.jsdelivr.net/npm/hanzi-writer-data@2.0/${encodeURIComponent(char)}.json`)
-                  .then((r) => r.json())
-                  .then((data) => {
-                    if (cancelled) return;
-                    if (data && Array.isArray(data.strokes)) setTotalStrokes(data.strokes.length);
-                    onComplete(data);
-                  })
-                  .catch((err) => {
-                    if (!cancelled) onErr(err);
-                  });
+                // Kein CDN-Fallback: die App ist offline-first, und ein
+                // externer Abruf würde das gelernte Zeichen offenlegen.
+                setStrokeDataMissing(true);
+                onErr(err);
               });
           },
           onLoadCharDataSuccess: () => {
@@ -361,6 +365,19 @@ export function StrokeOrderViewer({ character, pinyin, meaning, size = 190 }: St
         {loading && (
           <div className="absolute inset-0 flex items-center justify-center bg-white/70 backdrop-blur-xs dark:bg-zinc-900/70">
             <RefreshCw className="h-6 w-6 animate-spin text-emerald-600 dark:text-emerald-400" />
+          </div>
+        )}
+
+        {strokeDataMissing && (
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-white/85 p-6 text-center backdrop-blur-xs dark:bg-zinc-900/85">
+            <AlertTriangle className="h-6 w-6 text-amber-500" aria-hidden />
+            <p className="text-xs font-semibold text-zinc-700 dark:text-zinc-200">
+              Keine Strichdaten für {character} offline verfügbar.
+            </p>
+            <p className="max-w-[16rem] text-[11px] leading-relaxed text-zinc-500 dark:text-zinc-400">
+              Der Zeichen-Trainer lädt bewusst nur lokale Daten. Für dieses Zeichen fehlt die Datei
+              im App-Bund.
+            </p>
           </div>
         )}
       </div>

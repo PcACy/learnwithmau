@@ -39,6 +39,8 @@ export function BlitzPage() {
   const answeredRef = useRef(answeredCount);
   const correctCountRef = useRef(correctCount);
   const advanceTimerRef = useRef<number | undefined>(undefined);
+  const intervalRef = useRef<number | undefined>(undefined);
+  const timeLeftRef = useRef(TOTAL_TIME_SEC);
 
   useEffect(() => {
     answeredRef.current = answeredCount;
@@ -63,6 +65,7 @@ export function BlitzPage() {
     const q = generateBlitzQuestions(20);
     setQuestions(q);
     setCurrentIdx(0);
+    timeLeftRef.current = TOTAL_TIME_SEC;
     setTimeLeft(TOTAL_TIME_SEC);
     setScore(0);
     setStreak(0);
@@ -74,33 +77,54 @@ export function BlitzPage() {
     setGameState('playing');
   }, []);
 
-  // Timer-Countdown (unabhängig von Antworten/Score, um Reset-Freeze zu verhindern)
+  /**
+   * Beendet den Lauf. Bewusst als Effekt-Callback und nicht im setState-Updater:
+   * Updater dürfen unter StrictMode doppelt laufen – sonst entstehen doppelte
+   * db.stats-Zeilen und doppelter Confetti-Effekt.
+   */
+  const endRun = useCallback(() => {
+    if (intervalRef.current !== undefined) {
+      window.clearInterval(intervalRef.current);
+      intervalRef.current = undefined;
+    }
+    if (advanceTimerRef.current !== undefined) {
+      window.clearTimeout(advanceTimerRef.current);
+      advanceTimerRef.current = undefined;
+    }
+    setTimeLeft(0);
+    setGameState('ended');
+    fireCelebration();
+    void logSession({
+      mode: 'blitz',
+      answered: answeredRef.current,
+      correct: correctCountRef.current,
+      durationMs: TOTAL_TIME_SEC * 1000,
+    });
+  }, [logSession]);
+
+  // Timer-Countdown (unabhängig von Antworten/Score, um Reset-Freeze zu verhindern).
+  // Die Restzeit kommt aus dem Ref, damit endRun() außerhalb des
+  // setState-Updaters läuft (Updater sind unter StrictMode nicht rein).
   useEffect(() => {
     if (gameState !== 'playing') return;
 
-    const timer = setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev <= 1) {
-          clearInterval(timer);
-          if (advanceTimerRef.current !== undefined) {
-            window.clearTimeout(advanceTimerRef.current);
-          }
-          setGameState('ended');
-          fireCelebration();
-          void logSession({
-            mode: 'blitz',
-            answered: answeredRef.current,
-            correct: correctCountRef.current,
-            durationMs: TOTAL_TIME_SEC * 1000,
-          });
-          return 0;
-        }
-        return prev - 1;
-      });
+    const timer = window.setInterval(() => {
+      if (timeLeftRef.current <= 1) {
+        timeLeftRef.current = 0;
+        endRun();
+        return;
+      }
+      const next = timeLeftRef.current - 1;
+      timeLeftRef.current = next;
+      setTimeLeft(next);
     }, 1000);
+    intervalRef.current = timer;
 
-    return () => clearInterval(timer);
-  }, [gameState, logSession]);
+    return () => {
+      window.clearInterval(timer);
+      if (intervalRef.current === timer) intervalRef.current = undefined;
+    };
+  }, [gameState, endRun]);
 
   const currentQ = questions[currentIdx];
 
@@ -226,7 +250,7 @@ export function BlitzPage() {
   }
 
   if (gameState === 'ended') {
-    const accuracy = answeredCount > 0 ? Math.round(((score / 100) / answeredCount) * 100) : 0;
+    const accuracy = answeredCount > 0 ? Math.round((correctCount / answeredCount) * 100) : 0;
 
     return (
       <SessionSummary

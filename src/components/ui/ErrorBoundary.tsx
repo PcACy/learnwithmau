@@ -1,5 +1,6 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react';
 import { AlertTriangle, RefreshCw, Trash2 } from 'lucide-react';
+import { resetAllLocalData } from '../../lib/resetApp';
 
 interface Props {
   children: ReactNode;
@@ -29,16 +30,9 @@ export class ErrorBoundary extends Component<Props, State> {
   };
 
   private handleReset = async () => {
-    try {
-      if ('indexedDB' in window) {
-        indexedDB.deleteDatabase('hanzi-arcade');
-      }
-      localStorage.clear();
-      sessionStorage.clear();
-    } catch {
-      // ignore
-    }
-    window.location.href = '/';
+    // Nur App-eigene Daten löschen – localStorage.clear() würde auch die
+    // Keys fremder Origin-Anwendungen mitnehmen.
+    await resetAllLocalData();
   };
 
   render(): ReactNode {

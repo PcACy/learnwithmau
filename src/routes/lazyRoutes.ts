@@ -63,7 +63,7 @@ export const ROUTE_PRELOAD_MAP: Record<string, () => Promise<unknown>> = {
   '/mistakes': () => MistakesPage.preload(),
   '/blitz': () => BlitzPage.preload(),
   '/pinyin': () => PinyinPage.preload(),
-  '/stroke-guide': () => StrokeGuidePage.preload(),
+  '/strokes': () => StrokeGuidePage.preload(),
   '/culture': () => CulturePage.preload(),
   '/ear-trainer': () => EarTrainerPage.preload(),
   '/typeracer': () => TypeRacerPage.preload(),

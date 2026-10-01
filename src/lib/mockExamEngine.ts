@@ -8,6 +8,11 @@ export type ExamMode = 'set1' | 'set2' | 'shuffle';
 
 const ALL_QUESTIONS = mockExamData as ExamQuestion[];
 
+/** Einmalig sortiert: längste Zeichen zuerst, damit Greedy-Matching Mehrzeichen zuerst trifft. */
+const VOCAB_BY_LENGTH_DESC: readonly VocabItem[] = [...VOCAB].sort(
+  (a, b) => b.hanzi.length - a.hanzi.length,
+);
+
 /** Offizielles Format der neuen HSK-3.0-Prüfung, Stufe 1 (gültig ab 1. Juli 2026). */
 export const EXAM_FORMAT = {
   questionsPerSet: 40,
@@ -169,8 +174,7 @@ export function findVocabForExamQuestion(q: ExamQuestion): VocabItem | undefined
 
   const haystack = `${q.chineseText ?? ''} ${q.context ?? ''}`;
   if (haystack.trim().length > 0) {
-    const sorted = [...VOCAB].sort((a, b) => b.hanzi.length - a.hanzi.length);
-    for (const v of sorted) {
+    for (const v of VOCAB_BY_LENGTH_DESC) {
       if (haystack.includes(v.hanzi)) {
         return v;
       }

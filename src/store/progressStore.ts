@@ -89,6 +89,9 @@ export interface ProgressState {
   clearResolvedMistakes(): Promise<void>;
 }
 
+/** Handle des ausstehenden 6s-Nachmerges aus hydrate(); wird bei jedem hydrate() verworfen. */
+let lateMergeTimer: number | undefined;
+
 export const useProgressStore = create<ProgressState>()((set, get) => ({
   // Ohne Window (Tests/SSR) gibt es kein IndexedDB – dann direkt als bereit
   // markieren, damit AppShell die Seiten statt des Skeletons rendert.
@@ -100,6 +103,13 @@ export const useProgressStore = create<ProgressState>()((set, get) => ({
 
   async hydrate() {
     const HYDRATION_TIMEOUT_MS = 3000;
+
+    // Ein noch ausstehender Nachmerge darf keine veralteten Daten
+    // (z.B. aus vor einem Reset) zurückholen.
+    if (lateMergeTimer !== undefined) {
+      window.clearTimeout(lateMergeTimer);
+      lateMergeTimer = undefined;
+    }
 
     // IndexedDB.open kann bei blockierten Schema-Upgrades oder hängenden
     // deleteDatabase-Aufrufen PENDING bleiben (nie rejecten) – ohne Timeout
@@ -146,7 +156,8 @@ export const useProgressStore = create<ProgressState>()((set, get) => ({
     if (timedOut) {
       // Nachmerge: Wenn die Datenbank später doch aufgeht (z.B. nach dem
       // Schließen eines blockierenden Tabs), Daten leise übernehmen.
-      window.setTimeout(() => {
+      lateMergeTimer = window.setTimeout(() => {
+        lateMergeTimer = undefined;
         void load()
           .then(([lateRows, lateStreak, lateGoal, lateMistakes]) => {
             if (!lateRows) return;

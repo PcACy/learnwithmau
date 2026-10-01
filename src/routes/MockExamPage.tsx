@@ -134,23 +134,30 @@ export function MockExamPage() {
     submitExamRef.current = handleSubmitExam;
   });
 
-  // Timer: Stabil ohne Re-Erstellung bei jedem Sekundenschritt
+  // Timer: Stabil ohne Re-Erstellung bei jedem Sekundenschritt.
+  // Der Updater bleibt rein (nur Arithmetik); das Einreichen passiert
+  // danach im Effekt-Callback, da Updater unter StrictMode doppelt laufen.
+  const examTimerExpiredRef = useRef(false);
+
   useEffect(() => {
     if (phase !== 'exam' || isPaused) return;
 
     const timer = window.setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev <= 1) {
-          window.clearInterval(timer);
-          submitExamRef.current();
-          return 0;
-        }
-        return prev - 1;
-      });
+      setTimeLeft((prev) => (prev <= 1 ? 0 : prev - 1));
     }, 1000);
 
     return () => window.clearInterval(timer);
   }, [phase, isPaused]);
+
+  useEffect(() => {
+    if (phase !== 'exam' || isPaused) {
+      examTimerExpiredRef.current = false;
+      return;
+    }
+    if (timeLeft > 0 || examTimerExpiredRef.current) return;
+    examTimerExpiredRef.current = true;
+    submitExamRef.current();
+  }, [phase, isPaused, timeLeft]);
 
   // Audio bei Fragenwechsel im Hörverstehen
   useEffect(() => {

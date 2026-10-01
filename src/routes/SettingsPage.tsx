@@ -52,6 +52,7 @@ export function SettingsPage() {
   const [backupOpen, setBackupOpen] = useState(false);
   const [storageText, setStorageText] = useState<string>('–');
   const [armed, setArmed] = useState(false);
+  const [previewingSystem, setPreviewingSystem] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -71,6 +72,22 @@ export function SettingsPage() {
     const id = window.setTimeout(() => setArmed(false), 5000);
     return () => window.clearTimeout(id);
   }, [armed]);
+
+  // "Vorschau System": folgt der OS-Einstellung live, solange die Vorschau
+  // aktiv ist – nicht nur einmalig beim Klick.
+  useEffect(() => {
+    if (!previewingSystem) return;
+    applyTheme('system');
+    if (typeof window.matchMedia !== 'function') return;
+    const mql = window.matchMedia('(prefers-color-scheme: dark)');
+    const onChange = () => applyTheme('system');
+    mql.addEventListener?.('change', onChange);
+    return () => {
+      mql.removeEventListener?.('change', onChange);
+      // Zurück auf die gespeicherte Auswahl, falls sie nicht 'system' ist.
+      applyTheme(theme);
+    };
+  }, [previewingSystem, theme]);
 
   const stepTarget = useCallback(
     (delta: number) => {
@@ -203,7 +220,8 @@ export function SettingsPage() {
               {' '}
               <button
                 type="button"
-                onClick={() => applyTheme('system')}
+                onClick={() => setPreviewingSystem((v) => !v)}
+                aria-pressed={previewingSystem}
                 className="underline decoration-dotted underline-offset-2 hover:text-emerald-700 dark:hover:text-emerald-400"
               >
                 Vorschau System
