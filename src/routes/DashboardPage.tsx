@@ -3,6 +3,7 @@ import {
   ArrowRight,
   BookOpen,
   BookOpenText,
+  CalendarDays,
   CheckCircle2,
   ChevronRight,
   Compass,
@@ -27,7 +28,9 @@ import { useProgressStore } from '../store/progressStore';
 import { useKeyDown } from '../hooks/useKeyDown';
 import { VOCAB } from '../data';
 import { selectDueItemIds, selectMastery } from '../lib/srsQuery';
-import { getCompletedDialogues, getCompletedGrammar, getCompletedStories } from '../lib/db';
+import { getCompletedDialogues, getCompletedGrammar, getCompletedStories, getStudyPlan } from '../lib/db';
+import { buildPlanDay, getPlanDay, getPlanPhase, isTaskDone, type StudyPlanState } from '../lib/studyPlan';
+import { PLAN_DAYS } from '../data/studyPlan';
 import { filterActiveMistakes } from '../lib/mistakeBank';
 import {
   LESSONS_META,
@@ -50,11 +53,17 @@ export function DashboardPage() {
   const [completedGrammar, setCompletedGrammar] = useState<string[]>([]);
   const [completedStories, setCompletedStories] = useState<string[]>([]);
   const [completedDialoguesCount, setCompletedDialoguesCount] = useState<number>(0);
+  const [completedDialogueIds, setCompletedDialogueIds] = useState<string[]>([]);
+  const [studyPlan, setStudyPlan] = useState<StudyPlanState | null>(null);
 
   useEffect(() => {
     let cancelled = false;
+    void getStudyPlan().then((plan) => {
+      if (!cancelled) setStudyPlan(plan);
+    });
     void Promise.all([getCompletedGrammar(), getCompletedStories(), getCompletedDialogues()]).then(([g, s, d]) => {
       if (cancelled) return;
+      setCompletedDialogueIds(Object.keys(d || {}));
       setCompletedGrammar(g);
       setCompletedStories(s);
       setCompletedDialoguesCount(Object.keys(d || {}).length);
@@ -74,6 +83,17 @@ export function DashboardPage() {
   );
   const mastery = useMemo(() => selectMastery(cards, VOCAB.length), [cards]);
   const masteryPercent = Math.round(mastery * 100);
+
+  const planToday = useMemo(() => {
+    if (!studyPlan) return null;
+    const rawDay = getPlanDay(studyPlan.startDate, new Date());
+    if (getPlanPhase(rawDay) !== 'active') return null;
+    const day = buildPlanDay(rawDay, ALL_ITEM_IDS);
+    const doneSet = new Set(studyPlan.doneTasks);
+    const content = { grammar: completedGrammar, stories: completedStories, dialogues: completedDialogueIds };
+    const done = day.tasks.filter((task) => isTaskDone(task, doneSet, content)).length;
+    return { day, done };
+  }, [studyPlan, completedGrammar, completedStories, completedDialogueIds]);
   const goalReached = dailyGoal.completedReviews >= dailyGoal.targetReviews;
 
   const nextGrammarLesson = useMemo(() => {
@@ -175,6 +195,26 @@ export function DashboardPage() {
           </Link>
         </div>
       </div>
+
+      {planToday && (
+        <Link
+          to="/plan"
+          className="group flex items-center justify-between gap-4 rounded-[2rem] border border-emerald-500/30 bg-emerald-500/[0.06] px-6 py-4 transition-colors hover:bg-emerald-500/10"
+        >
+          <div className="flex items-center gap-3">
+            <CalendarDays className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+            <div>
+              <p className="text-sm font-bold">
+                Tag {planToday.day.day} von {PLAN_DAYS}: {planToday.day.theme}
+              </p>
+              <p className="font-mono text-xs text-zinc-500 dark:text-zinc-400">
+                {planToday.done}/{planToday.day.tasks.length} Aufgaben erledigt · {planToday.day.totalMinutes} Min.
+              </p>
+            </div>
+          </div>
+          <ArrowRight className="h-4 w-4 text-emerald-600 transition-transform group-hover:translate-x-0.5" />
+        </Link>
+      )}
 
       {/* 2. Intelligente Hero Call-To-Action Card (Double-Bezel Architecture) */}
       <div

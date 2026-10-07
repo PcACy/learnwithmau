@@ -44,6 +44,7 @@ const ROUTES: readonly [path: string, marker: string][] = [
   ['/strokes', 'Stricharten- &amp; Radikal-Fibel'],
   ['/culture', 'Kultur, Etikette'],
   ['/mistakes', 'Schwachstellen-Trainer'],
+  ['/plan', 'Dein 30-Tage-Lernplan'],
 ];
 
 describe('Alle Routen rendern ohne Crash', () => {

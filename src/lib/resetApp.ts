@@ -27,6 +27,7 @@ export async function resetAllLocalData(): Promise<void> {
     localStorage.removeItem('hanzi_completed_stories');
     localStorage.removeItem('hanzi_completed_dialogues');
     localStorage.removeItem('hanzi_mistake_bank');
+    localStorage.removeItem('hanzi_study_plan');
     sessionStorage.clear();
   } catch {
     // Private-Mode-Fälle ignorieren

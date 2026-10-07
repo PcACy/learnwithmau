@@ -20,6 +20,7 @@ import {
   StatsPage,
   StoriesPage,
   StrokeGuidePage,
+  StudyPlanPage,
   TypeRacerPage,
 } from './routes/lazyRoutes';
 
@@ -59,6 +60,7 @@ export function AppRoutes() {
         <Route path="/settings" element={<SettingsPage />} />
         <Route path="/blitz" element={<BlitzPage />} />
         <Route path="/mistakes" element={<MistakesPage />} />
+        <Route path="/plan" element={<StudyPlanPage />} />
         {MODES.map((mode) => (
           <Route key={mode.id} path={mode.path} element={renderMode(mode)} />
         ))}
