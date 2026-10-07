@@ -18,6 +18,7 @@ export const AlchemyPage = lazyRoute(() => import('./AlchemyPage'), 'AlchemyPage
 export const SentenceBuilderPage = lazyRoute(() => import('./SentenceBuilderPage'), 'SentenceBuilderPage');
 export const NumberDrillPage = lazyRoute(() => import('./NumberDrillPage'), 'NumberDrillPage');
 export const ReviewPage = lazyRoute(() => import('./ReviewPage'), 'ReviewPage');
+export const StudyPlanPage = lazyRoute(() => import('./StudyPlanPage'), 'StudyPlanPage');
 export const MockExamPage = lazyRoute(() => import('./MockExamPage'), 'MockExamPage');
 
 export const PRIMARY_ROUTES: readonly PreloadableComponent[] = [
@@ -31,6 +32,7 @@ export const PRIMARY_ROUTES: readonly PreloadableComponent[] = [
 
 export const SECONDARY_ROUTES: readonly PreloadableComponent[] = [
   MockExamPage,
+  StudyPlanPage,
   MistakesPage,
   BlitzPage,
   PinyinPage,
@@ -61,6 +63,7 @@ export const ROUTE_PRELOAD_MAP: Record<string, () => Promise<unknown>> = {
   '/settings': () => SettingsPage.preload(),
   '/review': () => ReviewPage.preload(),
   '/mistakes': () => MistakesPage.preload(),
+  '/plan': () => StudyPlanPage.preload(),
   '/blitz': () => BlitzPage.preload(),
   '/pinyin': () => PinyinPage.preload(),
   '/strokes': () => StrokeGuidePage.preload(),

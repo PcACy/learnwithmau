@@ -2,6 +2,7 @@ import Dexie, { type Table } from 'dexie';
 import type { SrsCard } from '../types/srs';
 import type { DailyGoal, SessionStat, StreakData } from '../types/game';
 import type { MistakeRecord } from '../types/mistake';
+import type { StudyPlanState } from './studyPlan';
 
 /** Typisierte Meta-Einträge (key-value in Tabelle `meta`). */
 export interface MetaMap {
@@ -11,6 +12,7 @@ export interface MetaMap {
   completedStories: string[];
   completedDialogues: Record<string, { stars: number; bestScore: number; completedAt: string }>;
   mistakeBank: Record<string, MistakeRecord>;
+  studyPlan: StudyPlanState;
 }
 
 export type MetaKey = keyof MetaMap;
@@ -138,6 +140,42 @@ export async function putMistakeBank(mistakes: Record<string, MistakeRecord>): P
   }
 }
 
+function isStudyPlanState(value: unknown): value is StudyPlanState {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return false;
+  const v = value as Record<string, unknown>;
+  return (
+    typeof v.startDate === 'string' &&
+    /^\d{4}-\d{2}-\d{2}$/.test(v.startDate) &&
+    (v.examDate === undefined || (typeof v.examDate === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(v.examDate))) &&
+    Array.isArray(v.doneTasks) &&
+    v.doneTasks.every((id) => typeof id === 'string')
+  );
+}
+
+/** 30-Tage-Plan; `null`, solange der Plan nicht gestartet wurde. */
+export async function getStudyPlan(): Promise<StudyPlanState | null> {
+  const meta = await getMeta('studyPlan');
+  if (isStudyPlanState(meta)) return meta;
+  try {
+    const raw = typeof window !== 'undefined' ? localStorage.getItem('hanzi_study_plan') : null;
+    const parsed: unknown = raw ? JSON.parse(raw) : null;
+    return isStudyPlanState(parsed) ? parsed : null;
+  } catch {
+    return null;
+  }
+}
+
+export async function putStudyPlan(plan: StudyPlanState): Promise<void> {
+  await putMeta('studyPlan', plan);
+  try {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('hanzi_study_plan', JSON.stringify(plan));
+    }
+  } catch {
+    // ignore
+  }
+}
+
 interface BackupData {
   version: 1;
   exportedAt: string;
@@ -236,6 +274,7 @@ const META_KEYS: readonly MetaKey[] = [
   'completedStories',
   'completedDialogues',
   'mistakeBank',
+  'studyPlan',
 ];
 
 function isValidMetaRow(value: unknown): value is MetaRow {
@@ -276,6 +315,7 @@ export async function importBackup(
       // Backup ohne mistakeBank-Zeile die alte Fehlerbank nach dem Neuladen.
       try {
         localStorage.removeItem('hanzi_mistake_bank');
+        localStorage.removeItem('hanzi_study_plan');
       } catch {
         // ignore
       }
@@ -301,6 +341,12 @@ export async function importBackup(
           } else if (row.key === 'completedDialogues' && typeof row.value === 'object' && row.value !== null) {
             try {
               localStorage.setItem('hanzi_completed_dialogues', JSON.stringify(row.value));
+            } catch {
+              // ignore
+            }
+          } else if (row.key === 'studyPlan' && isStudyPlanState(row.value)) {
+            try {
+              localStorage.setItem('hanzi_study_plan', JSON.stringify(row.value));
             } catch {
               // ignore
             }

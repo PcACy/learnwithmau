@@ -3,6 +3,7 @@ import {
   Award,
   BookOpen,
   BookOpenText,
+  CalendarDays,
   Flame,
   GraduationCap,
   HardDrive,
@@ -61,6 +62,7 @@ interface NavLinkItem {
 
 const NAV_LINKS: readonly NavLinkItem[] = [
   { to: '/', label: 'Zentrale', icon: Sparkles },
+  { to: '/plan', label: '30-Tage-Plan', icon: CalendarDays },
   { to: '/dictionary', label: 'Wörterbuch', icon: BookOpen },
   { to: '/grammar', label: 'Grammatik', icon: GraduationCap },
   { to: '/stories', label: 'Lesen', icon: BookOpenText },
