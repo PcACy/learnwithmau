@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 
 function Kbd({ children }: { children: ReactNode }) {
   return (
-    <kbd className="inline-flex h-6 min-w-6 items-center justify-center rounded-md border border-zinc-300/80 bg-white px-1.5 font-mono text-[11px] font-medium text-zinc-600 dark:border-white/10 dark:bg-zinc-800 dark:text-zinc-300">
+    <kbd className="inline-flex h-6 min-w-6 items-center justify-center rounded-md border-2 border-paper-tint bg-white px-1.5 font-mono text-[11px] font-medium text-zinc-600 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
       {children}
     </kbd>
   );

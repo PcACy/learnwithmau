@@ -21,9 +21,9 @@ export function SealBadge({
   const isJade = variant === 'jade';
 
   const borderAndBg = isCinnabar
-    ? 'border-rose-600/70 bg-rose-600/[0.08] text-rose-700 dark:border-rose-500/60 dark:bg-rose-500/[0.12] dark:text-rose-400'
+    ? 'border-cinnabar-500/70 bg-cinnabar-500/10 text-cinnabar-600 dark:border-cinnabar-400/60 dark:bg-cinnabar-500/15 dark:text-cinnabar-400'
     : isJade
-      ? 'border-emerald-600/70 bg-emerald-600/[0.08] text-emerald-800 dark:border-emerald-500/60 dark:bg-emerald-500/[0.12] dark:text-emerald-300'
+      ? 'border-jade-600/70 bg-jade-600/10 text-jade-800 dark:border-jade-500/60 dark:bg-jade-500/15 dark:text-jade-300'
       : 'border-zinc-400/60 bg-zinc-400/[0.08] text-zinc-700 dark:border-zinc-600 dark:bg-zinc-800/40 dark:text-zinc-300';
 
   const sizeStyle = size === 'sm' ? 'px-1.5 py-0.5 text-[10px]' : 'px-2 py-0.5 text-xs';
