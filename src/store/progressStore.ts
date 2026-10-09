@@ -2,7 +2,21 @@ import { create } from 'zustand';
 import type { SrsCard, SrsGrade } from '../types/srs';
 import { applyReview, createCard, toDateKey } from '../lib/srs';
 import type { DailyGoal, SessionStat, StreakData } from '../types/game';
-import { db, getMeta, getMistakeBank, putMeta, putMistakeBank } from '../lib/db';
+import {
+  db,
+  getMeta,
+  getMistakeBank,
+  getUnlockedAchievements,
+  getXp,
+  putMeta,
+  putMistakeBank,
+} from '../lib/db';
+import { aggregateSessionStats } from '../lib/achievementStats';
+import { findNewUnlocks, withUnlocks } from '../lib/gamification';
+import { levelFromXp, xpForSession } from '../lib/xp';
+import { ACHIEVEMENTS } from '../config/achievements';
+import { fireCelebration } from '../lib/confetti';
+import { useToastStore } from './toastStore';
 import type { MistakeRecord, MistakeSourceMode } from '../types/mistake';
 import { applyDrillResult, createOrUpdateMistakeRecord } from '../lib/mistakeBank';
 
@@ -65,6 +79,29 @@ export function normalizeStreak(streak: StreakData, now: Date = new Date()): Str
   };
 }
 
+/** Ergebnis der letzten Session für die Abschlussansicht (nicht persistiert). */
+export interface SessionReward {
+  xpGained: number;
+  levelBefore: number;
+  levelAfter: number;
+  /** Erfolg-IDs, die durch diese Session neu freigeschaltet wurden. */
+  unlocked: string[];
+}
+
+/** false, solange Alt-Bestände (XP/Erfolge) noch nicht still nachgetragen wurden. */
+let gamificationSeeded = false;
+
+function notifyGoalReached(prev: DailyGoal, next: DailyGoal): void {
+  if (prev.date === next.date && prev.completedReviews >= prev.targetReviews) return;
+  if (next.completedReviews < next.targetReviews) return;
+  useToastStore.getState().push({
+    kind: 'goal',
+    title: 'Tagesziel erreicht',
+    body: `${next.completedReviews} von ${next.targetReviews} Aufgaben erledigt`,
+  });
+  fireCelebration();
+}
+
 export interface ProgressState {
 
   /** true, sobald Dexie-Hydration abgeschlossen ist. */
@@ -73,6 +110,10 @@ export interface ProgressState {
   streak: StreakData;
   dailyGoal: DailyGoal;
   mistakes: Record<string, MistakeRecord>;
+  xp: number;
+  /** Erfolg-ID → ISO-Zeitstempel der Freischaltung. */
+  unlockedAchievements: Record<string, string>;
+  lastReward: SessionReward | null;
 
   hydrate(): Promise<void>;
   /** SM-2-Review mit Write-Through nach IndexedDB (atomar in einer Transaktion). */
@@ -89,6 +130,36 @@ export interface ProgressState {
   clearResolvedMistakes(): Promise<void>;
 }
 
+/**
+ * Einmalige, stille Migration für Bestandsnutzer: XP aus der Session-Historie
+ * schätzen und bereits erfüllte Erfolge als freigeschaltet markieren,
+ * damit nicht alle auf einmal als „neu“ aufpoppen.
+ */
+async function seedGamification(
+  existingXp: number | undefined,
+  existingUnlocked: Record<string, string> | undefined,
+): Promise<void> {
+  const rows = await db.stats.toArray();
+  const state = useProgressStore.getState();
+  const now = new Date();
+
+  const xp = existingXp ?? rows.reduce((sum, row) => sum + xpForSession(row), 0);
+  const unlocked =
+    existingUnlocked ??
+    withUnlocks(
+      {},
+      findNewUnlocks(state.cards, state.streak, aggregateSessionStats(rows), {}),
+      now,
+    );
+
+  useProgressStore.setState({ xp, unlockedAchievements: unlocked });
+  await db.meta.bulkPut([
+    { key: 'xp', value: xp },
+    { key: 'unlockedAchievements', value: unlocked },
+  ]);
+  gamificationSeeded = true;
+}
+
 /** Handle des ausstehenden 6s-Nachmerges aus hydrate(); wird bei jedem hydrate() verworfen. */
 let lateMergeTimer: number | undefined;
 
@@ -100,6 +171,9 @@ export const useProgressStore = create<ProgressState>()((set, get) => ({
   streak: DEFAULT_STREAK,
   dailyGoal: todayGoal(new Date()),
   mistakes: {},
+  xp: 0,
+  unlockedAchievements: {},
+  lastReward: null,
 
   async hydrate() {
     const HYDRATION_TIMEOUT_MS = 3000;
@@ -129,11 +203,13 @@ export const useProgressStore = create<ProgressState>()((set, get) => ({
         getMeta('streak').catch(() => undefined),
         getMeta('dailyGoal').catch(() => undefined),
         getMistakeBank().catch(() => ({})),
+        getXp().catch(() => undefined),
+        getUnlockedAchievements().catch(() => undefined),
       ] as const);
 
-    let [cardRows, streak, dailyGoal, loadedMistakes] = await withTimeout(load()).then(
-      (result) => result ?? [undefined, undefined, undefined, undefined],
-    );
+    const [cardRows, streak, dailyGoal, loadedMistakes, loadedXp, loadedUnlocked] = await withTimeout(
+      load(),
+    ).then((result) => result ?? [undefined, undefined, undefined, undefined, undefined, undefined]);
 
     const timedOut = cardRows === undefined;
     const cards: Record<string, SrsCard> = {};
@@ -151,7 +227,17 @@ export const useProgressStore = create<ProgressState>()((set, get) => ({
       streak: effectiveStreak,
       dailyGoal: effectiveGoal,
       mistakes: loadedMistakes ?? get().mistakes ?? {},
+      xp: loadedXp ?? get().xp,
+      unlockedAchievements: loadedUnlocked ?? get().unlockedAchievements,
     });
+
+    if (!timedOut) {
+      if (loadedXp !== undefined && loadedUnlocked !== undefined) {
+        gamificationSeeded = true;
+      } else {
+        void seedGamification(loadedXp, loadedUnlocked).catch(() => undefined);
+      }
+    }
 
     if (timedOut) {
       // Nachmerge: Wenn die Datenbank später doch aufgeht (z.B. nach dem
@@ -159,7 +245,7 @@ export const useProgressStore = create<ProgressState>()((set, get) => ({
       lateMergeTimer = window.setTimeout(() => {
         lateMergeTimer = undefined;
         void load()
-          .then(([lateRows, lateStreak, lateGoal, lateMistakes]) => {
+          .then(([lateRows, lateStreak, lateGoal, lateMistakes, lateXp, lateUnlocked]) => {
             if (!lateRows) return;
             const lateCards: Record<string, SrsCard> = { ...get().cards };
             for (const card of lateRows) {
@@ -171,7 +257,14 @@ export const useProgressStore = create<ProgressState>()((set, get) => ({
               streak: lateStreak ? normalizeStreak(lateStreak, lateNow) : state.streak,
               dailyGoal: lateGoal ? ensureFresh(lateGoal, lateNow) : state.dailyGoal,
               mistakes: lateMistakes ? { ...state.mistakes, ...lateMistakes } : state.mistakes,
+              xp: lateXp ?? state.xp,
+              unlockedAchievements: lateUnlocked ?? state.unlockedAchievements,
             }));
+            if (lateXp !== undefined && lateUnlocked !== undefined) {
+              gamificationSeeded = true;
+            } else {
+              void seedGamification(lateXp, lateUnlocked).catch(() => undefined);
+            }
           })
           .catch(() => undefined);
       }, 6000);
@@ -186,6 +279,7 @@ export const useProgressStore = create<ProgressState>()((set, get) => ({
 
     let updatedGoal: DailyGoal = get().dailyGoal;
     let updatedStreak: StreakData = get().streak;
+    const goalBefore = ensureFresh(get().dailyGoal, at);
 
     set((state) => {
       const freshGoal = ensureFresh(state.dailyGoal, at);
@@ -197,6 +291,7 @@ export const useProgressStore = create<ProgressState>()((set, get) => ({
         streak: updatedStreak,
       };
     });
+    notifyGoalReached(goalBefore, updatedGoal);
 
     try {
       await db.transaction('rw', db.cards, db.meta, async () => {
@@ -215,17 +310,23 @@ export const useProgressStore = create<ProgressState>()((set, get) => ({
     const at = new Date();
     const record: SessionStat = { ...stat, finishedAt: at.toISOString() };
     const credit = stat.correct > 0 ? stat.correct : (stat.answered > 0 ? 1 : 0);
+    const xpGained = xpForSession(stat);
+    const levelBefore = levelFromXp(get().xp).level;
+    const goalBefore = ensureFresh(get().dailyGoal, at);
 
     let updatedGoal: DailyGoal = get().dailyGoal;
     let updatedStreak: StreakData = get().streak;
+    let updatedXp = get().xp;
 
     set((state) => {
       const freshGoal = ensureFresh(state.dailyGoal, at);
       updatedGoal = { ...freshGoal, completedReviews: freshGoal.completedReviews + credit };
       updatedStreak = touchStreak(state.streak, toDateKey(at));
+      updatedXp = state.xp + xpGained;
       return {
         dailyGoal: updatedGoal,
         streak: updatedStreak,
+        xp: updatedXp,
       };
     });
 
@@ -235,11 +336,45 @@ export const useProgressStore = create<ProgressState>()((set, get) => ({
         await db.meta.bulkPut([
           { key: 'dailyGoal', value: updatedGoal },
           { key: 'streak', value: updatedStreak },
+          { key: 'xp', value: updatedXp },
         ]);
       });
     } catch {
       // IndexedDB write error handled gracefully
     }
+
+    const levelAfter = levelFromXp(updatedXp).level;
+    const toasts = useToastStore.getState();
+    notifyGoalReached(goalBefore, updatedGoal);
+    if (levelAfter > levelBefore) {
+      toasts.push({
+        kind: 'level',
+        title: `Level ${levelAfter} erreicht`,
+        body: levelFromXp(updatedXp).title,
+      });
+    }
+
+    let unlocked: string[] = [];
+    if (gamificationSeeded) {
+      try {
+        const stats = aggregateSessionStats(await db.stats.toArray());
+        const state = get();
+        unlocked = findNewUnlocks(state.cards, state.streak, stats, state.unlockedAchievements);
+        if (unlocked.length > 0) {
+          const next = withUnlocks(state.unlockedAchievements, unlocked, at);
+          set({ unlockedAchievements: next });
+          await putMeta('unlockedAchievements', next).catch(() => undefined);
+          for (const id of unlocked) {
+            const ach = ACHIEVEMENTS.find((a) => a.id === id);
+            if (ach) toasts.push({ kind: 'achievement', title: ach.title, body: 'Neuer Erfolg freigeschaltet' });
+          }
+        }
+      } catch {
+        // Erfolge werden beim nächsten Abschluss nachgeholt
+      }
+    }
+
+    set({ lastReward: { xpGained, levelBefore, levelAfter, unlocked } });
   },
 
   async setDailyTarget(target) {

@@ -13,6 +13,10 @@ export interface MetaMap {
   completedDialogues: Record<string, { stars: number; bestScore: number; completedAt: string }>;
   mistakeBank: Record<string, MistakeRecord>;
   studyPlan: StudyPlanState;
+  /** Gesamt-XP (Gamification). */
+  xp: number;
+  /** Erfolg-ID → ISO-Zeitstempel der Freischaltung. */
+  unlockedAchievements: Record<string, string>;
 }
 
 export type MetaKey = keyof MetaMap;
@@ -176,6 +180,18 @@ export async function putStudyPlan(plan: StudyPlanState): Promise<void> {
   }
 }
 
+/** Gesamt-XP; `undefined`, solange noch nie gespeichert (Altbestand). */
+export async function getXp(): Promise<number | undefined> {
+  const v = await getMeta('xp');
+  return isFiniteNumber(v) && v >= 0 ? v : undefined;
+}
+
+/** Freigeschaltete Erfolge; `undefined`, solange noch nie gespeichert (Altbestand). */
+export async function getUnlockedAchievements(): Promise<Record<string, string> | undefined> {
+  const v = await getMeta('unlockedAchievements');
+  return isUnlockedMap(v) ? v : undefined;
+}
+
 interface BackupData {
   version: 1;
   exportedAt: string;
@@ -275,13 +291,24 @@ const META_KEYS: readonly MetaKey[] = [
   'completedDialogues',
   'mistakeBank',
   'studyPlan',
+  'xp',
+  'unlockedAchievements',
 ];
+
+function isUnlockedMap(value: unknown): value is Record<string, string> {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return false;
+  return Object.values(value).every((v) => typeof v === 'string' && !Number.isNaN(Date.parse(v)));
+}
 
 function isValidMetaRow(value: unknown): value is MetaRow {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return false;
   const row = value as Record<string, unknown>;
   if (typeof row.key !== 'string') return false;
-  return (META_KEYS as readonly string[]).includes(row.key);
+  if (!(META_KEYS as readonly string[]).includes(row.key)) return false;
+  // Gamification-Werte werden strikt geprüft, damit ein fremdes Backup keine NaN-/Müllwerte einschleust.
+  if (row.key === 'xp') return isFiniteNumber(row.value) && row.value >= 0;
+  if (row.key === 'unlockedAchievements') return isUnlockedMap(row.value);
+  return true;
 }
 
 /**
