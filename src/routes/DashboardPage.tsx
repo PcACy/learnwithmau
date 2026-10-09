@@ -1,58 +1,66 @@
 import { useEffect, useMemo, useState } from 'react';
-import {
-  ArrowRight,
-  BookOpen,
-  BookOpenText,
-  CalendarDays,
-  CheckCircle2,
-  ChevronRight,
-  Compass,
-  Flame,
-  FlaskConical,
-  GraduationCap,
-  Headphones,
-  Keyboard,
-  Layers,
-  MessageSquareQuote,
-  MessagesSquare,
-  PenTool,
-  Play,
-  RotateCcw,
-  Sparkles,
-  Target,
-  TrendingUp,
-  Zap,
-} from 'lucide-react';
+import { CalendarClock, CalendarDays, CheckCircle2, Circle, Flame, Sparkles, Target, TrendingUp } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useProgressStore } from '../store/progressStore';
 import { useKeyDown } from '../hooks/useKeyDown';
 import { VOCAB } from '../data';
 import { selectDueItemIds, selectMastery } from '../lib/srsQuery';
 import { getCompletedDialogues, getCompletedGrammar, getCompletedStories, getStudyPlan } from '../lib/db';
-import { buildPlanDay, getPlanDay, getPlanPhase, isTaskDone, type StudyPlanState } from '../lib/studyPlan';
+import {
+  buildPlanDay,
+  daysUntilExam,
+  getPlanDay,
+  getPlanPhase,
+  isTaskDone,
+  type PlanTask,
+  type StudyPlanState,
+} from '../lib/studyPlan';
 import { PLAN_DAYS } from '../data/studyPlan';
 import { filterActiveMistakes } from '../lib/mistakeBank';
-import {
-  LESSONS_META,
-  STORIES_META,
-  TOTAL_GRAMMAR_LESSONS,
-  TOTAL_STORIES,
-} from '../data/curriculumMeta';
+import { LESSONS_META, STORIES_META } from '../data/curriculumMeta';
+import { pickNextAction } from '../lib/nextAction';
+import { levelFromXp } from '../lib/xp';
+import { MODES } from '../config/modes';
+import { Card } from '../components/ui/Card';
+import { HubTile } from '../components/ui/HubTile';
 import { KineticButton } from '../components/ui/KineticButton';
+import { ProgressBar } from '../components/ui/ProgressBar';
+import { ProgressRing } from '../components/ui/ProgressRing';
 import { SealBadge } from '../components/ui/SealBadge';
 
 const ALL_ITEM_IDS: readonly string[] = VOCAB.map((item) => item.id);
+
+const SHORTCUT_ROUTES = [
+  '/typeracer',
+  '/alchemy',
+  '/sentences',
+  '/number-drill',
+  '/ear-trainer',
+  '/blitz',
+  '/exam',
+  '/review',
+  '/mistakes',
+] as const;
+
+const QUICK_MODE_IDS = ['alchemy', 'ear-trainer', 'sentences', 'dialogue'] as const;
+
+function greeting(now: Date): string {
+  const h = now.getHours();
+  if (h < 11) return 'Guten Morgen';
+  if (h < 18) return 'Hallo';
+  return 'Guten Abend';
+}
 
 export function DashboardPage() {
   const cards = useProgressStore((s) => s.cards);
   const streak = useProgressStore((s) => s.streak);
   const dailyGoal = useProgressStore((s) => s.dailyGoal);
   const mistakes = useProgressStore((s) => s.mistakes);
+  const xp = useProgressStore((s) => s.xp);
   const navigate = useNavigate();
 
   const [completedGrammar, setCompletedGrammar] = useState<string[]>([]);
   const [completedStories, setCompletedStories] = useState<string[]>([]);
-  const [completedDialoguesCount, setCompletedDialoguesCount] = useState<number>(0);
   const [completedDialogueIds, setCompletedDialogueIds] = useState<string[]>([]);
   const [studyPlan, setStudyPlan] = useState<StudyPlanState | null>(null);
 
@@ -66,23 +74,17 @@ export function DashboardPage() {
       setCompletedDialogueIds(Object.keys(d || {}));
       setCompletedGrammar(g);
       setCompletedStories(s);
-      setCompletedDialoguesCount(Object.keys(d || {}).length);
     });
     return () => {
       cancelled = true;
     };
   }, []);
 
-  const dueToday = useMemo(
-    () => selectDueItemIds(cards, ALL_ITEM_IDS, new Date()).length,
-    [cards],
-  );
-  const activeMistakesCount = useMemo(
-    () => filterActiveMistakes(mistakes).length,
-    [mistakes],
-  );
-  const mastery = useMemo(() => selectMastery(cards, VOCAB.length), [cards]);
-  const masteryPercent = Math.round(mastery * 100);
+  const now = useMemo(() => new Date(), []);
+  const dueToday = useMemo(() => selectDueItemIds(cards, ALL_ITEM_IDS, new Date()).length, [cards]);
+  const activeMistakesCount = useMemo(() => filterActiveMistakes(mistakes).length, [mistakes]);
+  const masteryPercent = Math.round(selectMastery(cards, VOCAB.length) * 100);
+  const level = useMemo(() => levelFromXp(xp), [xp]);
 
   const planToday = useMemo(() => {
     if (!studyPlan) return null;
@@ -91,796 +93,197 @@ export function DashboardPage() {
     const day = buildPlanDay(rawDay, ALL_ITEM_IDS);
     const doneSet = new Set(studyPlan.doneTasks);
     const content = { grammar: completedGrammar, stories: completedStories, dialogues: completedDialogueIds };
-    const done = day.tasks.filter((task) => isTaskDone(task, doneSet, content)).length;
-    return { day, done };
+    const tasks = day.tasks.map((task) => ({ task, done: isTaskDone(task, doneSet, content) }));
+    return { day, tasks, doneCount: tasks.filter((t) => t.done).length };
   }, [studyPlan, completedGrammar, completedStories, completedDialogueIds]);
-  const goalReached = dailyGoal.completedReviews >= dailyGoal.targetReviews;
 
-  const nextGrammarLesson = useMemo(() => {
-    return LESSONS_META.find((l) => !completedGrammar.includes(l.id));
-  }, [completedGrammar]);
+  const examCountdown = useMemo(
+    () => (studyPlan?.examDate ? daysUntilExam(studyPlan.examDate, new Date()) : null),
+    [studyPlan],
+  );
 
-  const nextStory = useMemo(() => {
-    return STORIES_META.find((s) => !completedStories.includes(s.id));
-  }, [completedStories]);
+  const nextAction = useMemo(() => {
+    const open: PlanTask | undefined = planToday?.tasks.find((t) => !t.done)?.task;
+    const grammar = LESSONS_META.find((l) => !completedGrammar.includes(l.id));
+    const story = STORIES_META.find((s) => !completedStories.includes(s.id));
+    return pickNextAction({
+      planTask: open,
+      dueCount: dueToday,
+      mistakeCount: activeMistakesCount,
+      nextGrammar: grammar,
+      nextStory: story,
+    });
+  }, [planToday, dueToday, activeMistakesCount, completedGrammar, completedStories]);
 
-  const SHORTCUT_ROUTES = [
-    '/typeracer',     // 1
-    '/alchemy',       // 2
-    '/sentences',     // 3
-    '/number-drill',  // 4
-    '/ear-trainer',   // 5
-    '/blitz',         // 6
-    '/exam',          // 7
-    '/review',        // 8
-    '/mistakes',      // 9
-  ];
+  const goalProgress = dailyGoal.targetReviews > 0 ? dailyGoal.completedReviews / dailyGoal.targetReviews : 0;
+  const goalReached = goalProgress >= 1;
 
-  // Globale Shortcuts 1-9 im Dashboard
+  // Globale Shortcuts 1-9 auf der Startseite
   useKeyDown((event) => {
     if (event.metaKey || event.ctrlKey || event.altKey || event.repeat) return;
     if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) return;
-
     const num = Number.parseInt(event.key, 10);
-    if (num >= 1 && num <= SHORTCUT_ROUTES.length) {
-      navigate(SHORTCUT_ROUTES[num - 1]);
-    }
+    if (num >= 1 && num <= SHORTCUT_ROUTES.length) navigate(SHORTCUT_ROUTES[num - 1]);
   });
 
+  const quickModes = QUICK_MODE_IDS.map((id) => MODES.find((m) => m.id === id)).filter(
+    (m): m is (typeof MODES)[number] => m !== undefined,
+  );
+
   return (
-    <div className="space-y-12 pb-24">
-      {/* 1. Header & Quick Stat Badges */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div className="space-y-1.5">
-          <div className="flex items-center gap-2.5">
-            <SealBadge sealChar="汉" label="ZENTRALE · HSK 1" variant="cinnabar" />
-          </div>
-          <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl text-zinc-900 dark:text-zinc-50">
-            Trainings-Zentrale
+    <div className="space-y-8 pb-24">
+      {/* Begrüßung */}
+      <div className="flex flex-wrap items-end justify-between gap-3">
+        <div className="space-y-2">
+          <SealBadge sealChar="汉" label="HEUTE · HSK 1" variant="cinnabar" />
+          <h1 className="text-3xl font-extrabold tracking-tight text-zinc-900 sm:text-4xl dark:text-zinc-50">
+            {greeting(now)}
           </h1>
+          <p className="text-base text-zinc-600 dark:text-zinc-400">
+            Trainings-Zentrale
+            {planToday ? ` · Tag ${planToday.day.day} von ${PLAN_DAYS}` : ''}
+          </p>
         </div>
-
-        {/* Quick Stat Pills */}
-        <div className="flex flex-wrap items-center gap-2">
-          <Link
-            to="/stats"
-            title="Zu den detaillierten Statistiken"
-            className="group flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-4 py-2 text-xs font-bold text-amber-800 dark:text-amber-300 shadow-xs transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-amber-500/15"
-          >
-            <Flame
-              className={`h-3.5 w-3.5 transition-transform group-hover:scale-110 ${
-                streak.current > 0 ? 'text-amber-600 fill-current' : 'text-zinc-400'
-              }`}
-            />
-            <span className="font-mono">{streak.current} Tage Streak</span>
-          </Link>
-
-          <Link
-            to="/stats"
-            title="Zu den detaillierten Statistiken"
-            className="group flex items-center gap-2 rounded-full border border-zinc-200/80 bg-white/90 px-4 py-2 text-xs font-semibold text-zinc-700 shadow-xs transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-emerald-500/40 dark:border-white/10 dark:bg-zinc-900/90 dark:text-zinc-200"
-          >
-            <Target className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400 transition-transform group-hover:scale-110" />
-            <span className="font-mono">
-              {dailyGoal.completedReviews}/{dailyGoal.targetReviews} Ziel
+        {examCountdown !== null && examCountdown >= 0 && (
+          <div className="flex items-center gap-2 rounded-full border-2 border-cinnabar-500/40 bg-cinnabar-500/10 px-4 py-2 text-cinnabar-600 dark:text-cinnabar-400">
+            <CalendarClock className="h-5 w-5" aria-hidden />
+            <span className="font-mono text-sm font-bold">
+              {examCountdown === 0 ? 'Prüfung heute' : `Noch ${examCountdown} ${examCountdown === 1 ? 'Tag' : 'Tage'} bis HSK 1`}
             </span>
-          </Link>
-
-          <Link
-            to="/stats"
-            title="Zu den detaillierten Statistiken"
-            className="group flex items-center gap-2 rounded-full border border-zinc-200/80 bg-white/90 px-4 py-2 text-xs font-semibold text-zinc-700 shadow-xs transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-emerald-500/40 dark:border-white/10 dark:bg-zinc-900/90 dark:text-zinc-200"
-          >
-            <TrendingUp className="h-3.5 w-3.5 text-sky-600 dark:text-sky-400 transition-transform group-hover:scale-110" />
-            <span className="font-mono">{masteryPercent}% Meisterschaft</span>
-          </Link>
-
-          <Link
-            to="/mistakes"
-            title="Zum Schwachstellen-Trainer & Fehler-Bank"
-            className={`group flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-semibold shadow-xs transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-              activeMistakesCount > 0
-                ? 'border-rose-500/30 bg-rose-500/10 text-rose-800 dark:text-rose-300 hover:bg-rose-500/15'
-                : 'border-zinc-200/80 bg-white/90 text-zinc-700 hover:border-emerald-500/40 dark:border-white/10 dark:bg-zinc-900/90 dark:text-zinc-200'
-            }`}
-          >
-            <RotateCcw
-              className={`h-3.5 w-3.5 transition-transform group-hover:-rotate-45 ${
-                activeMistakesCount > 0 ? 'text-rose-600 dark:text-rose-400' : 'text-zinc-400'
-              }`}
-            />
-            <span className="font-mono">
-              {activeMistakesCount > 0 ? `${activeMistakesCount} Fehler` : '0 Fehler'}
-            </span>
-          </Link>
-        </div>
+          </div>
+        )}
       </div>
 
-      {planToday && (
-        <Link
-          to="/plan"
-          className="group flex items-center justify-between gap-4 rounded-[2rem] border border-emerald-500/30 bg-emerald-500/[0.06] px-6 py-4 transition-colors hover:bg-emerald-500/10"
-        >
-          <div className="flex items-center gap-3">
-            <CalendarDays className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
-            <div>
-              <p className="text-sm font-bold">
-                Tag {planToday.day.day} von {PLAN_DAYS}: {planToday.day.theme}
-              </p>
-              <p className="font-mono text-xs text-zinc-500 dark:text-zinc-400">
-                {planToday.done}/{planToday.day.tasks.length} Aufgaben erledigt · {planToday.day.totalMinutes} Min.
-              </p>
-            </div>
-          </div>
-          <ArrowRight className="h-4 w-4 text-emerald-600 transition-transform group-hover:translate-x-0.5" />
-        </Link>
-      )}
-
-      {/* 2. Intelligente Hero Call-To-Action Card (Double-Bezel Architecture) */}
-      <div
-        className="double-bezel-casing shadow-whisper"
-      >
-        <div className="double-bezel-core p-7 sm:p-10 space-y-6">
-          {/* Subtle Background Watermark */}
-          <span className="watermark-glyph">
-            学
+      {/* Hero: Weiter lernen */}
+      <section className="bg-hero-jade relative overflow-hidden rounded-[2rem] border-b-[6px] border-jade-800 p-6 sm:p-10">
+        <span aria-hidden className="pointer-events-none absolute -bottom-10 -right-4 select-none font-cjk text-[14rem] font-black leading-none text-white/10">
+          学
+        </span>
+        <div className="relative max-w-xl space-y-4">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-white/20 px-3 py-1 text-xs font-bold uppercase tracking-wider">
+            <Sparkles className="h-3.5 w-3.5" aria-hidden />
+            {nextAction.kind === 'plan' ? 'Dein Plan für heute' : 'Weiter lernen'}
           </span>
-
-          <div className="relative flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-            <div className="space-y-2.5 max-w-xl">
-              <div className="flex items-center gap-2.5">
-                <SealBadge
-                  sealChar="荐"
-                  label="TAGES-EMPFEHLUNG"
-                  variant="jade"
-                  size="sm"
-                />
-                {goalReached && (
-                  <span className="inline-flex items-center gap-1 rounded-full border border-emerald-500/30 bg-emerald-500/15 px-2.5 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-300">
-                    <CheckCircle2 className="h-3 w-3" />
-                    Tagesziel erreicht
-                  </span>
-                )}
-              </div>
-
-              {/* Dynamic recommendation headline */}
-              {dueToday > 0 ? (
-                <>
-                  <h2 className="text-2xl font-bold tracking-tight sm:text-3xl text-zinc-900 dark:text-zinc-100">
-                    {dueToday} Vokabeln heute zur Wiederholung bereit
-                  </h2>
-                  <p className="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-                    Festige dein Langzeit-Gedächtnis mit der intelligenten SM-2-Wiederholung für den vollständigen HSK-1-Katalog.
-                  </p>
-                </>
-              ) : activeMistakesCount > 0 ? (
-                <>
-                  <h2 className="text-2xl font-bold tracking-tight sm:text-3xl text-zinc-900 dark:text-zinc-100">
-                    {activeMistakesCount} Schwachstellen im Fehlerheft bereit
-                  </h2>
-                  <p className="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-                    Schließe Wissenslücken aus deinen bisherigen Übungen und bereinige die Fehlerbank in fokussierten 5er-Runden.
-                  </p>
-                </>
-              ) : nextGrammarLesson ? (
-                <>
-                  <h2 className="text-2xl font-bold tracking-tight sm:text-3xl text-zinc-900 dark:text-zinc-100">
-                    Nächster Lehrbuch-Schritt: {nextGrammarLesson.title}
-                  </h2>
-                  <p className="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-                    Lerne {nextGrammarLesson.subtitle} im didaktischen HSK-1 Grammatik-Lehrgang.
-                  </p>
-                </>
-              ) : nextStory ? (
-                <>
-                  <h2 className="text-2xl font-bold tracking-tight sm:text-3xl text-zinc-900 dark:text-zinc-100">
-                    Nächste Lesegeschichte: {nextStory.title}
-                  </h2>
-                  <p className="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-                    {nextStory.pinyinTitle} · {nextStory.germanTitle} — {nextStory.summary}
-                  </p>
-                </>
-              ) : (
-                <>
-                  <h2 className="text-2xl font-bold tracking-tight sm:text-3xl text-zinc-900 dark:text-zinc-100">
-                    Alle HSK-1-Lehrbuchinhalte gemeistert!
-                  </h2>
-                  <p className="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-                    Beweise dein Können im 35-minütigen HSK-1 Prüfungssimulator unter realistischen Testbedingungen.
-                  </p>
-                </>
-              )}
-            </div>
-
-            {/* Dynamic Kinetic CTAs */}
-            <div className="flex flex-wrap items-center gap-3 shrink-0">
-              {dueToday > 0 ? (
-                <KineticButton
-                  variant="primary"
-                  onClick={() => navigate('/review')}
-                  icon={<Play className="h-4 w-4 fill-white" />}
-                >
-                  Jetzt wiederholen ({dueToday})
-                </KineticButton>
-              ) : activeMistakesCount > 0 ? (
-                <KineticButton
-                  variant="primary"
-                  onClick={() => navigate('/mistakes')}
-                  icon={<RotateCcw className="h-4 w-4" />}
-                >
-                  Schwachstellen beheben ({activeMistakesCount})
-                </KineticButton>
-              ) : nextGrammarLesson ? (
-                <KineticButton
-                  variant="primary"
-                  onClick={() => navigate(`/grammar?lesson=${encodeURIComponent(nextGrammarLesson.id)}`)}
-                >
-                  Lektion starten
-                </KineticButton>
-              ) : nextStory ? (
-                <KineticButton
-                  variant="primary"
-                  onClick={() => navigate(`/stories?id=${nextStory.id}`)}
-                >
-                  Geschichte lesen
-                </KineticButton>
-              ) : (
-                <KineticButton
-                  variant="primary"
-                  onClick={() => navigate('/exam')}
-                >
-                  Prüfungssimulator
-                </KineticButton>
-              )}
-
-              <Link
-                to="/blitz"
-                className="group inline-flex items-center gap-2.5 rounded-full border border-amber-500/30 bg-amber-500/10 py-2 pl-4 pr-2 text-xs font-bold text-amber-800 transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-amber-500/20 active:scale-[0.98] dark:text-amber-300"
-              >
-                <span>2-Min-Blitz</span>
-                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-amber-500/20 text-amber-700 transition-transform duration-200 group-hover:scale-105 dark:text-amber-300">
-                  <Zap className="h-3.5 w-3.5 fill-current" />
-                </span>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* 2.5 LEHRBUCH-FUNDAMENT · PHONETIK, STRICHE & KULTUR */}
-      <section className="space-y-5">
-        <div className="flex items-baseline justify-between border-b border-zinc-200/80 dark:border-white/[0.08] pb-3">
-          <div className="flex items-center gap-3">
-            <SealBadge sealChar="基" label="FUNDAMENT" variant="cinnabar" size="sm" />
-            <div>
-              <h2 className="text-xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
-                Lehrbuch-Fundament: Phonetik, Striche &amp; Kultur
-              </h2>
-              <p className="text-xs text-zinc-500 dark:text-zinc-400">
-                Die unerlässlichen theoretischen Grundlagen der chinesischen Sprache
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-          {/* Tile: Pinyin-Schule */}
-          <Link
-            to="/pinyin"
-            className="group relative overflow-hidden rounded-3xl border border-zinc-200/80 bg-white p-6 shadow-whisper transition-all duration-200 hover:-translate-y-1 hover:border-emerald-500/50 dark:border-white/[0.08] dark:bg-zinc-900 flex flex-col justify-between gap-5"
-          >
-            <span className="watermark-glyph text-[100px]! -bottom-4! -right-2!">拼</span>
-            <div className="space-y-3 relative">
-              <div className="flex items-center justify-between">
-                <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-700 dark:text-emerald-400">
-                  <Sparkles className="h-5 w-5" />
-                </span>
-                <span className="font-mono text-xs font-semibold text-emerald-700 dark:text-emerald-400">
-                  21 Anlaute · 36 Auslaute
-                </span>
-              </div>
-              <div>
-                <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100">Pinyin- &amp; Phonetik-Schule</h3>
-                <p className="font-mono text-xs text-emerald-700 dark:text-emerald-400 uppercase tracking-wider mt-0.5">
-                  Lautlehre &amp; Tone Sandhi
-                </p>
-                <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed">
-                  Systematischer Ausspracheführer mit IPA, 4 Tönen, neutralem Ton und Tonveränderungsregeln (3+3, 一, 不).
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center gap-1.5 font-mono text-xs font-bold text-emerald-700 dark:text-emerald-400 pt-2">
-              <span>Pinyin-Schule öffnen</span>
-              <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
-            </div>
-          </Link>
-
-          {/* Tile: Stricharten- & Radikalfibel */}
-          <Link
-            to="/strokes"
-            className="group relative overflow-hidden rounded-3xl border border-zinc-200/80 bg-white p-6 shadow-whisper transition-all duration-200 hover:-translate-y-1 hover:border-emerald-500/50 dark:border-white/[0.08] dark:bg-zinc-900 flex flex-col justify-between gap-5"
-          >
-            <span className="watermark-glyph text-[100px]! -bottom-4! -right-2!">笔</span>
-            <div className="space-y-3 relative">
-              <div className="flex items-center justify-between">
-                <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-700 dark:text-emerald-400">
-                  <PenTool className="h-5 w-5" />
-                </span>
-                <span className="font-mono text-xs font-semibold text-emerald-700 dark:text-emerald-400">
-                  8 Striche · 7 Regeln
-                </span>
-              </div>
-              <div>
-                <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100">Stricharten &amp; Schreibregeln</h3>
-                <p className="font-mono text-xs text-emerald-700 dark:text-emerald-400 uppercase tracking-wider mt-0.5">
-                  永字八法 Anatomie
-                </p>
-                <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed">
-                  Die 8 Grundstriche, die 7 fundamentalen Strichfolge-Axiome und die sinntragenden Radikale.
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center gap-1.5 font-mono text-xs font-bold text-emerald-700 dark:text-emerald-400 pt-2">
-              <span>Strichlehre öffnen</span>
-              <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
-            </div>
-          </Link>
-
-          {/* Tile: Kultur & Landeskunde */}
-          <Link
-            to="/culture"
-            className="group relative overflow-hidden rounded-3xl border border-zinc-200/80 bg-white p-6 shadow-whisper transition-all duration-200 hover:-translate-y-1 hover:border-emerald-500/50 dark:border-white/[0.08] dark:bg-zinc-900 flex flex-col justify-between gap-5"
-          >
-            <span className="watermark-glyph text-[100px]! -bottom-4! -right-2!">文</span>
-            <div className="space-y-3 relative">
-              <div className="flex items-center justify-between">
-                <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-rose-500/10 text-rose-700 dark:text-rose-400">
-                  <Compass className="h-5 w-5" />
-                </span>
-                <span className="font-mono text-xs font-semibold text-rose-700 dark:text-rose-400">
-                  文化小知识
-                </span>
-              </div>
-              <div>
-                <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100">Kultur &amp; Etikette</h3>
-                <p className="font-mono text-xs text-rose-700 dark:text-rose-400 uppercase tracking-wider mt-0.5">
-                  Gepflogenheiten &amp; Tabus
-                </p>
-                <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed">
-                  Namenskonventionen, 1-Hand-Zahlengesten (1–10), Zahlensymbolik (8 vs 4) und Tischsitten.
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center gap-1.5 font-mono text-xs font-bold text-rose-700 dark:text-rose-400 pt-2">
-              <span>Kultur-Fibel öffnen</span>
-              <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
-            </div>
-          </Link>
+          <h2 className="text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl">{nextAction.title}</h2>
+          <p className="text-base text-white/85">{nextAction.subtitle}</p>
+          <KineticButton variant="secondary" onClick={() => navigate(nextAction.to)} className="mt-2">
+            {nextAction.cta}
+          </KineticButton>
         </div>
       </section>
 
-      {/* 3. 3-SÄULEN CURRICULUM ARCHITEKTUR */}
-
-      {/* SÄULE 1: LEHRBUCH & SPRACHVERSTÄNDNIS */}
-      <section className="space-y-5">
-        <div className="flex items-baseline justify-between border-b border-zinc-200/80 dark:border-white/[0.08] pb-3">
-          <div className="flex items-center gap-3">
-            <SealBadge sealChar="书" label="SÄULE 1" variant="jade" size="sm" />
-            <div>
-              <h2 className="text-xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
-                Lehrbuch & Textverständnis
-              </h2>
-              <p className="text-xs text-zinc-500 dark:text-zinc-400">
-                Systematischer Wissensaufbau für das offizielle HSK-1-Zertifikat
-              </p>
-            </div>
+      {/* Fortschritt */}
+      <section aria-label="Dein Fortschritt heute" className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+        <Card className="col-span-2 flex items-center gap-4 sm:col-span-1">
+          <ProgressRing value={goalProgress} size={72} stroke={8} label="Tagesziel">
+            {goalReached ? (
+              <CheckCircle2 className="h-7 w-7 text-gold-500" aria-hidden />
+            ) : (
+              <Target className="h-6 w-6 text-jade-700 dark:text-jade-300" aria-hidden />
+            )}
+          </ProgressRing>
+          <div>
+            <p className="font-mono text-2xl font-bold leading-none text-zinc-900 dark:text-zinc-50">
+              {dailyGoal.completedReviews}/{dailyGoal.targetReviews}
+            </p>
+            <p className="mt-1 text-xs font-semibold text-zinc-600 dark:text-zinc-400">
+              {goalReached ? 'Tagesziel geschafft' : 'Tagesziel'}
+            </p>
           </div>
-        </div>
+        </Card>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {/* Tile: Grammatik */}
-          <Link
-            to="/grammar"
-            className="group relative overflow-hidden rounded-3xl border border-zinc-200/80 bg-white p-6 shadow-whisper transition-all duration-200 hover:-translate-y-1 hover:border-emerald-500/50 dark:border-white/[0.08] dark:bg-zinc-900 flex flex-col justify-between gap-5"
-          >
-            <span className="watermark-glyph text-[100px]! -bottom-4! -right-2!">文</span>
-            <div className="space-y-3 relative">
-              <div className="flex items-center justify-between">
-                <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-700 dark:text-emerald-400">
-                  <GraduationCap className="h-5 w-5" />
-                </span>
-                <span className="font-mono text-xs font-semibold text-emerald-700 dark:text-emerald-400">
-                  {completedGrammar.length} / {TOTAL_GRAMMAR_LESSONS} gemeistert
-                </span>
-              </div>
-              <div>
-                <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100">Grammatik-Kompendium</h3>
-                <p className="font-mono text-xs text-emerald-700 dark:text-emerald-400 uppercase tracking-wider mt-0.5">
-                  {TOTAL_GRAMMAR_LESSONS} Didaktische Lektionen
-                </p>
-                <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed">
-                  SVO-Satzbau, Kopula 是, Ortsangaben 在, Entscheidungsfragen 吗 und Vollendung 了.
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center gap-1.5 font-mono text-xs font-bold text-emerald-700 dark:text-emerald-400 pt-2">
-              <span>Lehrgang öffnen</span>
-              <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
-            </div>
-          </Link>
+        <Card className="flex flex-col justify-center gap-1">
+          <div className="flex items-center gap-2">
+            <Flame className={`h-6 w-6 ${streak.current > 0 ? 'fill-gold-500 text-gold-500' : 'text-zinc-400'}`} aria-hidden />
+            <span className="font-mono text-2xl font-bold text-zinc-900 dark:text-zinc-50">{streak.current}</span>
+          </div>
+          <p className="text-xs font-semibold text-zinc-600 dark:text-zinc-400">
+            {streak.current > 0 ? 'Tage in Folge' : 'Starte heute deine Serie'}
+          </p>
+        </Card>
 
-          {/* Tile: Lesegeschichten */}
-          <Link
-            to="/stories"
-            className="group relative overflow-hidden rounded-3xl border border-zinc-200/80 bg-white p-6 shadow-whisper transition-all duration-200 hover:-translate-y-1 hover:border-emerald-500/50 dark:border-white/[0.08] dark:bg-zinc-900 flex flex-col justify-between gap-5"
-          >
-            <span className="watermark-glyph text-[100px]! -bottom-4! -right-2!">读</span>
-            <div className="space-y-3 relative">
-              <div className="flex items-center justify-between">
-                <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-700 dark:text-emerald-400">
-                  <BookOpenText className="h-5 w-5" />
-                </span>
-                <span className="font-mono text-xs font-semibold text-emerald-700 dark:text-emerald-400">
-                  {completedStories.length} / {TOTAL_STORIES} gelesen
-                </span>
-              </div>
-              <div>
-                <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100">Geschichten & Lesetexte</h3>
-                <p className="font-mono text-xs text-emerald-700 dark:text-emerald-400 uppercase tracking-wider mt-0.5">
-                  Graded Reader HSK 1
-                </p>
-                <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed">
-                  Authentische Kurzgeschichten mit synchronem Audio, Pinyin-Toggle und Wort-Lookup.
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center gap-1.5 font-mono text-xs font-bold text-emerald-700 dark:text-emerald-400 pt-2">
-              <span>Geschichten lesen</span>
-              <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
-            </div>
-          </Link>
+        <Card className="flex flex-col justify-center gap-2">
+          <div className="flex items-baseline justify-between">
+            <span className="font-mono text-sm font-bold text-gold-600 dark:text-gold-300">Lv {level.level}</span>
+            <span className="text-xs font-semibold text-zinc-600 dark:text-zinc-400">{level.title}</span>
+          </div>
+          <ProgressBar value={level.progress} tone="gold" label="Fortschritt zum nächsten Level" />
+          <p className="font-mono text-[11px] text-zinc-500 dark:text-zinc-400">
+            {level.xpForNext > 0 ? `${level.xpIntoLevel}/${level.xpForNext} XP` : 'Höchste Stufe'}
+          </p>
+        </Card>
 
-          {/* Tile: Alltagsdialoge */}
-          <Link
-            to="/dialogue"
-            className="group relative overflow-hidden rounded-3xl border border-zinc-200/80 bg-white p-6 shadow-whisper transition-all duration-200 hover:-translate-y-1 hover:border-emerald-500/50 dark:border-white/[0.08] dark:bg-zinc-900 flex flex-col justify-between gap-5"
-          >
-            <span className="watermark-glyph text-[100px]! -bottom-4! -right-2!">话</span>
-            <div className="space-y-3 relative">
-              <div className="flex items-center justify-between">
-                <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-700 dark:text-emerald-400">
-                  <MessagesSquare className="h-5 w-5" />
-                </span>
-                <span className="font-mono text-xs font-semibold text-emerald-700 dark:text-emerald-400">
-                  {completedDialoguesCount} / 6 gelöst
-                </span>
-              </div>
-              <div>
-                <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100">HSK-1 Alltagsdialoge</h3>
-                <p className="font-mono text-xs text-emerald-700 dark:text-emerald-400 uppercase tracking-wider mt-0.5">
-                  Interaktives Rollenspiel
-                </p>
-                <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed">
-                  Verzweigte Alltagsszenarien im Teehaus, Taxi oder Markt mit nativer Sprachausgabe und Feedback.
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center gap-1.5 font-mono text-xs font-bold text-emerald-700 dark:text-emerald-400 pt-2">
-              <span>Dialoge führen</span>
-              <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
-            </div>
-          </Link>
-
-          {/* Tile: Wörterbuch */}
-          <Link
-            to="/dictionary"
-            className="group relative overflow-hidden rounded-3xl border border-zinc-200/80 bg-white p-6 shadow-whisper transition-all duration-200 hover:-translate-y-1 hover:border-emerald-500/50 dark:border-white/[0.08] dark:bg-zinc-900 flex flex-col justify-between gap-5"
-          >
-            <span className="watermark-glyph text-[100px]! -bottom-4! -right-2!">典</span>
-            <div className="space-y-3 relative">
-              <div className="flex items-center justify-between">
-                <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-700 dark:text-emerald-400">
-                  <BookOpen className="h-5 w-5" />
-                </span>
-                <span className="font-mono text-xs font-semibold text-emerald-700 dark:text-emerald-400">
-                  {VOCAB.length} Vokabeln
-                </span>
-              </div>
-              <div>
-                <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100">Wörterbuch & Schriftzeichen</h3>
-                <p className="font-mono text-xs text-emerald-700 dark:text-emerald-400 uppercase tracking-wider mt-0.5">
-                  HanziWriter & Beispielsätze
-                </p>
-                <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed">
-                  Interaktiver Strichfolge-Trainer, Radikal-Dekomposition und 100% echte HSK-1-Beispiele.
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center gap-1.5 font-mono text-xs font-bold text-emerald-700 dark:text-emerald-400 pt-2">
-              <span>Wörterbuch nachschlagen</span>
-              <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
-            </div>
-          </Link>
-        </div>
+        <Card className="flex flex-col justify-center gap-2">
+          <div className="flex items-center gap-2">
+            <TrendingUp className="h-5 w-5 text-jade-600" aria-hidden />
+            <span className="font-mono text-2xl font-bold text-zinc-900 dark:text-zinc-50">{masteryPercent}%</span>
+          </div>
+          <ProgressBar value={masteryPercent / 100} label="Meisterschaft" />
+          <p className="text-xs font-semibold text-zinc-600 dark:text-zinc-400">Meisterschaft</p>
+        </Card>
       </section>
 
-      {/* SÄULE 2: SCHRIFT & MOTORIK */}
-      <section className="space-y-5">
-        <div className="flex items-baseline justify-between border-b border-zinc-200/80 dark:border-white/[0.08] pb-3">
-          <div className="flex items-center gap-3">
-            <SealBadge sealChar="技" label="SÄULE 2" variant="stone" size="sm" />
-            <div>
-              <h2 className="text-xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
-                Schrift & Motorik
-              </h2>
-              <p className="text-xs text-zinc-500 dark:text-zinc-400">
-                Interaktive Arcade-Arenen für Zeichenaufbau, IME-Eingabe und Satzstrukturen
-              </p>
-            </div>
-          </div>
-          <span className="hidden font-mono text-xs text-zinc-400 sm:block">
-            Tastatur: <kbd className="rounded border px-1.5 py-0.5 text-[11px] font-mono">1</kbd>–<kbd className="rounded border px-1.5 py-0.5 text-[11px] font-mono">4</kbd>
-          </span>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-          {/* 1: Pinyin TypeRacer */}
-          <Link
-            to="/typeracer"
-            className="group relative overflow-hidden rounded-3xl border border-zinc-200/80 bg-white p-5 shadow-whisper transition-all duration-200 hover:-translate-y-1 hover:border-emerald-500/50 dark:border-white/[0.08] dark:bg-zinc-900 flex flex-col justify-between gap-4"
-          >
-            <span className="watermark-glyph text-[80px]! -bottom-3! -right-2!">打</span>
-            <div className="space-y-2.5 relative">
-              <div className="flex items-center justify-between">
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-zinc-100 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 group-hover:bg-emerald-500/10 group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition-colors">
-                  <Keyboard className="h-5 w-5" />
-                </span>
-                <span className="rounded-md border border-zinc-200/80 bg-zinc-50 px-2 py-0.5 font-mono text-[11px] font-bold text-zinc-400 dark:border-white/10 dark:bg-zinc-800">
-                  [1]
-                </span>
-              </div>
-              <h3 className="font-bold text-base text-zinc-900 dark:text-zinc-100">Pinyin TypeRacer</h3>
-              <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
-                Tippe Pinyin flüssig und wähle Schriftzeichen im originalgetreuen IME-Kandidatenfeld.
-              </p>
-            </div>
-            <div className="flex items-center gap-1 font-mono text-xs font-semibold text-emerald-700 dark:text-emerald-400">
-              <span>Starten</span>
-              <ChevronRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-            </div>
-          </Link>
-
-          {/* 2: Hanzi Alchemy */}
-          <Link
-            to="/alchemy"
-            className="group relative overflow-hidden rounded-3xl border border-zinc-200/80 bg-white p-5 shadow-whisper transition-all duration-200 hover:-translate-y-1 hover:border-emerald-500/50 dark:border-white/[0.08] dark:bg-zinc-900 flex flex-col justify-between gap-4"
-          >
-            <span className="watermark-glyph text-[80px]! -bottom-3! -right-2!">合</span>
-            <div className="space-y-2.5 relative">
-              <div className="flex items-center justify-between">
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-zinc-100 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 group-hover:bg-emerald-500/10 group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition-colors">
-                  <FlaskConical className="h-5 w-5" />
-                </span>
-                <span className="rounded-md border border-zinc-200/80 bg-zinc-50 px-2 py-0.5 font-mono text-[11px] font-bold text-zinc-400 dark:border-white/10 dark:bg-zinc-800">
-                  [2]
-                </span>
-              </div>
-              <h3 className="font-bold text-base text-zinc-900 dark:text-zinc-100">Hanzi-Alchemie</h3>
-              <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
-                Kombiniere Grundradikale (Wasser 氵, Mensch 亻, Mund 口) zu fertigen Zeichen.
-              </p>
-            </div>
-            <div className="flex items-center gap-1 font-mono text-xs font-semibold text-emerald-700 dark:text-emerald-400">
-              <span>Starten</span>
-              <ChevronRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-            </div>
-          </Link>
-
-          {/* 3: Satzbau-Meister */}
-          <Link
-            to="/sentences"
-            className="group relative overflow-hidden rounded-3xl border border-zinc-200/80 bg-white p-5 shadow-whisper transition-all duration-200 hover:-translate-y-1 hover:border-emerald-500/50 dark:border-white/[0.08] dark:bg-zinc-900 flex flex-col justify-between gap-4"
-          >
-            <span className="watermark-glyph text-[80px]! -bottom-3! -right-2!">句</span>
-            <div className="space-y-2.5 relative">
-              <div className="flex items-center justify-between">
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-zinc-100 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 group-hover:bg-emerald-500/10 group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition-colors">
-                  <MessageSquareQuote className="h-5 w-5" />
-                </span>
-                <span className="rounded-md border border-zinc-200/80 bg-zinc-50 px-2 py-0.5 font-mono text-[11px] font-bold text-zinc-400 dark:border-white/10 dark:bg-zinc-800">
-                  [3]
-                </span>
-              </div>
-              <h3 className="font-bold text-base text-zinc-900 dark:text-zinc-100">Satzbau-Meister</h3>
-              <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
-                Bringe chinesische Wort-Kacheln in die korrekte grammatikalische SVO-Reihenfolge.
-              </p>
-            </div>
-            <div className="flex items-center gap-1 font-mono text-xs font-semibold text-emerald-700 dark:text-emerald-400">
-              <span>Starten</span>
-              <ChevronRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-            </div>
-          </Link>
-
-          {/* 4: Zahlen-Drill */}
-          <Link
-            to="/number-drill"
-            className="group relative overflow-hidden rounded-3xl border border-zinc-200/80 bg-white p-5 shadow-whisper transition-all duration-200 hover:-translate-y-1 hover:border-emerald-500/50 dark:border-white/[0.08] dark:bg-zinc-900 flex flex-col justify-between gap-4"
-          >
-            <span className="watermark-glyph text-[80px]! -bottom-3! -right-2!">数</span>
-            <div className="space-y-2.5 relative">
-              <div className="flex items-center justify-between">
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-zinc-100 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 group-hover:bg-emerald-500/10 group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition-colors">
-                  <Sparkles className="h-5 w-5" />
-                </span>
-                <span className="rounded-md border border-zinc-200/80 bg-zinc-50 px-2 py-0.5 font-mono text-[11px] font-bold text-zinc-400 dark:border-white/10 dark:bg-zinc-800">
-                  [4]
-                </span>
-              </div>
-              <h3 className="font-bold text-base text-zinc-900 dark:text-zinc-100">Zahlen-Drill</h3>
-              <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
-                Chinesische Ziffern 0–99, Preise, Mengenangaben und Uhrzeiten reflexartig verstehen.
-              </p>
-            </div>
-            <div className="flex items-center gap-1 font-mono text-xs font-semibold text-emerald-700 dark:text-emerald-400">
-              <span>Starten</span>
-              <ChevronRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-            </div>
+      {/* Heutige Aufgaben */}
+      <section className="space-y-3">
+        <div className="flex items-center justify-between">
+          <h2 className="text-xl font-extrabold tracking-tight text-zinc-900 dark:text-zinc-50">Heute auf dem Plan</h2>
+          <Link to="/plan" className="text-sm font-bold text-jade-700 hover:underline dark:text-jade-300">
+            Zum 30-Tage-Plan
           </Link>
         </div>
+        {planToday ? (
+          <Card className="space-y-1 !p-2">
+            <p className="px-3 pt-2 font-mono text-xs text-zinc-500 dark:text-zinc-400">
+              {planToday.day.theme} · {planToday.doneCount}/{planToday.tasks.length} erledigt · {planToday.day.totalMinutes} Min.
+            </p>
+            <ul>
+              {planToday.tasks.map(({ task, done }) => (
+                <li key={task.id}>
+                  <Link
+                    to={task.route}
+                    className="flex items-center gap-3 rounded-2xl px-3 py-3 transition-colors hover:bg-paper-tint dark:hover:bg-zinc-800/60"
+                  >
+                    {done ? (
+                      <CheckCircle2 className="h-6 w-6 shrink-0 text-jade-500" aria-hidden />
+                    ) : (
+                      <Circle className="h-6 w-6 shrink-0 text-zinc-300 dark:text-zinc-600" aria-hidden />
+                    )}
+                    <span className={`flex-1 text-base font-semibold ${done ? 'text-zinc-400 line-through' : 'text-zinc-900 dark:text-zinc-50'}`}>
+                      {task.label}
+                    </span>
+                    <span className="font-mono text-xs text-zinc-500 dark:text-zinc-400">{task.minutes} Min.</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </Card>
+        ) : (
+          <Link to="/plan" className="card-solid btn-chunky flex items-center gap-4 p-5 hover:border-jade-500/50">
+            <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-jade-500/15 text-jade-700 dark:text-jade-300">
+              <CalendarDays className="h-6 w-6" aria-hidden />
+            </span>
+            <span>
+              <span className="block text-lg font-extrabold text-zinc-900 dark:text-zinc-50">30-Tage-Plan starten</span>
+              <span className="block text-sm text-zinc-600 dark:text-zinc-400">
+                Jeden Tag klare Aufgaben, bis zur Prüfung.
+              </span>
+            </span>
+          </Link>
+        )}
       </section>
 
-      {/* SÄULE 3: PRÜFUNG & GEDÄCHTNIS */}
-      <section className="space-y-5">
-        <div className="flex items-baseline justify-between border-b border-zinc-200/80 dark:border-white/[0.08] pb-3">
-          <div className="flex items-center gap-3">
-            <SealBadge sealChar="考" label="SÄULE 3" variant="cinnabar" size="sm" />
-            <div>
-              <h2 className="text-xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
-                Prüfung & Gedächtnis
-              </h2>
-              <p className="text-xs text-zinc-500 dark:text-zinc-400">
-                Wiederholungs-Algorithmen, Tondiskriminierung und realistische HSK-1-Prüfungssimulation
-              </p>
-            </div>
-          </div>
-          <span className="hidden font-mono text-xs text-zinc-400 sm:block">
-            Tastatur: <kbd className="rounded border px-1.5 py-0.5 text-[11px] font-mono">5</kbd>–<kbd className="rounded border px-1.5 py-0.5 text-[11px] font-mono">9</kbd>
-          </span>
+      {/* Schnellstart */}
+      <section className="space-y-3">
+        <div className="flex items-center justify-between">
+          <h2 className="text-xl font-extrabold tracking-tight text-zinc-900 dark:text-zinc-50">Schnell üben</h2>
+          <Link to="/practice" className="text-sm font-bold text-jade-700 hover:underline dark:text-jade-300">
+            Alle Übungen
+          </Link>
         </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
-          {/* 5: Gehörtraining */}
-          <Link
-            to="/ear-trainer"
-            className="group relative overflow-hidden rounded-3xl border border-zinc-200/80 bg-white p-5 shadow-whisper transition-all duration-200 hover:-translate-y-1 hover:border-emerald-500/50 dark:border-white/[0.08] dark:bg-zinc-900 flex flex-col justify-between gap-4"
-          >
-            <span className="watermark-glyph text-[80px]! -bottom-3! -right-2!">听</span>
-            <div className="space-y-2.5 relative">
-              <div className="flex items-center justify-between">
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-zinc-100 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 group-hover:bg-emerald-500/10 group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition-colors">
-                  <Headphones className="h-5 w-5" />
-                </span>
-                <span className="rounded-md border border-zinc-200/80 bg-zinc-50 px-2 py-0.5 font-mono text-[11px] font-bold text-zinc-400 dark:border-white/10 dark:bg-zinc-800">
-                  [5]
-                </span>
-              </div>
-              <h3 className="font-bold text-base text-zinc-900 dark:text-zinc-100">Gehörtraining</h3>
-              <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
-                Tondiskriminierung der 4 Töne und Minimalpaare (z. B. b/p, d/t, zh/ch).
-              </p>
-            </div>
-            <div className="flex items-center gap-1 font-mono text-xs font-semibold text-emerald-700 dark:text-emerald-400">
-              <span>Starten</span>
-              <ChevronRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-            </div>
-          </Link>
-
-          {/* 6: 2-Minuten-Blitz */}
-          <Link
-            to="/blitz"
-            className="group relative overflow-hidden rounded-3xl border border-zinc-200/80 bg-white p-5 shadow-whisper transition-all duration-200 hover:-translate-y-1 hover:border-amber-500/50 dark:border-white/[0.08] dark:bg-zinc-900 flex flex-col justify-between gap-4"
-          >
-            <span className="watermark-glyph text-[80px]! -bottom-3! -right-2!">快</span>
-            <div className="space-y-2.5 relative">
-              <div className="flex items-center justify-between">
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-500/10 text-amber-700 dark:text-amber-400 transition-colors">
-                  <Zap className="h-5 w-5" />
-                </span>
-                <span className="rounded-md border border-zinc-200/80 bg-zinc-50 px-2 py-0.5 font-mono text-[11px] font-bold text-zinc-400 dark:border-white/10 dark:bg-zinc-800">
-                  [6]
-                </span>
-              </div>
-              <h3 className="font-bold text-base text-zinc-900 dark:text-zinc-100">90-Sekunden-Blitz</h3>
-              <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
-                High-Speed Vokabel-Review: Wie viele Begriffe erkennst du in 90 Sekunden?
-              </p>
-            </div>
-            <div className="flex items-center gap-1 font-mono text-xs font-semibold text-amber-700 dark:text-amber-400">
-              <span>Starten</span>
-              <ChevronRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-            </div>
-          </Link>
-
-          {/* 7: HSK 1 Prüfungssimulator */}
-          <Link
-            to="/exam"
-            className="group relative overflow-hidden rounded-3xl border border-rose-500/30 bg-rose-500/[0.03] p-5 shadow-whisper transition-all duration-200 hover:-translate-y-1 hover:border-rose-500/60 dark:border-rose-500/20 dark:bg-rose-500/[0.02] flex flex-col justify-between gap-4"
-          >
-            <span className="watermark-glyph text-[80px]! -bottom-3! -right-2!">考</span>
-            <div className="space-y-2.5 relative">
-              <div className="flex items-center justify-between">
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-rose-500/10 text-rose-700 dark:text-rose-400 transition-colors">
-                  <GraduationCap className="h-5 w-5" />
-                </span>
-                <span className="rounded-md border border-rose-500/30 bg-white px-2 py-0.5 font-mono text-[11px] font-bold text-rose-700 dark:bg-zinc-900 dark:text-rose-400">
-                  [7]
-                </span>
-              </div>
-              <h3 className="font-bold text-base text-zinc-900 dark:text-zinc-100">HSK-1 Prüfung</h3>
-              <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
-                Offizieller 35-minütiger Test: 20 Hörverständnis- & 20 Leseaufgaben mit Timer.
-              </p>
-            </div>
-            <div className="flex items-center gap-1 font-mono text-xs font-semibold text-rose-700 dark:text-rose-400">
-              <span>Prüfung starten</span>
-              <ChevronRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-            </div>
-          </Link>
-
-          {/* 8: SRS-Wiederholungsstapel */}
-          <Link
-            to="/review"
-            className="group relative overflow-hidden rounded-3xl border border-zinc-200/80 bg-white p-5 shadow-whisper transition-all duration-200 hover:-translate-y-1 hover:border-emerald-500/50 dark:border-white/[0.08] dark:bg-zinc-900 flex flex-col justify-between gap-4"
-          >
-            <span className="watermark-glyph text-[80px]! -bottom-3! -right-2!">忆</span>
-            <div className="space-y-2.5 relative">
-              <div className="flex items-center justify-between">
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-zinc-100 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 group-hover:bg-emerald-500/10 group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition-colors">
-                  <Layers className="h-5 w-5" />
-                </span>
-                <span className="rounded-md border border-zinc-200/80 bg-zinc-50 px-2 py-0.5 font-mono text-[11px] font-bold text-zinc-400 dark:border-white/10 dark:bg-zinc-800">
-                  [8]
-                </span>
-              </div>
-              <h3 className="font-bold text-base text-zinc-900 dark:text-zinc-100">SRS-Wiederholung</h3>
-              <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
-                Spaced-Repetition: {dueToday > 0 ? `${dueToday} Karten fällig` : 'Heute auf dem aktuellen Stand'}.
-              </p>
-            </div>
-            <div className="flex items-center gap-1 font-mono text-xs font-semibold text-emerald-700 dark:text-emerald-400">
-              <span>Stapel öffnen</span>
-              <ChevronRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-            </div>
-          </Link>
-
-          {/* 9: Schwachstellen-Trainer · 错题本 */}
-          <Link
-            to="/mistakes"
-            className="group relative overflow-hidden rounded-3xl border border-rose-500/30 bg-rose-500/[0.04] p-5 shadow-whisper transition-all duration-200 hover:-translate-y-1 hover:border-rose-500/60 dark:border-rose-500/20 dark:bg-rose-500/[0.02] flex flex-col justify-between gap-4"
-          >
-            <span className="watermark-glyph text-[80px]! -bottom-3! -right-2!">错</span>
-            <div className="space-y-2.5 relative">
-              <div className="flex items-center justify-between">
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-rose-500/10 text-rose-700 dark:text-rose-400 transition-colors">
-                  <RotateCcw className="h-5 w-5" />
-                </span>
-                <span className="rounded-md border border-rose-500/30 bg-white px-2 py-0.5 font-mono text-[11px] font-bold text-rose-700 dark:bg-zinc-900 dark:text-rose-400">
-                  [9]
-                </span>
-              </div>
-              <h3 className="font-bold text-base text-zinc-900 dark:text-zinc-100">Schwachstellen</h3>
-              <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
-                {activeMistakesCount > 0
-                  ? `${activeMistakesCount} offene Fehler im Fehlerheft (2 Treffer zum Löschen).`
-                  : 'Fehlerbank leer — alle Schwachstellen gemeistert!'}
-              </p>
-            </div>
-            <div className="flex items-center gap-1 font-mono text-xs font-semibold text-rose-700 dark:text-rose-400">
-              <span>Trainer starten</span>
-              <ChevronRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-            </div>
-          </Link>
+        <div className="grid gap-4 sm:grid-cols-2">
+          {quickModes.map((m, i) => (
+            <HubTile key={m.id} to={m.path} title={m.title} description={m.tagline} icon={m.icon} index={i} />
+          ))}
         </div>
       </section>
     </div>
