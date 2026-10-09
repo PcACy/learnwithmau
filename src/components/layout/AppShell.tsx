@@ -1,26 +1,27 @@
 import { Suspense, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import {
-  Award,
-  BookOpen,
-  BookOpenText,
-  CalendarDays,
+  Dumbbell,
   Flame,
   GraduationCap,
   HardDrive,
-  LineChart,
-  MessagesSquare,
+  Home,
   RotateCcw,
-  Settings,
-  Sparkles,
+  Target,
+  Trophy,
+  User,
+  type LucideIcon,
 } from 'lucide-react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useProgressStore } from '../../store/progressStore';
 import { useKeyDown } from '../../hooks/useKeyDown';
 import { stopCurrentAudio } from '../../lib/audio';
 import { filterActiveMistakes } from '../../lib/mistakeBank';
+import { levelFromXp } from '../../lib/xp';
 import { ThemeToggle } from './ThemeToggle';
 import { BackupModal } from '../dashboard/BackupModal';
 import { SealBadge } from '../ui/SealBadge';
+import { ProgressRing } from '../ui/ProgressRing';
+import { ToastHost } from '../ui/Toast';
 import { preloadAllRoutes, ROUTE_PRELOAD_MAP } from '../../routes/lazyRoutes';
 
 const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
@@ -54,56 +55,50 @@ function ShellSkeleton() {
   );
 }
 
-interface NavLinkItem {
+interface NavTab {
   to: string;
   label: string;
-  icon: typeof Sparkles;
+  icon: LucideIcon;
+  /** Weitere Pfade, die zu diesem Tab gehören. */
+  also: readonly string[];
 }
 
-const NAV_LINKS: readonly NavLinkItem[] = [
-  { to: '/', label: 'Zentrale', icon: Sparkles },
-  { to: '/plan', label: '30-Tage-Plan', icon: CalendarDays },
-  { to: '/dictionary', label: 'Wörterbuch', icon: BookOpen },
-  { to: '/grammar', label: 'Grammatik', icon: GraduationCap },
-  { to: '/stories', label: 'Lesen', icon: BookOpenText },
-  { to: '/dialogue', label: 'Dialoge', icon: MessagesSquare },
-  { to: '/exam', label: 'Prüfung', icon: Award },
-  { to: '/stats', label: 'Fortschritt', icon: LineChart },
-  { to: '/settings', label: 'Einstellungen', icon: Settings },
+const NAV_TABS: readonly NavTab[] = [
+  { to: '/', label: 'Heute', icon: Home, also: [] },
+  {
+    to: '/learn',
+    label: 'Lernen',
+    icon: GraduationCap,
+    also: ['/plan', '/dictionary', '/grammar', '/stories', '/pinyin', '/strokes', '/culture'],
+  },
+  {
+    to: '/practice',
+    label: 'Üben',
+    icon: Dumbbell,
+    also: ['/review', '/blitz', '/mistakes', '/dialogue', '/ear-trainer', '/typeracer', '/alchemy', '/sentences', '/number-drill'],
+  },
+  { to: '/exam', label: 'Prüfung', icon: Trophy, also: [] },
+  { to: '/stats', label: 'Profil', icon: User, also: ['/settings'] },
 ];
 
-function isLinkActive(to: string, currentPath: string): boolean {
-  if (to === '/') return currentPath === '/';
-  return currentPath.startsWith(to);
+function isTabActive(tab: NavTab, currentPath: string): boolean {
+  if (tab.to === '/') return currentPath === '/';
+  return [tab.to, ...tab.also].some((p) => currentPath === p || currentPath.startsWith(`${p}/`));
 }
 
 export function AppShell() {
   const hydrated = useProgressStore((s) => s.hydrated);
   const streak = useProgressStore((s) => s.streak.current);
   const mistakes = useProgressStore((s) => s.mistakes);
+  const xp = useProgressStore((s) => s.xp);
+  const dailyGoal = useProgressStore((s) => s.dailyGoal);
+  const level = useMemo(() => levelFromXp(xp), [xp]);
+  const goalProgress = dailyGoal.targetReviews > 0 ? dailyGoal.completedReviews / dailyGoal.targetReviews : 0;
   const activeMistakesCount = useMemo(() => filterActiveMistakes(mistakes).length, [mistakes]);
   const [backupOpen, setBackupOpen] = useState(false);
 
   const location = useLocation();
   const navigate = useNavigate();
-
-  // Sliding Nav Pill State
-  const navRef = useRef<HTMLElement | null>(null);
-  const linkRefs = useRef<Map<string, HTMLAnchorElement>>(new Map());
-  const [pillRect, setPillRect] = useState<{
-    left: number;
-    top: number;
-    width: number;
-    height: number;
-    opacity: number;
-  }>({
-    left: 0,
-    top: 0,
-    width: 0,
-    height: 0,
-    opacity: 0,
-  });
-  const [isMounted, setIsMounted] = useState(false);
 
   // Scroll Reset on Route Change
   const prevPathname = useRef(location.pathname);
@@ -143,52 +138,7 @@ export function AppShell() {
     }
   });
 
-  const activeLink = NAV_LINKS.find((l) => isLinkActive(l.to, location.pathname));
-
-  // Compute position of active link pill
-  useIsomorphicLayoutEffect(() => {
-    const updatePill = () => {
-      if (!activeLink) {
-        setPillRect((prev) => (prev.opacity === 0 ? prev : { ...prev, opacity: 0 }));
-        return;
-      }
-      const el = linkRefs.current.get(activeLink.to);
-      if (!el || !navRef.current) {
-        setPillRect((prev) => (prev.opacity === 0 ? prev : { ...prev, opacity: 0 }));
-        return;
-      }
-      setPillRect((prev) => {
-        if (
-          prev.left === el.offsetLeft &&
-          prev.top === el.offsetTop &&
-          prev.width === el.offsetWidth &&
-          prev.height === el.offsetHeight &&
-          prev.opacity === 1
-        ) {
-          return prev;
-        }
-        return {
-          left: el.offsetLeft,
-          top: el.offsetTop,
-          width: el.offsetWidth,
-          height: el.offsetHeight,
-          opacity: 1,
-        };
-      });
-    };
-
-    updatePill();
-    if (typeof window !== 'undefined') {
-      window.addEventListener('resize', updatePill);
-      if ('fonts' in document) {
-        void document.fonts.ready.then(updatePill).catch(() => {});
-      }
-      return () => window.removeEventListener('resize', updatePill);
-    }
-  }, [location.pathname, activeLink?.to]);
-
   useEffect(() => {
-    const timer = window.setTimeout(() => setIsMounted(true), 60);
     let preloadTimer: number | null = null;
     if (typeof window !== 'undefined') {
       const preload = () => {
@@ -204,7 +154,6 @@ export function AppShell() {
       }
     }
     return () => {
-      window.clearTimeout(timer);
       if (preloadTimer) window.clearTimeout(preloadTimer);
     };
   }, []);
@@ -215,90 +164,77 @@ export function AppShell() {
 
   return (
     <div className="min-h-dvh bg-paper text-zinc-900 dark:bg-ink dark:text-zinc-100">
-      <header className="app-shell-header sticky top-0 z-30 border-b border-zinc-200/80 bg-paper/90 backdrop-blur-md dark:border-white/[0.08] dark:bg-ink/90 relative">
-        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-8">
-          <div className="flex items-center gap-6">
+      <header className="app-shell-header sticky top-0 z-30 border-b-2 border-paper-tint bg-paper/90 backdrop-blur-md dark:border-zinc-800 dark:bg-ink/90">
+        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-2 px-4 sm:px-8">
+          <Link
+            to="/"
+            className="group flex items-center gap-3 transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] active:scale-[0.98]"
+          >
+            <SealBadge sealChar="汉" label="HSK 1" variant="cinnabar" size="sm" />
+            <span className="hidden text-base font-black leading-tight tracking-tight text-zinc-900 sm:block dark:text-zinc-50">
+              Hanzi Arcade
+            </span>
+          </Link>
+
+          <div className="flex items-center gap-2">
+            {/* Level + XP */}
             <Link
-              to="/"
-              className="group flex items-center gap-3 transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] active:scale-[0.98]"
+              to="/stats"
+              className="flex h-10 items-center gap-2 rounded-full border-2 border-gold-500/40 bg-gold-500/15 pl-2.5 pr-3 transition-colors hover:bg-gold-500/25"
+              title={`Level ${level.level}: ${level.title}, ${xp} XP`}
+              aria-label={`Level ${level.level}, ${level.title}`}
             >
-              <SealBadge sealChar="汉" label="HSK 1" variant="cinnabar" size="sm" />
-              <div className="hidden sm:block">
-                <span className="text-sm font-black tracking-tight text-zinc-900 dark:text-zinc-50 block leading-tight">
-                  Hanzi Arcade
-                </span>
-              </div>
+              <span className="font-mono text-xs font-bold text-gold-600 dark:text-gold-300">
+                Lv {level.level}
+              </span>
+              <span
+                aria-hidden
+                className="hidden h-2 w-14 overflow-hidden rounded-full bg-black/10 sm:block dark:bg-white/15"
+              >
+                <span
+                  className="block h-full rounded-full bg-gold-500 transition-[width] duration-700"
+                  style={{ width: `${Math.round(level.progress * 100)}%` }}
+                />
+              </span>
             </Link>
 
-            {/* Desktop Navigation Links with Kinetic Sliding Indicator Pill */}
-            <nav
-              ref={navRef}
-              className="relative hidden items-center gap-1 sm:flex"
-              aria-label="Hauptnavigation"
+            {/* Streak */}
+            <Link
+              to="/stats"
+              className={`flex h-10 items-center gap-1.5 rounded-full border-2 px-3 font-mono text-xs font-bold transition-colors ${
+                streak > 0
+                  ? 'border-gold-600/40 bg-gold-600/15 text-gold-600 hover:bg-gold-600/25 dark:text-gold-400'
+                  : 'border-zinc-300 text-zinc-500 dark:border-zinc-700 dark:text-zinc-400'
+              }`}
+              title={`${streak} Tage Lernserie`}
             >
-              {/* Sliding Milled Indicator Pill */}
-              <span
-                aria-hidden="true"
-                className={`pointer-events-none absolute rounded-full border border-emerald-600/30 bg-emerald-600/10 dark:border-emerald-500/30 dark:bg-emerald-500/15 motion-reduce:transition-none ${
-                  isMounted ? 'transition-all duration-260 ease-[cubic-bezier(0.16,1,0.3,1)]' : ''
-                }`}
-                style={{
-                  transform: `translate3d(${pillRect.left}px, ${pillRect.top}px, 0)`,
-                  width: `${pillRect.width}px`,
-                  height: `${pillRect.height}px`,
-                  opacity: pillRect.opacity,
-                }}
-              />
+              <Flame className={`h-4 w-4 ${streak > 0 ? 'fill-current animate-pulse-soft' : ''}`} aria-hidden />
+              <span>{streak}</span>
+            </Link>
 
-              {NAV_LINKS.map((link) => {
-                const isActive = isLinkActive(link.to, location.pathname);
-                const Icon = link.icon;
-                return (
-                  <Link
-                    key={link.to}
-                    to={link.to}
-                    onMouseEnter={() => void ROUTE_PRELOAD_MAP[link.to]?.()}
-                    onFocus={() => void ROUTE_PRELOAD_MAP[link.to]?.()}
-                    onTouchStart={() => void ROUTE_PRELOAD_MAP[link.to]?.()}
-                    ref={(el) => {
-                      if (el) linkRefs.current.set(link.to, el);
-                      else linkRefs.current.delete(link.to);
-                    }}
-                    className={`relative z-10 flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold whitespace-nowrap transition-colors duration-150 ${
-                      isActive
-                        ? 'text-emerald-900 font-bold dark:text-emerald-300'
-                        : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/70 dark:text-zinc-400 dark:hover:text-zinc-100 dark:hover:bg-zinc-800/50'
-                    }`}
-                  >
-                    <Icon className={`h-3.5 w-3.5 transition-transform duration-150 ${isActive ? 'scale-105' : ''}`} />
-                    <span>{link.label}</span>
-                  </Link>
-                );
-              })}
-            </nav>
-          </div>
-
-          <div className="flex items-center gap-2.5">
-            {/* Streak Counter with Amber Streak Accent */}
-            {streak > 0 && (
-              <Link
-                to="/stats"
-                className="flex h-9 items-center gap-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 px-3 font-mono text-xs font-bold text-amber-700 dark:border-amber-500/20 dark:text-amber-400 hover:bg-amber-500/15 transition-all"
-                title={`${streak} Tage Lernserie`}
+            {/* Daily goal */}
+            <Link
+              to="/"
+              className="flex h-10 w-10 items-center justify-center"
+              title={`Tagesziel: ${dailyGoal.completedReviews} von ${dailyGoal.targetReviews}`}
+            >
+              <ProgressRing
+                value={goalProgress}
+                size={38}
+                stroke={5}
+                label="Tagesziel"
               >
-                <Flame className="h-3.5 w-3.5 fill-current animate-pulse-soft" aria-hidden />
-                <span>{streak}d</span>
-              </Link>
-            )}
+                <Target className="h-4 w-4 text-jade-700 dark:text-jade-300" aria-hidden />
+              </ProgressRing>
+            </Link>
 
-            {/* Mistake Bank Counter with Rose/Cinnabar Accent */}
             {activeMistakesCount > 0 && (
               <Link
                 to="/mistakes"
-                className="flex h-9 items-center gap-1.5 rounded-full border border-rose-500/30 bg-rose-500/10 px-3 font-mono text-xs font-bold text-rose-700 dark:border-rose-500/20 dark:text-rose-400 hover:bg-rose-500/15 transition-all"
+                className="hidden h-10 items-center gap-1.5 rounded-full border-2 border-cinnabar-500/40 bg-cinnabar-500/10 px-3 font-mono text-xs font-bold text-cinnabar-600 transition-colors hover:bg-cinnabar-500/20 sm:flex dark:text-cinnabar-400"
                 title={`${activeMistakesCount} offene Schwachstellen im Fehlerheft`}
               >
-                <RotateCcw className="h-3.5 w-3.5" aria-hidden />
+                <RotateCcw className="h-4 w-4" aria-hidden />
                 <span>{activeMistakesCount}</span>
               </Link>
             )}
@@ -308,7 +244,7 @@ export function AppShell() {
               onClick={() => setBackupOpen(true)}
               aria-label="Backup und Wiederherstellung öffnen"
               title="Backup & Wiederherstellung"
-              className="flex h-9 w-9 items-center justify-center rounded-xl border border-zinc-200/80 bg-white text-zinc-700 shadow-xs transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-emerald-600/35 hover:bg-zinc-50 active:scale-95 dark:border-white/[0.08] dark:bg-zinc-900 dark:text-zinc-300 dark:hover:border-emerald-400/30 dark:hover:bg-zinc-800 cursor-pointer"
+              className="hidden h-10 w-10 cursor-pointer items-center justify-center rounded-xl border-2 border-paper-tint bg-white text-zinc-700 transition-colors hover:border-jade-500/50 sm:flex dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300"
             >
               <HardDrive className="h-4 w-4" aria-hidden />
             </button>
@@ -317,52 +253,59 @@ export function AppShell() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-6xl px-4 pt-6 pb-28 sm:py-10 sm:px-8">
+      {/* Desktop rail */}
+      <nav
+        aria-label="Hauptnavigation"
+        className="fixed bottom-0 left-0 top-16 z-20 hidden w-24 flex-col items-center gap-2 border-r-2 border-paper-tint px-2 py-6 sm:flex dark:border-zinc-800"
+      >
+        {NAV_TABS.map((tab) => (
+          <TabLink key={tab.to} tab={tab} active={isTabActive(tab, location.pathname)} layout="rail" />
+        ))}
+      </nav>
+
+      <main className="mx-auto max-w-6xl px-4 pt-6 pb-28 sm:py-10 sm:pl-32 sm:pr-8">
         <Suspense fallback={null}>
           <Outlet />
         </Suspense>
       </main>
 
-      {/* Mobile Ergonomic Bottom Navigation Bar */}
+      {/* Mobile bottom bar */}
       <nav
         aria-label="Mobile Navigation"
-        className="sm:hidden fixed bottom-0 left-0 right-0 z-40 border-t border-zinc-200/80 bg-paper/95 backdrop-blur-lg px-1 pt-1.5 safe-area-pb dark:border-white/[0.08] dark:bg-ink/95 shadow-whisper"
+        className="safe-area-pb fixed bottom-0 left-0 right-0 z-40 border-t-2 border-paper-tint bg-paper/95 px-2 pt-2 backdrop-blur-lg sm:hidden dark:border-zinc-800 dark:bg-ink/95"
       >
-        <div className="flex items-center justify-around">
-          {NAV_LINKS.map((link) => {
-            const isActive = isLinkActive(link.to, location.pathname);
-            const Icon = link.icon;
-            return (
-              <Link
-                key={link.to}
-                to={link.to}
-                onTouchStart={() => void ROUTE_PRELOAD_MAP[link.to]?.()}
-                onMouseEnter={() => void ROUTE_PRELOAD_MAP[link.to]?.()}
-                onFocus={() => void ROUTE_PRELOAD_MAP[link.to]?.()}
-                className={`flex flex-col items-center justify-center gap-0.5 px-1 py-1 text-[9px] font-semibold transition-all duration-150 active:scale-95 touch-manipulation ${
-                  isActive
-                    ? 'text-emerald-700 font-bold dark:text-emerald-400'
-                    : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200'
-                }`}
-              >
-                <div
-                  className={`flex h-7 w-7 items-center justify-center rounded-full transition-all duration-200 ${
-                    isActive
-                      ? 'bg-emerald-600/15 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300'
-                      : ''
-                  }`}
-                >
-                  <Icon className="h-3.5 w-3.5" />
-                </div>
-                <span className="truncate max-w-[44px]">{link.label}</span>
-              </Link>
-            );
-          })}
+        <div className="grid grid-cols-5 gap-1">
+          {NAV_TABS.map((tab) => (
+            <TabLink key={tab.to} tab={tab} active={isTabActive(tab, location.pathname)} layout="bar" />
+          ))}
         </div>
       </nav>
 
+      <ToastHost />
       <BackupModal open={backupOpen} onClose={() => setBackupOpen(false)} />
     </div>
   );
 }
 
+function TabLink({ tab, active, layout }: { tab: NavTab; active: boolean; layout: 'rail' | 'bar' }) {
+  const Icon = tab.icon;
+  const preload = () => void ROUTE_PRELOAD_MAP[tab.to]?.();
+  const size = layout === 'rail' ? 'h-16 w-[4.75rem]' : 'h-14 w-full';
+  return (
+    <Link
+      to={tab.to}
+      onMouseEnter={preload}
+      onFocus={preload}
+      onTouchStart={preload}
+      aria-current={active ? 'page' : undefined}
+      className={`flex ${size} touch-manipulation flex-col items-center justify-center gap-0.5 rounded-2xl border-2 text-xs font-bold transition-colors ${
+        active
+          ? 'border-jade-500/50 bg-jade-500/15 text-jade-800 dark:text-jade-300'
+          : 'border-transparent text-zinc-600 hover:bg-paper-tint dark:text-zinc-400 dark:hover:bg-zinc-800/60'
+      }`}
+    >
+      <Icon className="h-6 w-6" strokeWidth={active ? 2.25 : 1.75} aria-hidden />
+      <span>{tab.label}</span>
+    </Link>
+  );
+}

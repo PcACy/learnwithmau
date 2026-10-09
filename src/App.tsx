@@ -10,10 +10,12 @@ import {
   DictionaryPage,
   EarTrainerPage,
   GrammarPage,
+  LearnHubPage,
   MistakesPage,
   MockExamPage,
   NumberDrillPage,
   PinyinPage,
+  PracticeHubPage,
   ReviewPage,
   SentenceBuilderPage,
   SettingsPage,
@@ -50,6 +52,8 @@ export function AppRoutes() {
     <Routes>
       <Route element={<AppShell />}>
         <Route path="/" element={<DashboardPage />} />
+        <Route path="/learn" element={<LearnHubPage />} />
+        <Route path="/practice" element={<PracticeHubPage />} />
         <Route path="/dictionary" element={<DictionaryPage />} />
         <Route path="/pinyin" element={<PinyinPage />} />
         <Route path="/strokes" element={<StrokeGuidePage />} />

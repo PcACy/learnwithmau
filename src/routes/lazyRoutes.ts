@@ -19,9 +19,13 @@ export const SentenceBuilderPage = lazyRoute(() => import('./SentenceBuilderPage
 export const NumberDrillPage = lazyRoute(() => import('./NumberDrillPage'), 'NumberDrillPage');
 export const ReviewPage = lazyRoute(() => import('./ReviewPage'), 'ReviewPage');
 export const StudyPlanPage = lazyRoute(() => import('./StudyPlanPage'), 'StudyPlanPage');
+export const LearnHubPage = lazyRoute(() => import('./LearnHubPage'), 'LearnHubPage');
+export const PracticeHubPage = lazyRoute(() => import('./PracticeHubPage'), 'PracticeHubPage');
 export const MockExamPage = lazyRoute(() => import('./MockExamPage'), 'MockExamPage');
 
 export const PRIMARY_ROUTES: readonly PreloadableComponent[] = [
+  LearnHubPage,
+  PracticeHubPage,
   DictionaryPage,
   GrammarPage,
   StoriesPage,
@@ -54,6 +58,8 @@ export const ALL_ROUTE_COMPONENTS: readonly PreloadableComponent[] = [
 
 export const ROUTE_PRELOAD_MAP: Record<string, () => Promise<unknown>> = {
   '/': () => DashboardPage.preload(),
+  '/learn': () => LearnHubPage.preload(),
+  '/practice': () => PracticeHubPage.preload(),
   '/dictionary': () => DictionaryPage.preload(),
   '/grammar': () => GrammarPage.preload(),
   '/stories': () => StoriesPage.preload(),
