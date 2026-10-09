@@ -51,15 +51,15 @@ colors:
   jade-light: '#10b981'
   jade-base: '#059669'
   jade-deep: '#047857'
-  cinnabar-stamp: '#dc2626'
-  cinnabar-deep: '#b91c1c'
+  cinnabar-stamp: '#e11d48'
+  cinnabar-deep: '#be123c'
   amber-streak: '#d97706'
   amber-glow: '#f59e0b'
   celadon-sky: '#0284c7'
   imperial-gold: '#ca8a04'
   gold-shimmer: '#eab308'
-  xuan-paper: '#fbfbf9'
-  xuan-tint: '#f4f4f0'
+  xuan-paper: '#faf5ea'
+  xuan-tint: '#f2ead8'
   ink-black: '#09090b'
   ink-stone: '#18181b'
   ink-secondary: '#71717a'
@@ -186,6 +186,9 @@ This design system establishes a high-craft fusion of Classical Chinese Aestheti
 - **Atmospheric Depth:** Whisper-thin calligraphy watermarks embedded into module backgrounds with ghost-level opacities (1.5%–4%), providing cultural grounding without interfering with functional readability.
 
 ### Emotional Target
+**2026 overhaul — warm and energetic:** the interface is now motivation-first. Surfaces are warm paper (`#faf5ea`) with solid, chunky cards (`card-solid`, thick bottom edge) and press-down buttons (`btn-chunky`). Jade and gold hero blocks (`bg-hero-jade`, `bg-hero-gold`) carry the one primary action per screen. Progress (goal ring, XP, streak, level) is always visible. Colors come from `@theme` tokens in `src/index.css` (`jade-*`, `cinnabar-*`, `gold-*`, `paper`, `ink`), not raw Tailwind palette classes. The double-bezel classes remain for legacy pages.
+
+The original emotional target:
 The experience conveys absolute linguistic mastery, quiet focus, scholarly authority, and tactile mechanical delight. It deliberately avoids gamification clichés like candy gradients or decorative emojis, treating the student as a calligrapher and linguistic craftsman.
 
 ## Colors

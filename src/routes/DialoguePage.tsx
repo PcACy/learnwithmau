@@ -459,7 +459,7 @@ export function DialoguePage() {
           </div>
 
           {/* Chat Messenger Container */}
-          <div className="space-y-4 rounded-[2.5rem] border border-zinc-200/80 bg-[#f4f4f1] p-4 sm:p-6 shadow-whisper dark:border-white/[0.08] dark:bg-zinc-950/60 min-h-[380px]">
+          <div className="space-y-4 rounded-[2.5rem] border border-zinc-200/80 bg-paper-tint p-4 sm:p-6 shadow-whisper dark:border-white/[0.08] dark:bg-zinc-950/60 min-h-[380px]">
             {history.map((item) => (
               <DialogueMessageBubble
                 key={item.id}

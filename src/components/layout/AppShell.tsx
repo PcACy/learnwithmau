@@ -27,8 +27,8 @@ const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffec
 
 function ShellSkeleton() {
   return (
-    <div className="min-h-dvh bg-[#fbfbf9] dark:bg-[#09090b]" aria-busy="true" aria-label="Lade Fortschritt">
-      <header className="sticky top-0 border-b border-zinc-200/60 bg-[#fbfbf9]/85 backdrop-blur-md dark:border-white/[0.06] dark:bg-[#09090b]/85">
+    <div className="min-h-dvh bg-paper dark:bg-ink" aria-busy="true" aria-label="Lade Fortschritt">
+      <header className="sticky top-0 border-b border-zinc-200/60 bg-paper/85 backdrop-blur-md dark:border-white/[0.06] dark:bg-ink/85">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-8">
           <div className="skeleton-shimmer h-9 w-40 rounded-2xl" />
           <div className="flex gap-2">
@@ -214,8 +214,8 @@ export function AppShell() {
   }
 
   return (
-    <div className="min-h-dvh bg-[#fbfbf9] text-zinc-900 dark:bg-[#09090b] dark:text-zinc-100">
-      <header className="app-shell-header sticky top-0 z-30 border-b border-zinc-200/80 bg-[#fbfbf9]/90 backdrop-blur-md dark:border-white/[0.08] dark:bg-[#09090b]/90 relative">
+    <div className="min-h-dvh bg-paper text-zinc-900 dark:bg-ink dark:text-zinc-100">
+      <header className="app-shell-header sticky top-0 z-30 border-b border-zinc-200/80 bg-paper/90 backdrop-blur-md dark:border-white/[0.08] dark:bg-ink/90 relative">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-8">
           <div className="flex items-center gap-6">
             <Link
@@ -326,7 +326,7 @@ export function AppShell() {
       {/* Mobile Ergonomic Bottom Navigation Bar */}
       <nav
         aria-label="Mobile Navigation"
-        className="sm:hidden fixed bottom-0 left-0 right-0 z-40 border-t border-zinc-200/80 bg-[#fbfbf9]/95 backdrop-blur-lg px-1 pt-1.5 safe-area-pb dark:border-white/[0.08] dark:bg-[#09090b]/95 shadow-whisper"
+        className="sm:hidden fixed bottom-0 left-0 right-0 z-40 border-t border-zinc-200/80 bg-paper/95 backdrop-blur-lg px-1 pt-1.5 safe-area-pb dark:border-white/[0.08] dark:bg-ink/95 shadow-whisper"
       >
         <div className="flex items-center justify-around">
           {NAV_LINKS.map((link) => {

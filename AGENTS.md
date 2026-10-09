@@ -7,7 +7,7 @@
 ## 2. Design System & Frontend-Standards
 * **Anti-Slop & Redaktionelle Ästhetik:** Striktes Befolgen der Richtlinien aus `DESIGN.md`.
 * **Zero-Emoji-Policy:** Im UI dürfen keine Emojis verwendet werden; ausschließlich Lucide-Vektor-Icons und CJK-Schriftzeichen.
-* **Farben & Flächen:** Double-Bezel-Architektur, `#09090b` Canvas-Hintergrund in Dark-Mode, Emerald Signal (`#10B981` / `#059669`) für Fortschritt/Erfolge, Cinnabar Red (`#E11D48`) für Stempel-Badges.
+* **Farben & Flächen:** Double-Bezel-Architektur, `#09090b` Canvas-Hintergrund in Dark-Mode, Emerald Signal (`#10B981` / `#059669`) für Fortschritt/Erfolge, Cinnabar Red (`#E11D48`, token `cinnabar-500`) für Stempel-Badges.
 * **Typografie:** `font-sans` (`Outfit`) für Überschriften, `font-cjk` (`Noto Sans SC`) für chinesische Zeichen, `font-mono` (`JetBrains Mono`) für Pinyin, Hotkeys und Zahlen.
 
 ## 3. Test- & Codequalität

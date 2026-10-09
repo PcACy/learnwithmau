@@ -114,14 +114,14 @@ export function HorizontalScrollRow({
   // Fade-Gradienten basierend auf Canvas/Card
   const leftFadeClass =
     fadeVariant === 'canvas'
-      ? 'bg-gradient-to-r from-[#fbfbf9] via-[#fbfbf9]/90 to-transparent dark:from-[#09090b] dark:via-[#09090b]/90'
+      ? 'bg-gradient-to-r from-paper via-paper/90 to-transparent dark:from-ink dark:via-ink/90'
       : fadeVariant === 'card'
         ? 'bg-gradient-to-r from-white via-white/90 to-transparent dark:from-zinc-900 dark:via-zinc-900/90'
         : '';
 
   const rightFadeClass =
     fadeVariant === 'canvas'
-      ? 'bg-gradient-to-l from-[#fbfbf9] via-[#fbfbf9]/90 to-transparent dark:from-[#09090b] dark:via-[#09090b]/90'
+      ? 'bg-gradient-to-l from-paper via-paper/90 to-transparent dark:from-ink dark:via-ink/90'
       : fadeVariant === 'card'
         ? 'bg-gradient-to-l from-white via-white/90 to-transparent dark:from-zinc-900 dark:via-zinc-900/90'
         : '';
