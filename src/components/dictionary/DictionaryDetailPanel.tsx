@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import {
+  ArrowRight,
   CheckCircle2,
   PenTool,
   Volume2,
@@ -380,7 +381,7 @@ export function DictionaryDetailPanel({ item, card, globalIndex }: DictionaryDet
                         </span>
                       );
                     })}
-                    <span className="font-bold text-emerald-600 dark:text-emerald-400 ml-1">→</span>
+                    <ArrowRight className="ml-1 h-4 w-4 text-emerald-600 dark:text-emerald-400" aria-hidden />
                     <span className="inline-flex items-center gap-1.5 font-bold text-emerald-800 dark:text-emerald-300">
                       <span className="font-cjk text-base font-black">{charDec.char}</span>
                       <span>({syllable?.marked})</span>

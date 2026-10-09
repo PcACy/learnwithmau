@@ -712,7 +712,12 @@ export function GrammarPage() {
                                 : 'text-zinc-400 line-through opacity-60'
                             }
                           >
-                            {selectedPitfall.itemA.word} {pt.itemACorrect ? '✓' : '✗'}
+                            {selectedPitfall.itemA.word}{' '}
+                            {pt.itemACorrect ? (
+                              <Check className="inline h-4 w-4" aria-label="richtig" />
+                            ) : (
+                              <X className="inline h-4 w-4" aria-label="falsch" />
+                            )}
                           </span>
                           <span className="text-zinc-300">|</span>
                           <span
@@ -722,7 +727,12 @@ export function GrammarPage() {
                                 : 'text-zinc-400 line-through opacity-60'
                             }
                           >
-                            {selectedPitfall.itemB.word} {pt.itemBCorrect ? '✓' : '✗'}
+                            {selectedPitfall.itemB.word}{' '}
+                            {pt.itemBCorrect ? (
+                              <Check className="inline h-4 w-4" aria-label="richtig" />
+                            ) : (
+                              <X className="inline h-4 w-4" aria-label="falsch" />
+                            )}
                           </span>
                         </div>
                       </div>

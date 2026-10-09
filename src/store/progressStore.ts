@@ -81,6 +81,8 @@ export function normalizeStreak(streak: StreakData, now: Date = new Date()): Str
 
 /** Ergebnis der letzten Session für die Abschlussansicht (nicht persistiert). */
 export interface SessionReward {
+  /** Date.now() beim Abschluss; die Abschlussansicht ignoriert ältere Belohnungen. */
+  at: number;
   xpGained: number;
   levelBefore: number;
   levelAfter: number;
@@ -374,7 +376,7 @@ export const useProgressStore = create<ProgressState>()((set, get) => ({
       }
     }
 
-    set({ lastReward: { xpGained, levelBefore, levelAfter, unlocked } });
+    set({ lastReward: { at: Date.now(), xpGained, levelBefore, levelAfter, unlocked } });
   },
 
   async setDailyTarget(target) {

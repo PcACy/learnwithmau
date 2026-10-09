@@ -14,6 +14,7 @@ import {
   MessagesSquare,
   Play,
   RotateCcw,
+  Settings,
   Trophy,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -26,7 +27,8 @@ import { db } from '../lib/db';
 import { selectDueItemIds } from '../lib/srsQuery';
 import { ACHIEVEMENTS } from '../config/achievements';
 import { MASTERY_LEVELS, getMasteryLevel } from '../lib/mastery';
-import { EXAM_FORMAT, PASS_MARK } from '../lib/mockExamEngine';
+import { aggregateSessionStats, EMPTY_SESSION_STATS, type AchievementSessionStats } from '../lib/achievementStats';
+import { levelFromXp } from '../lib/xp';
 import { SealBadge } from '../components/ui/SealBadge';
 
 const ALL_ITEM_IDS: readonly string[] = VOCAB.map((item) => item.id);
@@ -34,72 +36,18 @@ const ALL_ITEM_IDS: readonly string[] = VOCAB.map((item) => item.id);
 export function StatsPage() {
   const cards = useProgressStore((s) => s.cards);
   const streak = useProgressStore((s) => s.streak);
+  const xp = useProgressStore((s) => s.xp);
+  const unlockedAt = useProgressStore((s) => s.unlockedAchievements);
+  const level = useMemo(() => levelFromXp(xp), [xp]);
   const [filterCategory, setFilterCategory] = useState<string>('all');
-  const [sessionStats, setSessionStats] = useState<{
-    alchemySolved: number;
-    tonesCorrect: number;
-    sentencesSolved: number;
-    blitzCompleted: number;
-    typeracerCorrect: number;
-    numbersCorrect: number;
-    reviewCount: number;
-    examPassed: number;
-    dialogueCompleted: number;
-  }>({
-    alchemySolved: 0,
-    tonesCorrect: 0,
-    sentencesSolved: 0,
-    blitzCompleted: 0,
-    typeracerCorrect: 0,
-    numbersCorrect: 0,
-    reviewCount: 0,
-    examPassed: 0,
-    dialogueCompleted: 0,
-  });
+  const [sessionStats, setSessionStats] = useState<AchievementSessionStats>(EMPTY_SESSION_STATS);
 
   useEffect(() => {
     let cancelled = false;
     void db.stats
       .toArray()
       .then((rows) => {
-        if (cancelled) return;
-        let alchemySolved = 0;
-        let tonesCorrect = 0;
-        let sentencesSolved = 0;
-        let blitzCompleted = 0;
-        let typeracerCorrect = 0;
-        let numbersCorrect = 0;
-        let reviewCount = 0;
-        let examPassed = 0;
-        let dialogueCompleted = 0;
-
-        for (const row of rows) {
-          if (row.mode === 'alchemy') alchemySolved += row.correct;
-          else if (row.mode === 'ear-trainer') tonesCorrect += row.correct;
-          else if (row.mode === 'sentences') sentencesSolved += row.correct;
-          else if (row.mode === 'blitz') blitzCompleted += 1;
-          else if (row.mode === 'typeracer') typeracerCorrect += row.correct;
-          else if (row.mode === 'number-drill') numbersCorrect += row.correct;
-          else if (row.mode === 'review') reviewCount += row.answered;
-          else if (row.mode === 'exam') {
-            if (row.correct * EXAM_FORMAT.pointsPerQuestion >= PASS_MARK) examPassed += 1;
-          }
-          else if (row.mode === 'dialogue') {
-            dialogueCompleted += 1;
-          }
-        }
-
-        setSessionStats({
-          alchemySolved,
-          tonesCorrect,
-          sentencesSolved,
-          blitzCompleted,
-          typeracerCorrect,
-          numbersCorrect,
-          reviewCount,
-          examPassed,
-          dialogueCompleted,
-        });
+        if (!cancelled) setSessionStats(aggregateSessionStats(rows));
       })
       .catch(() => undefined);
 
@@ -166,6 +114,14 @@ export function StatsPage() {
           </p>
         </div>
 
+        <div className="flex flex-wrap items-center gap-3">
+        <Link
+          to="/settings"
+          className="inline-flex h-11 items-center gap-2 rounded-2xl border-2 border-paper-tint bg-white px-5 text-sm font-bold text-zinc-800 transition-colors hover:border-jade-500/50 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100"
+        >
+          <Settings className="h-4 w-4" aria-hidden />
+          Einstellungen
+        </Link>
         {dueToday > 0 && (
           <Link
             to="/review"
@@ -175,7 +131,128 @@ export function StatsPage() {
             Heute fällig: {dueToday}
           </Link>
         )}
+        </div>
       </div>
+
+      {/* Profil: Level, XP, Rang */}
+      <section className="bg-hero-jade relative overflow-hidden rounded-[2rem] border-b-[6px] border-jade-800 p-6 sm:p-8">
+        <span aria-hidden className="pointer-events-none absolute -bottom-8 -right-2 select-none font-cjk text-[11rem] font-black leading-none text-white/10">
+          级
+        </span>
+        <div className="relative flex flex-col gap-5 sm:flex-row sm:items-center">
+          <div className="flex h-24 w-24 shrink-0 flex-col items-center justify-center rounded-3xl bg-white/20">
+            <span className="text-xs font-bold uppercase tracking-wider">Level</span>
+            <span className="font-mono text-5xl font-black leading-none">{level.level}</span>
+          </div>
+          <div className="min-w-0 flex-1 space-y-2">
+            <h2 className="text-2xl font-extrabold tracking-tight sm:text-3xl">{level.title}</h2>
+            <div className="h-3 w-full overflow-hidden rounded-full bg-black/20" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(level.progress * 100)} aria-label="Fortschritt zum nächsten Level">
+              <div className="h-full rounded-full bg-gold-400 transition-[width] duration-700" style={{ width: `${Math.round(level.progress * 100)}%` }} />
+            </div>
+            <p className="font-mono text-sm text-white/85">
+              {xp} XP gesamt
+              {level.xpForNext > 0 ? ` · noch ${level.xpForNext - level.xpIntoLevel} XP bis Level ${level.level + 1}` : ' · höchste Stufe erreicht'}
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Achievements- & Trophäen-Galerie */}
+      <section
+        className="space-y-5 rounded-[2.5rem] border border-zinc-200/70 bg-white p-7 shadow-whisper dark:border-white/[0.06] dark:bg-zinc-900"
+      >
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <div className="flex items-center gap-2">
+              <Trophy className="h-5 w-5 text-amber-500" />
+              <h2 className="text-xl font-bold tracking-tight">Erfolge & Abzeichen</h2>
+            </div>
+            <p className="text-xs text-zinc-500 dark:text-zinc-400">
+              {unlockedCount} von {ACHIEVEMENTS.length} Trophäen freigeschaltet
+            </p>
+          </div>
+
+          {/* Filter Tabs */}
+          <div className="flex flex-wrap items-center gap-1 rounded-xl bg-zinc-100 p-1 dark:bg-zinc-800" role="tablist">
+            {[
+              { id: 'all', label: 'Alle' },
+              { id: 'vocab', label: 'Vokabeln' },
+              { id: 'streak', label: 'Streak' },
+              { id: 'mastery', label: 'Meister' },
+              { id: 'games', label: 'Spiele' },
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                type="button"
+                onClick={() => setFilterCategory(tab.id)}
+                className={`rounded-lg px-3 py-1 text-xs font-semibold transition-all ${
+                  filterCategory === tab.id
+                    ? 'bg-white text-zinc-900 shadow-xs dark:bg-zinc-900 dark:text-zinc-100'
+                    : 'text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-200'
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Achievement Grid */}
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 pt-2">
+          {filteredAchievements.map((ach) => {
+            const Icon = ach.icon;
+            const percent = Math.min(100, Math.round((ach.current / ach.maxProgress) * 100));
+
+            return (
+              <div
+                key={ach.id}
+                className={`flex gap-3.5 rounded-2xl border p-4 transition-all ${
+                  ach.unlocked
+                    ? 'border-emerald-500/30 bg-emerald-500/[0.04] dark:border-emerald-400/25 dark:bg-emerald-950/15'
+                    : 'border-zinc-200/80 bg-zinc-50/50 opacity-70 dark:border-white/5 dark:bg-zinc-950/30'
+                }`}
+              >
+                <span
+                  className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${
+                    ach.unlocked
+                      ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 shadow-xs'
+                      : 'bg-zinc-200/60 text-zinc-400 dark:bg-zinc-800 dark:text-zinc-500'
+                  }`}
+                >
+                  {ach.unlocked ? <Icon className="h-5 w-5" /> : <Lock className="h-5 w-5" />}
+                </span>
+
+                <div className="min-w-0 flex-1 space-y-1">
+                  <div className="flex items-center justify-between gap-1">
+                    <h3 className="truncate font-bold text-sm text-zinc-900 dark:text-zinc-100">
+                      {ach.title}
+                    </h3>
+                    <span className="font-mono text-[10px] font-bold text-zinc-400">
+                      {ach.current}/{ach.maxProgress}
+                    </span>
+                  </div>
+                  <p className="text-xs leading-relaxed text-zinc-500 dark:text-zinc-400">
+                    {ach.description}
+                  </p>
+                  {ach.unlocked && unlockedAt[ach.id] && (
+                    <p className="font-mono text-[10px] font-bold text-jade-700 dark:text-jade-300">
+                      Erreicht am {new Date(unlockedAt[ach.id]).toLocaleDateString('de-DE')}
+                    </p>
+                  )}
+
+                  {/* Progress Bar */}
+                  <div className="h-1.5 w-full overflow-hidden rounded-full bg-zinc-200/80 dark:bg-zinc-800 mt-2">
+                    <div
+                      className={`h-full transition-all duration-300 ${ach.unlocked ? 'bg-emerald-500' : 'bg-zinc-400'}`}
+                      style={{ width: `${percent}%` }}
+                    />
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
 
       {/* Haupt-Metriken (StatsGrid) */}
       <StatsGrid />
@@ -300,98 +377,6 @@ export function StatsPage() {
             <span className="mt-1 text-xs font-bold text-zinc-800 dark:text-zinc-200">HSK 1 Prüfung</span>
             <span className="text-[10px] text-zinc-400">Examen bestanden</span>
           </div>
-        </div>
-      </section>
-
-      {/* Achievements- & Trophäen-Galerie */}
-      <section
-        className="space-y-5 rounded-[2.5rem] border border-zinc-200/70 bg-white p-7 shadow-whisper dark:border-white/[0.06] dark:bg-zinc-900"
-      >
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <div className="flex items-center gap-2">
-              <Trophy className="h-5 w-5 text-amber-500" />
-              <h2 className="text-xl font-bold tracking-tight">Erfolge & Abzeichen</h2>
-            </div>
-            <p className="text-xs text-zinc-500 dark:text-zinc-400">
-              {unlockedCount} von {ACHIEVEMENTS.length} Trophäen freigeschaltet
-            </p>
-          </div>
-
-          {/* Filter Tabs */}
-          <div className="flex flex-wrap items-center gap-1 rounded-xl bg-zinc-100 p-1 dark:bg-zinc-800" role="tablist">
-            {[
-              { id: 'all', label: 'Alle' },
-              { id: 'vocab', label: 'Vokabeln' },
-              { id: 'streak', label: 'Streak' },
-              { id: 'mastery', label: 'Meister' },
-              { id: 'games', label: 'Spiele' },
-            ].map((tab) => (
-              <button
-                key={tab.id}
-                type="button"
-                onClick={() => setFilterCategory(tab.id)}
-                className={`rounded-lg px-3 py-1 text-xs font-semibold transition-all ${
-                  filterCategory === tab.id
-                    ? 'bg-white text-zinc-900 shadow-xs dark:bg-zinc-900 dark:text-zinc-100'
-                    : 'text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-200'
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Achievement Grid */}
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 pt-2">
-          {filteredAchievements.map((ach) => {
-            const Icon = ach.icon;
-            const percent = Math.min(100, Math.round((ach.current / ach.maxProgress) * 100));
-
-            return (
-              <div
-                key={ach.id}
-                className={`flex gap-3.5 rounded-2xl border p-4 transition-all ${
-                  ach.unlocked
-                    ? 'border-emerald-500/30 bg-emerald-500/[0.04] dark:border-emerald-400/25 dark:bg-emerald-950/15'
-                    : 'border-zinc-200/80 bg-zinc-50/50 opacity-70 dark:border-white/5 dark:bg-zinc-950/30'
-                }`}
-              >
-                <span
-                  className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${
-                    ach.unlocked
-                      ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 shadow-xs'
-                      : 'bg-zinc-200/60 text-zinc-400 dark:bg-zinc-800 dark:text-zinc-500'
-                  }`}
-                >
-                  {ach.unlocked ? <Icon className="h-5 w-5" /> : <Lock className="h-5 w-5" />}
-                </span>
-
-                <div className="min-w-0 flex-1 space-y-1">
-                  <div className="flex items-center justify-between gap-1">
-                    <h3 className="truncate font-bold text-sm text-zinc-900 dark:text-zinc-100">
-                      {ach.title}
-                    </h3>
-                    <span className="font-mono text-[10px] font-bold text-zinc-400">
-                      {ach.current}/{ach.maxProgress}
-                    </span>
-                  </div>
-                  <p className="text-xs leading-relaxed text-zinc-500 dark:text-zinc-400">
-                    {ach.description}
-                  </p>
-
-                  {/* Progress Bar */}
-                  <div className="h-1.5 w-full overflow-hidden rounded-full bg-zinc-200/80 dark:bg-zinc-800 mt-2">
-                    <div
-                      className={`h-full transition-all duration-300 ${ach.unlocked ? 'bg-emerald-500' : 'bg-zinc-400'}`}
-                      style={{ width: `${percent}%` }}
-                    />
-                  </div>
-                </div>
-              </div>
-            );
-          })}
         </div>
       </section>
 
